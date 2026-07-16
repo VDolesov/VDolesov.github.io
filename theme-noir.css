@@ -1,0 +1,149 @@
+:root {
+  --ink: #150c14;
+  --ink-soft: #24121f;
+  --wine: #8f1737;
+  --wine-bright: #bf2c50;
+  --paper: #f6f0e6;
+  --cream: #eadcc6;
+  --gold: #c7a875;
+  --white: #fffaf1;
+  --muted: #81727a;
+  --line: rgba(49, 23, 42, .18);
+  --shadow: 0 32px 90px rgba(36, 12, 28, .16);
+}
+
+body.theme-noir { background: #120a11; }
+
+.theme-noir .service-line {
+  color: rgba(255, 240, 224, .62);
+  background: #080408;
+  border-bottom: 1px solid rgba(199, 168, 117, .18);
+}
+
+.theme-noir .site-header {
+  color: #f2dfc7;
+  border-bottom-color: rgba(199, 168, 117, .2);
+}
+
+.theme-noir .site-header.is-scrolled {
+  color: #f0dfcf;
+  background: rgba(15, 7, 14, .92);
+  border-bottom-color: rgba(199, 168, 117, .22);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, .25);
+}
+
+.theme-noir .brand__text { letter-spacing: .04em; }
+.theme-noir .brand__mark { color: var(--gold); }
+.theme-noir .desktop-nav { text-transform: uppercase; letter-spacing: .12em; font-size: 10px; }
+.theme-noir .cart-button__count,
+.theme-noir .site-header.is-scrolled .cart-button__count { border-color: #0f070e; }
+
+.theme-noir .hero {
+  min-height: min(980px, 100svh);
+  color: #f5e8d8;
+  background: #100810;
+}
+
+.theme-noir .hero__media {
+  background-image: url("assets/hero-noir.webp");
+  background-position: center center;
+}
+
+.theme-noir .hero__shade {
+  background:
+    radial-gradient(circle at 72% 54%, transparent 12%, rgba(9, 3, 9, .08) 40%, rgba(9, 3, 9, .45) 100%),
+    linear-gradient(90deg, rgba(9, 3, 9, .92) 0%, rgba(9, 3, 9, .68) 33%, rgba(9, 3, 9, .04) 68%, rgba(9, 3, 9, .2) 100%);
+}
+
+.theme-noir .hero__content { padding-top: clamp(215px, 28vh, 300px); }
+.theme-noir .hero__eyebrow { color: var(--gold); }
+.theme-noir .hero h1 {
+  max-width: 790px;
+  font-size: clamp(78px, 9vw, 158px);
+  line-height: .76;
+  letter-spacing: -.065em;
+}
+.theme-noir .hero h1 em { color: #d6b783; }
+.theme-noir .hero__description { max-width: 455px; color: rgba(255, 241, 224, .66); }
+.theme-noir .button--light { color: #150c14; background: #d0ae76; }
+.theme-noir .button--light:hover { background: #efd7ae; }
+.theme-noir .text-button { color: #e7d3bc; border-color: rgba(199, 168, 117, .45); }
+.theme-noir .hero__meta { border-top: 1px solid rgba(199, 168, 117, .23); padding-top: 20px; }
+
+.theme-noir .collections {
+  color: #eadcca;
+  background: #120a11;
+}
+.theme-noir .collections__head > p { color: rgba(234, 220, 202, .52); }
+.theme-noir .category-rail { border-color: rgba(199, 168, 117, .18); }
+.theme-noir .category-tile {
+  color: #e6d5c2;
+  border-color: rgba(199, 168, 117, .18);
+  background: #1b0d18;
+}
+.theme-noir .category-tile:nth-child(2) { background: #25101d; }
+.theme-noir .category-tile:nth-child(3) { background: #180c15; }
+.theme-noir .category-tile--dark { background: #310f20; }
+.theme-noir .category-tile::before { background: #801834; }
+.theme-noir .category-tile__visual { color: #c6a777; opacity: .52; }
+
+.theme-noir .favorites,
+.theme-noir .catalog { color: #eadcca; background: #100810; }
+.theme-noir .favorites { border-top: 1px solid rgba(199, 168, 117, .16); }
+.theme-noir h2 em { color: #c8a876; }
+.theme-noir .arrow-link { border-color: rgba(234, 220, 202, .65); }
+.theme-noir .product-card__image,
+.theme-noir .product-grid .product-card__image {
+  background: radial-gradient(circle at 50% 42%, #332125 0%, #1a0e16 74%);
+  border: 1px solid rgba(199, 168, 117, .12);
+}
+.theme-noir .product-card__image img {
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 24px 28px rgba(0,0,0,.32)) saturate(.86) contrast(1.05);
+}
+.theme-noir .product-card__badge { color: #e8d4bb; background: rgba(83, 18, 42, .88); }
+.theme-noir .product-card__favorite { color: #e7d5c2; border-color: rgba(231, 213, 194, .25); background: rgba(18, 10, 17, .65); }
+.theme-noir .product-card__quick { color: #170c14; background: #d0ae76; }
+.theme-noir .product-card__category,
+.theme-noir .product-card__price small { color: rgba(234, 220, 202, .48); }
+.theme-noir .product-card__add { color: #d7bd94; border-color: #8b6d4f; }
+
+.theme-noir .manifesto { background: #78172f; }
+.theme-noir .manifesto__ticker { border-color: rgba(255,255,255,.15); }
+.theme-noir .manifesto__ticker div { color: rgba(255, 236, 215, .22); }
+.theme-noir .manifesto__facts article { border-color: rgba(255,255,255,.2); }
+
+.theme-noir .catalog__heading { border-color: rgba(199, 168, 117, .2); }
+.theme-noir .catalog__heading > p,
+.theme-noir .catalog-status,
+.theme-noir .catalog-sort { color: rgba(234, 220, 202, .5); }
+.theme-noir .catalog-search { border-color: #c6ad8d; }
+.theme-noir .catalog-search input,
+.theme-noir .catalog-sort select { color: #eadcca; }
+.theme-noir .catalog-sort select { border-color: rgba(199, 168, 117, .24); background: #160b14; }
+.theme-noir .filter-chip { color: #dbc8b4; border-color: rgba(199, 168, 117, .24); }
+.theme-noir .filter-chip:hover,
+.theme-noir .filter-chip.is-active { color: #170c14; border-color: #d0ae76; background: #d0ae76; }
+.theme-noir .catalog-status { border-color: rgba(199, 168, 117, .17); }
+.theme-noir .button--outline { color: #dcc7af; border-color: #dcc7af; }
+.theme-noir .button--outline:hover { color: #170c14; background: #dcc7af; }
+
+.theme-noir .custom { background: #1a0c17; border-top: 1px solid rgba(199, 168, 117, .2); }
+.theme-noir .custom__rings i { border-color: rgba(199, 168, 117, .22); }
+.theme-noir .button--accent { color: #160b14; background: #d0ae76; }
+.theme-noir .button--accent:hover { background: #efd7ae; }
+.theme-noir .cake-sculpture > span { filter: saturate(.6) brightness(.7); }
+
+.theme-noir .delivery { background: #eadfce; }
+.theme-noir .about { background: #f6f0e6; }
+.theme-noir .site-footer { background: #090408; }
+.theme-noir .cart-drawer,
+.theme-noir dialog { color: #eadcca; background: #150b13; }
+.theme-noir .cart-item { border-color: rgba(199,168,117,.18); }
+
+@media (max-width: 760px) {
+  .theme-noir .mobile-menu { color: #eadcca; background: #100810; }
+  .theme-noir .hero__media { background-position: 62% center; }
+  .theme-noir .hero__shade { background: linear-gradient(180deg, rgba(8,3,8,.46), rgba(8,3,8,.82) 55%, rgba(8,3,8,.95)); }
+  .theme-noir .hero h1 { font-size: clamp(52px, 15vw, 70px); }
+}

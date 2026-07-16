@@ -1,0 +1,109 @@
+/* Общие данные каталога «Мир сладостей».
+   Slug'и категорий повторяют структуру mirsladostey164.ru (/catalog/<slug>/). */
+(() => {
+  "use strict";
+
+  const CATEGORY_META = {
+    cakes: { slug: "torty", label: "Торты", short: "Торты", description: "Праздничный торт собственного производства: мягкие коржи, крем и сбалансированная сладость." },
+    pies: { slug: "pirogi", label: "Пироги", short: "Пироги", description: "Домашний пирог с щедрой начинкой и румяным тестом. Подойдёт для семейного стола или офиса." },
+    pastry: { slug: "vypechka", label: "Выпечка", short: "Выпечка", description: "Свежая выпечка из слоёного теста — хрустящая снаружи и сочная внутри." },
+    desserts: { slug: "pirozhnye_i_deserty", label: "Пирожные и десерты", short: "Десерты", description: "Порционный десерт с выразительной текстурой, аккуратной подачей и знакомым вкусом." },
+    salads: { slug: "salaty", label: "Салаты", short: "Салаты", description: "Готовый салат для домашнего обеда или праздничного стола. Производится небольшими партиями." },
+    mains: { slug: "vtorye_blyuda", label: "Вторые блюда", short: "Горячее", description: "Горячее блюдо собственного производства. Остаётся только разогреть и подать к столу." },
+    semifinished: { slug: "polufabrikaty", label: "Полуфабрикаты", short: "Полуфабрикаты", description: "Домашние полуфабрикаты для быстрого ужина — удобно хранить и легко приготовить." },
+    drinks: { slug: "napitki", label: "Напитки", short: "Напитки", description: "Фруктово-ягодный напиток в удобном формате — к выпечке, обеду или праздничному заказу." }
+  };
+
+  const IMPROVED_PASTRY_IDS = new Set(["742", "743", "744", "745", "746", "780"]);
+  const IMPROVED_PIE_IDS = new Set(["736", "737", "738", "739", "741", "772", "773", "774", "801", "802", "803"]);
+
+  const product = (id, category, name, price, unit, badge = "") => ({
+    id: String(id),
+    category,
+    name,
+    price,
+    unit,
+    badge,
+    article: `20${id}`,
+    image: (category === "pastry" && IMPROVED_PASTRY_IDS.has(String(id))) ||
+      (category === "pies" && IMPROVED_PIE_IDS.has(String(id)))
+      ? `/assets/products/${category}-${id}-v2.webp`
+      : `/assets/products/${category}-${id}.jpg`,
+    description: CATEGORY_META[category].description,
+    availability: ["cakes", "pies"].includes(category) ? "Предзаказ от 24 часов" : "Наличие уточнит менеджер"
+  });
+
+  // v3 — реальные фотографии производства (заменили сгенерированные v2)
+  const REAL_PHOTO_PIE_IDS = new Set(["801", "802"]);
+
+  const ossetianPie = (id, name, price, badge, description) => ({
+    ...product(id, "pies", name, price, "шт", badge),
+    image: REAL_PHOTO_PIE_IDS.has(String(id))
+      ? `/assets/products/pies-${id}-v3.webp`
+      : `/assets/products/pies-${id}-v2.webp`,
+    description,
+    availability: "Выпекаем под заказ от 24 часов"
+  });
+
+  const PRODUCTS = [
+    product(777, "cakes", "Торт «Медово-ореховый»", 880, "шт", "Выбор недели"),
+    product(749, "cakes", "Торт «Шварцвальдский»", 880, "шт", "Хит"),
+    product(747, "cakes", "Торт «Прага»", 1200, "шт", "Классика"),
+    product(748, "cakes", "Торт «Сластёна»", 880, "шт"),
+    product(751, "cakes", "Торт «Экзотика с ананасом»", 880, "шт"),
+
+    ossetianPie(801, "Осетинский пирог с мясом", 890, "Новая коллекция", "Традиционный фыдджын: тонкое тесто и сочная начинка из рубленого мяса с луком и специями."),
+    ossetianPie(802, "Осетинский пирог с картофелем и сыром", 690, "Традиция", "Картофджын с мягким картофелем и сыром — сливочный, сытный и хорошо сбалансированный."),
+    ossetianPie(803, "Осетинский пирог с зеленью и сыром", 720, "Сезонный", "Цахараджын со свежей зеленью и сыром — яркий аромат, сочная начинка и тонкая румяная корочка."),
+
+    product(737, "pies", "Пирог с вишней", 620, "кг", "Сезонный"),
+    product(736, "pies", "Пирог с мясом", 720, "кг"),
+    product(773, "pies", "Пирог с белой рыбой", 620, "кг"),
+    product(774, "pies", "Пирог с капустой и яйцом", 510, "кг"),
+    product(741, "pies", "Пирог с луком и яйцом", 510, "кг"),
+    product(772, "pies", "Пирог с курагой и повидлом", 510, "кг"),
+    product(739, "pies", "Пирог с капустой и грибами", 510, "кг"),
+    product(738, "pies", "Пирог с капустой и рыбой", 510, "кг"),
+    product(775, "pies", "Кух бисквитный", 540, "кг"),
+    product(776, "pies", "Каравай свадебный", 500, "шт", "На заказ"),
+
+    product(746, "pastry", "Штрудель с вишней", 500, "кг", "Хит"),
+    product(780, "pastry", "Штрудель с лимоном", 500, "кг"),
+    product(742, "pastry", "Слойка с ветчиной и сыром", 66, "шт"),
+    product(743, "pastry", "Слойка с вишней", 66, "шт"),
+    product(744, "pastry", "Самса с курицей", 85, "шт"),
+    product(745, "pastry", "Самса с сыром", 85, "шт"),
+
+    product(778, "desserts", "Тирамису с малиной", 125, "шт", "Новинка"),
+    product(756, "desserts", "Десерт «Зимняя вишня»", 125, "шт"),
+    product(758, "desserts", "Десерт «Киевский»", 125, "шт"),
+    product(757, "desserts", "Десерт «Соната»", 125, "шт"),
+
+    product(765, "salads", "Салат «Русский»", 450, "кг", "К обеду"),
+    product(766, "salads", "Салат «Винегрет»", 450, "кг"),
+    product(764, "salads", "Салат «Сельдь под шубой»", 570, "шт"),
+    product(768, "salads", "Салат «Тбилиси»", 910, "кг"),
+    product(769, "salads", "Салат «Аппетитный»", 840, "кг"),
+
+    product(770, "mains", "Котлеты по-киевски", 120, "шт"),
+    product(771, "mains", "Люля рубленые", 930, "кг"),
+    product(783, "mains", "Пикша жареная", 1070, "кг"),
+
+    product(760, "semifinished", "Пельмени", 390, "шт"),
+    product(761, "semifinished", "Манты", 390, "шт"),
+    product(781, "semifinished", "Вареники с картошкой", 130, "шт"),
+    product(782, "semifinished", "Вареники с вишней", 210, "шт"),
+
+    product(762, "drinks", "Компот фруктово-ягодный", 70, "шт"),
+    product(763, "drinks", "Морс клюквенный", 70, "шт")
+  ];
+
+  window.MS_DATA = {
+    CATEGORY_META,
+    PRODUCTS,
+    FEATURED_IDS: ["777", "749", "737", "778", "746", "765"],
+    MIN_ORDER: 800,
+    FREE_DELIVERY: 3000,
+    DELIVERY_FEE: 150
+  };
+})();

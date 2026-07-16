@@ -1,0 +1,115 @@
+/* Дополнительные стили многостраничного каркаса (внутренние страницы). */
+
+/* Оригинальный логотип-мельница mirsladostey164.ru.
+   Подключён CSS-маской, чтобы наследовать цвет темы (currentColor). */
+.brand__mark--mill {
+  flex: 0 0 auto;
+  width: 82px;
+  height: 42px;
+  background-color: currentColor;
+  -webkit-mask: url("/assets/logo-melnitsa.svg") center / contain no-repeat;
+  mask: url("/assets/logo-melnitsa.svg") center / contain no-repeat;
+}
+@media (max-width: 800px) {
+  .brand__mark--mill { width: 62px; height: 32px; }
+}
+
+/* Компактный тёмный баннер внутренних страниц вместо полноэкранного hero */
+.page-hero {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: clamp(320px, 42vh, 430px);
+  padding-bottom: 48px;
+  color: #f5e8d8;
+  background: #100810;
+  overflow: hidden;
+}
+.page-hero__media {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/hero-noir.webp") center 38% / cover no-repeat;
+  opacity: .5;
+}
+.page-hero__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9,3,9,.55), rgba(9,3,9,.82) 70%, #100810 100%);
+}
+.page-hero .shell { position: relative; z-index: 2; }
+.page-hero__eyebrow { color: var(--gold); }
+.page-hero h1 {
+  margin: 0;
+  font-size: clamp(52px, 7vw, 118px);
+  line-height: .88;
+  letter-spacing: -.05em;
+}
+.page-hero h1 em { color: #d6b783; font-style: italic; }
+.page-hero__lead { max-width: 520px; margin: 20px 0 0; color: rgba(255,241,224,.62); line-height: 1.7; }
+
+/* Хлебные крошки — как в каркасе оригинала */
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 26px;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(234, 220, 202, .5);
+}
+.breadcrumbs a { color: var(--gold); }
+.breadcrumbs a:hover { color: #efd7ae; }
+.breadcrumbs span[aria-hidden] { color: rgba(234,220,202,.3); }
+
+/* Полоса ссылок на разделы каталога (slug'и оригинала) */
+.category-links { display: flex; gap: 8px; padding: 30px 0 6px; overflow-x: auto; scrollbar-width: none; }
+.category-links::-webkit-scrollbar { display: none; }
+a.filter-chip { display: inline-flex; align-items: center; }
+.theme-noir a.filter-chip.is-current { color: #170c14; border-color: #d0ae76; background: #d0ae76; pointer-events: none; }
+
+/* Витрина разделов на странице /catalog/ */
+.section-rail { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(199,168,117,.18); }
+.section-rail .category-tile { min-height: 300px; }
+.section-rail .category-tile__visual { width: min(64%, 200px); top: 40px; }
+
+/* Контакты */
+.contacts-block { padding: 110px 0 140px; color: #eadcca; background: #100810; }
+.contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; }
+.contact-card { padding: 34px 0 30px; border-top: 1px solid rgba(199,168,117,.25); }
+.contact-card h3 { margin-bottom: 14px; color: var(--gold); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; }
+.contact-card a, .contact-card p { margin: 0; color: #eadcca; font-family: var(--serif); font-size: clamp(24px, 2.4vw, 38px); line-height: 1.25; }
+.contact-card small { display: block; margin-top: 10px; color: rgba(234,220,202,.45); font-size: 12px; font-family: var(--sans); }
+
+.stores { padding: 120px 0 140px; background: var(--cream); }
+.stores__head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 60px; }
+.stores__list { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); }
+.store-row { position: relative; display: grid; grid-template-columns: 54px 1fr; gap: 20px; align-items: baseline; padding: 30px 40px 30px 0; border-bottom: 1px solid var(--line); }
+.store-row:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 50px; }
+.store-row:nth-child(even) { padding-left: 50px; }
+.store-row__index { color: var(--wine); font-family: var(--serif); font-size: 19px; }
+.store-row h3 { margin: 0 0 6px; font-family: var(--serif); font-size: clamp(21px, 1.8vw, 28px); font-weight: 400; }
+.store-row p { margin: 0; color: var(--muted); font-size: 13px; }
+
+/* О компании: лента вех */
+.timeline { padding: 130px 0 150px; color: #eadcca; background: #120a11; }
+.timeline__list { display: grid; margin-top: 65px; border-top: 1px solid rgba(199,168,117,.22); }
+.timeline-row { display: grid; grid-template-columns: 180px 1fr; gap: 40px; padding: 36px 0; border-bottom: 1px solid rgba(199,168,117,.14); }
+.timeline-row strong { color: var(--gold); font-family: var(--serif); font-size: clamp(30px, 3vw, 46px); font-weight: 400; line-height: 1; }
+.timeline-row h3 { margin-bottom: 8px; font-family: var(--serif); font-size: 24px; font-weight: 400; }
+.timeline-row p { max-width: 620px; margin: 0; color: rgba(234,220,202,.55); font-size: 14px; line-height: 1.7; }
+
+@media (max-width: 1180px) {
+  .section-rail { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 800px) {
+  .page-hero { min-height: 300px; padding-bottom: 36px; }
+  .section-rail { grid-template-columns: 1fr; }
+  .section-rail .category-tile { min-height: 240px; }
+  .contacts-grid { grid-template-columns: 1fr; gap: 0; }
+  .stores__head { display: block; }
+  .stores__list { grid-template-columns: 1fr; }
+  .store-row { padding: 24px 0 !important; border-right: 0 !important; }
+  .timeline-row { grid-template-columns: 1fr; gap: 12px; }
+}
