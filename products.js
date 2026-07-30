@@ -33,14 +33,10 @@
     availability: ["cakes", "pies"].includes(category) ? "Предзаказ от 24 часов" : "Наличие уточнит менеджер"
   });
 
-  // v3 — реальные фотографии производства (заменили сгенерированные v2)
-  const REAL_PHOTO_PIE_IDS = new Set(["801", "802"]);
-
+  // v4 — реальные фотографии производства (заменили сгенерированные v2)
   const ossetianPie = (id, name, price, badge, description) => ({
     ...product(id, "pies", name, price, "шт", badge),
-    image: REAL_PHOTO_PIE_IDS.has(String(id))
-      ? `/assets/products/pies-${id}-v3.webp`
-      : `/assets/products/pies-${id}-v2.webp`,
+    image: `/assets/products/pies-${id}-v4.webp`,
     description,
     availability: "Выпекаем под заказ от 24 часов"
   });
