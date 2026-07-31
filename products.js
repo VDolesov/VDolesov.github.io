@@ -14,9 +14,8 @@
     drinks: { slug: "napitki", label: "Напитки", short: "Напитки", description: "Фруктово-ягодный напиток в удобном формате — к выпечке, обеду или праздничному заказу." }
   };
 
-  const IMPROVED_PASTRY_IDS = new Set(["742", "743", "744", "745", "746", "780"]);
-  const IMPROVED_PIE_IDS = new Set(["736", "737", "738", "739", "741", "772", "773", "774", "801", "802", "803"]);
-
+  // v5 — единая серия каталога: тёплый студийный свет, общий грейд для всех
+  // источников (старые packshot, студийные кадры и фотографии производства).
   const product = (id, category, name, price, unit, badge = "") => ({
     id: String(id),
     category,
@@ -25,18 +24,13 @@
     unit,
     badge,
     article: `20${id}`,
-    image: (category === "pastry" && IMPROVED_PASTRY_IDS.has(String(id))) ||
-      (category === "pies" && IMPROVED_PIE_IDS.has(String(id)))
-      ? `/assets/products/${category}-${id}-v2.webp`
-      : `/assets/products/${category}-${id}.jpg`,
+    image: `/assets/products/${category}-${id}-v5.webp`,
     description: CATEGORY_META[category].description,
     availability: ["cakes", "pies"].includes(category) ? "Предзаказ от 24 часов" : "Наличие уточнит менеджер"
   });
 
-  // v4 — реальные фотографии производства (заменили сгенерированные v2)
   const ossetianPie = (id, name, price, badge, description) => ({
     ...product(id, "pies", name, price, "шт", badge),
-    image: `/assets/products/pies-${id}-v4.webp`,
     description,
     availability: "Выпекаем под заказ от 24 часов"
   });
