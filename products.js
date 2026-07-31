@@ -14,8 +14,12 @@
     drinks: { slug: "napitki", label: "Напитки", short: "Напитки", description: "Фруктово-ягодный напиток в удобном формате — к выпечке, обеду или праздничному заказу." }
   };
 
-  // v5 — единая серия каталога: тёплый студийный свет, общий грейд для всех
+  // Единая серия каталога: тёплый студийный свет и общий грейд для всех
   // источников (старые packshot, студийные кадры и фотографии производства).
+  // v6 — пересобранные позиции: торты выровнены по ширине тарелки и линии
+  // основания, осетинские пироги перенесены в общую сцену.
+  const V6_IDS = new Set(["777", "749", "747", "748", "751", "801", "802", "803"]);
+
   const product = (id, category, name, price, unit, badge = "") => ({
     id: String(id),
     category,
@@ -24,15 +28,13 @@
     unit,
     badge,
     article: `20${id}`,
-    image: `/assets/products/${category}-${id}-v5.webp`,
+    image: `/assets/products/${category}-${id}-v${V6_IDS.has(String(id)) ? 6 : 5}.webp`,
     description: CATEGORY_META[category].description,
     availability: ["cakes", "pies"].includes(category) ? "Предзаказ от 24 часов" : "Наличие уточнит менеджер"
   });
 
-  // v6 — снимки производства, пересобранные в общую сцену каталога
   const ossetianPie = (id, name, price, badge, description) => ({
     ...product(id, "pies", name, price, "шт", badge),
-    image: `/assets/products/pies-${id}-v6.webp`,
     description,
     availability: "Выпекаем под заказ от 24 часов"
   });
