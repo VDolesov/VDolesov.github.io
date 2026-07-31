@@ -29,8 +29,10 @@
     availability: ["cakes", "pies"].includes(category) ? "Предзаказ от 24 часов" : "Наличие уточнит менеджер"
   });
 
+  // v6 — снимки производства, пересобранные в общую сцену каталога
   const ossetianPie = (id, name, price, badge, description) => ({
     ...product(id, "pies", name, price, "шт", badge),
+    image: `/assets/products/pies-${id}-v6.webp`,
     description,
     availability: "Выпекаем под заказ от 24 часов"
   });
