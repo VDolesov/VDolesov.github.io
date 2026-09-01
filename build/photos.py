@@ -22,6 +22,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 SITE = os.path.dirname(os.path.dirname(os.path.dirname(APP)))
 SRC_HD = os.path.join(HERE, "photos")
+SRC_STUDIO = os.path.join(HERE, "sources", "studio")
+SRC_LEGACY = os.path.join(HERE, "sources", "legacy")
 PRODUCTS = os.path.join(APP, "assets", "products")
 PREVIEW = os.path.join(HERE, "preview")
 
@@ -278,15 +280,15 @@ def main():
                 out = finish(real_photo(*REAL[pid]), floor=.58, lift=1.10, shadows=.66)
                 kind = "съёмка производства"
             elif pid in STUDIO:
-                out = finish(refit_studio(os.path.join(PRODUCTS, f"pies-{pid}-v2.webp")))
+                out = finish(refit_studio(os.path.join(SRC_STUDIO, f"pies-{pid}-v2.webp")))
                 kind = "студийная серия"
             elif os.path.exists(hd):
                 out = finish(tinted(hd) if pid in TINT_IDS else place(cutout(hd)))
                 kind = "HD с сайта" + (", без выреза" if pid in TINT_IDS else "")
             else:
-                legacy = [f for f in os.listdir(PRODUCTS) if f.endswith(f"-{pid}.jpg")]
+                legacy = [f for f in os.listdir(SRC_LEGACY) if f.endswith(f"-{pid}.jpg")]
                 if legacy:
-                    out = finish(place(cutout(os.path.join(PRODUCTS, legacy[0]))))
+                    out = finish(place(cutout(os.path.join(SRC_LEGACY, legacy[0]))))
                     kind = "архивные 350 px"
                 else:
                     out = finish(placeholder())
