@@ -92,6 +92,92 @@ def recolor(css):
     return rules
 
 
+
+# Шаблон рассчитан на белый фон: тёмный текст, белые заливки, светлые рамки.
+# Второй проход переписывает их так же, как первый переписывает акцент, —
+# теми же селекторами, поэтому специфичность совпадает, а наш файл идёт
+# последним и выигрывает. Ручными правилами это не перекрыть: в шаблоне
+# сотни мест с !important и длинными селекторами.
+TEXT_MAP = {
+    "#000000": INK, "#000": INK, "#111111": INK, "#111": INK,
+    "#1a1a1a": INK, "#202020": INK, "#212121": INK, "#222222": INK, "#222": INK,
+    "#2b2b2b": INK, "#303030": INK, "#333333": INK, "#333": INK,
+    "#3c3c3c": INK, "#404040": INK, "#444444": INK, "#444": INK,
+    "#4d4d4d": MUTED, "#555555": MUTED, "#555": MUTED, "#5c5c5c": MUTED,
+    "#666666": MUTED, "#666": MUTED, "#707070": MUTED, "#757575": MUTED,
+    "#777777": MUTED, "#777": MUTED, "#808080": MUTED, "#888888": MUTED,
+    "#888": MUTED, "#8c8c8c": MUTED, "#919191": MUTED, "#999999": MUTED,
+    "#999": MUTED, "#a0a0a0": MUTED, "#aaaaaa": MUTED, "#aaa": MUTED,
+    "black": INK,
+}
+FILL_MAP = {
+    "#ffffff": CARD, "#fff": CARD, "white": CARD,
+    "#fefefe": CARD, "#fdfdfd": CARD, "#fcfcfc": PANEL, "#fbfbfb": PANEL,
+    "#fafafa": PANEL, "#f9f9f9": PANEL, "#f8f8f8": PANEL, "#f7f7f7": PANEL,
+    "#f6f6f6": PANEL, "#f5f5f5": PANEL, "#f4f4f4": PANEL, "#f3f3f3": PANEL,
+    "#f2f2f2": PANEL, "#f1f1f1": PANEL, "#f0f0f0": PANEL,
+    "#ededed": PANEL, "#ebebeb": PANEL, "#eeeeee": PANEL, "#eee": PANEL,
+}
+EDGE_MAP = {
+    "#ffffff": LINE, "#fff": LINE, "white": LINE,
+    "#f5f5f5": LINE, "#f0f0f0": LINE, "#ededed": LINE, "#ebebeb": LINE,
+    "#eeeeee": LINE, "#eee": LINE, "#e8e8e8": LINE, "#e5e5e5": LINE,
+    "#e3e3e3": LINE, "#e0e0e0": LINE, "#dedede": LINE, "#dddddd": LINE,
+    "#ddd": LINE, "#d9d9d9": LINE, "#d6d6d6": LINE, "#d5d5d5": LINE,
+    "#d0d0d0": LINE, "#cccccc": LINE, "#ccc": LINE, "#c8c8c8": LINE,
+}
+
+# правила шаблона, которые трогать нельзя: там светлый фон осмыслен
+KEEP_LIGHT = ("sticker", "label", "btn", "button", "badge", "tooltip",
+              "flex-direction", "owl-", "slick-", "colorpicker")
+
+
+def _swap(value, mapping):
+    """Замена цвета с границами слова: #fff не должен попасть в #ffffff."""
+    for old in sorted(mapping, key=len, reverse=True):
+        if old.startswith("#"):
+            rx = r"(?<![0-9a-fA-F])" + re.escape(old) + r"(?![0-9a-fA-F])"
+        else:
+            rx = r"\b" + re.escape(old) + r"\b"
+        value = re.sub(rx, mapping[old], value, flags=re.I)
+    return value
+
+
+def _mapping(prop):
+    prop = prop.strip().lower()
+    if prop.startswith(("background", "fill")):
+        return FILL_MAP
+    if "border" in prop or "outline" in prop:
+        return EDGE_MAP
+    if prop == "color" or prop.endswith("-color") or prop == "stroke":
+        return TEXT_MAP
+    return None
+
+
+def redark(css):
+    """Светлая схема шаблона → тёмная, правило за правилом."""
+    pattern = re.compile(r"([^{}]+)\{([^{}]*)\}")
+    rules = []
+    for match in pattern.finditer(css):
+        selector, body = match.group(1).strip(), match.group(2)
+        if selector.startswith("@") or any(k in selector for k in KEEP_LIGHT):
+            continue
+
+        kept = []
+        for declaration in body.split(";"):
+            if ":" not in declaration:
+                continue
+            prop, value = declaration.split(":", 1)
+            mapping = _mapping(prop)
+            if mapping is None or "url(" in value.lower():
+                continue
+            fresh = _swap(value, mapping)
+            if fresh != value:
+                kept.append(f"{prop.strip()}:{fresh.strip()}")
+        if kept:
+            rules.append(" ".join(selector.split()) + "{" + ";".join(kept) + "}")
+    return rules
+
 FONTS = """/* Шрифты подключаются первой строкой: правило @import
    действует только до первых стилей, ниже по файлу браузер его отбрасывает. */
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap");
@@ -441,6 +527,7 @@ LAYOUT = f"""
 def main():
     css = fetch_css()
     rules = recolor(css)
+    dark = redark(css)
 
     header = (
         "/* skin.css — надстройка оформления для mirsladostey164.ru\n"
@@ -450,12 +537,14 @@ def main():
 
     body = (FONTS
             + "\n/* --- перекраска фирменного акцента ------------------------------------ */\n"
-            + "\n".join(rules) + "\n" + MANUAL + LAYOUT)
+            + "\n".join(rules) + "\n"
+            + "\n/* --- светлая схема шаблона переведена в тёмную --- */\n"
+            + "\n".join(dark) + "\n" + MANUAL + LAYOUT)
 
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(header + body)
 
-    print(f"правил перекрашено: {len(rules)}")
+    print(f"правил перекрашено: {len(rules)}, затемнено: {len(dark)}")
     print(f"размер skin.css: {os.path.getsize(OUT) // 1024} КБ")
     print("записано:", OUT)
 
