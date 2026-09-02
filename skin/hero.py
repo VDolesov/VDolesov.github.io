@@ -27,10 +27,10 @@ from photos import cutout  # noqa: E402  — переиспользуем выр
 
 BG_W, BG_H = 2400, 1060
 CAKE_W, CAKE_H = 1308, 880
-SOURCE = os.path.join(BUILD, "photos", "748.jpg")
+SOURCE = os.path.join(BUILD, "photos", "749.jpg")
 
 # бордо подложки: слева темнее — там лежит текст, справа теплее — там свет
-DARK = np.array([26, 10, 16], np.float32)
+DARK = np.array([21, 9, 13], np.float32)
 DEEP = np.array([64, 16, 32], np.float32)
 WARM = np.array([206, 142, 98], np.float32)
 
@@ -58,7 +58,7 @@ def backdrop():
 
     # виньетка по краям кадра
     r = np.sqrt(((u - 0.5) / 0.62) ** 2 + ((v - 0.5) / 0.72) ** 2)
-    img *= np.clip(1.06 - 0.34 * r ** 2.2, 0, 1)[..., None]
+    img *= np.clip(1.06 - 0.44 * r ** 2.0, 0, 1)[..., None]
 
     # зерно, чтобы градиент не полосил на больших экранах
     rng = np.random.default_rng(11)

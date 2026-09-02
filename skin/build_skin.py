@@ -26,21 +26,26 @@ OUT = os.path.join(HERE, "skin.css")
 # Красный сохраняем как акцент, но берём глубокий бордо: узнаваемость
 # остаётся, агрессивная «распродажная» яркость уходит.
 COLOR_MAP = {
-    "#f3103a": "#6d1226",   # основной акцент — глубокий бордо
-    "#f42d52": "#8a1f36",   # наведение
-    "#f30b36": "#6d1226",   # вариант основного
-    "#e00a31": "#530d1c",   # нажатие, тёмный вариант
-    "#ff1441": "#8a1f36",
-    "#e5062d": "#530d1c",
+    "#f3103a": "#a8213c",   # основной акцент — бордо, читаемое на тёмном
+    "#f42d52": "#c42b4c",   # наведение
+    "#f30b36": "#a8213c",   # вариант основного
+    "#e00a31": "#7d1329",   # нажатие, тёмный вариант
+    "#ff1441": "#c42b4c",
+    "#e5062d": "#7d1329",
 }
 
-ACCENT = "#6d1226"
-ACCENT_HOVER = "#8a1f36"
-INK = "#241a1a"
-PAPER = "#faf6ef"        # тёплая бумага вместо белого
-CARD = "#ffffff"
-LINE = "rgba(36, 26, 26, .12)"
-GOLD = "#b08b4f"
+ACCENT = "#a8213c"
+ACCENT_HOVER = "#c42b4c"
+ACCENT_DEEP = "#7d1329"
+INK = "#f1eae3"          # основной текст — светлый
+MUTED = "rgba(241, 234, 227, .52)"
+GROUND = "#15100f"       # фон страницы
+PANEL = "#1c1615"        # полосы секций, выпадающие панели
+CARD = "#221b19"         # карточки товара
+FIELD = "#171211"        # поля ввода
+LINE = "rgba(241, 234, 227, .10)"
+GOLD = "#c2a15f"
+TILE = "#f6efe4"         # плитка под фотографией товара
 
 
 def fetch_css():
@@ -95,19 +100,33 @@ FONTS = """/* Шрифты подключаются первой строкой:
 
 MANUAL = f"""
 /* ======================================================================
-   Ручной слой: типографика, воздух, карточки, кнопки.
+   Ручной слой: тёмная палитра, типографика, карточки, формы.
    Разметка не меняется — только оформление поверх шаблона.
    ====================================================================== */
 
-
 /* --- основа ------------------------------------------------------------ */
-body, .wrapper1, .wrapper_inner {{ background: {PAPER}; color: {INK}; }}
+html, body, .wrapper1, .wrapper_inner, .wraps, #content, .middle,
+.container, .container_inner, .maxwidth-theme, .section-content-wrapper,
+.front-block, .drag-block, .page-top, .content_wrapper {{
+  background-color: {GROUND} !important;
+}}
 body {{
+  color: {INK} !important;
   font-family: Inter, "Segoe UI", Arial, sans-serif !important;
   font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased;
 }}
-p, li, td, dd, label, .muted, .description {{ font-family: inherit; }}
-ul.menu .child a, #order_form_div input[type=submit] {{ font-family: inherit !important; }}
+::selection {{ background: {ACCENT}; color: #fff; }}
+
+/* цвет текста задан в шаблоне сотнями правил — переводим в светлый */
+p, li, td, th, dd, dt, label, span, div, section, article,
+.text, .description, .tab-content, .props_list td, .char_name, .char_value {{
+  color: inherit !important;
+}}
+a, a:visited {{ color: {INK} !important; }}
+a:hover, a:focus {{ color: {ACCENT_HOVER} !important; }}
+.muted, .small, .article_block, .article, .price_measure, .date,
+.hint, .quantity, .measure, .copyright {{ color: {MUTED} !important; }}
+::placeholder {{ color: rgba(241, 234, 227, .34) !important; }}
 
 /* --- заголовки --------------------------------------------------------- */
 h1, h2, h3, h4, .h1, .h2, .h3, .h4,
@@ -118,186 +137,212 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4,
   font-weight: 500 !important;
   letter-spacing: -.02em;
   text-transform: none !important;
-  color: {INK};
+  color: {INK} !important;
 }}
 .topic, .page-top .topic {{ font-size: clamp(34px, 4vw, 56px) !important; line-height: 1.08 !important; }}
 h1 {{ font-size: clamp(32px, 3.6vw, 50px); line-height: 1.1; }}
 h2, .title_block, .top_block .title {{ font-size: clamp(26px, 2.8vw, 40px) !important; line-height: 1.14; }}
 h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
-
-/* подписи над заголовками секций — тонкие, разрядка */
 .top_block .title_wrapper > .muted, .section-subtitle {{
   color: {GOLD} !important; font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
 }}
 
 /* --- воздух между секциями --------------------------------------------- */
-.front-block, .drag-block, .section_block {{ padding-top: clamp(46px, 5vw, 86px) !important; padding-bottom: clamp(46px, 5vw, 86px) !important; }}
-.front-block .top_block, .drag-block .top_block {{ margin-bottom: clamp(26px, 3vw, 46px) !important; }}
-.grey_block, .grey {{ background: #f3ede3 !important; }}
-
-/* --- шапка ------------------------------------------------------------- */
-.header_wrap, .header_wrap .logo_and_menu-row, .header-v2 .logo_and_menu-row {{
-  background: #fffdfa !important; border-bottom: 1px solid rgba(36,26,26,.08);
+.front-block, .drag-block, .section_block {{
+  padding-top: clamp(46px, 5vw, 86px) !important;
+  padding-bottom: clamp(46px, 5vw, 86px) !important;
 }}
-.header_wrap .line-row, .header-v1 .line-row {{ background: #1b1211 !important; color: rgba(255,255,255,.75) !important; }}
-.header_wrap .line-row a {{ color: rgba(255,255,255,.85) !important; }}
+.front-block .top_block, .drag-block .top_block {{ margin-bottom: clamp(26px, 3vw, 46px) !important; }}
+
+/* чередование полос: одна тёмная, другая чуть светлее */
+.grey_block, .grey, .block_wr.grey, .front-block.grey, .drag-block.grey {{
+  background-color: {PANEL} !important;
+}}
+
+/* --- меню и выпадающие панели ------------------------------------------ */
 .menu-row .menu_wrap ul.menu > li > a {{
   font-size: 14px !important; font-weight: 500 !important; letter-spacing: .01em;
   text-transform: none !important; padding: 14px 16px !important;
 }}
-.menu-row .menu_wrap ul.menu > li.current > a, .menu-row .menu_wrap ul.menu > li:hover > a {{ color: {ACCENT} !important; }}
-.mega-menu .dropdown, .menu_wrap .dropdown {{
-  border-radius: 10px !important; border: 1px solid rgba(36,26,26,.08) !important;
-  box-shadow: 0 24px 60px rgba(36,26,26,.14) !important;
+.menu-row .menu_wrap ul.menu > li.current > a,
+.menu-row .menu_wrap ul.menu > li:hover > a {{ color: {ACCENT_HOVER} !important; }}
+.mega-menu .dropdown, .menu_wrap .dropdown, .dropdown-menu,
+#mobilemenu, .mobile_menu, .search_popup, .ik_select_list,
+.bx_filter_select_popup, .jq-selectbox__dropdown, .tooltip-inner {{
+  background: {PANEL} !important;
+  color: {INK} !important;
+  border: 1px solid {LINE} !important;
+  border-radius: 10px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .55) !important;
 }}
-.wrap_icon svg, .header_wrap svg {{ stroke-width: 1.4; }}
 
-/* --- кнопки: скруглённые, с воздухом ----------------------------------- */
+/* окна: обратная связь, быстрый заказ, корзина при наведении */
+.popup-window, .popup_window, .bx-core-popup-window, .basket_hover_block,
+.fancybox-skin, .modal-content, .ui-widget-content, .white_block {{
+  background: {PANEL} !important; color: {INK} !important;
+  border-color: {LINE} !important;
+}}
+.popup-window-titlebar, .bx-core-popup-window-titlebar {{
+  background: transparent !important; border-bottom: 1px solid {LINE} !important;
+}}
+
+/* --- кнопки ------------------------------------------------------------ */
 .btn, .btn.btn-default, .btn.btn-lg, .btn.btn-sm, .btn.btn-xs, button.btn, input[type=submit] {{
   border-radius: 999px !important;
   padding: 13px 30px !important;
   font-family: Inter, sans-serif !important;
   font-size: 14px !important; font-weight: 600 !important;
   letter-spacing: .01em !important; text-transform: none !important;
-  border-width: 1px !important;
-  box-shadow: none !important;
+  border-width: 1px !important; box-shadow: none !important;
   transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
 }}
 .btn.btn-lg {{ padding: 16px 38px !important; font-size: 15px !important; }}
 .btn.btn-sm, .btn.btn-xs {{ padding: 9px 20px !important; font-size: 13px !important; }}
-.btn.btn-default, .btn-primary, input[type=submit] {{ background-color: {ACCENT} !important; border-color: {ACCENT} !important; color: #fff !important; }}
-.btn.btn-default:hover, .btn-primary:hover, input[type=submit]:hover {{ background-color: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important; transform: translateY(-1px); }}
-.btn.btn-transparent, .btn.btn-default.transparent, .btn.btn-default.white {{
-  color: {ACCENT} !important; border-color: rgba(109,18,38,.35) !important; background: transparent !important;
+.btn.btn-default, .btn-primary, input[type=submit] {{
+  background-color: {ACCENT} !important; border-color: {ACCENT} !important; color: #fff !important;
 }}
-.btn.btn-transparent:hover, .btn.btn-default.transparent:hover {{ color: #fff !important; background: {ACCENT} !important; border-color: {ACCENT} !important; }}
+.btn.btn-default:hover, .btn-primary:hover, input[type=submit]:hover {{
+  background-color: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important;
+  color: #fff !important; transform: translateY(-1px);
+}}
+.btn.btn-transparent, .btn.btn-default.transparent, .btn.btn-default.white {{
+  color: {INK} !important; border-color: rgba(241, 234, 227, .26) !important; background: transparent !important;
+}}
+.btn.btn-transparent:hover, .btn.btn-default.transparent:hover {{
+  color: #fff !important; background: {ACCENT} !important; border-color: {ACCENT} !important;
+}}
 
 /* --- карточки товара ---------------------------------------------------- */
 .catalog_block .item_block, .catalog_block .catalog_item_wrapp {{ background: transparent !important; border: 0 !important; }}
 .item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container {{
   background: {CARD} !important;
-  border: 0 !important;
+  border: 1px solid {LINE} !important;
   border-radius: 14px !important;
   padding: 14px 14px 20px !important;
-  box-shadow: 0 1px 2px rgba(36,26,26,.06), 0 8px 24px rgba(36,26,26,.05) !important;
-  transition: box-shadow .3s ease, transform .3s ease !important;
+  box-shadow: none !important;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease !important;
 }}
 .item_block:hover .catalog_item, .catalog_item_wrapp:hover .catalog_item {{
-  box-shadow: 0 20px 46px rgba(36,26,26,.13) !important;
+  border-color: rgba(168, 33, 60, .55) !important;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, .55) !important;
   transform: translateY(-3px);
 }}
 .catalog_item .image_wrapper_block, .product-item-image-wrapper {{
-  background: #fbf6ee !important; border-radius: 10px !important; overflow: hidden;
+  background: {TILE} !important; border-radius: 10px !important; overflow: hidden;
 }}
-.catalog_item .image_wrapper_block img {{ mix-blend-mode: normal; transition: transform .5s ease; }}
+.catalog_item .image_wrapper_block img {{ transition: transform .5s ease; }}
 .item_block:hover .image_wrapper_block img {{ transform: scale(1.03); }}
 .catalog_item .item-title, .product-item-title {{ margin-top: 14px !important; }}
 .item-title a, .product-item-title a {{ font-size: 18px !important; line-height: 1.28 !important; letter-spacing: -.01em; }}
-.catalog_item .article_block, .catalog_item .article, .item .article_block {{
-  color: rgba(36,26,26,.42) !important; font-size: 12px !important; letter-spacing: .02em;
-}}
 .catalog_item .price, .price_matrix_wrapper .price, .product-item-price-current, .price_value {{
   font-family: "Playfair Display", Georgia, serif !important;
   font-size: 24px !important; font-weight: 500 !important; color: {INK} !important;
 }}
-.price_measure, .item .price_measure {{ color: rgba(36,26,26,.45) !important; font-size: 13px !important; }}
 
-/* метки: цвет задан на вложенном элементе, поэтому целимся в него */
-.stickers > div, .sticker_wrapper > div {{ background: transparent !important; box-shadow: none !important; }}
-[class*="sticker_"], .stickers .sticker, .product-item-label-text {{
-  border-radius: 999px !important;
-  padding: 5px 13px !important;
-  font-family: Inter, sans-serif !important;
+/* метки: одна палитра вместо пёстрых плашек */
+.stickers .sticker, .product-item-label-text, .sticker_wrapper .sticker, .stickers > div {{
+  border-radius: 999px !important; padding: 5px 12px !important;
   font-size: 10px !important; font-weight: 600 !important;
   letter-spacing: .1em !important; text-transform: uppercase !important;
-  background: {ACCENT} !important; color: #fff !important;
-  box-shadow: none !important; border: 0 !important;
+  background: {ACCENT} !important; color: #fff !important; box-shadow: none !important;
 }}
-[class*="sticker_new"], [class*="sticker_novink"] {{ background: {GOLD} !important; color: #241a1a !important; }}
-[class*="sticker_sovetuem"], [class*="sticker_recommend"], [class*="sticker_hit"] {{ background: #3f2b28 !important; }}
-
-/* рейтинг-звёзды приглушаем: он почти везде пустой */
+.stickers .sticker.new, .sticker_wrapper .sticker.new {{ background: {GOLD} !important; color: #1a1211 !important; }}
+.stickers .sticker.recommend, .sticker_wrapper .sticker.recommend {{ background: #4a3330 !important; }}
 .catalog_item .rating, .item_block .rating, .votes_block {{ opacity: .35; }}
 
 /* --- карточка товара ---------------------------------------------------- */
 .detail .element_detail_wrapper, .detail_wrapper, .detail .price_block {{ background: transparent !important; }}
 .detail .prices_block .price_value, .detail .price_value {{ font-size: clamp(30px, 3vw, 44px) !important; }}
-.detail .img_wrapper, .detail .product-detail-gallery {{ background: #fbf6ee !important; border-radius: 16px !important; overflow: hidden; }}
-.detail .tabs .tab-list li a, .tabs_section .tab-list li a {{
-  font-family: Inter, sans-serif !important; font-size: 15px !important; letter-spacing: .01em;
-  text-transform: none !important;
+.detail .img_wrapper, .detail .product-detail-gallery, .detail .slides {{
+  background: {TILE} !important; border-radius: 16px !important; overflow: hidden;
 }}
-.tabs .tab-list li.active a, .tabs_section .tab-list li.active a {{ color: {ACCENT} !important; border-color: {ACCENT} !important; }}
-.detail .characteristic .props_list td, .props_list td {{ font-size: 15px !important; padding: 11px 0 !important; }}
+.detail .tabs .tab-list li a, .tabs_section .tab-list li a {{
+  font-family: Inter, sans-serif !important; font-size: 15px !important;
+  letter-spacing: .01em; text-transform: none !important;
+}}
+.tabs .tab-list li.active a, .tabs_section .tab-list li.active a {{
+  color: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important;
+}}
+.detail .characteristic .props_list td, .props_list td {{
+  font-size: 15px !important; padding: 11px 0 !important; border-color: {LINE} !important;
+}}
 
-/* --- фильтры, сортировка, хлебные крошки -------------------------------- */
+/* --- таблицы, фильтры, крошки ------------------------------------------- */
+table td, table th, .table > tbody > tr > td {{ border-color: {LINE} !important; }}
 .breadcrumbs, .bx-breadcrumb {{ font-size: 12px !important; letter-spacing: .03em; margin-bottom: 18px !important; }}
-.breadcrumbs a, .bx-breadcrumb a {{ color: rgba(36,26,26,.5) !important; }}
-.breadcrumbs a:hover, .bx-breadcrumb a:hover {{ color: {ACCENT} !important; }}
+.breadcrumbs a, .bx-breadcrumb a, .breadcrumbs span, .bx-breadcrumb span {{ color: {MUTED} !important; }}
+.breadcrumbs a:hover, .bx-breadcrumb a:hover {{ color: {ACCENT_HOVER} !important; }}
 .sort_header, .display_list, .filter_form, .smartfilter {{ font-size: 14px; }}
 .sort_header .sort_item, .filter_form .btn {{ border-radius: 999px !important; }}
-.sidebar .menu_top_block li a, .sidebar_menu li a {{ font-size: 15px !important; letter-spacing: 0; }}
+.sidebar .menu_top_block li a, .sidebar_menu li a, .left_block a {{ font-size: 15px !important; letter-spacing: 0; }}
+.left_block .internal_sections_list li.cur > a, .left_block .internal_sections_list li:hover > a {{ color: {ACCENT_HOVER} !important; }}
 
 /* --- формы -------------------------------------------------------------- */
 input[type="text"], input[type="tel"], input[type="email"], input[type="password"],
-textarea, select, .form-control, .input-group .form-control {{
+input[type="search"], input[type="number"], textarea, select, .form-control, .input-group .form-control {{
   border-radius: 10px !important;
-  border: 1px solid rgba(36,26,26,.14) !important;
-  background: #fff !important;
+  border: 1px solid {LINE} !important;
+  background: {FIELD} !important;
+  color: {INK} !important;
   padding: 12px 16px !important;
   font-family: Inter, sans-serif !important; font-size: 15px !important;
 }}
 input:focus, textarea:focus, select:focus, .form-control:focus {{
-  border-color: {ACCENT} !important; box-shadow: 0 0 0 3px rgba(109,18,38,.10) !important;
+  border-color: {ACCENT} !important; box-shadow: 0 0 0 3px rgba(168, 33, 60, .18) !important;
 }}
 
 /* --- подвал ------------------------------------------------------------- */
-.footer_inner, .footer-block, footer.footer {{ background: #1b1211 !important; color: rgba(255,255,255,.66) !important; }}
-.footer_inner a, footer.footer a {{ color: rgba(255,255,255,.78) !important; }}
+.footer_inner, .footer-block, footer.footer, .footer_bottom {{
+  background: #0e0a0a !important; color: {MUTED} !important;
+}}
+.footer_inner a, footer.footer a {{ color: rgba(241, 234, 227, .74) !important; }}
 .footer_inner a:hover, footer.footer a:hover {{ color: {GOLD} !important; }}
 .footer_inner .title, footer.footer .title, .footer_inner .bottom_block .title {{
   color: {GOLD} !important; font-family: Inter, sans-serif !important;
   font-size: 11px !important; letter-spacing: .16em !important; text-transform: uppercase !important;
 }}
-.footer_inner .bottom_inner, .copyright {{ border-top: 1px solid rgba(255,255,255,.10) !important; }}
-
-/* --- баннер на главной -------------------------------------------------- */
-.top_big_banners .main_info .text, .top_slider_wrapp .text {{ font-size: 17px !important; line-height: 1.6 !important; }}
-.top_big_banners .main_info .title, .top_slider_wrapp .title {{
-  font-family: "Playfair Display", Georgia, serif !important;
-  font-size: clamp(34px, 4vw, 58px) !important; line-height: 1.08 !important; font-weight: 500 !important;
-}}
+.footer_inner .bottom_inner, .copyright {{ border-top: 1px solid rgba(241, 234, 227, .08) !important; }}
 
 /* --- разделители и мелочи ----------------------------------------------- */
 hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color: {LINE} !important; }}
 .scroll-top, .fixed_menu, #mobilemenu .menu_item {{ border-radius: 999px; }}
-.wrap_icon .count, .basket_count, .icon_count {{ background: {ACCENT} !important; }}
+.wrap_icon .count, .basket_count, .icon_count {{ background: {ACCENT} !important; color: #fff !important; }}
+
+/* полоса прокрутки в тон */
+::-webkit-scrollbar {{ width: 11px; height: 11px; }}
+::-webkit-scrollbar-track {{ background: {GROUND}; }}
+::-webkit-scrollbar-thumb {{ background: #3a2c2a; border-radius: 999px; border: 3px solid {GROUND}; }}
+::-webkit-scrollbar-thumb:hover {{ background: {ACCENT_DEEP}; }}
 """
 
 
 LAYOUT = f"""
 
 /* ======================================================================
-   Сетка каталога и шапка. Разметка прежняя, меняется только раскладка.
+   Сетка каталога, шапка и баннер. Разметка прежняя, меняется раскладка.
    ====================================================================== */
 
-/* --- шапка: липкая, просторная, со стеклом ------------------------------ */
+/* --- шапка: липкая, тёмная, со стеклом ---------------------------------- */
 .header_wrap, .header-wrapper, header > .header-wrapper {{
   position: sticky !important; top: 0; z-index: 900;
-  background: rgba(255, 253, 250, .93) !important;
+  background: rgba(18, 13, 12, .92) !important;
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(36, 26, 26, .07), 0 12px 34px rgba(36, 26, 26, .06) !important;
+  box-shadow: 0 1px 0 rgba(241, 234, 227, .07), 0 14px 34px rgba(0, 0, 0, .45) !important;
   border-bottom: 0 !important;
 }}
-.header_wrap .logo_and_menu-row, .header-wrapper .logo_and_menu-row {{ min-height: 104px !important; background: transparent !important; }}
-.header_wrap .logo_and_menu-row > .maxwidth-theme,
-.header_wrap .logo_and_menu-row .container {{ padding-top: 12px; padding-bottom: 12px; }}
+.header_wrap .logo_and_menu-row, .header-wrapper .logo_and_menu-row,
+.header_wrap .menu-row, .header_wrap #header {{
+  background: transparent !important; border-color: {LINE} !important;
+}}
+.header_wrap .logo_and_menu-row {{ min-height: 104px !important; }}
+.header_wrap .line-row, .header-v1 .line-row, .top-block-item {{
+  background: #0e0a0a !important; color: {MUTED} !important;
+}}
 .logo img {{ transition: transform .3s ease; }}
 .logo:hover img {{ transform: scale(1.03); }}
 
-/* телефон и вход — крупнее и спокойнее */
-.header_wrap .phone a, .header_wrap .phone .no-decript,
-.header-wrapper .phone a, .header-wrapper .phone .no-decript {{
+/* телефон и вход */
+.header_wrap .phone a, .header_wrap .phone .no-decript {{
   font-family: Inter, sans-serif !important; font-size: 18px !important;
   font-weight: 600 !important; letter-spacing: -.01em; color: {INK} !important;
 }}
@@ -307,28 +352,22 @@ LAYOUT = f"""
 }}
 
 /* иконки: крупнее, с мягкой подложкой при наведении */
-.header_wrap .wrap_icon, .header_wrap .wrap_icon_block,
-.header-wrapper .wrap_icon, .header-wrapper .wrap_icon_block {{
+.header_wrap .wrap_icon, .header_wrap .wrap_icon_block {{
   width: 46px !important; height: 46px !important;
   border-radius: 999px !important; transition: background-color .2s ease;
 }}
-.header_wrap .wrap_icon:hover {{ background: rgba(109, 18, 38, .07) !important; }}
-.header_wrap svg, .header-wrapper svg {{ width: 22px !important; height: 22px !important; }}
-.header_wrap .count, .header_wrap .basket_count,
-.header-wrapper .count, .header-wrapper .basket_count {{
+.header_wrap .wrap_icon:hover {{ background: rgba(241, 234, 227, .08) !important; }}
+.header_wrap svg {{ width: 22px !important; height: 22px !important; }}
+.header_wrap .count, .header_wrap .basket_count {{
   min-width: 20px !important; height: 20px !important;
   border-radius: 999px !important; font-size: 11px !important; font-weight: 600 !important;
   background: {ACCENT} !important; color: #fff !important;
 }}
-
-/* кнопка каталога слева — заметнее */
 .header_wrap .burger, .header_wrap .menu-burger, .mega_fixed_menu_btn {{
   border-radius: 999px !important; padding: 11px 14px !important;
   transition: background-color .2s ease;
 }}
-.header_wrap .burger:hover, .header_wrap .menu-burger:hover {{ background: rgba(109, 18, 38, .07) !important; }}
-
-/* плавающая панель корзины сбоку — в тон */
+.header_wrap .burger:hover, .header_wrap .menu-burger:hover {{ background: rgba(241, 234, 227, .08) !important; }}
 .fixed_side_panel, .right_fixed_panel, .fix_menu {{ border-radius: 14px 0 0 14px !important; overflow: hidden; }}
 
 /* --- сетка каталога: крупные карточки ---------------------------------- */
@@ -336,8 +375,7 @@ LAYOUT = f"""
   .catalog_block.items.row {{
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 30px !important;
-    margin: 0 !important;
+    gap: 30px !important; margin: 0 !important;
   }}
   .catalog_block.items.row > [class*="col-"] {{
     width: 100% !important; max-width: none !important;
@@ -355,8 +393,6 @@ LAYOUT = f"""
     flex: none !important; padding: 0 !important; margin: 0 !important;
   }}
 }}
-
-/* карточки крупнее — увеличиваем изображение и типографику */
 @media (min-width: 768px) {{
   .item_block .catalog_item, .catalog_item_wrapp .catalog_item {{ padding: 18px 18px 24px !important; }}
   .catalog_item .image_wrapper_block {{ aspect-ratio: 1 / 1; display: grid; place-items: center; }}
@@ -365,40 +401,24 @@ LAYOUT = f"""
   .catalog_item .price, .price_value {{ font-size: 27px !important; }}
 }}
 
-/* строка заголовка раздела — больше воздуха */
+/* заголовок раздела и панель сортировки */
 .page-top, .section-content-wrapper > .page-top {{ padding: 40px 0 10px !important; }}
 .page-top .topic {{ margin-bottom: 6px !important; }}
-
-/* панель сортировки и фильтров — легче */
 .sort_header, .panel_sort, .display_wrapper {{
   background: transparent !important; border: 0 !important;
   border-bottom: 1px solid {LINE} !important; padding: 10px 0 18px !important;
 }}
 .sort_header .sort_item a, .sort_header a {{ font-size: 14px !important; }}
 
-/* карточка: без пустот, кнопка покупки видна сразу */
-.item_block .catalog_item, .catalog_item_wrapp .catalog_item {{ min-height: 0 !important; }}
-.catalog_item .inner_wrap {{ display: flex !important; flex-direction: column; height: 100%; }}
-.catalog_item .item_info {{ padding: 0 !important; min-height: 0 !important; margin-top: 14px !important; flex: 1 1 auto; }}
-.catalog_item .item_info > * {{ margin: 0 0 8px !important; }}
-.catalog_item .rating {{ margin-bottom: 4px !important; }}
-.catalog_item .cost.prices {{ margin: 6px 0 0 !important; }}
-.catalog_item .image_wrapper, .catalog_item .image_wrapper_block,
-.catalog_item .image_wrapper_block > a, .catalog_item .image_wrapper_block .thumb {{
-  width: 100% !important; max-width: none !important;
-}}
-
+/* кнопка покупки видна сразу, а не при наведении */
 .catalog_item .footer_button {{
-  display: block !important;
-  opacity: 1 !important; visibility: visible !important;
-  position: static !important; height: auto !important;
-  margin-top: 16px !important; padding: 0 !important;
-  transform: none !important; box-shadow: none !important; background: transparent !important;
+  display: block !important; opacity: 1 !important; visibility: visible !important;
+  position: static !important; height: auto !important; margin-top: 16px !important;
 }}
 .catalog_item .footer_button .counter_wrapp {{ display: flex !important; gap: 10px; align-items: center; }}
 .catalog_item .footer_button .btn {{ flex: 1 1 auto; justify-content: center; }}
 
-/* --- главный баннер: тёмная подложка, светлый текст --------------------- */
+/* --- главный баннер ----------------------------------------------------- */
 .top_slider_wrapp .slides > li .banner_title .section {{
   color: {GOLD} !important; letter-spacing: .18em !important; text-transform: uppercase !important;
 }}
@@ -406,18 +426,14 @@ LAYOUT = f"""
 .top_slider_wrapp .slides > li .banner_title {{ color: #fff !important; }}
 .top_slider_wrapp .slides > li .banner_text {{ color: rgba(255, 255, 255, .80) !important; }}
 .top_slider_wrapp .slides > li:before {{ display: none !important; }}
-
-/* продукт справа тянется по ширине ячейки, а не по своим пикселям */
 .top_slider_wrapp td.img img {{
   max-width: min(46vw, 720px) !important; height: auto !important;
 }}
-
-/* кнопка на тёмном — светлая */
 .top_slider_wrapp .banner_buttons .btn {{
-  background: #fff !important; border-color: #fff !important; color: {ACCENT} !important;
+  background: #fff !important; border-color: #fff !important; color: {ACCENT_DEEP} !important;
 }}
 .top_slider_wrapp .banner_buttons .btn:hover {{
-  background: {GOLD} !important; border-color: {GOLD} !important; color: #241a1a !important;
+  background: {GOLD} !important; border-color: {GOLD} !important; color: #1a1211 !important;
 }}
 """
 
