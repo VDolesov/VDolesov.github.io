@@ -394,6 +394,24 @@ hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color
 .scroll-top, .fixed_menu, #mobilemenu .menu_item {{ border-radius: 999px; }}
 .wrap_icon .count, .basket_count, .icon_count {{ background: {ACCENT} !important; color: #fff !important; }}
 
+/* --- то, что не поймал автоматический проход ---------------------------- */
+
+/* логотип нарисован тёмно-красным по светлому — на тёмной шапке пропадает */
+.logo svg .st0, .logo svg .st1, .logo svg path, .logo svg polygon {{ fill: {INK} !important; }}
+.logo svg {{ transition: opacity .25s ease; }}
+.logo:hover svg {{ opacity: .82; }}
+
+/* выезжающая корзина и мобильный фильтр остались белыми панелями */
+.basket_fly, .basket_fly .wrap_cont, .fly_basket, .basket_fly_wrapper,
+.scrollbar-filter, #mobilefilter {{
+  background: {PANEL} !important; color: {INK} !important;
+}}
+
+/* миниатюры галереи — та же тёплая плитка, что и под крупным фото */
+.product-detail-gallery li.bordered, .detail .thumbs li, .slides li.bordered {{
+  background: {TILE} !important; border-color: {LINE} !important;
+}}
+
 /* полоса прокрутки в тон */
 ::-webkit-scrollbar {{ width: 11px; height: 11px; }}
 ::-webkit-scrollbar-track {{ background: {GROUND}; }}

@@ -30,8 +30,8 @@ CAKE_W, CAKE_H = 1308, 880
 SOURCE = os.path.join(BUILD, "photos", "749.jpg")
 
 # бордо подложки: слева темнее — там лежит текст, справа теплее — там свет
-DARK = np.array([21, 9, 13], np.float32)
-DEEP = np.array([64, 16, 32], np.float32)
+DARK = np.array([28, 12, 18], np.float32)
+DEEP = np.array([78, 20, 40], np.float32)
 WARM = np.array([206, 142, 98], np.float32)
 
 
@@ -46,7 +46,7 @@ def backdrop():
 
     # софит за тортом
     glow = np.exp(-(((u - 0.66) / 0.34) ** 2 + ((v - 0.46) / 0.52) ** 2))
-    img += WARM * (glow ** 1.7)[..., None] * 0.47
+    img += WARM * (glow ** 1.6)[..., None] * 0.56
 
     # второй, слабый и холодный — чтобы левый край не был плоским
     side = np.exp(-(((u - 0.06) / 0.30) ** 2 + ((v - 0.30) / 0.70) ** 2))
@@ -58,7 +58,7 @@ def backdrop():
 
     # виньетка по краям кадра
     r = np.sqrt(((u - 0.5) / 0.62) ** 2 + ((v - 0.5) / 0.72) ** 2)
-    img *= np.clip(1.06 - 0.44 * r ** 2.0, 0, 1)[..., None]
+    img *= np.clip(1.06 - 0.36 * r ** 2.1, 0, 1)[..., None]
 
     # зерно, чтобы градиент не полосил на больших экранах
     rng = np.random.default_rng(11)

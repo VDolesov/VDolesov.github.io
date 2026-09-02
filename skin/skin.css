@@ -1388,6 +1388,24 @@ hr, .border, .item-separator, .top_block, .section-title-wrapper { border-color:
 .scroll-top, .fixed_menu, #mobilemenu .menu_item { border-radius: 999px; }
 .wrap_icon .count, .basket_count, .icon_count { background: #a8213c !important; color: #fff !important; }
 
+/* --- то, что не поймал автоматический проход ---------------------------- */
+
+/* логотип нарисован тёмно-красным по светлому — на тёмной шапке пропадает */
+.logo svg .st0, .logo svg .st1, .logo svg path, .logo svg polygon { fill: #f1eae3 !important; }
+.logo svg { transition: opacity .25s ease; }
+.logo:hover svg { opacity: .82; }
+
+/* выезжающая корзина и мобильный фильтр остались белыми панелями */
+.basket_fly, .basket_fly .wrap_cont, .fly_basket, .basket_fly_wrapper,
+.scrollbar-filter, #mobilefilter {
+  background: #1c1615 !important; color: #f1eae3 !important;
+}
+
+/* миниатюры галереи — та же тёплая плитка, что и под крупным фото */
+.product-detail-gallery li.bordered, .detail .thumbs li, .slides li.bordered {
+  background: #f6efe4 !important; border-color: rgba(241, 234, 227, .10) !important;
+}
+
 /* полоса прокрутки в тон */
 ::-webkit-scrollbar { width: 11px; height: 11px; }
 ::-webkit-scrollbar-track { background: #15100f; }
