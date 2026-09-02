@@ -32,6 +32,21 @@ PAGES = [
     ("contacts.html", "/contacts/"),
 ]
 
+DEMO_FIX = """
+<style>
+/* Только для этой демонстрации: вкладки «Новинка» и «Рекомендуем» и
+   всплывающая корзина подгружают содержимое запросом к сайту, а вне его
+   домена такой запрос не проходит. Чтобы не показывать пустую крутилку,
+   они здесь скрыты. На сервере всё работает штатно и прятать нечего. */
+li[data-code="NEW"], li[data-code="RECOMMEND"],
+.NEW_slides, .RECOMMEND_slides { display: none !important; }
+.basket_hover_block.loading_block,
+.loading_block_content { background-image: none !important; }
+.wrap_basket .basket_hover_block { display: none !important; }
+</style>
+"""
+
+
 PHOTO_SCRIPT = """
 <script>
 /* Фотографии обработанной серии подставляются по коду товара из ссылки.
@@ -66,6 +81,66 @@ PHOTO_SCRIPT = """
 """
 
 
+def unlazy(html):
+    """Раскрывает отложенную загрузку картинок.
+
+    В шаблоне настоящий адрес лежит в data-src (для фона — в data-bg), а в
+    src стоит заглушка-спиннер, которую подставляет скрипт. Вне исходного
+    домена этот скрипт не отрабатывает, поэтому подставляем адреса сразу.
+    """
+    def img(match):
+        tag = match.group(0)
+        real = re.search(r'data-src="([^"]+)"', tag)
+        if not real:
+            return tag
+        tag = re.sub(r'(?<![-\w])src="[^"]*"', f'src="{real.group(1)}"', tag, count=1)
+        if 'src="' not in tag:
+            tag = tag.replace("<img", f'<img src="{real.group(1)}"', 1)
+        return tag.replace(" lazy", "")
+
+    html = re.sub(r"<img[^>]*>", img, html)
+
+    def background(match):
+        tag = match.group(0)
+        real = re.search(r'data-bg="([^"]+)"', tag)
+        if not real:
+            return tag
+        tag = re.sub(r"url\('[^']*double_ring\.svg'\)", f"url('{real.group(1)}')", tag)
+        return tag.replace(" lazy", "")
+
+    return re.sub(r"<[a-z]+[^>]*data-bg=\"[^\"]+\"[^>]*>", background, html)
+
+
+def inline_deferred(html):
+    """Встраивает блоки, которые сайт догружает отдельным запросом.
+
+    На главной часть блоков (разделы каталога, вкладки товаров, карта)
+    помечена классом js-load-block и подгружается скриптом по адресу из
+    data-file. Вне исходного домена такой запрос не проходит, поэтому
+    содержимое запрашивается на этапе сборки и вставляется в страницу.
+    """
+    pattern = re.compile(r'<div[^>]*js-load-block[^>]*data-file="([^"]+)"[^>]*>')
+    for match in list(pattern.finditer(html)):
+        url = match.group(1)
+        try:
+            request = urllib.request.Request(
+                SITE + url,
+                headers={"User-Agent": "Mozilla/5.0",
+                         "X-Requested-With": "XMLHttpRequest",
+                         "Referer": SITE + "/"})
+            block = urllib.request.urlopen(request, timeout=45).read().decode("utf-8", "ignore")
+        except Exception as exc:
+            print(f"    блок {url}: {exc}")
+            continue
+
+        opening = match.group(0)
+        # блок больше не нужно догружать скриптом
+        clean = opening.replace(" js-load-block", "").replace(" loader_circle", "")
+        html = html.replace(opening, clean + block, 1)
+        print(f"    встроен блок {url.split('/')[-1]}")
+    return html
+
+
 def fetch(path):
     request = urllib.request.Request(SITE + path, headers={"User-Agent": "Mozilla/5.0"})
     return urllib.request.urlopen(request, timeout=60).read().decode("utf-8", "ignore")
@@ -78,6 +153,8 @@ def product_ids():
 
 def build_page(filename, path, ids):
     html = fetch(path)
+    html = inline_deferred(html)
+    html = unlazy(html)
 
     # ресурсы и ссылки продолжают работать с исходного домена
     html = html.replace("<head>", f'<head>\n<base href="{SITE}/">', 1)
@@ -90,7 +167,7 @@ def build_page(filename, path, ids):
     script = (PHOTO_SCRIPT.replace("%IDS%", json.dumps(ids))
                           .replace("%ORIGIN%", PAGES_ORIGIN)
                           .replace("%PAGE_ID%", match.group(1) if match else ""))
-    html = html.replace("</body>", script + "\n</body>", 1)
+    html = html.replace("</body>", script + DEMO_FIX + chr(10) + "</body>", 1)
 
     os.makedirs(OUT, exist_ok=True)
     with open(os.path.join(OUT, filename), "w", encoding="utf-8", newline="\n") as f:
