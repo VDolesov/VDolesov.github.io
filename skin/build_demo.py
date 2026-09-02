@@ -81,6 +81,19 @@ PHOTO_SCRIPT = """
 """
 
 
+BANNER = {
+    # главный баннер: стоковая съёмка заменена своей — подложка и продукт
+    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg",
+    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-cake.png",
+}
+
+
+def swap_banner(html):
+    for old, new in BANNER.items():
+        html = html.replace(old, PAGES_ORIGIN + new)
+    return html
+
+
 def unlazy(html):
     """Раскрывает отложенную загрузку картинок.
 
@@ -155,6 +168,7 @@ def build_page(filename, path, ids):
     html = fetch(path)
     html = inline_deferred(html)
     html = unlazy(html)
+    html = swap_banner(html)
 
     # ресурсы и ссылки продолжают работать с исходного домена
     html = html.replace("<head>", f'<head>\n<base href="{SITE}/">', 1)

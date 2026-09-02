@@ -397,6 +397,26 @@ LAYOUT = f"""
 }}
 .catalog_item .footer_button .counter_wrapp {{ display: flex !important; gap: 10px; align-items: center; }}
 .catalog_item .footer_button .btn {{ flex: 1 1 auto; justify-content: center; }}
+
+/* --- главный баннер: тёмная подложка, светлый текст --------------------- */
+.top_slider_wrapp .slides > li .banner_title .section {{
+  color: {GOLD} !important; letter-spacing: .18em !important; text-transform: uppercase !important;
+}}
+.top_slider_wrapp .slides > li .banner_title .head-title,
+.top_slider_wrapp .slides > li .banner_title {{ color: #fff !important; }}
+.top_slider_wrapp .slides > li .banner_text {{ color: rgba(255, 255, 255, .80) !important; }}
+.top_slider_wrapp .slides > li:before {{ display: none !important; }}
+
+/* продукт справа тянется по ширине ячейки, а не по своим пикселям */
+.top_slider_wrapp td.img img {{ max-width: 100% !important; height: auto !important; }}
+
+/* кнопка на тёмном — светлая */
+.top_slider_wrapp .banner_buttons .btn {{
+  background: #fff !important; border-color: #fff !important; color: {ACCENT} !important;
+}}
+.top_slider_wrapp .banner_buttons .btn:hover {{
+  background: {GOLD} !important; border-color: {GOLD} !important; color: #241a1a !important;
+}}
 """
 
 
