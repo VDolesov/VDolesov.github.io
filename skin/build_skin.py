@@ -270,6 +270,131 @@ hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color
 """
 
 
+LAYOUT = f"""
+
+/* ======================================================================
+   Сетка каталога и шапка. Разметка прежняя, меняется только раскладка.
+   ====================================================================== */
+
+/* --- шапка: липкая, просторная, со стеклом ------------------------------ */
+.header_wrap, .header-wrapper, header > .header-wrapper {{
+  position: sticky !important; top: 0; z-index: 900;
+  background: rgba(255, 253, 250, .93) !important;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(36, 26, 26, .07), 0 12px 34px rgba(36, 26, 26, .06) !important;
+  border-bottom: 0 !important;
+}}
+.header_wrap .logo_and_menu-row, .header-wrapper .logo_and_menu-row {{ min-height: 104px !important; background: transparent !important; }}
+.header_wrap .logo_and_menu-row > .maxwidth-theme,
+.header_wrap .logo_and_menu-row .container {{ padding-top: 12px; padding-bottom: 12px; }}
+.logo img {{ transition: transform .3s ease; }}
+.logo:hover img {{ transform: scale(1.03); }}
+
+/* телефон и вход — крупнее и спокойнее */
+.header_wrap .phone a, .header_wrap .phone .no-decript,
+.header-wrapper .phone a, .header-wrapper .phone .no-decript {{
+  font-family: Inter, sans-serif !important; font-size: 18px !important;
+  font-weight: 600 !important; letter-spacing: -.01em; color: {INK} !important;
+}}
+.header_wrap .phone_wrap .more_phone a {{ font-size: 15px !important; }}
+.header_wrap .personal-link, .header_wrap .auth_wr_inner a {{
+  font-size: 15px !important; font-weight: 500 !important;
+}}
+
+/* иконки: крупнее, с мягкой подложкой при наведении */
+.header_wrap .wrap_icon, .header_wrap .wrap_icon_block,
+.header-wrapper .wrap_icon, .header-wrapper .wrap_icon_block {{
+  width: 46px !important; height: 46px !important;
+  border-radius: 999px !important; transition: background-color .2s ease;
+}}
+.header_wrap .wrap_icon:hover {{ background: rgba(109, 18, 38, .07) !important; }}
+.header_wrap svg, .header-wrapper svg {{ width: 22px !important; height: 22px !important; }}
+.header_wrap .count, .header_wrap .basket_count,
+.header-wrapper .count, .header-wrapper .basket_count {{
+  min-width: 20px !important; height: 20px !important;
+  border-radius: 999px !important; font-size: 11px !important; font-weight: 600 !important;
+  background: {ACCENT} !important; color: #fff !important;
+}}
+
+/* кнопка каталога слева — заметнее */
+.header_wrap .burger, .header_wrap .menu-burger, .mega_fixed_menu_btn {{
+  border-radius: 999px !important; padding: 11px 14px !important;
+  transition: background-color .2s ease;
+}}
+.header_wrap .burger:hover, .header_wrap .menu-burger:hover {{ background: rgba(109, 18, 38, .07) !important; }}
+
+/* плавающая панель корзины сбоку — в тон */
+.fixed_side_panel, .right_fixed_panel, .fix_menu {{ border-radius: 14px 0 0 14px !important; overflow: hidden; }}
+
+/* --- сетка каталога: крупные карточки ---------------------------------- */
+@media (min-width: 1200px) {{
+  .catalog_block.items.row {{
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px !important;
+    margin: 0 !important;
+  }}
+  .catalog_block.items.row > [class*="col-"] {{
+    width: 100% !important; max-width: none !important;
+    flex: none !important; padding: 0 !important; margin: 0 !important;
+  }}
+}}
+@media (min-width: 768px) and (max-width: 1199px) {{
+  .catalog_block.items.row {{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px !important; margin: 0 !important;
+  }}
+  .catalog_block.items.row > [class*="col-"] {{
+    width: 100% !important; max-width: none !important;
+    flex: none !important; padding: 0 !important; margin: 0 !important;
+  }}
+}}
+
+/* карточки крупнее — увеличиваем изображение и типографику */
+@media (min-width: 768px) {{
+  .item_block .catalog_item, .catalog_item_wrapp .catalog_item {{ padding: 18px 18px 24px !important; }}
+  .catalog_item .image_wrapper_block {{ aspect-ratio: 1 / 1; display: grid; place-items: center; }}
+  .catalog_item .image_wrapper_block img {{ width: 100%; height: 100%; object-fit: cover; }}
+  .item-title a, .product-item-title a {{ font-size: 21px !important; }}
+  .catalog_item .price, .price_value {{ font-size: 27px !important; }}
+}}
+
+/* строка заголовка раздела — больше воздуха */
+.page-top, .section-content-wrapper > .page-top {{ padding: 40px 0 10px !important; }}
+.page-top .topic {{ margin-bottom: 6px !important; }}
+
+/* панель сортировки и фильтров — легче */
+.sort_header, .panel_sort, .display_wrapper {{
+  background: transparent !important; border: 0 !important;
+  border-bottom: 1px solid {LINE} !important; padding: 10px 0 18px !important;
+}}
+.sort_header .sort_item a, .sort_header a {{ font-size: 14px !important; }}
+
+/* карточка: без пустот, кнопка покупки видна сразу */
+.item_block .catalog_item, .catalog_item_wrapp .catalog_item {{ min-height: 0 !important; }}
+.catalog_item .inner_wrap {{ display: flex !important; flex-direction: column; height: 100%; }}
+.catalog_item .item_info {{ padding: 0 !important; min-height: 0 !important; margin-top: 14px !important; flex: 1 1 auto; }}
+.catalog_item .item_info > * {{ margin: 0 0 8px !important; }}
+.catalog_item .rating {{ margin-bottom: 4px !important; }}
+.catalog_item .cost.prices {{ margin: 6px 0 0 !important; }}
+.catalog_item .image_wrapper, .catalog_item .image_wrapper_block,
+.catalog_item .image_wrapper_block > a, .catalog_item .image_wrapper_block .thumb {{
+  width: 100% !important; max-width: none !important;
+}}
+
+.catalog_item .footer_button {{
+  display: block !important;
+  opacity: 1 !important; visibility: visible !important;
+  position: static !important; height: auto !important;
+  margin-top: 16px !important; padding: 0 !important;
+  transform: none !important; box-shadow: none !important; background: transparent !important;
+}}
+.catalog_item .footer_button .counter_wrapp {{ display: flex !important; gap: 10px; align-items: center; }}
+.catalog_item .footer_button .btn {{ flex: 1 1 auto; justify-content: center; }}
+"""
+
+
 def main():
     css = fetch_css()
     rules = recolor(css)
@@ -281,7 +406,7 @@ def main():
         f"   Правил перекраски: {len(rules)}. Собрано скриптом skin/build_skin.py */\n")
 
     body = ("\n/* --- перекраска фирменного акцента ------------------------------------ */\n"
-            + "\n".join(rules) + "\n" + MANUAL)
+            + "\n".join(rules) + "\n" + MANUAL + LAYOUT)
 
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(header + body)
