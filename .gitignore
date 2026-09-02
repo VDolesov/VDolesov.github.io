@@ -1,2 +1,4 @@
 build/preview/
 build/__pycache__/
+skin/demo/*.local.html
+skin/aspro.css
