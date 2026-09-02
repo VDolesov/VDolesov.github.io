@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Новое оформление сайта — демонстрация</title>
+<style>
+  :root { --accent:#8f1737; --ink:#241a1a; --paper:#faf6ef; --gold:#b08b4f; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+         font:16px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:900px; margin:0 auto; padding:70px 24px 90px; }
+  h1 { font-family:Georgia, serif; font-size:clamp(32px,5vw,52px); font-weight:500;
+       line-height:1.1; margin:0 0 18px; letter-spacing:-.02em; }
+  .lead { max-width:620px; color:rgba(36,26,26,.72); font-size:17px; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:44px 0 40px; }
+  .card { display:block; padding:26px 28px; background:#fff; border:1px solid rgba(36,26,26,.12);
+          border-radius:4px; text-decoration:none; color:inherit; transition:.25s; }
+  .card:hover { box-shadow:0 18px 40px rgba(36,26,26,.10); transform:translateY(-2px); }
+  .card b { display:block; font-family:Georgia,serif; font-size:21px; font-weight:500; margin-bottom:6px; }
+  .card span { color:rgba(36,26,26,.6); font-size:14px; }
+  table { width:100%; border-collapse:collapse; margin:30px 0 40px; font-size:15px; }
+  th, td { text-align:left; padding:12px 14px; border-bottom:1px solid rgba(36,26,26,.12); }
+  th { color:rgba(36,26,26,.5); font-weight:600; font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+  .sw { display:inline-block; width:13px; height:13px; border-radius:2px; margin-right:8px; vertical-align:-1px; }
+  .note { padding:22px 26px; background:#fff; border-left:3px solid var(--accent); border-radius:0 4px 4px 0; }
+  .note p { margin:0 0 10px; } .note p:last-child { margin:0; }
+  a.more { color:var(--accent); }
+  footer { margin-top:50px; padding-top:22px; border-top:1px solid rgba(36,26,26,.12);
+           color:rgba(36,26,26,.5); font-size:13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Новое оформление<br>действующего сайта</h1>
+  <p class="lead">Это страницы <b>mirsladostey164.ru</b> как есть — с той же вёрсткой,
+     теми же компонентами и адресами. Подключён только один файл стилей.
+     В правом нижнем углу каждой страницы переключатель «до/после».</p>
+
+  <div class="grid">
+    <a class="card" href="home.html"><b>Главная</b><span>Шапка, витрина, подвал</span></a>
+    <a class="card" href="catalog.html"><b>Раздел каталога</b><span>Торты: сетка карточек и фильтры</span></a>
+    <a class="card" href="product.html"><b>Карточка товара</b><span>Торт «Прага»: цена, состав, кнопки</span></a>
+    <a class="card" href="basket.html"><b>Корзина</b><span>Оформление и итоги</span></a>
+  </div>
+
+  <table>
+    <tr><th>Что</th><th>Было</th><th>Стало</th></tr>
+    <tr><td>Акцент</td>
+        <td><span class="sw" style="background:#f3103a"></span>#f3103a</td>
+        <td><span class="sw" style="background:#8f1737"></span>#8f1737 — винный</td></tr>
+    <tr><td>Фон страницы</td>
+        <td><span class="sw" style="background:#fff;border:1px solid #ddd"></span>белый</td>
+        <td><span class="sw" style="background:#faf6ef"></span>тёплая бумага</td></tr>
+    <tr><td>Заголовки</td><td>Montserrat</td><td>Playfair Display, антиква</td></tr>
+    <tr><td>Подвал</td><td>серый</td><td>тёплый тёмный с золотыми подписями</td></tr>
+    <tr><td>Карточки</td><td>плоские</td><td>мягкая тень, подъём при наведении</td></tr>
+    <tr><td>Фотографии</td><td>разнородные</td><td>единая серия, тёплый фон</td></tr>
+  </table>
+
+  <div class="note">
+    <p><b>Как это ставится на сайт.</b> Один файл <code>skin.css</code> кладётся
+       в шаблон и подключается последним. Вёрстка, компоненты и адреса не меняются —
+       значит ничего не ломается, а откат занимает минуту.</p>
+    <p>Подробности для разработчика — в
+       <a class="more" href="https://github.com/VDolesov/VDolesov.github.io/blob/main/skin/README.md">README скина</a>.</p>
+  </div>
+
+  <footer>Демонстрация оформления · «Мир сладостей», Саратов</footer>
+</div>
+</body>
+</html>
