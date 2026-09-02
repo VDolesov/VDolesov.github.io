@@ -523,6 +523,9 @@ LAYOUT = f"""
 .catalog_item .footer_button .btn {{ flex: 1 1 auto; justify-content: center; }}
 
 /* --- главный баннер ----------------------------------------------------- */
+/* внутри слайда лежит свой .wrapper_inner — он закрашивал подложку */
+.top_slider_wrapp .wrapper_inner, .top_big_banners .wrapper_inner,
+.top_slider_wrapp table, .top_slider_wrapp td {{ background: transparent !important; }}
 .top_slider_wrapp .slides > li .banner_title .section {{
   color: {GOLD} !important; letter-spacing: .18em !important; text-transform: uppercase !important;
 }}
