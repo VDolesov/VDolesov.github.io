@@ -408,7 +408,9 @@ LAYOUT = f"""
 .top_slider_wrapp .slides > li:before {{ display: none !important; }}
 
 /* продукт справа тянется по ширине ячейки, а не по своим пикселям */
-.top_slider_wrapp td.img img {{ max-width: 100% !important; height: auto !important; }}
+.top_slider_wrapp td.img img {{
+  max-width: min(46vw, 720px) !important; height: auto !important;
+}}
 
 /* кнопка на тёмном — светлая */
 .top_slider_wrapp .banner_buttons .btn {{
