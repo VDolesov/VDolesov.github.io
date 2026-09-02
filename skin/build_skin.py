@@ -396,6 +396,17 @@ hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color
 
 /* --- то, что не поймал автоматический проход ---------------------------- */
 
+/* метки на карточках: у шаблона они синяя, зелёная и фиолетовая */
+[class*="sticker_"] {{
+  border-radius: 999px !important; padding: 5px 12px !important;
+  font-size: 10px !important; font-weight: 600 !important;
+  letter-spacing: .1em !important; text-transform: uppercase !important;
+  background: {ACCENT} !important; color: #fff !important; box-shadow: none !important;
+}}
+[class*="sticker_novinka"], [class*="sticker_new"] {{ background: {GOLD} !important; color: #1a1211 !important; }}
+[class*="sticker_sovetuem"], [class*="sticker_recommend"] {{ background: #4a3330 !important; }}
+.stickers, .sticker_wrapper {{ background: transparent !important; }}
+
 /* логотип нарисован тёмно-красным по светлому — на тёмной шапке пропадает */
 .logo svg .st0, .logo svg .st1, .logo svg path, .logo svg polygon {{ fill: {INK} !important; }}
 .logo svg {{ transition: opacity .25s ease; }}
