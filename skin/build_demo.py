@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Демонстрация скина на реальных страницах сайта.
+"""Готовая версия сайта с новым оформлением.
 
-Берём страницы боевого сайта как есть, добавляем <base>, чтобы стили,
-скрипты и картинки грузились с исходного домена, и подключаем skin.css
-последним. Вёрстка не правится ни на символ — это и есть суть подхода.
+Страницы боевого сайта берутся как есть, добавляется <base>, чтобы стили,
+скрипты и картинки грузились с исходного домена, и подключается skin.css.
+Вёрстка не правится ни на символ — именно так это будет выглядеть после
+подключения файла на сервере.
 
-Дополнительно демо подменяет фотографии товаров на обработанную серию
-и показывает переключатель «до/после».
+Фотографии каталога подменяются обработанной серией: на живом сайте их
+загружают в карточки товаров, здесь подстановка сделана скриптом, чтобы
+результат было видно целиком.
 
     python skin/build_demo.py
 """
@@ -22,67 +24,42 @@ PAGES_ORIGIN = "https://vdolesov.github.io"
 OUT = os.path.join(HERE, "demo")
 
 PAGES = [
-    ("home.html", "/", "Главная"),
-    ("catalog.html", "/catalog/torty/", "Раздел каталога"),
-    ("product.html", "/catalog/torty/747/", "Карточка товара"),
-    ("basket.html", "/basket/", "Корзина"),
+    ("index.html", "/"),
+    ("catalog.html", "/catalog/torty/"),
+    ("pirogi.html", "/catalog/pirogi/"),
+    ("product.html", "/catalog/torty/747/"),
+    ("basket.html", "/basket/"),
+    ("contacts.html", "/contacts/"),
 ]
 
-PANEL = """
-<div id="skin-demo-panel">
-  <div class="skin-demo-panel__title">Оформление</div>
-  <label class="skin-demo-switch">
-    <input type="checkbox" id="skin-demo-toggle" checked>
-    <span></span>
-    <b>новое</b>
-  </label>
-  <div class="skin-demo-panel__links"><a href="index.html">← обзор</a>%LINKS%</div>
-  <p class="skin-demo-panel__note">Страница сайта как есть — меняется только подключённый CSS.</p>
-</div>
-<style>
-#skin-demo-panel {
-  position: fixed; z-index: 100000; right: 18px; bottom: 18px; width: 232px;
-  padding: 16px 18px; border-radius: 4px; background: #1b1211; color: #f0e6d8;
-  box-shadow: 0 20px 50px rgba(0,0,0,.35); font: 13px/1.5 system-ui, sans-serif;
-}
-.skin-demo-panel__title { color: #b08b4f; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
-.skin-demo-switch { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.skin-demo-switch input { position: absolute; opacity: 0; }
-.skin-demo-switch span { position: relative; width: 40px; height: 22px; border-radius: 11px; background: #4a3a38; transition: background .2s; }
-.skin-demo-switch span:after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .2s; }
-.skin-demo-switch input:checked + span { background: #8f1737; }
-.skin-demo-switch input:checked + span:after { transform: translateX(18px); }
-.skin-demo-switch b { font-weight: 600; }
-.skin-demo-panel__links { display: grid; gap: 5px; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.14); }
-.skin-demo-panel__links a { color: #e8d8c4; text-decoration: none; font-size: 12px; }
-.skin-demo-panel__links a:hover { color: #b08b4f; }
-.skin-demo-panel__links a.current { color: #b08b4f; }
-.skin-demo-panel__note { margin: 12px 0 0; color: rgba(240,230,216,.5); font-size: 11px; line-height: 1.4; }
-@media (max-width: 700px) { #skin-demo-panel { right: 10px; bottom: 10px; width: 190px; padding: 12px 14px; } }
-</style>
+PHOTO_SCRIPT = """
 <script>
+/* Фотографии обработанной серии подставляются по коду товара из ссылки.
+   На сервере этого скрипта не нужно: файлы загружаются в карточки товаров. */
 (function () {
-  var link = document.getElementById("skin-demo-css");
-  var toggle = document.getElementById("skin-demo-toggle");
-  toggle.addEventListener("change", function () {
-    link.disabled = !toggle.checked;
-    document.querySelectorAll("[data-skin-photo]").forEach(function (img) {
-      img.src = toggle.checked ? img.dataset.skinPhoto : img.dataset.skinOriginal;
-    });
-  });
-
-  // Фотографии обработанной серии подставляются по коду товара из ссылки.
   var ids = %IDS%;
+  var pageId = "%PAGE_ID%";
+
+  function swap(img, id) {
+    if (img.dataset.skinDone || img.closest(".stickers")) return;
+    img.dataset.skinDone = "1";
+    img.removeAttribute("srcset");
+    img.removeAttribute("data-src");
+    img.classList.remove("lazy");
+    img.src = "%ORIGIN%/assets/products/" + id + "-v7.webp";
+  }
+
+  // страница товара: главное изображение и миниатюры галереи
+  if (pageId) {
+    document.querySelectorAll(".detail img, .product-detail img, .slides img, .thumbs img")
+      .forEach(function (img) { swap(img, pageId); });
+  }
   document.querySelectorAll("a[href*='/catalog/']").forEach(function (a) {
     var m = a.getAttribute("href").match(/\\/catalog\\/[a-z_]+\\/(\\d+)\\//);
     if (!m || ids.indexOf(m[1]) === -1) return;
-    var card = a.closest(".catalog_item, .product-item-container, .item_block, .catalog_item_wrapp");
-    var img = card && card.querySelector("img");
-    if (!img || img.dataset.skinPhoto) return;
-    img.dataset.skinOriginal = img.getAttribute("src") || "";
-    img.dataset.skinPhoto = "%ORIGIN%/assets/products/" + m[1] + "-v7.webp";
-    img.removeAttribute("srcset");
-    img.src = img.dataset.skinPhoto;
+    var card = a.closest(".catalog_item, .product-item-container, .item_block, .catalog_item_wrapp, .detail");
+    if (!card) return;
+    card.querySelectorAll("img").forEach(function (img) { swap(img, m[1]); });
   });
 })();
 </script>
@@ -105,30 +82,26 @@ def build_page(filename, path, ids):
     # ресурсы и ссылки продолжают работать с исходного домена
     html = html.replace("<head>", f'<head>\n<base href="{SITE}/">', 1)
 
-    # скин подключается последним — как это и будет на сайте
-    skin = (f'\n<link id="skin-demo-css" rel="stylesheet" '
-            f'href="{PAGES_ORIGIN}/skin/skin.css">\n</head>')
-    html = html.replace("</head>", skin, 1)
+    # оформление подключается последним — как это и будет на сервере
+    link = f'\n<link rel="stylesheet" href="{PAGES_ORIGIN}/skin/skin.css">\n</head>'
+    html = html.replace("</head>", link, 1)
 
-    links = ""
-    for name, _, title in PAGES:
-        current = ' class="current"' if name == filename else ""
-        links += f'<a href="{name}"{current}>{title}</a>'
-    panel = (PANEL.replace("%LINKS%", links)
-                  .replace("%IDS%", json.dumps(ids))
-                  .replace("%ORIGIN%", PAGES_ORIGIN))
-    html = html.replace("</body>", panel + "\n</body>", 1)
+    match = re.search(r"/catalog/[a-z_]+/(\d+)/", path)
+    script = (PHOTO_SCRIPT.replace("%IDS%", json.dumps(ids))
+                          .replace("%ORIGIN%", PAGES_ORIGIN)
+                          .replace("%PAGE_ID%", match.group(1) if match else ""))
+    html = html.replace("</body>", script + "\n</body>", 1)
 
     os.makedirs(OUT, exist_ok=True)
     with open(os.path.join(OUT, filename), "w", encoding="utf-8", newline="\n") as f:
         f.write(html)
-    print(f"  {filename} ← {path}")
+    print(f"  {filename} <- {path}")
 
 
 def main():
     ids = product_ids()
-    print("страницы демонстрации:")
-    for filename, path, _ in PAGES:
+    print("страницы:")
+    for filename, path in PAGES:
         try:
             build_page(filename, path, ids)
         except Exception as exc:
