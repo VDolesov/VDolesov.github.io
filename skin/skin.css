@@ -2,6 +2,9 @@
    Подключается последним, поверх шаблона Aspro Максимум.
    Вёрстка и логика сайта не меняются: только цвет, шрифты и фон.
    Правил перекраски: 260. Собрано скриптом skin/build_skin.py */
+/* Шрифты подключаются первой строкой: правило @import
+   действует только до первых стилей, ниже по файлу браузер его отбрасывает. */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap");
 
 /* --- перекраска фирменного акцента ------------------------------------ */
 /* End */ /* Start:/bitrix/templates/aspro_max/themes/custom_s1/theme.min.css?167750551450389*/ .colored_theme_bg,.colored_theme_bg_before:before,.colored_theme_hover_bg_before:hover:before,.colored_theme_bg_before:before,.colored_theme_hover_bg:hover,.colored_theme_hover_bg-block:hover .colored_theme_hover_bg-el,.video-block .image .play:after,.landings-list__item--active,.item-accordion-wrapper.opened .accordion-head:before{background-color:#6d1226;border-color:#6d1226}
@@ -270,7 +273,6 @@ footer .info .subscribe_button .btn:hover{background-color:#8a1f36;border-color:
    Разметка не меняется — только оформление поверх шаблона.
    ====================================================================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap");
 
 /* --- основа ------------------------------------------------------------ */
 body, .wrapper1, .wrapper_inner { background: #faf6ef; color: #241a1a; }
