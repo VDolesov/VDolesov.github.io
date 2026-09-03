@@ -83,8 +83,8 @@ PHOTO_SCRIPT = """
 
 BANNER = {
     # главный баннер: стоковая съёмка заменена своей — подложка и продукт
-    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg",
-    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-cake.png",
+    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=3",
+    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-cake.png?v=3",
 }
 
 
