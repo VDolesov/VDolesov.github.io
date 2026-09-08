@@ -6,7 +6,7 @@
 что и на сайте, поэтому меняются только файлы:
 
     assets/hero-bg.jpg    2400x1060  подложка
-    assets/hero-cake.png  1308x880   торт, снизу уходящий в темноту
+    assets/hero-cake.png  1308x880   торт «Прага», снизу уходящий в темноту
 
 Подложка намеренно тихая: почти чёрное вино с одним приглушённым источником
 света сверху справа. Яркий софит превращал вырез в наклейку — продукт висел
@@ -32,7 +32,7 @@ from photos import cutout  # noqa: E402  — переиспользуем выр
 
 BG_W, BG_H = 2400, 1060
 CAKE_W, CAKE_H = 1308, 880
-SOURCE = os.path.join(BUILD, "photos", "749.jpg")
+SOURCE = os.path.join(BUILD, "photos", "747.jpg")
 
 # почти чёрное вино; светлее — только там, где падает свет
 DARK = np.array([18, 10, 13], np.float32)
@@ -91,8 +91,8 @@ def relight(im):
 
     # придерживаем пересветы
     rgb = a[..., :3]
-    top = np.clip((rgb - 196) / 59.0, 0, 1)
-    rgb -= top * 30.0
+    top = np.clip((rgb - 172) / 83.0, 0, 1)
+    rgb -= top * 46.0
     a[..., :3] = np.clip(rgb, 0, 255)
 
     return Image.fromarray(a.astype(np.uint8), "RGBA")
