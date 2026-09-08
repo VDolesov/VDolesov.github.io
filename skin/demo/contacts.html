@@ -20,7 +20,7 @@
 <script src="/bitrix/js/main/core/core.min.js?1611311608252123"></script>
 <script>BX.setJSList(['/bitrix/js/main/core/core_ajax.js','/bitrix/js/main/core/core_promise.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/loadext/loadext.js','/bitrix/js/main/loadext/extension.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/includes/js/includes.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/ui/polyfill/closest/js/closest.js','/bitrix/js/main/polyfill/fill/main.polyfill.fill.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/core/core.js','/bitrix/js/main/polyfill/intersectionobserver/js/intersectionobserver.js','/bitrix/js/main/lazyload/dist/lazyload.bundle.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/parambag/dist/parambag.bundle.js']);
 BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dist/lazyload.bundle.css','/bitrix/js/main/parambag/dist/parambag.bundle.css']);</script>
-<script>(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'10800','SITE_ID':'s1','SITE_DIR':'/','USER_ID':'','SERVER_TIME':'1788858367','USER_TZ_OFFSET':'3600','USER_TZ_AUTO':'Y','bitrix_sessid':'413ff13785038dfffde3755f591b9a6f'});</script>
+<script>(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'10800','SITE_ID':'s1','SITE_DIR':'/','USER_ID':'','SERVER_TIME':'1788859267','USER_TZ_OFFSET':'3600','USER_TZ_AUTO':'Y','bitrix_sessid':'ed1abb82d47ff36630be5e2b4bac074f'});</script>
 
 <script  src="/bitrix/cache/js/s1/aspro_max/kernel_main/kernel_main_v1.js?1782284679179526"></script>
 <script  src="/bitrix/cache/js/s1/aspro_max/kernel_main_polyfill_customevent/kernel_main_polyfill_customevent_v1.js?17822093351051"></script>
@@ -78,7 +78,7 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 <script  src="/bitrix/cache/js/s1/aspro_max/template_06cd0198cb10009eae4cf545a63e4da3/template_06cd0198cb10009eae4cf545a63e4da3_v1.js?1782209341795426"></script>
 <script  src="/bitrix/cache/js/s1/aspro_max/page_062c2516638da10203b83cf0e8489bc3/page_062c2516638da10203b83cf0e8489bc3_v1.js?17822508822171"></script>
 <script>var _ba = _ba || []; _ba.push(["aid", "ad3db4bedb44825186b8a1a5fda1b2ec"]); _ba.push(["host", "www.mirsladostey164.ru"]); (function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
-<script>new Image().src='https://mirsladostey164.ru/bitrix/spread.php?s=QklUUklYX1NNX1NBTEVfVUlEATliYzg3NzkwMGM3OWQ3NTAyMWRlMjYyNTgxYzEwZTg4ATE4MTk5NjIzNjcBLwEBAQI%3D&k=754cbe2f19beb181481075c01af0562b';
+<script>new Image().src='https://mirsladostey164.ru/bitrix/spread.php?s=QklUUklYX1NNX1NBTEVfVUlEATM3YWQ5Y2IzZGQ3Zjk4NDlkNzI4ODIwZmUzYjA5MmZjATE4MTk5NjMyNjcBLwEBAQI%3D&k=ea1187112de1d56b25833e1ad2c98786';
 </script>
 
 			
@@ -1405,6 +1405,20 @@ function BXMapYandexAfterShow(mapId)
     if (!card) return;
     card.querySelectorAll("img").forEach(function (img) { swap(img, m[1]); });
   });
+
+  // разделы на главной: вместо миниатюр 90x90 — наша серия
+  var sections = {"torty": "749", "pirogi": "801", "vypechka": "746", "pirozhnye_i_deserty": "757", "pechene": "753", "salaty": "765", "vtorye_blyuda": "770", "polufabrikaty": "760", "napitki": "763"};
+  document.querySelectorAll(".cat_sections a.thumb, .sections_wrapper a.thumb")
+    .forEach(function (a) {
+      var m = (a.getAttribute("href") || "").match(/\/catalog\/([a-z_]+)\/$/);
+      if (!m || !sections[m[1]]) return;
+      var img = a.querySelector("img");
+      if (!img) return;
+      img.removeAttribute("srcset");
+      img.removeAttribute("data-src");
+      img.classList.remove("lazy");
+      img.src = "https://vdolesov.github.io/assets/products/" + sections[m[1]] + "-v7.webp";
+    });
 })();
 </script>
 
