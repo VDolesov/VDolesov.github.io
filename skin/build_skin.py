@@ -818,14 +818,16 @@ body .search-button-div .btn, body .search-button-div button {{
   overflow: hidden; background: transparent !important;
 }}
 .counter_block .minus, .counter_block .plus {{
-  width: 42px !important; height: auto !important; padding: 0 !important;
+  width: 42px !important; flex: 0 0 42px !important;
+  height: auto !important; padding: 0 !important;
   display: flex !important; align-items: center !important; justify-content: center !important;
   background: transparent !important; border: 0 !important; cursor: pointer;
   color: {MUTED} !important; transition: color .2s ease;
 }}
 .counter_block .minus:hover, .counter_block .plus:hover {{ color: {INK} !important; }}
 .counter_block input.text, .counter_block .text, .counter_block input {{
-  width: 54px !important; height: auto !important; padding: 0 !important;
+  width: 54px !important; flex: 0 0 54px !important;
+  height: auto !important; padding: 0 !important;
   text-align: center !important; border: 0 !important; border-radius: 0 !important;
   background: transparent !important; color: {INK} !important;
   font-family: Inter, sans-serif !important; font-size: 16px !important; font-weight: 600 !important;
@@ -833,8 +835,8 @@ body .search-button-div .btn, body .search-button-div button {{
 }}
 .counter_block input:focus {{ box-shadow: none !important; }}
 .catalog_item .counter_block {{ height: 46px !important; }}
-.catalog_item .counter_block .minus, .catalog_item .counter_block .plus {{ width: 34px !important; }}
-.catalog_item .counter_block input {{ width: 40px !important; font-size: 15px !important; }}
+.catalog_item .counter_block .minus, .catalog_item .counter_block .plus {{ width: 34px !important; flex: 0 0 34px !important; }}
+.catalog_item .counter_block input {{ width: 40px !important; flex: 0 0 40px !important; font-size: 15px !important; }}
 
 /* --- одна форма для всех мелких подписей -------------------------------- */
 .top_block .title_wrapper > .muted, .section-subtitle,
