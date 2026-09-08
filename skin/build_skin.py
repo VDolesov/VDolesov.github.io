@@ -769,6 +769,89 @@ body .cat_sections.cat_sections .item.compact .name a {{
 .top_slider_wrapp .banner_buttons .btn:hover {{
   background: {GOLD} !important; border-color: {GOLD} !important; color: #1a1211 !important;
 }}
+
+/* ======================================================================
+   Единый стиль: подписи, кнопки, счётчик, поля.
+
+   Отступы кнопок и полей заданы выше одним правилом на все `.btn` и все
+   `input`. Шаблон теми же классами размечает кнопки-значки, счётчик
+   количества и поиск — им общие отступы ломают выравнивание. Ниже эти
+   случаи выделены отдельно; правила идут последними, поэтому побеждают.
+   ====================================================================== */
+
+/* --- кнопки только со значком: квадрат, значок по центру ---------------- */
+.btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn,
+.btn.btn-search, button.btn-search, .top-btn, .btn.subscribe,
+.btn[class*="icon_"], .btn.close {{
+  width: 42px !important; height: 42px !important;
+  min-width: 0 !important; max-width: none !important;
+  padding: 0 !important; line-height: 1 !important;
+  display: inline-flex !important; align-items: center !important; justify-content: center !important;
+  border-radius: 999px !important;
+  border: 1px solid {LINE} !important; background: transparent !important;
+  transition: border-color .2s ease, background-color .2s ease;
+}}
+.btn.wish_item:hover, .btn.compare_item:hover, .btn.btn-search:hover, .top-btn:hover {{
+  border-color: {ACCENT} !important; background: rgba(168, 33, 60, .10) !important;
+}}
+.catalog_item .btn.wish_item, .catalog_item .btn.compare_item,
+.catalog_item .wish_item.btn, .catalog_item .compare_item.btn {{
+  width: 36px !important; height: 36px !important;
+}}
+.btn.wish_item svg, .btn.compare_item svg, .btn.btn-search svg {{
+  width: 17px !important; height: 17px !important; margin: 0 !important;
+}}
+/* кнопка поиска сидит внутри поля, а не рядом с ним */
+.search-button-div {{ right: 6px !important; left: auto !important; }}
+
+/* --- счётчик количества: одна деталь, а не три разных ------------------- */
+.counter_wrapp .counter_block, .counter_block.md, .counter_block {{
+  display: inline-flex !important; align-items: stretch !important;
+  height: 54px !important; padding: 0 !important;
+  border: 1px solid {LINE} !important; border-radius: 999px !important;
+  overflow: hidden; background: transparent !important;
+}}
+.counter_block .minus, .counter_block .plus {{
+  width: 42px !important; height: auto !important; padding: 0 !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  background: transparent !important; border: 0 !important; cursor: pointer;
+  color: {MUTED} !important; transition: color .2s ease;
+}}
+.counter_block .minus:hover, .counter_block .plus:hover {{ color: {INK} !important; }}
+.counter_block input.text, .counter_block .text, .counter_block input {{
+  width: 54px !important; height: auto !important; padding: 0 !important;
+  text-align: center !important; border: 0 !important; border-radius: 0 !important;
+  background: transparent !important; color: {INK} !important;
+  font-family: Inter, sans-serif !important; font-size: 16px !important; font-weight: 600 !important;
+  box-shadow: none !important;
+}}
+.counter_block input:focus {{ box-shadow: none !important; }}
+.catalog_item .counter_block {{ height: 46px !important; }}
+.catalog_item .counter_block .minus, .catalog_item .counter_block .plus {{ width: 34px !important; }}
+.catalog_item .counter_block input {{ width: 40px !important; font-size: 15px !important; }}
+
+/* --- одна форма для всех мелких подписей -------------------------------- */
+.top_block .title_wrapper > .muted, .section-subtitle,
+.char-side__title, .ordered-block__title--small,
+.footer_inner .title, footer.footer .title,
+.top_slider_wrapp .slides > li .banner_title .section {{
+  font-family: Inter, sans-serif !important;
+  font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: .14em !important; text-transform: uppercase !important;
+  color: {GOLD} !important;
+}}
+.char-side__title {{ margin-bottom: 16px !important; }}
+
+/* артикул и единица измерения — тихая служебная строка */
+.article_block, .article, .price_measure, .item .article_block {{
+  font-family: Inter, sans-serif !important;
+  font-size: 12px !important; letter-spacing: .04em !important;
+  color: {MUTED} !important; text-transform: none !important;
+}}
+
+/* --- пустой рейтинг не притворяется оценкой ----------------------------- */
+.catalog_item .rating, .item_block .rating, .votes_block,
+.product-info-headnote .rating {{ opacity: .3; }}
 """
 
 
