@@ -537,6 +537,9 @@ LAYOUT = f"""
 
 /* --- карточка товара --------------------------------------------------- */
 
+/* окно «поделиться» вылезает за правый край; clip не ломает липкую шапку */
+.wrapper1 {{ overflow-x: clip; }}
+
 /* колонки: галерея крупнее блока покупки */
 @media (min-width: 992px) {{
   body .product-info .flexbox--row > .product-detail-gallery {{
@@ -563,6 +566,7 @@ body .product-detail-gallery .product-detail-gallery__slider .owl-item:not(.acti
   display: none !important;
 }}
 body .product-detail-gallery .product-detail-gallery__item {{
+  width: 100% !important; height: auto !important;
   aspect-ratio: 1 / 1; background: {TILE} !important;
   border-radius: 16px !important; overflow: hidden;
   display: grid !important; place-items: center; margin: 0 !important;
