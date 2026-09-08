@@ -566,7 +566,7 @@ body .product-detail-gallery .product-detail-gallery__slider .owl-item:not(.acti
   display: none !important;
 }}
 body .product-detail-gallery .product-detail-gallery__item {{
-  width: 100% !important; height: auto !important;
+  width: 100% !important; height: auto !important; max-width: none !important;
   aspect-ratio: 1 / 1; background: {TILE} !important;
   border-radius: 16px !important; overflow: hidden;
   display: grid !important; place-items: center; margin: 0 !important;
@@ -643,6 +643,17 @@ body .product-chars .properties__title {{
 }}
 body .product-chars .properties__value {{
   font-size: 14px !important; line-height: 1.55; text-align: left !important;
+}}
+
+/* на телефоне подпись характеристики встаёт над значением */
+@media (max-width: 600px) {{
+  body .product-chars .properties__item {{
+    grid-template-columns: 1fr !important; gap: 3px 0; padding: 12px 0 !important;
+  }}
+  body .product-chars .properties__title {{
+    font-size: 11px !important; letter-spacing: .08em; text-transform: uppercase;
+  }}
+  body .product-main .product-chars {{ margin-top: 22px !important; padding-top: 22px !important; }}
 }}
 
 /* вкладки внизу: плашки в рамке → простые заголовки с подчёркиванием */
