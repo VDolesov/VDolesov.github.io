@@ -1525,6 +1525,147 @@ hr, .border, .item-separator, .top_block, .section-title-wrapper { border-color:
 .catalog_item .footer_button .btn { flex: 1 1 auto; justify-content: center; }
 
 
+
+/* --- карточка товара --------------------------------------------------- */
+
+/* колонки: галерея крупнее блока покупки */
+@media (min-width: 992px) {
+  body .product-info .flexbox--row > .product-detail-gallery {
+    flex: 0 0 54% !important; max-width: 54% !important;
+  }
+  body .product-info .flexbox--row > .product-main {
+    flex: 0 0 46% !important; max-width: 46% !important; padding-left: 46px !important;
+  }
+}
+
+/* галерея во всю колонку и в квадрат: было 450 px в колонке на 645 */
+body .product-detail-gallery .product-detail-gallery__container { width: 100% !important; }
+body .product-detail-gallery .product-detail-gallery__slider {
+  width: 100% !important; max-width: none !important;
+}
+body .product-detail-gallery .product-detail-gallery__slider .owl-stage-outer { width: 100% !important; }
+body .product-detail-gallery .product-detail-gallery__slider .owl-stage {
+  width: 100% !important; transform: none !important; transition: none !important;
+}
+body .product-detail-gallery .product-detail-gallery__slider .owl-item {
+  width: 100% !important; margin: 0 !important; float: none !important;
+}
+body .product-detail-gallery .product-detail-gallery__slider .owl-item:not(.active) {
+  display: none !important;
+}
+body .product-detail-gallery .product-detail-gallery__item {
+  aspect-ratio: 1 / 1; background: #f6efe4 !important;
+  border-radius: 16px !important; overflow: hidden;
+  display: grid !important; place-items: center; margin: 0 !important;
+}
+body .product-detail-gallery .product-detail-gallery__link {
+  display: block !important; width: 100% !important; height: 100% !important;
+}
+body .product-detail-gallery .product-detail-gallery__picture {
+  width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important; object-fit: cover;
+}
+
+/* миниатюры — ряд квадратов вместо полоски в 26 px */
+body .product-detail-gallery__thmb-inner {
+  display: flex !important; flex-wrap: wrap; gap: 10px;
+  justify-content: flex-start; margin-top: 14px !important;
+}
+body .product-detail-gallery__thmb-inner > * {
+  width: 78px !important; height: 78px !important; margin: 0 !important;
+  border-radius: 10px !important; overflow: hidden;
+  background: #f6efe4 !important; border: 1px solid rgba(241, 234, 227, .10) !important;
+  transition: border-color .2s ease;
+}
+body .product-detail-gallery__thmb-inner > *:hover,
+body .product-detail-gallery__thmb-inner > .active { border-color: #a8213c !important; }
+body .product-detail-gallery__thmb-inner img {
+  width: 100% !important; height: 100% !important; object-fit: cover;
+}
+
+/* правая колонка: цена и покупка сверху, характеристики под ними */
+body .product-main .flexbox--row { display: block !important; }
+body .product-main .product-action.flex-50,
+body .product-main .product-chars.flex-50 {
+  width: 100% !important; max-width: none !important; flex: none !important;
+  padding-left: 0 !important; padding-right: 0 !important;
+}
+body .product-main .product-chars {
+  margin-top: 28px !important; padding-top: 26px !important;
+  border-top: 1px solid rgba(241, 234, 227, .10) !important;
+}
+body .product-main .char-side { width: 100% !important; }
+
+/* цена крупная, единица измерения тихая */
+body .detail .prices_block .price_value { font-size: clamp(34px, 3.4vw, 48px) !important; }
+body .detail .prices_block .price_currency { font-size: 26px !important; }
+body .detail .prices_block .price_measure { font-size: 14px !important; margin-left: 8px; }
+body .detail .prices_block { margin-bottom: 22px !important; }
+
+/* кнопка покупки — во всю ширину колонки */
+body .detail .buy_block .counter_wrapp {
+  display: flex !important; gap: 14px; align-items: stretch; flex-wrap: nowrap;
+}
+body .detail .buy_block .counter_block_inner { flex: 0 0 auto; }
+body .detail .buy_block .btn {
+  flex: 1 1 auto; justify-content: center;
+  padding: 16px 30px !important; font-size: 15px !important;
+}
+
+/* характеристики: две колонки с волосяной линией вместо плотного списка */
+body .char-side__title {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 21px !important; font-weight: 500 !important;
+  margin-bottom: 14px !important; text-transform: none !important;
+}
+body .product-chars .properties__item {
+  display: grid !important; grid-template-columns: 148px 1fr; gap: 0 20px;
+  padding: 11px 0 !important; margin: 0 !important;
+  border-bottom: 1px solid rgba(241, 234, 227, .10) !important;
+}
+body .product-chars .properties__item:last-child { border-bottom: 0 !important; }
+body .product-chars .properties__hr { display: none !important; }
+body .product-chars .properties__title {
+  color: rgba(241, 234, 227, .52) !important; font-size: 14px !important; line-height: 1.5;
+}
+body .product-chars .properties__value {
+  font-size: 14px !important; line-height: 1.55; text-align: left !important;
+}
+
+/* вкладки внизу: плашки в рамке → простые заголовки с подчёркиванием */
+body .bottom-info .tabs .nav-tabs {
+  border-bottom: 1px solid rgba(241, 234, 227, .10) !important; display: flex !important;
+  flex-wrap: wrap; gap: 2px; margin-bottom: 0 !important;
+}
+body .bottom-info .tabs .nav-tabs > li {
+  background: transparent !important; border: 0 !important;
+  border-radius: 0 !important; margin: 0 !important;
+}
+body .bottom-info .tabs .nav-tabs > li > a {
+  padding: 15px 20px !important; border: 0 !important; border-radius: 0 !important;
+  background: transparent !important; font-size: 15px !important;
+  color: rgba(241, 234, 227, .52) !important; box-shadow: none !important;
+}
+body .bottom-info .tabs .nav-tabs > li:hover > a { color: #f1eae3 !important; }
+body .bottom-info .tabs .nav-tabs > li.active > a {
+  color: #f1eae3 !important; box-shadow: inset 0 -2px 0 #a8213c !important;
+}
+body .bottom-info .tab-content > .tab-pane > .bordered {
+  border: 0 !important; background: transparent !important;
+  padding: 28px 0 0 !important; border-radius: 0 !important;
+}
+body .bottom-info .ordered-block__title {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 26px !important; font-weight: 500 !important; text-transform: none !important;
+}
+
+/* боковой блок обратной связи — карточка в тон */
+body .bottom-info-wrapper .side-block {
+  background: #221b19 !important; border: 1px solid rgba(241, 234, 227, .10) !important;
+  border-radius: 14px !important; overflow: hidden;
+}
+body .bottom-info-wrapper .side-block__bottom { border-top: 1px solid rgba(241, 234, 227, .10) !important; }
+
 /* --- разделы на главной: карусель мелких квадратиков → сетка плиток ----- */
 body .cat_sections.cat_sections .owl-stage-outer { overflow: visible !important; }
 body .cat_sections.cat_sections .owl-stage {
