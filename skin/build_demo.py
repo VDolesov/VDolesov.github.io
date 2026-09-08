@@ -76,9 +76,37 @@ PHOTO_SCRIPT = """
     if (!card) return;
     card.querySelectorAll("img").forEach(function (img) { swap(img, m[1]); });
   });
+
+  // разделы на главной: вместо миниатюр 90x90 — наша серия
+  var sections = %SECTIONS%;
+  document.querySelectorAll(".cat_sections a.thumb, .sections_wrapper a.thumb")
+    .forEach(function (a) {
+      var m = (a.getAttribute("href") || "").match(/\/catalog\/([a-z_]+)\/$/);
+      if (!m || !sections[m[1]]) return;
+      var img = a.querySelector("img");
+      if (!img) return;
+      img.removeAttribute("srcset");
+      img.removeAttribute("data-src");
+      img.classList.remove("lazy");
+      img.src = "%ORIGIN%/assets/products/" + sections[m[1]] + "-v7.webp";
+    });
 })();
 </script>
 """
+
+
+SECTION_PHOTOS = {
+    # раздел на главной → фотография из нашей серии
+    "torty": "749",                 # Шварцвальдский
+    "pirogi": "801",                # осетинский пирог, съёмка производства
+    "vypechka": "746",              # штрудель с вишней
+    "pirozhnye_i_deserty": "757",   # Соната
+    "pechene": "753",               # Суворовское
+    "salaty": "765",                # Русский
+    "vtorye_blyuda": "770",         # котлеты по-киевски
+    "polufabrikaty": "760",         # пельмени
+    "napitki": "763",               # морс клюквенный
+}
 
 
 BANNER = {
@@ -180,7 +208,8 @@ def build_page(filename, path, ids):
     match = re.search(r"/catalog/[a-z_]+/(\d+)/", path)
     script = (PHOTO_SCRIPT.replace("%IDS%", json.dumps(ids))
                           .replace("%ORIGIN%", PAGES_ORIGIN)
-                          .replace("%PAGE_ID%", match.group(1) if match else ""))
+                          .replace("%PAGE_ID%", match.group(1) if match else "")
+                          .replace("%SECTIONS%", json.dumps(SECTION_PHOTOS)))
     html = html.replace("</body>", script + DEMO_FIX + chr(10) + "</body>", 1)
 
     os.makedirs(OUT, exist_ok=True)

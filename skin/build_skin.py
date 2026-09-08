@@ -533,6 +533,63 @@ LAYOUT = f"""
 .catalog_item .footer_button .counter_wrapp {{ display: flex !important; gap: 10px; align-items: center; }}
 .catalog_item .footer_button .btn {{ flex: 1 1 auto; justify-content: center; }}
 
+
+/* --- разделы на главной: карусель мелких квадратиков → сетка плиток ----- */
+.cat_sections .owl-stage-outer {{ overflow: visible !important; }}
+.cat_sections .owl-stage {{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px !important;
+  width: auto !important;
+  transform: none !important;
+  transition: none !important;
+}}
+.cat_sections .owl-item {{
+  width: auto !important; margin: 0 !important; float: none !important;
+}}
+.cat_sections .owl-nav, .cat_sections .owl-dots {{ display: none !important; }}
+.cat_sections .item_block {{ height: auto !important; }}
+
+.cat_sections .item.compact {{
+  background: {CARD} !important;
+  border: 1px solid {LINE} !important;
+  border-radius: 14px !important;
+  overflow: hidden;
+  height: 100%;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}}
+.cat_sections .item.compact:hover {{
+  border-color: rgba(168, 33, 60, .55) !important;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, .55);
+  transform: translateY(-3px);
+}}
+.cat_sections .item.compact .img {{
+  aspect-ratio: 4 / 3; background: {TILE} !important;
+  margin: 0 !important; padding: 0 !important; overflow: hidden;
+}}
+.cat_sections .item.compact .img a.thumb {{ display: block; width: 100%; height: 100%; }}
+.cat_sections .item.compact .img img {{
+  width: 100% !important; height: 100% !important;
+  max-width: none !important; object-fit: cover;
+  transition: transform .5s ease;
+}}
+.cat_sections .item.compact:hover .img img {{ transform: scale(1.04); }}
+.cat_sections .item.compact .name {{
+  padding: 16px 16px 18px !important; margin: 0 !important; text-align: center;
+}}
+.cat_sections .item.compact .name a {{
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 18px !important; font-weight: 500 !important;
+  letter-spacing: .01em !important; line-height: 1.25 !important;
+}}
+@media (max-width: 1199px) {{
+  .cat_sections .owl-stage {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px !important; }}
+}}
+@media (max-width: 600px) {{
+  .cat_sections .owl-stage {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px !important; }}
+  .cat_sections .item.compact .name a {{ font-size: 14px !important; }}
+}}
+
 /* --- главный баннер ----------------------------------------------------- */
 /* внутри слайда лежит свой .wrapper_inner — он закрашивал подложку */
 .top_slider_wrapp .wrapper_inner, .top_big_banners .wrapper_inner,
