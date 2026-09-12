@@ -1801,12 +1801,13 @@ body .search-button-div .btn, body .search-button-div button {
 .search-button-div { right: 6px !important; left: auto !important; }
 
 /* --- счётчик количества: одна деталь, а не три разных ------------------- */
-.counter_wrapp .counter_block, .counter_block.md, .counter_block {
+body .counter_wrapp .counter_block, body .counter_block.md, body .counter_block {
   display: inline-flex !important; align-items: stretch !important;
-  width: auto !important; flex: 0 0 auto !important;
+  width: max-content !important; min-width: 0 !important; max-width: none !important;
+  flex: 0 0 auto !important;
   height: 54px !important; padding: 0 !important;
   border: 1px solid rgba(241, 234, 227, .10) !important; border-radius: 999px !important;
-  overflow: hidden; background: transparent !important;
+  overflow: visible !important; background: transparent !important;
 }
 .counter_block .minus, .counter_block .plus {
   width: 42px !important; flex: 0 0 42px !important;
