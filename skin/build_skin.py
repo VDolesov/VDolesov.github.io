@@ -843,6 +843,16 @@ body .catalog_item .counter_block {{ width: 112px !important; height: 46px !impo
 body .catalog_item .counter_block .minus, body .catalog_item .counter_block .plus {{ width: 36px !important; }}
 body .catalog_item .counter_block input {{ padding: 0 36px !important; font-size: 15px !important; line-height: 44px !important; }}
 
+/* --- значки: заливка по цвету текста ------------------------------------ */
+/* встроенные svg-значки шаблона залиты чёрным атрибутом по умолчанию —
+   на тёмном фоне минус, плюс и прочая мелочь исчезали */
+.svg.inline svg, .svg.inline svg rect, .svg.inline svg path,
+.svg.inline svg circle, .svg.inline svg polygon, .svg.inline svg ellipse {{
+  fill: currentColor !important;
+}}
+.svg.inline svg [fill="none"] {{ fill: none !important; }}
+body .counter_block .minus, body .counter_block .plus {{ color: rgba(241, 234, 227, .72) !important; }}
+
 /* --- одна форма для всех мелких подписей -------------------------------- */
 .top_block .title_wrapper > .muted, .section-subtitle,
 body .char-side__title, .ordered-block__title--small,
