@@ -1128,6 +1128,90 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   .ms-item__sum {{ grid-column: 3; grid-row: 2; text-align: right; font-size: 18px; }}
   .ms-toast {{ right: 12px; left: 12px; bottom: 76px; max-width: none; }}
 }}
+
+/* ======================================================================
+   Главная страница: мозаика разделов, блок о компании, преимущества,
+   подвал. Идёт после блока плиток и переопределяет его сетку.
+   ====================================================================== */
+
+/* --- разделы: мозаика с крупной первой плиткой и подписью на фото ------- */
+@media (min-width: 992px) {{
+  body .cat_sections.cat_sections .owl-stage {{
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }}
+  body .cat_sections.cat_sections .owl-item:first-child {{ grid-column: span 2; grid-row: span 2; }}
+  body .cat_sections.cat_sections .owl-item:first-child .item.compact .img.shine {{
+    aspect-ratio: auto !important; height: 100% !important;
+  }}
+  body .cat_sections.cat_sections .owl-item:first-child .item.compact .name a {{ font-size: 28px !important; }}
+}}
+body .cat_sections.cat_sections .item.compact {{ position: relative; height: 100%; }}
+body .cat_sections.cat_sections .item.compact .img.shine {{ aspect-ratio: 1 / 1; }}
+body .cat_sections.cat_sections .item.compact .name {{
+  position: absolute !important; left: 0; right: 0; bottom: 0;
+  padding: 54px 20px 18px !important; text-align: left !important;
+  background: linear-gradient(to top, rgba(14, 9, 9, .88) 0%, rgba(14, 9, 9, .55) 55%, rgba(14, 9, 9, 0) 100%);
+  pointer-events: none;
+}}
+body .cat_sections.cat_sections .item.compact .name a {{
+  color: #fff !important; pointer-events: auto; text-shadow: 0 1px 12px rgba(0, 0, 0, .5);
+}}
+@media (max-width: 991px) {{
+  body .cat_sections.cat_sections .owl-item:first-child {{ grid-column: span 2; }}
+  body .cat_sections.cat_sections .owl-item:first-child .item.compact .img.shine {{ aspect-ratio: 2 / 1 !important; }}
+}}
+
+/* заголовок над мозаикой: у шаблона его нет — даём блоку воздух сверху */
+body .CATALOG_SECTIONS {{ padding-top: clamp(40px, 4vw, 64px) !important; padding-bottom: clamp(30px, 3vw, 48px) !important; }}
+
+/* --- хиты продаж: вкладки как подпись, сетка как в каталоге ------------- */
+body .CATALOG_TAB .tab_slider_wrapp .tabs {{ border-bottom: 1px solid {LINE} !important; margin-bottom: 26px !important; }}
+body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a {{
+  font-family: "Playfair Display", Georgia, serif !important; font-size: 26px !important;
+  font-weight: 500 !important; text-transform: none !important; letter-spacing: -.01em !important;
+  padding: 0 0 14px !important; background: transparent !important; border: 0 !important;
+  color: {MUTED} !important;
+}}
+body .CATALOG_TAB .tabs li.cur a, body .CATALOG_TAB .nav-tabs li.active a {{
+  color: {INK} !important; box-shadow: inset 0 -2px 0 {ACCENT} !important;
+}}
+
+/* --- о компании: текст слева, фотография с производства справа ---------- */
+body .COMPANY_TEXT .company-block .row.flexbox {{ align-items: stretch !important; margin: 0 !important; width: 100% !important; }}
+body .COMPANY_TEXT .text-block .item, body .COMPANY_TEXT .text-block .item-inner {{ width: 100% !important; }}
+body .COMPANY_TEXT .text-block .text {{
+  width: 100% !important; max-width: 560px !important; margin: 0 !important; padding: 0 40px 0 0 !important;
+  font-size: 16px !important; line-height: 1.7 !important;
+}}
+body .COMPANY_TEXT .text-block .text p {{ font-size: 16px !important; line-height: 1.7 !important; }}
+body .COMPANY_TEXT .image-block .item.video-block {{
+  width: 100% !important; min-height: 360px !important; height: 100% !important;
+  border-radius: 18px !important; overflow: hidden;
+  background: {PANEL} url("/assets/about.jpg?v=1") center / cover no-repeat !important;
+  border: 1px solid {LINE} !important;
+}}
+body .COMPANY_TEXT {{ padding-top: clamp(56px, 6vw, 96px) !important; padding-bottom: clamp(56px, 6vw, 96px) !important; }}
+@media (max-width: 991px) {{
+  body .COMPANY_TEXT .text-block .text {{ max-width: none !important; padding: 0 0 26px !important; }}
+  body .COMPANY_TEXT .image-block .item.video-block {{ min-height: 240px !important; }}
+}}
+
+/* --- преимущества: значки золотом, подписи в одну систему --------------- */
+body .TIZERS .item {{ padding: 26px 18px !important; }}
+body .TIZERS .item .icon, body .TIZERS .item .icon svg, body .TIZERS .item svg {{ color: {GOLD} !important; }}
+body .TIZERS .item .title {{
+  font-family: "Playfair Display", Georgia, serif !important; font-size: 19px !important;
+  font-weight: 500 !important; margin: 14px 0 8px !important; text-transform: none !important;
+}}
+body .TIZERS .item .text, body .TIZERS .item .muted {{ font-size: 14px !important; line-height: 1.55 !important; color: {MUTED} !important; }}
+
+/* --- подвал: без пустой полосы между колонками и копирайтом ------------- */
+body .footer-inner .footer_top {{ padding: 56px 0 40px !important; }}
+body .footer-inner .footer_middle {{ display: none !important; }}
+body .footer-inner .footer_bottom {{ padding: 20px 0 !important; border-top: 1px solid rgba(241, 234, 227, .08) !important; }}
+body .footer-inner .footer_bottom, body .footer-inner .footer_bottom * {{ font-size: 12px !important; }}
+body footer .bottom-menu li a, body footer .footer_top .menu li a {{ font-size: 14px !important; line-height: 1.5 !important; }}
 """
 
 
