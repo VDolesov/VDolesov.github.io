@@ -486,6 +486,9 @@ LAYOUT = f"""
 .fixed_side_panel, .right_fixed_panel, .fix_menu {{ border-radius: 14px 0 0 14px !important; overflow: hidden; }}
 
 /* --- сетка каталога: крупные карточки ---------------------------------- */
+/* clearfix бутстрапа (::before/::after у .row) в grid становится ячейкой
+   и оставляет первую клетку пустой */
+.catalog_block.items.row::before, .catalog_block.items.row::after {{ display: none !important; content: none !important; }}
 @media (min-width: 1200px) {{
   .catalog_block.items.row {{
     display: grid !important;
