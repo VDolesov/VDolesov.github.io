@@ -154,9 +154,20 @@ def localize_links(html, current):
     return html
 
 
+SCRIPTS = ("cart-data.js", "cart.js")
+
+
 def skin_version():
-    with open(os.path.join(HERE, "skin.css"), "rb") as f:
-        return hashlib.md5(f.read()).hexdigest()[:8]
+    """Короткий отпечаток оформления и скриптов — для сброса кэша браузера."""
+    digest = hashlib.md5()
+    for name in ("skin.css",) + SCRIPTS:
+        with open(os.path.join(HERE, name), "rb") as f:
+            digest.update(f.read())
+    return digest.hexdigest()[:8]
+
+
+def script_tags(version):
+    return "".join(f'<script src="/skin/{name}?v={version}"></script>\n' for name in SCRIPTS)
 
 
 def build_page(path, html, ids, version):
@@ -177,7 +188,7 @@ def build_page(path, html, ids, version):
                           .replace("%ORIGIN%", PAGES_ORIGIN)
                           .replace("%PAGE_ID%", match.group(1) if match else "")
                           .replace("%SECTIONS%", json.dumps(SECTION_PHOTOS)))
-    return html.replace("</body>", script + DEMO_FIX + "\n</body>", 1)
+    return html.replace("</body>", script + DEMO_FIX + "\n" + script_tags(version) + "</body>", 1)
 
 
 def write(path, html):
@@ -243,6 +254,9 @@ def restamp():
             full = os.path.join(root, name)
             html = io.open(full, encoding="utf-8").read()
             fresh = pattern.sub(f"/skin/skin.css?v={version}", html)
+            # скрипты корзины: старые подключения убрать, актуальные добавить
+            fresh = re.sub(r'<script src="/skin/[a-z-]+\.js\?v=[0-9a-f]+"></script>\n?', "", fresh)
+            fresh = fresh.replace("</body>", script_tags(version) + "</body>", 1)
             if fresh != html:
                 io.open(full, "w", encoding="utf-8", newline="\n").write(fresh)
                 count += 1
