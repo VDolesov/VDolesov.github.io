@@ -805,6 +805,8 @@ body .cat_sections.cat_sections .item.compact .name a {{
   width: 17px !important; height: 17px !important; margin: 0 !important;
 }}
 /* кнопка поиска сидит внутри поля, а не рядом с ним */
+body .inline-search-block .search-button-div .btn.btn-search.btn-lg,
+body .search-button-div .btn.btn-search.btn-lg,
 body .search-button-div .btn, body .search-button-div button {{
   width: 42px !important; height: 42px !important; padding: 0 !important;
   min-width: 0 !important; border-radius: 999px !important;
