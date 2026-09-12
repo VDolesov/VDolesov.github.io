@@ -878,6 +878,130 @@ body .char-side__title {{ margin-bottom: 16px !important; }}
 /* --- пустой рейтинг не притворяется оценкой ----------------------------- */
 .catalog_item .rating, .item_block .rating, .votes_block,
 .product-info-headnote .rating {{ opacity: .3; }}
+
+/* ======================================================================
+   Шапка. Правило «все svg в шапке 22 px» выше цепляло и логотип, и стрелку
+   у телефона: логотип ужимался до 22 px, стрелка раздувалась до 22.
+   Здесь всё задано поэлементно; блок идёт последним и побеждает.
+   ====================================================================== */
+
+/* строка шапки — flex вместо обтеканий, всё по вертикальному центру */
+body .header_wrap .logo-row .row > .col-md-12,
+body .header-wrapper .logo-row .row > .col-md-12 {{
+  display: flex !important; align-items: center !important;
+  min-height: 92px !important; height: auto !important;
+}}
+body .header_wrap .logo-row [class*="pull-"],
+body .header-wrapper .logo-row [class*="pull-"] {{ float: none !important; height: auto !important; }}
+
+/* бургер */
+body .header_wrap .logo-row .burger, body .header-wrapper .logo-row .burger {{
+  height: 44px !important; width: 44px !important; padding: 0 !important;
+  margin: 0 16px 0 0 !important; display: inline-flex !important;
+  align-items: center !important; justify-content: center !important;
+  border-radius: 999px !important;
+}}
+body .header_wrap .logo-row .burger svg, body .header-wrapper .logo-row .burger svg {{
+  width: 22px !important; height: 22px !important;
+}}
+
+/* логотип: 54 px высоты, а не 22 */
+body .header_wrap .logo-block, body .header-wrapper .logo-block {{
+  height: auto !important; margin: 0 22px 0 0 !important; padding: 0 !important;
+}}
+body .header_wrap .logo, body .header-wrapper .logo {{
+  height: auto !important; width: auto !important; line-height: 0 !important;
+  display: block !important; padding: 0 !important;
+}}
+body .header_wrap .logo a, body .header-wrapper .logo a {{ display: inline-block !important; line-height: 0 !important; }}
+body .header_wrap .logo svg, body .header-wrapper .logo svg {{
+  width: auto !important; height: 54px !important; max-width: none !important;
+}}
+
+/* подпись рядом с логотипом */
+body .header_wrap .logo-row .float_wrapper, body .header-wrapper .logo-row .float_wrapper {{
+  height: auto !important; margin: 0 40px 0 0 !important; padding: 0 !important;
+}}
+body .header_wrap .logo-row .float_wrapper .hidden-sm,
+body .header-wrapper .logo-row .float_wrapper .hidden-sm {{
+  height: auto !important; max-width: 220px !important;
+  font-size: 13px !important; line-height: 1.35 !important;
+  color: {MUTED} !important; padding: 0 !important;
+}}
+
+/* телефон: номер, маленькая стрелка, под ним ссылка на звонок */
+body .header_wrap .logo-row .wrap_icon.inner-table-block,
+body .header-wrapper .logo-row .wrap_icon.inner-table-block {{
+  width: auto !important; height: auto !important; display: block !important;
+  border-radius: 0 !important; background: transparent !important;
+}}
+body .header_wrap .phone-block, body .header-wrapper .phone-block {{
+  display: flex !important; flex-direction: column !important; gap: 2px !important;
+  align-items: flex-start !important;
+}}
+body .header_wrap .phone.with_dropdown, body .header-wrapper .phone.with_dropdown {{
+  display: inline-flex !important; align-items: center !important; gap: 8px !important;
+  height: auto !important; line-height: 1.2 !important; padding: 0 !important;
+}}
+body .header_wrap .phone > a, body .header-wrapper .phone > a {{
+  font-size: 18px !important; font-weight: 600 !important; letter-spacing: -.01em !important;
+  color: {INK} !important; line-height: 1.2 !important;
+}}
+body .header_wrap .phone .svg-inline-phone, body .header-wrapper .phone .svg-inline-phone {{ display: none !important; }}
+body .header_wrap .phone .svg-inline-down, body .header-wrapper .phone .svg-inline-down {{
+  display: inline-flex !important; align-items: center !important; opacity: .6;
+}}
+body .header_wrap .phone .svg-inline-down svg, body .header-wrapper .phone .svg-inline-down svg {{
+  width: 10px !important; height: 10px !important;
+}}
+body .header_wrap .callback-block, body .header-wrapper .callback-block {{
+  font-family: Inter, sans-serif !important; font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: .12em !important; text-transform: uppercase !important;
+  color: {GOLD} !important; cursor: pointer;
+}}
+body .header_wrap .callback-block:hover, body .header-wrapper .callback-block:hover {{ color: {INK} !important; }}
+
+/* правая группа: поиск и вход — значок и подпись в одной пилюле */
+body .header_wrap .right-icons, body .header-wrapper .right-icons {{
+  margin-left: auto !important; display: flex !important; align-items: center !important;
+  gap: 8px !important; height: auto !important; float: none !important;
+}}
+body .header_wrap .right-icons > .pull-right, body .header-wrapper .right-icons > .pull-right {{
+  float: none !important; margin: 0 !important; width: auto !important;
+}}
+body .header_wrap .right-icons .wrap_icon, body .header-wrapper .right-icons .wrap_icon {{
+  width: auto !important; height: auto !important; padding: 0 !important; margin: 0 !important;
+  display: block !important; border-radius: 0 !important; background: transparent !important;
+}}
+body .header_wrap .right-icons .top-btn, body .header-wrapper .right-icons .top-btn,
+body .header_wrap .right-icons .personal-link, body .header-wrapper .right-icons .personal-link {{
+  display: inline-flex !important; align-items: center !important; justify-content: center !important;
+  gap: 9px !important; height: 42px !important; width: auto !important; min-width: 0 !important;
+  padding: 0 16px !important; margin: 0 !important;
+  border: 1px solid {LINE} !important; border-radius: 999px !important;
+  background: transparent !important; box-shadow: none !important;
+  font-family: Inter, sans-serif !important; font-size: 13px !important; font-weight: 500 !important;
+  letter-spacing: .01em !important; text-transform: none !important; color: {INK} !important;
+  transition: border-color .2s ease, background-color .2s ease;
+}}
+body .header_wrap .right-icons .top-btn:hover, body .header-wrapper .right-icons .top-btn:hover,
+body .header_wrap .right-icons .personal-link:hover, body .header-wrapper .right-icons .personal-link:hover {{
+  border-color: {ACCENT} !important; background: rgba(168, 33, 60, .10) !important; color: {INK} !important;
+}}
+body .header_wrap .right-icons svg, body .header-wrapper .right-icons svg {{
+  width: 18px !important; height: 18px !important; margin: 0 !important;
+}}
+body .header_wrap .right-icons .svg, body .header-wrapper .right-icons .svg {{
+  display: inline-flex !important; align-items: center !important; margin: 0 !important; position: static !important;
+}}
+body .header_wrap .right-icons .title, body .header-wrapper .right-icons .title,
+body .header_wrap .right-icons .wrap, body .header-wrapper .right-icons .wrap,
+body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
+  display: inline !important; position: static !important; margin: 0 !important; padding: 0 !important;
+  font-family: Inter, sans-serif !important; font-size: 13px !important; font-weight: 500 !important;
+  letter-spacing: .01em !important; text-transform: none !important; line-height: 1 !important;
+  color: inherit !important;
+}}
 """
 
 
