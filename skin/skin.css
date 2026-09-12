@@ -1955,6 +1955,7 @@ body .header_wrap .callback-block:hover, body .header-wrapper .callback-block:ho
 /* правая группа: поиск и вход — значок и подпись в одной пилюле */
 body .header_wrap .right-icons, body .header-wrapper .right-icons {
   margin-left: auto !important; display: flex !important; align-items: center !important;
+  flex-direction: row-reverse !important;   /* поиск, затем вход — как было при обтекании */
   gap: 8px !important; height: auto !important; float: none !important;
 }
 body .header_wrap .right-icons > .pull-right, body .header-wrapper .right-icons > .pull-right {
