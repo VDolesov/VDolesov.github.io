@@ -22,6 +22,7 @@ APP = os.path.dirname(HERE)
 SITE = "https://www.mirsladostey164.ru"
 PAGES_ORIGIN = "https://vdolesov.github.io"
 OUT = os.path.join(HERE, "demo")
+SERIES = "v9"   # фотосерия каталога: assets/products/<id>-<серия>.webp
 
 PAGES = [
     ("index.html", "/"),
@@ -61,7 +62,7 @@ PHOTO_SCRIPT = """
     img.removeAttribute("srcset");
     img.removeAttribute("data-src");
     img.classList.remove("lazy");
-    img.src = "%ORIGIN%/assets/products/" + id + "-v8.webp";
+    img.src = "%ORIGIN%/assets/products/" + id + "-%SERIES%.webp";
   }
 
   // страница товара: главное изображение и миниатюры галереи
@@ -88,7 +89,7 @@ PHOTO_SCRIPT = """
       img.removeAttribute("srcset");
       img.removeAttribute("data-src");
       img.classList.remove("lazy");
-      img.src = "%ORIGIN%/assets/products/" + sections[m[1]] + "-v8.webp";
+      img.src = "%ORIGIN%/assets/products/" + sections[m[1]] + "-%SERIES%.webp";
     });
 })();
 </script>
@@ -111,14 +112,31 @@ SECTION_PHOTOS = {
 
 BANNER = {
     # главный баннер: стоковая съёмка заменена своей — подложка и продукт
-    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=4",
-    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-mosaic.webp?v=2",
+    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=5",
+    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-cake.webp?v=1",
 }
+
+# текст баннера: формулировки направления «Чёрный шоколад» вместо
+# стокового «Изготовление тортов и пирожных». На сервере это правится в
+# настройках слайда, здесь — подстановкой при сборке. Регулярные выражения,
+# потому что в разметке вокруг текста табуляция и переносы.
+BANNER_COPY = [
+    (r'(<div class="section font_upper_md">)Торты(</div>)', r"\1Собственное производство\2"),
+    (r'(<span class="head-title">\s*)Изготовление тортов и пирожных(\s*</span>)',
+     r"\1Прага. Шварцвальд. Сластёна.\2"),
+    (r'(<div class="banner_text">)Аппетитный внешний вид[^<]*(</div>)',
+     r"\1Торты, пироги и десерты, которые мы печём сами. "
+     r"Заберите в одном из двух магазинов или закажите доставку по Саратову.\2"),
+    (r'(class="btn btn-default btn-lg"[^>]*>\s*)Перейти в каталог(\s*</a>)', r"\1Выбрать торт\2"),
+    (r'(<img class="plaxy"[^>]*(?:alt|title)=")Изготовление тортов и пирожных(")', r"\1Торт «Шварцвальдский»\2"),
+]
 
 
 def swap_banner(html):
     for old, new in BANNER.items():
         html = html.replace(old, PAGES_ORIGIN + new)
+    for pattern, new in BANNER_COPY:
+        html = re.sub(pattern, new, html)
     return html
 
 

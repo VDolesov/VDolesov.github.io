@@ -29,8 +29,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
-from build_demo import (DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT, SECTION_PHOTOS,  # noqa: E402
-                        SITE, inline_deferred, product_ids, swap_banner, unlazy)
+from build_demo import (BANNER, BANNER_COPY, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,  # noqa: E402
+                        SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
+                        swap_banner, unlazy)
 
 HOSTS = {"www.mirsladostey164.ru", "mirsladostey164.ru"}
 SEEDS = ["/", "/catalog/", "/basket/", "/personal/", "/search/", "/contacts/",
@@ -186,6 +187,7 @@ def build_page(path, html, ids, version):
     match = re.search(r"/catalog/[a-z_]+/(\d+)/", path)
     script = (PHOTO_SCRIPT.replace("%IDS%", json.dumps(ids))
                           .replace("%ORIGIN%", PAGES_ORIGIN)
+                          .replace("%SERIES%", SERIES)
                           .replace("%PAGE_ID%", match.group(1) if match else "")
                           .replace("%SECTIONS%", json.dumps(SECTION_PHOTOS)))
     return html.replace("</body>", script + DEMO_FIX + "\n" + script_tags(version) + "</body>", 1)
@@ -241,6 +243,19 @@ def main():
     print(f"страниц собрано: {len(done)}, не удалось: {len(failed)}, в очереди осталось: {len(queue)}")
 
 
+def refresh(html):
+    """Приводит собранную страницу к текущим настройкам без обхода сайта:
+    фотосерия, файлы баннера и его текст."""
+    html = re.sub(r'(/assets/products/" \+ [^"]+ \+ ")-v\d+\.webp"',
+                  lambda m: m.group(1) + "-" + SERIES + '.webp"', html)
+    backdrop, product = BANNER.values()
+    html = re.sub(r"/assets/hero-bg\.jpg\?v=\d+", backdrop, html)
+    html = re.sub(r"/assets/hero-(?:mosaic|cake)\.(?:webp|png)\?v=\d+", product, html)
+    for pattern, new in BANNER_COPY:
+        html = re.sub(pattern, new, html)
+    return html
+
+
 def restamp():
     """Обновляет версию skin.css во всех собранных страницах без обхода сайта."""
     version = skin_version()
@@ -253,7 +268,7 @@ def restamp():
                 continue
             full = os.path.join(root, name)
             html = io.open(full, encoding="utf-8").read()
-            fresh = pattern.sub(f"/skin/skin.css?v={version}", html)
+            fresh = refresh(pattern.sub(f"/skin/skin.css?v={version}", html))
             # скрипты корзины: старые подключения убрать, актуальные добавить
             fresh = re.sub(r'<script src="/skin/[a-z-]+\.js\?v=[0-9a-f]+"></script>\n?', "", fresh)
             fresh = fresh.replace("</body>", script_tags(version) + "</body>", 1)

@@ -22,30 +22,33 @@ SITE = "https://www.mirsladostey164.ru"
 CACHE = os.path.join(HERE, "aspro.css")
 OUT = os.path.join(HERE, "skin.css")
 
-# Текущая палитра шаблона → новая.
-# Красный сохраняем как акцент, но берём глубокий бордо: узнаваемость
-# остаётся, агрессивная «распродажная» яркость уходит.
+# Направление «Чёрный шоколад»: почти чёрное какао, карамельное золото,
+# антиква Prata, тонкие линии. Фирменный красный шаблона уходит в золото —
+# это единственный акцент; кнопки золотые с тёмной надписью.
 COLOR_MAP = {
-    "#f3103a": "#a8213c",   # основной акцент — бордо, читаемое на тёмном
-    "#f42d52": "#c42b4c",   # наведение
-    "#f30b36": "#a8213c",   # вариант основного
-    "#e00a31": "#7d1329",   # нажатие, тёмный вариант
-    "#ff1441": "#c42b4c",
-    "#e5062d": "#7d1329",
+    "#f3103a": "#d6a459",   # основной акцент — карамельное золото
+    "#f42d52": "#e6b96f",   # наведение — светлее
+    "#f30b36": "#d6a459",   # вариант основного
+    "#e00a31": "#b88a45",   # нажатие, тёмный вариант
+    "#ff1441": "#e6b96f",
+    "#e5062d": "#b88a45",
 }
 
-ACCENT = "#a8213c"
-ACCENT_HOVER = "#c42b4c"
-ACCENT_DEEP = "#7d1329"
-INK = "#f1eae3"          # основной текст — светлый
-MUTED = "rgba(241, 234, 227, .52)"
-GROUND = "#15100f"       # фон страницы
-PANEL = "#1c1615"        # полосы секций, выпадающие панели
-CARD = "#221b19"         # карточки товара
-FIELD = "#171211"        # поля ввода
-LINE = "rgba(241, 234, 227, .10)"
-GOLD = "#c2a15f"
-TILE = "#f6efe4"         # плитка под фотографией товара
+ACCENT = "#d6a459"
+ACCENT_HOVER = "#e6b96f"
+ACCENT_DEEP = "#b88a45"
+ON_ACCENT = "#120b08"    # надпись на золотой кнопке
+INK = "#f3e8d8"          # основной текст — сливки
+MUTED = "rgba(243, 232, 216, .55)"
+GROUND = "#120b08"       # фон страницы — какао
+PANEL = "#170e0b"        # полосы секций, выпадающие панели
+CARD = "#1b110d"         # карточки товара
+FIELD = "#0e0806"        # поля ввода
+LINE = "rgba(243, 232, 216, .12)"
+GOLD = "#d6a459"
+GOLD_LINE = "rgba(214, 164, 89, .5)"   # золотая волосяная линия
+TILE = "#130c09"         # подложка под фотографией: серия v9 снята на тёмном
+ACCENT_SOFT = "rgba(214, 164, 89, .12)"
 
 
 def fetch_css():
@@ -180,7 +183,7 @@ def redark(css):
 
 FONTS = """/* Шрифты подключаются первой строкой: правило @import
    действует только до первых стилей, ниже по файлу браузер его отбрасывает. */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600&display=swap");
 """
 
 
@@ -198,10 +201,10 @@ html, body, .wrapper1, .wrapper_inner, .wraps, #content, .middle,
 }}
 body {{
   color: {INK} !important;
-  font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+  font-family: "Golos Text", "Segoe UI", Arial, sans-serif !important;
   font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased;
 }}
-::selection {{ background: {ACCENT}; color: #fff; }}
+::selection {{ background: {ACCENT}; color: {ON_ACCENT}; }}
 
 /* цвет текста задан в шаблоне сотнями правил — переводим в светлый */
 p, li, td, th, dd, dt, label, span, div, section, article,
@@ -212,16 +215,16 @@ a, a:visited {{ color: {INK} !important; }}
 a:hover, a:focus {{ color: {ACCENT_HOVER} !important; }}
 .muted, .small, .article_block, .article, .price_measure, .date,
 .hint, .quantity, .measure, .copyright {{ color: {MUTED} !important; }}
-::placeholder {{ color: rgba(241, 234, 227, .34) !important; }}
+::placeholder {{ color: rgba(243, 232, 216, .34) !important; }}
 
 /* --- заголовки --------------------------------------------------------- */
 h1, h2, h3, h4, .h1, .h2, .h3, .h4,
 .topic, .topic span, .title_block, .top_block .title, .section_title,
 .front-block .title, .detail .element-title, .item-title, .item-title a,
 .popup-window-titlebar, .basket-title, .page-top .topic, .tabs_section .title {{
-  font-family: "Playfair Display", Georgia, serif !important;
-  font-weight: 500 !important;
-  letter-spacing: -.02em;
+  font-family: Prata, Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0;
   text-transform: none !important;
   color: {INK} !important;
 }}
@@ -258,7 +261,7 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
   background: {PANEL} !important;
   color: {INK} !important;
   border: 1px solid {LINE} !important;
-  border-radius: 10px !important;
+  border-radius: 0 !important;
   box-shadow: 0 24px 60px rgba(0, 0, 0, .55) !important;
 }}
 
@@ -274,9 +277,9 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
 
 /* --- кнопки ------------------------------------------------------------ */
 .btn, .btn.btn-default, .btn.btn-lg, .btn.btn-sm, .btn.btn-xs, button.btn, input[type=submit] {{
-  border-radius: 999px !important;
+  border-radius: 0 !important;
   padding: 13px 30px !important;
-  font-family: Inter, sans-serif !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important;
   font-size: 14px !important; font-weight: 600 !important;
   letter-spacing: .01em !important; text-transform: none !important;
   border-width: 1px !important; box-shadow: none !important;
@@ -285,17 +288,17 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
 .btn.btn-lg {{ padding: 16px 38px !important; font-size: 15px !important; }}
 .btn.btn-sm, .btn.btn-xs {{ padding: 9px 20px !important; font-size: 13px !important; }}
 .btn.btn-default, .btn-primary, input[type=submit] {{
-  background-color: {ACCENT} !important; border-color: {ACCENT} !important; color: #fff !important;
+  background-color: {ACCENT} !important; border-color: {ACCENT} !important; color: {ON_ACCENT} !important;
 }}
 .btn.btn-default:hover, .btn-primary:hover, input[type=submit]:hover {{
   background-color: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important;
-  color: #fff !important; transform: translateY(-1px);
+  color: {ON_ACCENT} !important; transform: none;
 }}
 .btn.btn-transparent, .btn.btn-default.transparent, .btn.btn-default.white {{
-  color: {INK} !important; border-color: rgba(241, 234, 227, .26) !important; background: transparent !important;
+  color: {INK} !important; border-color: rgba(243, 232, 216, .26) !important; background: transparent !important;
 }}
 .btn.btn-transparent:hover, .btn.btn-default.transparent:hover {{
-  color: #fff !important; background: {ACCENT} !important; border-color: {ACCENT} !important;
+  color: {ON_ACCENT} !important; background: {ACCENT} !important; border-color: {ACCENT} !important;
 }}
 
 /* --- карточки товара ---------------------------------------------------- */
@@ -303,47 +306,47 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
 .item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container {{
   background: {CARD} !important;
   border: 1px solid {LINE} !important;
-  border-radius: 14px !important;
+  border-radius: 0 !important;
   padding: 14px 14px 20px !important;
   box-shadow: none !important;
   transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease !important;
 }}
 .item_block:hover .catalog_item, .catalog_item_wrapp:hover .catalog_item {{
-  border-color: rgba(168, 33, 60, .55) !important;
+  border-color: {GOLD_LINE} !important;
   box-shadow: 0 22px 48px rgba(0, 0, 0, .55) !important;
   transform: translateY(-3px);
 }}
 .catalog_item .image_wrapper_block, .product-item-image-wrapper {{
-  background: {TILE} !important; border-radius: 10px !important; overflow: hidden;
+  background: {TILE} !important; border-radius: 0 !important; overflow: hidden;
 }}
 .catalog_item .image_wrapper_block img {{ transition: transform .5s ease; }}
 .item_block:hover .image_wrapper_block img {{ transform: scale(1.03); }}
 .catalog_item .item-title, .product-item-title {{ margin-top: 14px !important; }}
 .item-title a, .product-item-title a {{ font-size: 18px !important; line-height: 1.28 !important; letter-spacing: -.01em; }}
 .catalog_item .price, .price_matrix_wrapper .price, .product-item-price-current, .price_value {{
-  font-family: "Playfair Display", Georgia, serif !important;
+  font-family: Prata, Georgia, serif !important;
   font-size: 24px !important; font-weight: 500 !important; color: {INK} !important;
 }}
 
 /* метки: одна палитра вместо пёстрых плашек */
 .stickers .sticker, .product-item-label-text, .sticker_wrapper .sticker, .stickers > div {{
-  border-radius: 999px !important; padding: 5px 12px !important;
+  border-radius: 0 !important; padding: 5px 12px !important;
   font-size: 10px !important; font-weight: 600 !important;
   letter-spacing: .1em !important; text-transform: uppercase !important;
-  background: {ACCENT} !important; color: #fff !important; box-shadow: none !important;
+  background: {ACCENT} !important; color: {ON_ACCENT} !important; box-shadow: none !important;
 }}
-.stickers .sticker.new, .sticker_wrapper .sticker.new {{ background: {GOLD} !important; color: #1a1211 !important; }}
-.stickers .sticker.recommend, .sticker_wrapper .sticker.recommend {{ background: #4a3330 !important; }}
+.stickers .sticker.new, .sticker_wrapper .sticker.new {{ background: transparent !important; color: {GOLD} !important; box-shadow: inset 0 0 0 1px {GOLD_LINE} !important; }}
+.stickers .sticker.recommend, .sticker_wrapper .sticker.recommend {{ background: #3a2a22 !important; }}
 .catalog_item .rating, .item_block .rating, .votes_block {{ opacity: .35; }}
 
 /* --- карточка товара ---------------------------------------------------- */
 .detail .element_detail_wrapper, .detail_wrapper, .detail .price_block {{ background: transparent !important; }}
 .detail .prices_block .price_value, .detail .price_value {{ font-size: clamp(30px, 3vw, 44px) !important; }}
 .detail .img_wrapper, .detail .product-detail-gallery, .detail .slides {{
-  background: {TILE} !important; border-radius: 16px !important; overflow: hidden;
+  background: {TILE} !important; border-radius: 0 !important; overflow: hidden;
 }}
 .detail .tabs .tab-list li a, .tabs_section .tab-list li a {{
-  font-family: Inter, sans-serif !important; font-size: 15px !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 15px !important;
   letter-spacing: .01em; text-transform: none !important;
 }}
 .tabs .tab-list li.active a, .tabs_section .tab-list li.active a {{
@@ -359,52 +362,52 @@ table td, table th, .table > tbody > tr > td {{ border-color: {LINE} !important;
 .breadcrumbs a, .bx-breadcrumb a, .breadcrumbs span, .bx-breadcrumb span {{ color: {MUTED} !important; }}
 .breadcrumbs a:hover, .bx-breadcrumb a:hover {{ color: {ACCENT_HOVER} !important; }}
 .sort_header, .display_list, .filter_form, .smartfilter {{ font-size: 14px; }}
-.sort_header .sort_item, .filter_form .btn {{ border-radius: 999px !important; }}
+.sort_header .sort_item, .filter_form .btn {{ border-radius: 0 !important; }}
 .sidebar .menu_top_block li a, .sidebar_menu li a, .left_block a {{ font-size: 15px !important; letter-spacing: 0; }}
 .left_block .internal_sections_list li.cur > a, .left_block .internal_sections_list li:hover > a {{ color: {ACCENT_HOVER} !important; }}
 
 /* --- формы -------------------------------------------------------------- */
 input[type="text"], input[type="tel"], input[type="email"], input[type="password"],
 input[type="search"], input[type="number"], textarea, select, .form-control, .input-group .form-control {{
-  border-radius: 10px !important;
+  border-radius: 0 !important;
   border: 1px solid {LINE} !important;
   background: {FIELD} !important;
   color: {INK} !important;
   padding: 12px 16px !important;
-  font-family: Inter, sans-serif !important; font-size: 15px !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 15px !important;
 }}
 input:focus, textarea:focus, select:focus, .form-control:focus {{
-  border-color: {ACCENT} !important; box-shadow: 0 0 0 3px rgba(168, 33, 60, .18) !important;
+  border-color: {ACCENT} !important; box-shadow: 0 0 0 3px rgba(214, 164, 89, .18) !important;
 }}
 
 /* --- подвал ------------------------------------------------------------- */
 .footer_inner, .footer-block, footer.footer, .footer_bottom {{
-  background: #0e0a0a !important; color: {MUTED} !important;
+  background: #0c0705 !important; color: {MUTED} !important;
 }}
-.footer_inner a, footer.footer a {{ color: rgba(241, 234, 227, .74) !important; }}
+.footer_inner a, footer.footer a {{ color: rgba(243, 232, 216, .74) !important; }}
 .footer_inner a:hover, footer.footer a:hover {{ color: {GOLD} !important; }}
 .footer_inner .title, footer.footer .title, .footer_inner .bottom_block .title {{
-  color: {GOLD} !important; font-family: Inter, sans-serif !important;
+  color: {GOLD} !important; font-family: "Golos Text", "Segoe UI", sans-serif !important;
   font-size: 11px !important; letter-spacing: .16em !important; text-transform: uppercase !important;
 }}
-.footer_inner .bottom_inner, .copyright {{ border-top: 1px solid rgba(241, 234, 227, .08) !important; }}
+.footer_inner .bottom_inner, .copyright {{ border-top: 1px solid rgba(243, 232, 216, .08) !important; }}
 
 /* --- разделители и мелочи ----------------------------------------------- */
 hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color: {LINE} !important; }}
-.scroll-top, .fixed_menu, #mobilemenu .menu_item {{ border-radius: 999px; }}
-.wrap_icon .count, .basket_count, .icon_count {{ background: {ACCENT} !important; color: #fff !important; }}
+.scroll-top, .fixed_menu, #mobilemenu .menu_item {{ border-radius: 0; }}
+.wrap_icon .count, .basket_count, .icon_count {{ background: {ACCENT} !important; color: {ON_ACCENT} !important; }}
 
 /* --- то, что не поймал автоматический проход ---------------------------- */
 
 /* метки на карточках: у шаблона они синяя, зелёная и фиолетовая */
 [class*="sticker_"] {{
-  border-radius: 999px !important; padding: 5px 12px !important;
+  border-radius: 0 !important; padding: 5px 12px !important;
   font-size: 10px !important; font-weight: 600 !important;
   letter-spacing: .1em !important; text-transform: uppercase !important;
-  background: {ACCENT} !important; color: #fff !important; box-shadow: none !important;
+  background: {ACCENT} !important; color: {ON_ACCENT} !important; box-shadow: none !important;
 }}
-[class*="sticker_novinka"], [class*="sticker_new"] {{ background: {GOLD} !important; color: #1a1211 !important; }}
-[class*="sticker_sovetuem"], [class*="sticker_recommend"] {{ background: #4a3330 !important; }}
+[class*="sticker_novinka"], [class*="sticker_new"] {{ background: transparent !important; color: {GOLD} !important; box-shadow: inset 0 0 0 1px {GOLD_LINE} !important; }}
+[class*="sticker_sovetuem"], [class*="sticker_recommend"] {{ background: #3a2a22 !important; }}
 .stickers, .sticker_wrapper {{ background: transparent !important; }}
 
 /* логотип нарисован тёмно-красным по светлому — на тёмной шапке пропадает */
@@ -426,7 +429,7 @@ hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color
 /* полоса прокрутки в тон */
 ::-webkit-scrollbar {{ width: 11px; height: 11px; }}
 ::-webkit-scrollbar-track {{ background: {GROUND}; }}
-::-webkit-scrollbar-thumb {{ background: #3a2c2a; border-radius: 999px; border: 3px solid {GROUND}; }}
+::-webkit-scrollbar-thumb {{ background: #3a2a22; border-radius: 999px; border: 3px solid {GROUND}; }}
 ::-webkit-scrollbar-thumb:hover {{ background: {ACCENT_DEEP}; }}
 """
 
@@ -440,9 +443,9 @@ LAYOUT = f"""
 /* --- шапка: липкая, тёмная, со стеклом ---------------------------------- */
 .header_wrap, .header-wrapper, header > .header-wrapper {{
   position: sticky !important; top: 0; z-index: 900;
-  background: rgba(18, 13, 12, .92) !important;
+  background: rgba(18, 11, 8, .94) !important;
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(241, 234, 227, .07), 0 14px 34px rgba(0, 0, 0, .45) !important;
+  box-shadow: 0 1px 0 rgba(243, 232, 216, .07), 0 14px 34px rgba(0, 0, 0, .45) !important;
   border-bottom: 0 !important;
 }}
 .header_wrap .logo_and_menu-row, .header-wrapper .logo_and_menu-row,
@@ -451,14 +454,14 @@ LAYOUT = f"""
 }}
 .header_wrap .logo_and_menu-row {{ min-height: 104px !important; }}
 .header_wrap .line-row, .header-v1 .line-row, .top-block-item {{
-  background: #0e0a0a !important; color: {MUTED} !important;
+  background: #0c0705 !important; color: {MUTED} !important;
 }}
 .logo img {{ transition: transform .3s ease; }}
 .logo:hover img {{ transform: scale(1.03); }}
 
 /* телефон и вход */
 .header_wrap .phone a, .header_wrap .phone .no-decript {{
-  font-family: Inter, sans-serif !important; font-size: 18px !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 18px !important;
   font-weight: 600 !important; letter-spacing: -.01em; color: {INK} !important;
 }}
 .header_wrap .phone_wrap .more_phone a {{ font-size: 15px !important; }}
@@ -469,21 +472,21 @@ LAYOUT = f"""
 /* иконки: крупнее, с мягкой подложкой при наведении */
 .header_wrap .wrap_icon, .header_wrap .wrap_icon_block {{
   width: 46px !important; height: 46px !important;
-  border-radius: 999px !important; transition: background-color .2s ease;
+  border-radius: 0 !important; transition: background-color .2s ease;
 }}
-.header_wrap .wrap_icon:hover {{ background: rgba(241, 234, 227, .08) !important; }}
+.header_wrap .wrap_icon:hover {{ background: rgba(243, 232, 216, .08) !important; }}
 .header_wrap svg {{ width: 22px !important; height: 22px !important; }}
 .header_wrap .count, .header_wrap .basket_count {{
   min-width: 20px !important; height: 20px !important;
-  border-radius: 999px !important; font-size: 11px !important; font-weight: 600 !important;
-  background: {ACCENT} !important; color: #fff !important;
+  border-radius: 0 !important; font-size: 11px !important; font-weight: 600 !important;
+  background: {ACCENT} !important; color: {ON_ACCENT} !important;
 }}
 .header_wrap .burger, .header_wrap .menu-burger, .mega_fixed_menu_btn {{
-  border-radius: 999px !important; padding: 11px 14px !important;
+  border-radius: 0 !important; padding: 11px 14px !important;
   transition: background-color .2s ease;
 }}
-.header_wrap .burger:hover, .header_wrap .menu-burger:hover {{ background: rgba(241, 234, 227, .08) !important; }}
-.fixed_side_panel, .right_fixed_panel, .fix_menu {{ border-radius: 14px 0 0 14px !important; overflow: hidden; }}
+.header_wrap .burger:hover, .header_wrap .menu-burger:hover {{ background: rgba(243, 232, 216, .08) !important; }}
+.fixed_side_panel, .right_fixed_panel, .fix_menu {{ border-radius: 0 !important; overflow: hidden; }}
 
 /* --- сетка каталога: крупные карточки ---------------------------------- */
 /* clearfix бутстрапа (::before/::after у .row) в grid становится ячейкой
@@ -571,7 +574,7 @@ body .product-detail-gallery .product-detail-gallery__slider .owl-item:not(.acti
 body .product-detail-gallery .product-detail-gallery__item {{
   width: 100% !important; height: auto !important; max-width: none !important;
   aspect-ratio: 1 / 1; background: {TILE} !important;
-  border-radius: 16px !important; overflow: hidden;
+  border-radius: 0 !important; overflow: hidden;
   display: grid !important; place-items: center; margin: 0 !important;
 }}
 body .product-detail-gallery .product-detail-gallery__link {{
@@ -589,7 +592,7 @@ body .product-detail-gallery__thmb-inner {{
 }}
 body .product-detail-gallery__thmb-inner > * {{
   width: 78px !important; height: 78px !important; margin: 0 !important;
-  border-radius: 10px !important; overflow: hidden;
+  border-radius: 0 !important; overflow: hidden;
   background: {TILE} !important; border: 1px solid {LINE} !important;
   transition: border-color .2s ease;
 }}
@@ -630,7 +633,7 @@ body .detail .buy_block .btn {{
 
 /* характеристики: две колонки с волосяной линией вместо плотного списка */
 body .char-side__title {{
-  font-family: "Playfair Display", Georgia, serif !important;
+  font-family: Prata, Georgia, serif !important;
   font-size: 21px !important; font-weight: 500 !important;
   margin-bottom: 14px !important; text-transform: none !important;
 }}
@@ -682,14 +685,14 @@ body .bottom-info .tab-content > .tab-pane > .bordered {{
   padding: 28px 0 0 !important; border-radius: 0 !important;
 }}
 body .bottom-info .ordered-block__title {{
-  font-family: "Playfair Display", Georgia, serif !important;
+  font-family: Prata, Georgia, serif !important;
   font-size: 26px !important; font-weight: 500 !important; text-transform: none !important;
 }}
 
 /* боковой блок обратной связи — карточка в тон */
 body .bottom-info-wrapper .side-block {{
   background: {CARD} !important; border: 1px solid {LINE} !important;
-  border-radius: 14px !important; overflow: hidden;
+  border-radius: 0 !important; overflow: hidden;
 }}
 body .bottom-info-wrapper .side-block__bottom {{ border-top: 1px solid {LINE} !important; }}
 
@@ -712,13 +715,13 @@ body .cat_sections.cat_sections .item_block {{ height: auto !important; }}
 body .cat_sections.cat_sections .item.compact {{
   background: {CARD} !important;
   border: 1px solid {LINE} !important;
-  border-radius: 14px !important;
+  border-radius: 0 !important;
   overflow: hidden;
   height: 100%;
   transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 }}
 body .cat_sections.cat_sections .item.compact:hover {{
-  border-color: rgba(168, 33, 60, .55) !important;
+  border-color: {GOLD_LINE} !important;
   box-shadow: 0 20px 44px rgba(0, 0, 0, .55);
   transform: translateY(-3px);
 }}
@@ -740,7 +743,7 @@ body .cat_sections.cat_sections .item.compact .name {{
   padding: 16px 16px 18px !important; margin: 0 !important; text-align: center;
 }}
 body .cat_sections.cat_sections .item.compact .name a {{
-  font-family: "Playfair Display", Georgia, serif !important;
+  font-family: Prata, Georgia, serif !important;
   font-size: 18px !important; font-weight: 500 !important;
   letter-spacing: .01em !important; line-height: 1.25 !important;
 }}
@@ -767,10 +770,10 @@ body .cat_sections.cat_sections .item.compact .name a {{
   max-width: min(46vw, 720px) !important; height: auto !important;
 }}
 .top_slider_wrapp .banner_buttons .btn {{
-  background: #fff !important; border-color: #fff !important; color: {ACCENT_DEEP} !important;
+  background: {ACCENT} !important; border-color: {ACCENT} !important; color: {ON_ACCENT} !important;
 }}
 .top_slider_wrapp .banner_buttons .btn:hover {{
-  background: {GOLD} !important; border-color: {GOLD} !important; color: #1a1211 !important;
+  background: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important; color: {ON_ACCENT} !important;
 }}
 
 /* ======================================================================
@@ -790,12 +793,12 @@ body .cat_sections.cat_sections .item.compact .name a {{
   min-width: 0 !important; max-width: none !important;
   padding: 0 !important; line-height: 1 !important;
   display: inline-flex !important; align-items: center !important; justify-content: center !important;
-  border-radius: 999px !important;
+  border-radius: 0 !important;
   border: 1px solid {LINE} !important; background: transparent !important;
   transition: border-color .2s ease, background-color .2s ease;
 }}
 .btn.wish_item:hover, .btn.compare_item:hover, .btn.btn-search:hover, .top-btn:hover {{
-  border-color: {ACCENT} !important; background: rgba(168, 33, 60, .10) !important;
+  border-color: {ACCENT} !important; background: {ACCENT_SOFT} !important;
 }}
 .catalog_item .btn.wish_item, .catalog_item .btn.compare_item,
 .catalog_item .wish_item.btn, .catalog_item .compare_item.btn {{
@@ -809,7 +812,7 @@ body .inline-search-block .search-button-div .btn.btn-search.btn-lg,
 body .search-button-div .btn.btn-search.btn-lg,
 body .search-button-div .btn, body .search-button-div button {{
   width: 42px !important; height: 42px !important; padding: 0 !important;
-  min-width: 0 !important; border-radius: 999px !important;
+  min-width: 0 !important; border-radius: 0 !important;
   display: inline-flex !important; align-items: center !important; justify-content: center !important;
 }}
 .search-button-div {{ right: 6px !important; left: auto !important; }}
@@ -822,7 +825,7 @@ body .counter_wrapp .counter_block, body .counter_block.md, body .counter_block 
   width: 138px !important; min-width: 0 !important; max-width: none !important;
   height: 54px !important; padding: 0 !important; margin: 0 !important;
   flex: 0 0 auto !important;
-  border: 1px solid {LINE} !important; border-radius: 999px !important;
+  border: 1px solid {LINE} !important; border-radius: 0 !important;
   overflow: hidden !important; background: transparent !important;
 }}
 body .counter_block .minus, body .counter_block .plus {{
@@ -840,7 +843,7 @@ body .counter_block input.text, body .counter_block .text, body .counter_block i
   width: 100% !important; height: 100% !important; padding: 0 42px !important; margin: 0 !important;
   text-align: center !important; border: 0 !important; border-radius: 0 !important;
   background: transparent !important; color: {INK} !important;
-  font-family: Inter, sans-serif !important; font-size: 16px !important; font-weight: 600 !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 16px !important; font-weight: 600 !important;
   box-shadow: none !important; line-height: 52px !important;
 }}
 body .counter_block input:focus {{ box-shadow: none !important; outline: 0 !important; }}
@@ -856,14 +859,14 @@ body .catalog_item .counter_block input {{ padding: 0 36px !important; font-size
   fill: currentColor !important;
 }}
 .svg.inline svg [fill="none"] {{ fill: none !important; }}
-body .counter_block .minus, body .counter_block .plus {{ color: rgba(241, 234, 227, .72) !important; }}
+body .counter_block .minus, body .counter_block .plus {{ color: rgba(243, 232, 216, .72) !important; }}
 
 /* --- одна форма для всех мелких подписей -------------------------------- */
 .top_block .title_wrapper > .muted, .section-subtitle,
 body .char-side__title, .ordered-block__title--small,
 .footer_inner .title, footer.footer .title,
 .top_slider_wrapp .slides > li .banner_title .section {{
-  font-family: Inter, sans-serif !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important;
   font-size: 11px !important; font-weight: 600 !important;
   letter-spacing: .14em !important; text-transform: uppercase !important;
   color: {GOLD} !important;
@@ -872,7 +875,7 @@ body .char-side__title {{ margin-bottom: 16px !important; }}
 
 /* артикул и единица измерения — тихая служебная строка */
 .article_block, .article, .price_measure, .item .article_block {{
-  font-family: Inter, sans-serif !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important;
   font-size: 12px !important; letter-spacing: .04em !important;
   color: {MUTED} !important; text-transform: none !important;
 }}
@@ -901,7 +904,7 @@ body .header_wrap .logo-row .burger, body .header-wrapper .logo-row .burger {{
   height: 44px !important; width: 44px !important; padding: 0 !important;
   margin: 0 16px 0 0 !important; display: inline-flex !important;
   align-items: center !important; justify-content: center !important;
-  border-radius: 999px !important;
+  border-radius: 0 !important;
 }}
 body .header_wrap .logo-row .burger svg, body .header-wrapper .logo-row .burger svg {{
   width: 22px !important; height: 22px !important;
@@ -957,7 +960,7 @@ body .header_wrap .phone .svg-inline-down svg, body .header-wrapper .phone .svg-
   width: 10px !important; height: 10px !important;
 }}
 body .header_wrap .callback-block, body .header-wrapper .callback-block {{
-  font-family: Inter, sans-serif !important; font-size: 11px !important; font-weight: 600 !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 11px !important; font-weight: 600 !important;
   letter-spacing: .12em !important; text-transform: uppercase !important;
   color: {GOLD} !important; cursor: pointer;
 }}
@@ -981,15 +984,15 @@ body .header_wrap .right-icons .personal-link, body .header-wrapper .right-icons
   display: inline-flex !important; align-items: center !important; justify-content: center !important;
   gap: 9px !important; height: 42px !important; width: auto !important; min-width: 0 !important;
   padding: 0 16px !important; margin: 0 !important;
-  border: 1px solid {LINE} !important; border-radius: 999px !important;
+  border: 1px solid {LINE} !important; border-radius: 0 !important;
   background: transparent !important; box-shadow: none !important;
-  font-family: Inter, sans-serif !important; font-size: 13px !important; font-weight: 500 !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 13px !important; font-weight: 500 !important;
   letter-spacing: .01em !important; text-transform: none !important; color: {INK} !important;
   transition: border-color .2s ease, background-color .2s ease;
 }}
 body .header_wrap .right-icons .top-btn:hover, body .header-wrapper .right-icons .top-btn:hover,
 body .header_wrap .right-icons .personal-link:hover, body .header-wrapper .right-icons .personal-link:hover {{
-  border-color: {ACCENT} !important; background: rgba(168, 33, 60, .10) !important; color: {INK} !important;
+  border-color: {ACCENT} !important; background: {ACCENT_SOFT} !important; color: {INK} !important;
 }}
 body .header_wrap .right-icons svg, body .header-wrapper .right-icons svg {{
   width: 18px !important; height: 18px !important; margin: 0 !important;
@@ -1001,7 +1004,7 @@ body .header_wrap .right-icons .title, body .header-wrapper .right-icons .title,
 body .header_wrap .right-icons .wrap, body .header-wrapper .right-icons .wrap,
 body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   display: inline !important; position: static !important; margin: 0 !important; padding: 0 !important;
-  font-family: Inter, sans-serif !important; font-size: 13px !important; font-weight: 500 !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 13px !important; font-weight: 500 !important;
   letter-spacing: .01em !important; text-transform: none !important; line-height: 1 !important;
   color: inherit !important;
 }}
@@ -1013,20 +1016,20 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
 .ms-toast {{
   position: fixed; right: 24px; bottom: 24px; z-index: 5000;
   display: flex; align-items: center; gap: 18px;
-  padding: 14px 18px 14px 20px; border-radius: 14px;
+  padding: 14px 18px 14px 20px; border-radius: 0;
   background: {PANEL}; color: {INK}; border: 1px solid {LINE};
   box-shadow: 0 24px 60px rgba(0, 0, 0, .55);
   transform: translateY(16px); opacity: 0; transition: transform .25s ease, opacity .25s ease;
-  font-family: Inter, sans-serif; font-size: 14px; max-width: min(420px, calc(100vw - 48px));
+  font-family: "Golos Text", "Segoe UI", sans-serif; font-size: 14px; max-width: min(420px, calc(100vw - 48px));
 }}
 .ms-toast.is-on {{ transform: none; opacity: 1; }}
 .ms-toast__link {{
-  flex: 0 0 auto; padding: 9px 16px; border-radius: 999px;
-  background: {ACCENT} !important; color: #fff !important; font-weight: 600; font-size: 13px;
+  flex: 0 0 auto; padding: 9px 16px; border-radius: 0;
+  background: {ACCENT} !important; color: {ON_ACCENT} !important; font-weight: 600; font-size: 13px;
 }}
 .ms-toast__link:hover {{ background: {ACCENT_HOVER} !important; }}
-.to-cart.ms-added {{ background: #3a2c2a !important; border-color: #3a2c2a !important; }}
-.basket_count.ms-has-items, .wrap_basket .count.ms-has-items {{ background: {ACCENT} !important; color: #fff !important; }}
+.to-cart.ms-added {{ background: #3a2a22 !important; border-color: #3a2a22 !important; }}
+.basket_count.ms-has-items, .wrap_basket .count.ms-has-items {{ background: {ACCENT} !important; color: {ON_ACCENT} !important; }}
 
 .ms-basket-root {{ padding: 8px 0 40px; }}
 .ms-cart {{ display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 40px; align-items: start; }}
@@ -1037,41 +1040,41 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   border-bottom: 1px solid {LINE};
 }}
 .ms-item__pic {{
-  width: 96px; height: 96px; border-radius: 12px; overflow: hidden;
+  width: 96px; height: 96px; border-radius: 0; overflow: hidden;
   background: {TILE}; display: block;
 }}
 .ms-item__pic img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
 .ms-item__name {{
-  font-family: "Playfair Display", Georgia, serif !important; font-size: 19px !important;
+  font-family: Prata, Georgia, serif !important; font-size: 19px !important;
   font-weight: 500 !important; color: {INK} !important; line-height: 1.25;
 }}
 .ms-item__meta {{ margin-top: 6px; font-size: 13px; color: {MUTED}; }}
-.ms-item__sum {{ min-width: 92px; text-align: right; font-family: "Playfair Display", Georgia, serif; font-size: 21px; }}
+.ms-item__sum {{ min-width: 92px; text-align: right; font-family: Prata, Georgia, serif; font-size: 21px; }}
 .ms-item__remove {{
-  width: 36px; height: 36px; border-radius: 999px; border: 1px solid {LINE};
+  width: 36px; height: 36px; border-radius: 0; border: 1px solid {LINE};
   background: transparent; color: {MUTED}; font-size: 20px; line-height: 1; cursor: pointer;
   transition: color .2s ease, border-color .2s ease;
 }}
 .ms-item__remove:hover {{ color: {INK}; border-color: {ACCENT}; }}
-.ms-qty {{ display: inline-flex; align-items: stretch; height: 44px; border: 1px solid {LINE}; border-radius: 999px; overflow: hidden; }}
+.ms-qty {{ display: inline-flex; align-items: stretch; height: 44px; border: 1px solid {LINE}; border-radius: 0; overflow: hidden; }}
 .ms-qty__btn {{
   width: 38px; border: 0; background: transparent; color: {MUTED}; font-size: 18px; cursor: pointer;
 }}
 .ms-qty__btn:hover {{ color: {INK}; }}
 .ms-qty__input {{
   width: 46px !important; border: 0 !important; background: transparent !important; text-align: center !important;
-  padding: 0 !important; font-family: Inter, sans-serif !important; font-size: 15px !important; font-weight: 600 !important;
+  padding: 0 !important; font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 15px !important; font-weight: 600 !important;
   color: {INK} !important; border-radius: 0 !important; box-shadow: none !important;
 }}
 
 .ms-summary {{
   position: sticky; top: 118px;
-  background: {CARD}; border: 1px solid {LINE}; border-radius: 16px; padding: 24px;
+  background: {CARD}; border: 1px solid {LINE}; border-radius: 0; padding: 24px;
 }}
 .ms-summary__row {{ display: flex; justify-content: space-between; font-size: 14px; color: {MUTED}; padding: 6px 0; }}
 .ms-summary__row--total {{
   margin-top: 8px; padding-top: 16px; border-top: 1px solid {LINE};
-  color: {INK}; font-family: "Playfair Display", Georgia, serif; font-size: 26px;
+  color: {INK}; font-family: Prata, Georgia, serif; font-size: 26px;
 }}
 .ms-summary__btn {{ display: flex !important; justify-content: center; width: 100%; margin-top: 18px; }}
 .ms-summary__note {{ margin-top: 16px; font-size: 12px; line-height: 1.55; color: {MUTED}; }}
@@ -1081,7 +1084,7 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: {GOLD}; margin-bottom: 10px;
 }}
 .ms-order__title, .ms-done__title {{
-  font-family: "Playfair Display", Georgia, serif !important; font-size: clamp(26px, 2.8vw, 36px) !important;
+  font-family: Prata, Georgia, serif !important; font-size: clamp(26px, 2.8vw, 36px) !important;
   font-weight: 500 !important; margin: 0 0 26px !important; color: {INK} !important;
 }}
 .ms-form {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; max-width: 860px; }}
@@ -1092,7 +1095,7 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
 .ms-choice {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }}
 .ms-choice label {{
   display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 12px;
-  padding: 14px 16px; border: 1px solid {LINE}; border-radius: 12px; cursor: pointer; align-items: center;
+  padding: 14px 16px; border: 1px solid {LINE}; border-radius: 0; cursor: pointer; align-items: center;
   transition: border-color .2s ease;
 }}
 .ms-choice label:has(input:checked) {{ border-color: {ACCENT}; }}
@@ -1104,14 +1107,14 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
 .ms-form__error {{ grid-column: 1 / -1; color: #e0596f; font-size: 14px; }}
 
 .ms-empty {{ padding: 40px 0 20px; max-width: 520px; }}
-.ms-empty__title {{ font-family: "Playfair Display", Georgia, serif; font-size: 30px; margin-bottom: 10px; }}
+.ms-empty__title {{ font-family: Prata, Georgia, serif; font-size: 30px; margin-bottom: 10px; }}
 .ms-empty__text {{ color: {MUTED}; margin: 0 0 24px; }}
 
 .ms-done {{ max-width: 720px; padding: 10px 0 20px; }}
 .ms-done__text {{ font-size: 16px; line-height: 1.6; margin: 0 0 24px; }}
 .ms-done__list {{ border-top: 1px solid {LINE}; margin-bottom: 26px; }}
 .ms-done__row {{ display: flex; justify-content: space-between; gap: 20px; padding: 11px 0; border-bottom: 1px solid {LINE}; font-size: 15px; }}
-.ms-done__row--total {{ font-family: "Playfair Display", Georgia, serif; font-size: 22px; }}
+.ms-done__row--total {{ font-family: Prata, Georgia, serif; font-size: 22px; }}
 .ms-done__actions {{ display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }}
 .ms-done__phone {{ font-size: 16px; font-weight: 600; color: {INK} !important; margin-left: 6px; }}
 .ms-done__note {{ margin: 26px 0 18px; font-size: 13px; line-height: 1.55; color: {MUTED}; }}
@@ -1153,7 +1156,7 @@ body .cat_sections.cat_sections .item.compact .img.shine {{ aspect-ratio: 1 / 1;
 body .cat_sections.cat_sections .item.compact .name {{
   position: absolute !important; left: 0; right: 0; bottom: 0;
   padding: 54px 20px 18px !important; text-align: left !important;
-  background: linear-gradient(to top, rgba(14, 9, 9, .88) 0%, rgba(14, 9, 9, .55) 55%, rgba(14, 9, 9, 0) 100%);
+  background: linear-gradient(to top, rgba(18, 11, 8, .88) 0%, rgba(18, 11, 8, .55) 55%, rgba(18, 11, 8, 0) 100%);
   pointer-events: none;
 }}
 body .cat_sections.cat_sections .item.compact .name a {{
@@ -1170,7 +1173,7 @@ body .CATALOG_SECTIONS {{ padding-top: clamp(40px, 4vw, 64px) !important; paddin
 /* --- хиты продаж: вкладки как подпись, сетка как в каталоге ------------- */
 body .CATALOG_TAB .tab_slider_wrapp .tabs {{ border-bottom: 1px solid {LINE} !important; margin-bottom: 26px !important; }}
 body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a {{
-  font-family: "Playfair Display", Georgia, serif !important; font-size: 26px !important;
+  font-family: Prata, Georgia, serif !important; font-size: 26px !important;
   font-weight: 500 !important; text-transform: none !important; letter-spacing: -.01em !important;
   padding: 0 0 14px !important; background: transparent !important; border: 0 !important;
   color: {MUTED} !important;
@@ -1189,7 +1192,7 @@ body .COMPANY_TEXT .text-block .text {{
 body .COMPANY_TEXT .text-block .text p {{ font-size: 16px !important; line-height: 1.7 !important; }}
 body .COMPANY_TEXT .image-block .item.video-block {{
   width: 100% !important; min-height: 360px !important; height: 100% !important;
-  border-radius: 18px !important; overflow: hidden;
+  border-radius: 0 !important; overflow: hidden;
   background: {PANEL} url("/assets/about.jpg?v=1") center / cover no-repeat !important;
   border: 1px solid {LINE} !important;
 }}
@@ -1203,7 +1206,7 @@ body .COMPANY_TEXT {{ padding-top: clamp(56px, 6vw, 96px) !important; padding-bo
 body .TIZERS .item {{ padding: 26px 18px !important; }}
 body .TIZERS .item .icon, body .TIZERS .item .icon svg, body .TIZERS .item svg {{ color: {GOLD} !important; }}
 body .TIZERS .item .title {{
-  font-family: "Playfair Display", Georgia, serif !important; font-size: 19px !important;
+  font-family: Prata, Georgia, serif !important; font-size: 19px !important;
   font-weight: 500 !important; margin: 14px 0 8px !important; text-transform: none !important;
 }}
 body .TIZERS .item .text, body .TIZERS .item .muted {{ font-size: 14px !important; line-height: 1.55 !important; color: {MUTED} !important; }}
@@ -1211,7 +1214,7 @@ body .TIZERS .item .text, body .TIZERS .item .muted {{ font-size: 14px !importan
 /* --- подвал: без пустой полосы между колонками и копирайтом ------------- */
 body .footer-inner .footer_top {{ padding: 56px 0 40px !important; }}
 body .footer-inner .footer_middle {{ display: none !important; }}
-body .footer-inner .footer_bottom {{ padding: 20px 0 !important; border-top: 1px solid rgba(241, 234, 227, .08) !important; }}
+body .footer-inner .footer_bottom {{ padding: 20px 0 !important; border-top: 1px solid rgba(243, 232, 216, .08) !important; }}
 body .footer-inner .footer_bottom, body .footer-inner .footer_bottom * {{ font-size: 12px !important; }}
 body footer .bottom-menu li a, body footer .footer_top .menu li a {{ font-size: 14px !important; line-height: 1.5 !important; }}
 
@@ -1235,7 +1238,7 @@ body .search-button-div .btn, body .search-button-div button {{
 .btn.wish_item:hover, .btn.compare_item:hover, .wish_item.btn:hover, .compare_item.btn:hover,
 .btn.btn-search:hover, button.btn-search:hover,
 body .search-button-div .btn:hover, body .search-button-div button:hover {{
-  border: 0 !important; background: {ACCENT} !important; color: #fff !important;
+  border: 0 !important; background: {ACCENT} !important; color: {ON_ACCENT} !important;
 }}
 
 /* шапка: «Поиск» и «Войти» — просто значок с подписью, без пилюли */
@@ -1251,6 +1254,208 @@ body .header_wrap .logo-row .burger:hover, body .header-wrapper .logo-row .burge
 .header_wrap .wrap_icon:hover, .header_wrap .burger:hover, .header_wrap .menu-burger:hover {{
   background: transparent !important; color: {ACCENT_HOVER} !important;
 }}
+
+/* ======================================================================
+   Направление «Чёрный шоколад». Блок идёт последним и задаёт форму:
+   квадратные кнопки капителью с разрядкой, волосяные линии вместо плашек,
+   золото как единственный акцент, изделия на тёмной сцене (серия v9).
+   ====================================================================== */
+
+/* --- кнопки: квадрат, капитель с разрядкой ------------------------------ */
+.btn, .btn.btn-default, .btn.btn-lg, .btn.btn-sm, .btn.btn-xs, button.btn, input[type=submit] {{
+  font-family: "Golos Text", "Segoe UI", sans-serif !important;
+  font-size: 12px !important; font-weight: 600 !important;
+  letter-spacing: .14em !important; text-transform: uppercase !important;
+  line-height: 1 !important; padding: 18px 32px !important;
+}}
+.btn.btn-lg {{ padding: 20px 38px !important; }}
+.btn.btn-sm, .btn.btn-xs {{ padding: 13px 18px !important; font-size: 11px !important; }}
+.btn.btn-transparent, .btn.btn-default.transparent, .btn.btn-default.white {{
+  color: {GOLD} !important; border-color: {GOLD_LINE} !important; background: transparent !important;
+}}
+.btn.btn-transparent:hover, .btn.btn-default.transparent:hover, .btn.btn-default.white:hover {{
+  color: {ON_ACCENT} !important; background: {ACCENT} !important; border-color: {ACCENT} !important;
+}}
+
+/* --- логотип золотом, подписи в шапке капителью -------------------------- */
+.logo svg .st0, .logo svg .st1, .logo svg path, .logo svg polygon {{ fill: {GOLD} !important; }}
+body .header_wrap .logo-row .float_wrapper .hidden-sm,
+body .header-wrapper .logo-row .float_wrapper .hidden-sm {{
+  font-size: 11px !important; letter-spacing: .12em !important; text-transform: uppercase !important;
+  line-height: 1.5 !important; max-width: 200px !important;
+}}
+body .header_wrap .phone > a, body .header-wrapper .phone > a {{
+  font-size: 17px !important; font-weight: 500 !important; letter-spacing: 0 !important;
+}}
+body .header_wrap .right-icons .title, body .header-wrapper .right-icons .title,
+body .header_wrap .right-icons .wrap, body .header-wrapper .right-icons .wrap,
+body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
+  font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: .14em !important; text-transform: uppercase !important;
+}}
+.header_wrap, .header-wrapper, header > .header-wrapper {{
+  box-shadow: 0 1px 0 {LINE} !important;
+}}
+
+/* --- карточки: волосяная рамка, цена золотом ----------------------------- */
+.item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container {{
+  background: {CARD} !important; border: 1px solid {LINE} !important; padding: 16px 16px 18px !important;
+}}
+.item_block:hover .catalog_item, .catalog_item_wrapp:hover .catalog_item {{
+  border-color: {LINE} !important; box-shadow: 0 24px 50px rgba(0, 0, 0, .5) !important; transform: translateY(-2px);
+}}
+.catalog_item .image_wrapper_block, .product-item-image-wrapper {{
+  background: {TILE} !important; border: 1px solid {LINE} !important;
+}}
+@media (min-width: 768px) {{
+  .item_block .catalog_item, .catalog_item_wrapp .catalog_item {{ padding: 16px 16px 18px !important; }}
+  .item-title a, .product-item-title a {{ font-size: 20px !important; }}
+  .catalog_item .price, .price_value {{ font-size: 22px !important; }}
+}}
+.item-title a, .product-item-title a {{ font-family: Prata, Georgia, serif !important; font-weight: 400 !important; }}
+.catalog_item .price, .price_matrix_wrapper .price, .product-item-price-current, .price_value,
+.catalog_item .price .price_value, .catalog_item .price .price_currency {{
+  color: {GOLD} !important; font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+}}
+.catalog_item .footer_button .btn, .catalog_item .footer_button .btn.to-cart,
+.catalog_item .footer_button .btn.btn-default {{
+  background: transparent !important; border: 1px solid rgba(243, 232, 216, .22) !important;
+  color: {INK} !important; font-size: 11px !important; padding: 14px 16px !important;
+}}
+.catalog_item .footer_button .btn:hover, .catalog_item .footer_button .btn.to-cart:hover {{
+  background: {ACCENT} !important; border-color: {ACCENT} !important; color: {ON_ACCENT} !important;
+}}
+.catalog_item .footer_button .btn.ms-added, .to-cart.ms-added {{
+  background: {ACCENT_SOFT} !important; border-color: {GOLD_LINE} !important; color: {GOLD} !important;
+}}
+
+/* --- страница товара ---------------------------------------------------- */
+body .product-detail-gallery .product-detail-gallery__item {{
+  background: {TILE} !important; border: 1px solid {LINE} !important;
+}}
+body .product-detail-gallery__thmb-inner > * {{ width: 84px !important; height: 84px !important; }}
+body .detail .prices_block .price_value, body .detail .prices_block .price_currency,
+body .detail .price_value {{
+  color: {GOLD} !important; font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+}}
+body .product-main .product-chars {{ border-top: 1px solid {GOLD_LINE} !important; }}
+body .product-chars .properties__item {{ grid-template-columns: 180px 1fr; padding: 13px 0 !important; }}
+body .product-chars .properties__value {{ font-size: 15px !important; }}
+body .detail .buy_block .btn {{ padding: 20px 30px !important; }}
+body .bottom-info .tabs .nav-tabs > li > a {{
+  font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: .14em !important; text-transform: uppercase !important;
+}}
+body .bottom-info .tabs .nav-tabs > li.active > a {{ box-shadow: inset 0 -1px 0 {GOLD} !important; }}
+
+/* --- главный баннер: заголовок антиквой, текст сливками ------------------ */
+.top_slider_wrapp .slides > li .banner_title .head-title {{
+  font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  font-size: clamp(38px, 5vw, 76px) !important; line-height: 1.04 !important;
+  letter-spacing: 0 !important; text-transform: none !important; color: {INK} !important;
+}}
+.top_slider_wrapp .slides > li .banner_title {{ color: {INK} !important; }}
+.top_slider_wrapp .slides > li .banner_text {{
+  color: rgba(243, 232, 216, .65) !important; font-size: 17px !important; line-height: 1.65 !important;
+  max-width: 460px;
+}}
+.top_slider_wrapp td.img img {{ max-width: min(44vw, 660px) !important; }}
+
+/* --- разделы на главной: ряд квадратов, подпись под фотографией ---------- */
+body .cat_sections.cat_sections .owl-stage {{
+  display: flex !important; flex-wrap: wrap !important; justify-content: center !important;
+  gap: 16px !important;
+}}
+body .cat_sections.cat_sections .owl-item {{ width: calc((100% - 5 * 16px) / 6) !important; }}
+body .cat_sections.cat_sections .owl-item:first-child {{ grid-column: auto; grid-row: auto; }}
+body .cat_sections.cat_sections .item.compact,
+body .cat_sections.cat_sections .item.compact:hover {{
+  background: transparent !important; border: 0 !important; box-shadow: none !important; transform: none !important;
+}}
+body .cat_sections.cat_sections .item.compact .img.shine,
+body .cat_sections.cat_sections .owl-item:first-child .item.compact .img.shine {{
+  aspect-ratio: 1 / 1 !important; height: auto !important;
+  border: 1px solid {LINE} !important; background: {TILE} !important;
+}}
+body .cat_sections.cat_sections .item.compact:hover .img.shine img {{ transform: scale(1.03); }}
+body .cat_sections.cat_sections .item.compact .name {{
+  position: static !important; padding: 14px 0 0 !important;
+  background: none !important; text-align: left !important; pointer-events: auto;
+}}
+body .cat_sections.cat_sections .item.compact .name a,
+body .cat_sections.cat_sections .owl-item:first-child .item.compact .name a {{
+  font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  font-size: 20px !important; color: {INK} !important; text-shadow: none !important;
+}}
+@media (max-width: 1199px) {{
+  body .cat_sections.cat_sections .owl-item {{ width: calc((100% - 3 * 16px) / 4) !important; }}
+}}
+@media (max-width: 600px) {{
+  body .cat_sections.cat_sections .owl-item {{ width: calc((100% - 12px) / 2) !important; }}
+  body .cat_sections.cat_sections .owl-stage {{ gap: 12px !important; }}
+  body .cat_sections.cat_sections .item.compact .name a {{ font-size: 16px !important; }}
+}}
+
+/* --- хиты: четыре в ряд, вкладки антиквой ------------------------------- */
+@media (min-width: 1200px) {{
+  body .CATALOG_TAB .catalog_block.items.row {{ grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 16px !important; }}
+}}
+body .CATALOG_TAB .tab_slider_wrapp .tabs {{ border-bottom: 1px solid {GOLD_LINE} !important; }}
+body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a {{
+  font-family: Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 34px !important;
+}}
+body .CATALOG_TAB .tabs li.cur a, body .CATALOG_TAB .nav-tabs li.active a {{ box-shadow: none !important; }}
+
+/* --- о компании: полоса в золотой рамке, фото справа --------------------- */
+body .COMPANY_TEXT .company-block .row.flexbox {{ border: 1px solid {GOLD_LINE} !important; }}
+body .COMPANY_TEXT .text-block .item, body .COMPANY_TEXT .text-block .item-inner {{ height: 100% !important; }}
+body .COMPANY_TEXT .text-block .text {{ padding: 52px 56px 52px 8px !important; }}
+body .COMPANY_TEXT .image-block .item.video-block {{
+  border: 0 !important; border-left: 1px solid {GOLD_LINE} !important; min-height: 420px !important;
+  background-image: url("/assets/about.jpg?v=2") !important;
+}}
+body .COMPANY_TEXT .company-block .title, body .COMPANY_TEXT .top_block .title {{ font-size: clamp(30px, 3vw, 44px) !important; }}
+@media (max-width: 991px) {{
+  body .COMPANY_TEXT .text-block .text {{ padding: 28px 24px !important; }}
+  body .COMPANY_TEXT .image-block .item.video-block {{ border-left: 0 !important; border-top: 1px solid {GOLD_LINE} !important; min-height: 260px !important; }}
+}}
+
+/* --- преимущества: колонки с золотой линией сверху ----------------------- */
+body .TIZERS .item {{ text-align: left !important; padding: 22px 0 0 !important; border-top: 1px solid {GOLD_LINE} !important; }}
+body .TIZERS .item .image {{ display: none !important; }}
+body .TIZERS .item .title {{ font-family: Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 22px !important; margin: 0 0 10px !important; }}
+body .TIZERS .item .value, body .TIZERS .item .text {{ font-size: 14px !important; line-height: 1.65 !important; color: {MUTED} !important; }}
+body .TIZERS .item-wrapper {{ padding-left: 20px !important; padding-right: 20px !important; }}
+
+/* --- корзина -------------------------------------------------------------- */
+.ms-item__name, .ms-item__sum, .ms-summary__row--total, .ms-done__row--total, .ms-empty__title {{
+  font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+}}
+.ms-item__sum, .ms-summary__row--total {{ color: {GOLD}; }}
+.ms-summary {{ background: transparent; border: 1px solid {GOLD_LINE}; }}
+.ms-toast__link {{ font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 11px 16px; }}
+.ms-item__pic {{ border: 1px solid {LINE}; }}
+
+/* --- подвал ------------------------------------------------------------- */
+.footer_inner, .footer-block, footer.footer, .footer_bottom {{ background: #0c0705 !important; }}
+body .footer-inner .footer_top {{ border-top: 1px solid {LINE} !important; }}
+
+.stickers > div:not([class*="sticker_"]) {{
+  background: transparent !important; padding: 0 !important; margin: 0 0 6px !important; box-shadow: none !important;
+}}
+body .cat_sections.cat_sections .item.compact .name a {{ display: block !important; text-transform: lowercase !important; }}
+body .cat_sections.cat_sections .item.compact .name a::first-letter {{ text-transform: uppercase !important; }}
+body .CATALOG_SECTIONS .sections_wrapper {{ padding-bottom: 0 !important; }}
+body .CATALOG_SECTIONS {{ padding-bottom: 24px !important; }}
+body .catalog_item .item-title a {{ display: block !important; text-transform: lowercase !important; }}
+body .catalog_item .item-title a::first-letter {{ text-transform: uppercase !important; }}
+
+.page-top, .section-content-wrapper > .page-top {{ padding: 40px 16px 10px !important; }}
+.catalog_page_detail .page-top, .catalog_page .page-top {{ padding-left: 30px !important; padding-right: 30px !important; }}
+.ms-basket-root {{ padding: 8px 16px 40px; }}
+.page-top .topic, h1#pagetitle, .detail .topic h1 {{ text-transform: lowercase !important; }}
+.page-top .topic::first-letter, h1#pagetitle::first-letter {{ text-transform: uppercase !important; }}
+.drag-block.SALE:not(:has(*)), .drag-block.REVIEWS:not(:has(*)) {{ display: none !important; }}
 """
 
 
