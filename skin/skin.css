@@ -2205,3 +2205,40 @@ body .footer-inner .footer_middle { display: none !important; }
 body .footer-inner .footer_bottom { padding: 20px 0 !important; border-top: 1px solid rgba(241, 234, 227, .08) !important; }
 body .footer-inner .footer_bottom, body .footer-inner .footer_bottom * { font-size: 12px !important; }
 body footer .bottom-menu li a, body footer .footer_top .menu li a { font-size: 14px !important; line-height: 1.5 !important; }
+
+/* ======================================================================
+   Наведение без рамок. Раньше при наведении появлялась бордовая рамка:
+   у карточек товара, у плиток разделов, у значков «в избранное» и
+   «сравнить» на странице товара, у «Поиск» и «Войти» в шапке. Здесь всё
+   это снято: реакция на наведение — подъём, тень и цвет значка.
+   ====================================================================== */
+
+/* карточки и плитки: рамка не меняется */
+.item_block:hover .catalog_item, .catalog_item_wrapp:hover .catalog_item { border-color: rgba(241, 234, 227, .10) !important; }
+body .cat_sections.cat_sections .item.compact:hover { border-color: rgba(241, 234, 227, .10) !important; }
+
+/* кнопки-значки: без рамки в покое и при наведении, круг заливается цветом */
+.btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn,
+.btn.btn-search, button.btn-search, .btn.subscribe, .btn[class*="icon_"], .btn.close,
+body .search-button-div .btn, body .search-button-div button {
+  border: 0 !important; background: #221b19 !important;
+}
+.btn.wish_item:hover, .btn.compare_item:hover, .wish_item.btn:hover, .compare_item.btn:hover,
+.btn.btn-search:hover, button.btn-search:hover,
+body .search-button-div .btn:hover, body .search-button-div button:hover {
+  border: 0 !important; background: #a8213c !important; color: #fff !important;
+}
+
+/* шапка: «Поиск» и «Войти» — просто значок с подписью, без пилюли */
+body .header_wrap .right-icons .top-btn, body .header-wrapper .right-icons .top-btn,
+body .header_wrap .right-icons .personal-link, body .header-wrapper .right-icons .personal-link {
+  border: 0 !important; padding: 0 12px !important; background: transparent !important;
+}
+body .header_wrap .right-icons .top-btn:hover, body .header-wrapper .right-icons .top-btn:hover,
+body .header_wrap .right-icons .personal-link:hover, body .header-wrapper .right-icons .personal-link:hover {
+  border: 0 !important; background: transparent !important; color: #c42b4c !important;
+}
+body .header_wrap .logo-row .burger:hover, body .header-wrapper .logo-row .burger:hover,
+.header_wrap .wrap_icon:hover, .header_wrap .burger:hover, .header_wrap .menu-burger:hover {
+  background: transparent !important; color: #c42b4c !important;
+}
