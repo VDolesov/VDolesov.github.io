@@ -60,7 +60,7 @@ def tile_real(path, w, h, box, focus):
 
 
 def tile_product(pid, w, h):
-    im = Image.open(os.path.join(PRODUCTS, f"{pid}-v7.webp"))
+    im = Image.open(os.path.join(PRODUCTS, f"{pid}-v8.webp"))
     return cover(im, w, h, (0.5, 0.52))
 
 

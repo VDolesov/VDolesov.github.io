@@ -48,7 +48,7 @@
   }
   function photo(id) {
     return PHOTOS.indexOf(id) !== -1
-      ? ORIGIN + "/assets/products/" + id + "-v7-640.webp"
+      ? ORIGIN + "/assets/products/" + id + "-v8-640.webp"
       : (PRODUCTS[id] && PRODUCTS[id].image) || "";
   }
 

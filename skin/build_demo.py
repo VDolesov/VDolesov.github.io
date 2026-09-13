@@ -61,7 +61,7 @@ PHOTO_SCRIPT = """
     img.removeAttribute("srcset");
     img.removeAttribute("data-src");
     img.classList.remove("lazy");
-    img.src = "%ORIGIN%/assets/products/" + id + "-v7.webp";
+    img.src = "%ORIGIN%/assets/products/" + id + "-v8.webp";
   }
 
   // страница товара: главное изображение и миниатюры галереи
@@ -88,7 +88,7 @@ PHOTO_SCRIPT = """
       img.removeAttribute("srcset");
       img.removeAttribute("data-src");
       img.classList.remove("lazy");
-      img.src = "%ORIGIN%/assets/products/" + sections[m[1]] + "-v7.webp";
+      img.src = "%ORIGIN%/assets/products/" + sections[m[1]] + "-v8.webp";
     });
 })();
 </script>
@@ -112,7 +112,7 @@ SECTION_PHOTOS = {
 BANNER = {
     # главный баннер: стоковая съёмка заменена своей — подложка и продукт
     "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=4",
-    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-mosaic.webp?v=1",
+    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-mosaic.webp?v=2",
 }
 
 

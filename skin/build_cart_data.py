@@ -20,7 +20,7 @@ PAGES_ORIGIN = "https://vdolesov.github.io"
 def main():
     catalog = json.load(io.open(os.path.join(APP, "build", "catalog.json"), encoding="utf-8"))
     photos = {f.split("-")[0] for f in os.listdir(os.path.join(APP, "assets", "products"))
-              if f.endswith("-v7-640.webp")}
+              if f.endswith("-v8-640.webp")}
 
     products = {}
     for item in catalog["items"]:
