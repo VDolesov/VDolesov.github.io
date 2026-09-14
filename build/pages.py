@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Страницы витрины: главная, каталог, карточки товаров, корзина, оформление,
-поиск, отложенные и текстовые разделы. Запускается из build/build_all.py.
-"""
 import json
 import os
 
@@ -42,8 +38,6 @@ def load_items():
                               else "Наличие уточнит менеджер")
     return items
 
-
-# ------------------------------------------------------------ общие фрагменты
 
 def catalog_toolbar(placeholder, chips=True):
     chip_html = ""
@@ -94,7 +88,6 @@ def section_tiles():
           <span class="category-tile__caption" data-section-count="{s['slug']}"></span>
         </a>""")
     return "\n".join(tiles)
-
 
 DELIVERY_BLOCK = """    <section class="delivery" id="delivery" aria-labelledby="deliveryTitle">
       <div class="delivery__header shell reveal">
@@ -147,8 +140,6 @@ FAQ_BLOCK = """    <section class="faq" id="faq" aria-labelledby="faqTitle">
     </section>
 """
 
-
-# -------------------------------------------------------------------- страницы
 
 def build_home():
     main = f"""  <main id="main">
@@ -356,8 +347,6 @@ def build_product(item, items):
         f'{item["name"]} — купить в Саратове | Мир сладостей',
         description, item["url"], main, SECTIONS, f'/catalog/{item["section"]}/'))
 
-
-# ------------------------------------------------- корзина, оформление, поиск
 
 def build_basket():
     main = f"""  <main id="main">

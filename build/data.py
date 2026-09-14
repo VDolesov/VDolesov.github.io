@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Сборка products.js из снимка каталога.
-
-Данные берутся из build/catalog.json (реальные цены, артикулы, состав и КБЖУ
-с сайта предприятия) и дополняются позициями, которых в нём ещё нет —
-осетинскими пирогами собственной съёмки.
-"""
 import json
 import os
 import re
@@ -25,7 +18,7 @@ SECTIONS = [
     ("napitki", "Напитки", "Напитки", "Фруктово-ягодный напиток в удобном формате — к выпечке, обеду или празднику."),
 ]
 
-# позиции собственной съёмки, которых нет в каталоге предприятия
+
 EXTRA = [
     {"id": "801", "section": "pirogi", "name": "Осетинский пирог с мясом", "price": 890,
      "unit": "шт", "article": "10801", "badges": ["Новинка"],
@@ -50,10 +43,6 @@ TYPE_BY_SECTION = {
 
 
 def pretty(name, section):
-    """Приводит названия каталога к читаемому виду.
-
-    «ПИРОГ С ВИШНЕЙ» → «Пирог с вишней», «Торт "ПРАГА"» → «Торт «Прага»».
-    """
     PREPOSITIONS = ("с ", "со ", "из ", "по ", "в ", "на ")
     name = name.strip().strip('"').strip()
 
@@ -69,7 +58,6 @@ def pretty(name, section):
         return core
     prefix = prefix.capitalize()
 
-    # «с вишней» — это описание начинки, имя собственное берём в кавычки
     if core.lower().startswith(PREPOSITIONS):
         return f"{prefix} {core[0].lower() + core[1:]}"
     if core.lower().startswith(prefix.lower()):
@@ -146,11 +134,11 @@ def main():
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
 
-    print("товаров:", len(items))
+    print("products:", len(items))
     for slug, title, *_ in SECTIONS:
         n = len([i for i in items if i["section"] == slug])
         print(f"  {title}: {n}")
-    print("записано:", OUT)
+    print("written:", OUT)
 
 
 if __name__ == "__main__":

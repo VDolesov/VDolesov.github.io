@@ -1,16 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Картинки главной страницы: подборка в баннер и кадр для блока «О компании».
-
-    assets/hero-mosaic.webp 1320x900   четыре кадра плиткой: слева высокий —
-                                       настоящая съёмка пирога на производстве,
-                                       справа два квадрата из каталожной серии
-    assets/about.jpg        1440x610   пирог на столе цеха, для блока о компании
-
-Подборка вместо одного выреза: у выреза на тёмном фоне всегда видно, что он
-вырезан. Кадры в рамках — нет: это просто фотографии.
-
-    python skin/home.py
-"""
 import os
 
 import numpy as np
@@ -26,7 +13,6 @@ W, H, GAP, RADIUS = 1320, 900, 26, 26
 
 
 def cover(im, w, h, focus=(0.5, 0.5)):
-    """Вписывает кадр в w×h с обрезкой, центр обрезки — в точке focus."""
     im = im.convert("RGB")
     scale = max(w / im.width, h / im.height)
     im = im.resize((round(im.width * scale), round(im.height * scale)), Image.LANCZOS)
@@ -69,13 +55,11 @@ def mosaic():
     col = (W - GAP) // 2
     row = (H - GAP) // 2
 
-    # слева — высокий кадр с производства: пирог на доске, тёмный стол
     left = tile_real(os.path.join(SITE, "i2.jpg"), col, H, (420, 420, 1330, 1440), (0.6, 0.25))
-    # справа — два кадра из каталожной серии
+
     top = tile_product("747", col, row)
     bottom = tile_product("746", col, row)
 
-    # мягкая тень под каждой плиткой, чтобы подборка не висела в воздухе
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     draw = ImageDraw.Draw(shadow)
     for box in ((0, 0, col, H), (col + GAP, 0, W, row), (col + GAP, row + GAP, W, H)):
@@ -87,7 +71,6 @@ def mosaic():
     canvas.alpha_composite(rounded(top, RADIUS), (col + GAP, 0))
     canvas.alpha_composite(rounded(bottom, RADIUS), (col + GAP, row + GAP))
 
-    # тонкая светлая кромка — как рамка у карточек
     edge = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(edge)
     for box in ((0, 0, col - 1, H - 1), (col + GAP, 0, W - 1, row - 1), (col + GAP, row + GAP, W - 1, H - 1)):
@@ -112,9 +95,8 @@ def main():
     p2 = os.path.join(OUT, "about.jpg")
     a.save(p2, quality=86, optimize=True, progressive=True)
     for p in (p1, p2):
-        print(f"  {os.path.basename(p)}  {os.path.getsize(p) // 1024} КБ")
+        print(f"  {os.path.basename(p)}  {os.path.getsize(p) // 1024} KB")
 
-    # предпросмотр на подложке баннера
     bg = Image.open(os.path.join(OUT, "hero-bg.jpg")).convert("RGB")
     frame = bg.resize((1425, round(1425 * bg.height / bg.width)), Image.LANCZOS)
     frame = frame.crop((0, (frame.height - 631) // 2, 1425, (frame.height - 631) // 2 + 631))

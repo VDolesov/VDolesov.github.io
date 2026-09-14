@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Сборка статических страниц витрины.
-
-Структура адресов повторяет mirsladostey164.ru — это нужно, чтобы вёрстку
-можно было положить на существующий бэкенд без потери ссылок и позиций
-в поиске. Данные берутся из build/catalog.json.
-"""
 import json
 import os
 import re
@@ -43,8 +36,6 @@ SECTION_LEAD = {
 }
 
 
-# --------------------------------------------------------------------- утилиты
-
 def esc(text):
     return (str(text).replace("&", "&amp;").replace("<", "&lt;")
             .replace(">", "&gt;").replace('"', "&quot;"))
@@ -60,8 +51,6 @@ def write(path, content):
     with open(full, "w", encoding="utf-8", newline="\n") as f:
         f.write(content)
 
-
-# ------------------------------------------------------------------- каркас
 
 def head(title, description, canonical):
     v = ASSETS_VERSION
@@ -87,7 +76,6 @@ def head(title, description, canonical):
 
 
 def nav_dropdown(title, href, items, active):
-    """Пункт меню с выпадающим списком — как в верхнем меню оригинала."""
     links = "".join(
         f'<a href="{h}"{" class=&quot;is-current&quot;" if h == active else ""}>{esc(t)}</a>'
         for t, h in items)

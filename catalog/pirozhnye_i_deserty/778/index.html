@@ -114,7 +114,7 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 </script>
 
 			
-<link rel="stylesheet" href="/skin/skin.css?v=19a19b3c">
+<link rel="stylesheet" href="/skin/skin.css?v=09dc0eb3">
 </head>
 <body class=" site_s1  fill_bg_n catalog-delayed-btn-" id="main" data-site="/">
 		
@@ -2474,8 +2474,6 @@ BX.message({});
 				<!--'start_frame_cache_bottom-panel-block'-->				<!--'end_frame_cache_bottom-panel-block'-->	<div id="popup_iframe_wrapper"></div>
 	
 <script>
-/* Фотографии обработанной серии подставляются по коду товара из ссылки.
-   На сервере этого скрипта не нужно: файлы загружаются в карточки товаров. */
 (function () {
   var ids = ["747", "748", "749", "751", "752", "777", "736", "737", "738", "739", "741", "772", "773", "774", "775", "776", "742", "743", "744", "745", "746", "780", "756", "757", "758", "778", "753", "764", "765", "766", "768", "769", "770", "771", "783", "760", "761", "781", "782", "762", "763"];
   var pageId = "778";
@@ -2489,7 +2487,6 @@ BX.message({});
     img.src = "https://vdolesov.github.io/assets/products/" + id + "-v9.webp";
   }
 
-  // страница товара: главное изображение и миниатюры галереи
   if (pageId) {
     document.querySelectorAll(".detail img, .product-detail img, .slides img, .thumbs img")
       .forEach(function (img) { swap(img, pageId); });
@@ -2502,7 +2499,6 @@ BX.message({});
     card.querySelectorAll("img").forEach(function (img) { swap(img, m[1]); });
   });
 
-  // разделы на главной: вместо миниатюр 90x90 — наша серия
   var sections = {"torty": "749", "pirogi": "801", "vypechka": "746", "pirozhnye_i_deserty": "757", "pechene": "753", "salaty": "765", "vtorye_blyuda": "770", "polufabrikaty": "760", "napitki": "763"};
   document.querySelectorAll(".cat_sections a.thumb, .sections_wrapper a.thumb")
     .forEach(function (a) {
@@ -2519,10 +2515,6 @@ BX.message({});
 </script>
 
 <style>
-/* Только для этой демонстрации: вкладки «Новинка» и «Рекомендуем» и
-   всплывающая корзина подгружают содержимое запросом к сайту, а вне его
-   домена такой запрос не проходит. Чтобы не показывать пустую крутилку,
-   они здесь скрыты. На сервере всё работает штатно и прятать нечего. */
 li[data-code="NEW"], li[data-code="RECOMMEND"],
 .NEW_slides, .RECOMMEND_slides { display: none !important; }
 .basket_hover_block.loading_block,
@@ -2530,7 +2522,7 @@ li[data-code="NEW"], li[data-code="RECOMMEND"],
 .wrap_basket .basket_hover_block { display: none !important; }
 </style>
 
-<script src="/skin/cart-data.js?v=19a19b3c"></script>
-<script src="/skin/cart.js?v=19a19b3c"></script>
+<script src="/skin/cart-data.js?v=09dc0eb3"></script>
+<script src="/skin/cart.js?v=09dc0eb3"></script>
 </body>
 </html>

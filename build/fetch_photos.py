@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Скачивает исходные фотографии товаров с сайта в build/photos/<id>.jpg."""
 import json
 import os
 import time
@@ -16,7 +14,7 @@ catalog = json.load(open(os.path.join(HERE, "catalog.json"), encoding="utf-8"))
 for item in catalog["items"]:
     url = item.get("image")
     if not url:
-        print(f"{item['id']}: фото нет")
+        print(f"{item['id']}: no photo")
         continue
     dst = os.path.join(OUT, f"{item['id']}.jpg")
     if os.path.exists(dst):
@@ -25,7 +23,7 @@ for item in catalog["items"]:
     try:
         with urllib.request.urlopen(req, timeout=40) as r, open(dst, "wb") as f:
             f.write(r.read())
-        print(f"{item['id']}: скачано {os.path.getsize(dst)//1024} КБ")
+        print(f"{item['id']}: downloaded {os.path.getsize(dst)//1024} KB")
     except Exception as e:
-        print(f"{item['id']}: ошибка {e}")
+        print(f"{item['id']}: error {e}")
     time.sleep(0.3)

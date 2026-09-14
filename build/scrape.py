@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Снимок каталога mirsladostey164.ru: разделы, товары, цены, характеристики.
-
-Результат: build/catalog.json — источник данных для сборки витрины.
-Запускать редко, вручную: python build/scrape.py
-"""
 import html
 import json
 import os
@@ -36,7 +30,6 @@ def text_of(fragment):
 
 
 def best_image(page):
-    """Самый крупный файл товара среди картинок инфоблока."""
     urls = sorted(set(re.findall(r"/upload/iblock/[^\"'\s]+\.(?:jpg|jpeg|png)", page)))
     best, best_size = "", 0
     for u in urls:
@@ -102,19 +95,18 @@ def main():
         page = get(f"{BASE}/catalog/{slug}/")
         ids = sorted(set(re.findall(r'href="/catalog/' + slug + r'/(\d+)/"', page)), key=int)
         catalog["sections"].append({"slug": slug, "title": title, "count": len(ids)})
-        print(f"{slug}: {len(ids)} товаров")
+        print(f"{slug}: {len(ids)} products")
         for pid in ids:
             try:
                 item = parse_item(slug, pid)
                 catalog["items"].append(item)
                 print("   ", pid, item["name"][:38], item["price"], item["unit"])
             except Exception as e:
-                print("   ", pid, "ошибка:", e)
+                print("   ", pid, "error:", e)
             time.sleep(0.4)
 
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(catalog, f, ensure_ascii=False, indent=1)
-    print("\nсохранено:", OUT, "| товаров:", len(catalog["items"]))
-
+    print("\nsaved:", OUT, "| products:", len(catalog["items"]))
 
 main()

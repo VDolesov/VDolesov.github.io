@@ -1,20 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Главный баннер направления «Чёрный шоколад».
-
-Шаблон складывает баннер из широкой подложки и картинки продукта справа.
-Обе собираются здесь в тех же пропорциях, что и раньше (skin/hero.py):
-
-    assets/hero-bg.jpg     2400x1060  подложка — почти чёрное какао,
-                                      одно тёплое световое пятно справа
-    assets/hero-cake.webp  1308x880   торт «Шварцвальдский» с лужицей
-                                      света и тенью, прозрачный WebP
-
-Свет и тень запечены в картинку продукта, а не в подложку: шаблон двигает
-продукт при смене ширины экрана, и пятно света должно ехать вместе с ним.
-Заодно пересобирается фотография в блоке «О компании» — темнее, в тон.
-
-    python skin/hero_choc.py
-"""
 import os
 import sys
 
@@ -28,7 +11,7 @@ BUILD = os.path.join(SITE, "frontend_mir_slad-main", "apps", "noir-classic", "bu
 OUT = os.path.join(APP, "assets")
 
 sys.path.insert(0, BUILD)
-from photos_v8 import neural_cutout  # noqa: E402  — тот же вырез, что в каталоге
+from photos_v8 import neural_cutout
 
 BG_W, BG_H = 2400, 1060
 CAKE_W, CAKE_H = 1308, 880
@@ -40,12 +23,11 @@ POOL = (92, 62, 44)
 
 
 def backdrop():
-    """Тихая подложка: какао, тёплое пятно света там, где стоит продукт."""
     y, x = np.mgrid[0:BG_H, 0:BG_W].astype(np.float32)
     u, v = x / BG_W, y / BG_H
     d = np.clip(np.hypot((u - .70) / .55, (v - .32) / .95), 0, 1)
     img = LIT + (GROUND - LIT) * (d ** 1.3)[..., None]
-    # левая половина под текст — темнее
+
     img *= np.clip(.62 + .38 * np.clip((u - .05) / .45, 0, 1), 0, 1)[..., None]
     rng = np.random.default_rng(11)
     img += rng.normal(0, 1.6, (BG_H, BG_W, 1))
@@ -53,7 +35,6 @@ def backdrop():
 
 
 def cake():
-    """Вырез продукта с лужицей света и тенью на прозрачном фоне."""
     im = neural_cutout(Image.open(SOURCE))
     rgb = im.convert("RGB")
     rgb = ImageEnhance.Contrast(rgb).enhance(1.08)
@@ -73,14 +54,12 @@ def cake():
     canvas = Image.new("RGBA", (CAKE_W, CAKE_H), (0, 0, 0, 0))
     silhouette = im.getchannel("A").point(lambda v: 255 if v > 60 else 0)
 
-    # лужица света под изделием — светлее подложки, с прозрачностью
     soft = silhouette.resize((int(im.width * 1.4), max(2, int(im.height * .30))), Image.LANCZOS)
     layer = Image.new("L", (CAKE_W, CAKE_H), 0)
     layer.paste(soft, (x - int(im.width * .2), y + im.height - int(im.height * .16)))
     layer = layer.filter(ImageFilter.GaussianBlur(CAKE_W * .05)).point(lambda v: int(v * .70))
     canvas.paste(Image.new("RGBA", (CAKE_W, CAKE_H), POOL + (255,)), (0, 0), layer)
 
-    # контактная тень — чёрная, узкая
     tight = silhouette.resize((int(im.width * .94), max(2, int(im.height * .07))), Image.LANCZOS)
     layer = Image.new("L", (CAKE_W, CAKE_H), 0)
     layer.paste(tight, (x + int(im.width * .03), y + im.height - int(im.height * .035)))
@@ -92,7 +71,6 @@ def cake():
 
 
 def about():
-    """Фото с производства в блоке «О компании»: темнее и теплее, в тон странице."""
     im = Image.open(os.path.join(SITE, "i1.jpg")).convert("RGB").crop((230, 330, 1920, 1440))
     w, h = 1440, 610
     k = max(w / im.width, h / im.height)
@@ -139,7 +117,7 @@ def main():
     ab.save(ab_path, quality=84, optimize=True, progressive=True)
 
     for path in (bg_path, ck_path, ab_path, preview(bg, ck)):
-        print(f"  {os.path.basename(path)}  {os.path.getsize(path) // 1024} КБ")
+        print(f"  {os.path.basename(path)}  {os.path.getsize(path) // 1024} KB")
 
 
 if __name__ == "__main__":

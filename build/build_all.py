@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Полная пересборка витрины.
-
-    python build/build_all.py
-
-Сначала удаляются ранее сгенерированные каталоги, затем создаются заново:
-главная, каталог, разделы, карточки товаров, корзина, оформление, поиск,
-отложенные и текстовые разделы. Адреса совпадают со структурой
-mirsladostey164.ru, чтобы вёрстку можно было положить на существующий бэкенд.
-"""
 import os
 import shutil
 import sys
@@ -51,8 +41,7 @@ def main():
                 if True)
     html = sum(1 for root, _, files in os.walk(APP) for f in files
                if f == "index.html")
-    print(f"товаров: {len(items)}")
-    print(f"страниц: {html}")
-
+    print(f"products: {len(items)}")
+    print(f"pages: {html}")
 
 main()

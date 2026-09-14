@@ -1,18 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Сборка skin.css — надстройки над текущим оформлением сайта.
-
-Идея: вёрстка и логика сайта (1С-Битрикс, шаблон Aspro Максимум) остаются
-как есть. Меняется только внешний слой — палитра, шрифты, фон, карточки.
-
-Скрипт читает боевой CSS шаблона, находит все правила с фирменным красным
-(#f3103a и его оттенками) и переписывает их новым цветом. Так покрываются
-все места, где акцент используется, без ручного перебора селекторов.
-Поверх добавляется небольшой ручной блок: типографика, фон, карточки.
-
-    python skin/build_skin.py
-
-Результат: skin/skin.css — один файл, который подключается последним.
-"""
 import os
 import re
 import urllib.request
@@ -22,14 +7,11 @@ SITE = "https://www.mirsladostey164.ru"
 CACHE = os.path.join(HERE, "aspro.css")
 OUT = os.path.join(HERE, "skin.css")
 
-# Направление «Чёрный шоколад»: почти чёрное какао, карамельное золото,
-# антиква Prata, тонкие линии. Фирменный красный шаблона уходит в золото —
-# это единственный акцент; кнопки золотые с тёмной надписью.
 COLOR_MAP = {
-    "#f3103a": "#d6a459",   # основной акцент — карамельное золото
-    "#f42d52": "#e6b96f",   # наведение — светлее
-    "#f30b36": "#d6a459",   # вариант основного
-    "#e00a31": "#b88a45",   # нажатие, тёмный вариант
+    "#f3103a": "#d6a459",
+    "#f42d52": "#e6b96f",
+    "#f30b36": "#d6a459",
+    "#e00a31": "#b88a45",
     "#ff1441": "#e6b96f",
     "#e5062d": "#b88a45",
 }
@@ -37,22 +19,21 @@ COLOR_MAP = {
 ACCENT = "#d6a459"
 ACCENT_HOVER = "#e6b96f"
 ACCENT_DEEP = "#b88a45"
-ON_ACCENT = "#120b08"    # надпись на золотой кнопке
-INK = "#f3e8d8"          # основной текст — сливки
+ON_ACCENT = "#120b08"
+INK = "#f3e8d8"
 MUTED = "rgba(243, 232, 216, .55)"
-GROUND = "#120b08"       # фон страницы — какао
-PANEL = "#170e0b"        # полосы секций, выпадающие панели
-CARD = "#1b110d"         # карточки товара
-FIELD = "#0e0806"        # поля ввода
+GROUND = "#120b08"
+PANEL = "#170e0b"
+CARD = "#1b110d"
+FIELD = "#0e0806"
 LINE = "rgba(243, 232, 216, .12)"
 GOLD = "#d6a459"
-GOLD_LINE = "rgba(214, 164, 89, .5)"   # золотая волосяная линия
-TILE = "#130c09"         # подложка под фотографией: серия v9 снята на тёмном
+GOLD_LINE = "rgba(214, 164, 89, .5)"
+TILE = "#130c09"
 ACCENT_SOFT = "rgba(214, 164, 89, .12)"
 
 
 def fetch_css():
-    """Боевой CSS шаблона: берём по ссылке с сайта, затем кэшируем."""
     if os.path.exists(CACHE):
         return open(CACHE, encoding="utf-8", errors="ignore").read()
     home = urllib.request.urlopen(
@@ -67,7 +48,6 @@ def fetch_css():
 
 
 def recolor(css):
-    """Правила с фирменным красным → те же селекторы с новым цветом."""
     pattern = re.compile(r"([^{}]+)\{([^{}]*)\}")
     targets = tuple(COLOR_MAP)
     rules = []
@@ -94,13 +74,6 @@ def recolor(css):
             rules.append(f"{selector}{{{';'.join(kept)}}}")
     return rules
 
-
-
-# Шаблон рассчитан на белый фон: тёмный текст, белые заливки, светлые рамки.
-# Второй проход переписывает их так же, как первый переписывает акцент, —
-# теми же селекторами, поэтому специфичность совпадает, а наш файл идёт
-# последним и выигрывает. Ручными правилами это не перекрыть: в шаблоне
-# сотни мест с !important и длинными селекторами.
 TEXT_MAP = {
     "#000000": INK, "#000": INK, "#111111": INK, "#111": INK,
     "#1a1a1a": INK, "#202020": INK, "#212121": INK, "#222222": INK, "#222": INK,
@@ -130,13 +103,11 @@ EDGE_MAP = {
     "#d0d0d0": LINE, "#cccccc": LINE, "#ccc": LINE, "#c8c8c8": LINE,
 }
 
-# правила шаблона, которые трогать нельзя: там светлый фон осмыслен
 KEEP_LIGHT = ("sticker", "label", "btn", "button", "badge", "tooltip",
               "flex-direction", "owl-", "slick-", "colorpicker")
 
 
 def _swap(value, mapping):
-    """Замена цвета с границами слова: #fff не должен попасть в #ffffff."""
     for old in sorted(mapping, key=len, reverse=True):
         if old.startswith("#"):
             rx = r"(?<![0-9a-fA-F])" + re.escape(old) + r"(?![0-9a-fA-F])"
@@ -158,7 +129,6 @@ def _mapping(prop):
 
 
 def redark(css):
-    """Светлая схема шаблона → тёмная, правило за правилом."""
     pattern = re.compile(r"([^{}]+)\{([^{}]*)\}")
     rules = []
     for match in pattern.finditer(css):
@@ -181,19 +151,11 @@ def redark(css):
             rules.append(" ".join(selector.split()) + "{" + ";".join(kept) + "}")
     return rules
 
-FONTS = """/* Шрифты подключаются первой строкой: правило @import
-   действует только до первых стилей, ниже по файлу браузер его отбрасывает. */
-@import url("https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600&display=swap");
+FONTS = """@import url("https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600&display=swap");
 """
 
-
 MANUAL = f"""
-/* ======================================================================
-   Ручной слой: тёмная палитра, типографика, карточки, формы.
-   Разметка не меняется — только оформление поверх шаблона.
-   ====================================================================== */
 
-/* --- основа ------------------------------------------------------------ */
 html, body, .wrapper1, .wrapper_inner, .wraps, #content, .middle,
 .container, .container_inner, .maxwidth-theme, .section-content-wrapper,
 .front-block, .drag-block, .page-top, .content_wrapper {{
@@ -206,7 +168,6 @@ body {{
 }}
 ::selection {{ background: {ACCENT}; color: {ON_ACCENT}; }}
 
-/* цвет текста задан в шаблоне сотнями правил — переводим в светлый */
 p, li, td, th, dd, dt, label, span, div, section, article,
 .text, .description, .tab-content, .props_list td, .char_name, .char_value {{
   color: inherit !important;
@@ -217,7 +178,6 @@ a:hover, a:focus {{ color: {ACCENT_HOVER} !important; }}
 .hint, .quantity, .measure, .copyright {{ color: {MUTED} !important; }}
 ::placeholder {{ color: rgba(243, 232, 216, .34) !important; }}
 
-/* --- заголовки --------------------------------------------------------- */
 h1, h2, h3, h4, .h1, .h2, .h3, .h4,
 .topic, .topic span, .title_block, .top_block .title, .section_title,
 .front-block .title, .detail .element-title, .item-title, .item-title a,
@@ -236,19 +196,16 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
   color: {GOLD} !important; font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
 }}
 
-/* --- воздух между секциями --------------------------------------------- */
 .front-block, .drag-block, .section_block {{
   padding-top: clamp(46px, 5vw, 86px) !important;
   padding-bottom: clamp(46px, 5vw, 86px) !important;
 }}
 .front-block .top_block, .drag-block .top_block {{ margin-bottom: clamp(26px, 3vw, 46px) !important; }}
 
-/* чередование полос: одна тёмная, другая чуть светлее */
 .grey_block, .grey, .block_wr.grey, .front-block.grey, .drag-block.grey {{
   background-color: {PANEL} !important;
 }}
 
-/* --- меню и выпадающие панели ------------------------------------------ */
 .menu-row .menu_wrap ul.menu > li > a {{
   font-size: 14px !important; font-weight: 500 !important; letter-spacing: .01em;
   text-transform: none !important; padding: 14px 16px !important;
@@ -265,7 +222,6 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
   box-shadow: 0 24px 60px rgba(0, 0, 0, .55) !important;
 }}
 
-/* окна: обратная связь, быстрый заказ, корзина при наведении */
 .popup-window, .popup_window, .bx-core-popup-window, .basket_hover_block,
 .fancybox-skin, .modal-content, .ui-widget-content, .white_block {{
   background: {PANEL} !important; color: {INK} !important;
@@ -275,7 +231,6 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
   background: transparent !important; border-bottom: 1px solid {LINE} !important;
 }}
 
-/* --- кнопки ------------------------------------------------------------ */
 .btn, .btn.btn-default, .btn.btn-lg, .btn.btn-sm, .btn.btn-xs, button.btn, input[type=submit] {{
   border-radius: 0 !important;
   padding: 13px 30px !important;
@@ -301,7 +256,6 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
   color: {ON_ACCENT} !important; background: {ACCENT} !important; border-color: {ACCENT} !important;
 }}
 
-/* --- карточки товара ---------------------------------------------------- */
 .catalog_block .item_block, .catalog_block .catalog_item_wrapp {{ background: transparent !important; border: 0 !important; }}
 .item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container {{
   background: {CARD} !important;
@@ -328,7 +282,6 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
   font-size: 24px !important; font-weight: 500 !important; color: {INK} !important;
 }}
 
-/* метки: одна палитра вместо пёстрых плашек */
 .stickers .sticker, .product-item-label-text, .sticker_wrapper .sticker, .stickers > div {{
   border-radius: 0 !important; padding: 5px 12px !important;
   font-size: 10px !important; font-weight: 600 !important;
@@ -339,7 +292,6 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
 .stickers .sticker.recommend, .sticker_wrapper .sticker.recommend {{ background: #3a2a22 !important; }}
 .catalog_item .rating, .item_block .rating, .votes_block {{ opacity: .35; }}
 
-/* --- карточка товара ---------------------------------------------------- */
 .detail .element_detail_wrapper, .detail_wrapper, .detail .price_block {{ background: transparent !important; }}
 .detail .prices_block .price_value, .detail .price_value {{ font-size: clamp(30px, 3vw, 44px) !important; }}
 .detail .img_wrapper, .detail .product-detail-gallery, .detail .slides {{
@@ -356,7 +308,6 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
   font-size: 15px !important; padding: 11px 0 !important; border-color: {LINE} !important;
 }}
 
-/* --- таблицы, фильтры, крошки ------------------------------------------- */
 table td, table th, .table > tbody > tr > td {{ border-color: {LINE} !important; }}
 .breadcrumbs, .bx-breadcrumb {{ font-size: 12px !important; letter-spacing: .03em; margin-bottom: 18px !important; }}
 .breadcrumbs a, .bx-breadcrumb a, .breadcrumbs span, .bx-breadcrumb span {{ color: {MUTED} !important; }}
@@ -366,7 +317,6 @@ table td, table th, .table > tbody > tr > td {{ border-color: {LINE} !important;
 .sidebar .menu_top_block li a, .sidebar_menu li a, .left_block a {{ font-size: 15px !important; letter-spacing: 0; }}
 .left_block .internal_sections_list li.cur > a, .left_block .internal_sections_list li:hover > a {{ color: {ACCENT_HOVER} !important; }}
 
-/* --- формы -------------------------------------------------------------- */
 input[type="text"], input[type="tel"], input[type="email"], input[type="password"],
 input[type="search"], input[type="number"], textarea, select, .form-control, .input-group .form-control {{
   border-radius: 0 !important;
@@ -380,7 +330,6 @@ input:focus, textarea:focus, select:focus, .form-control:focus {{
   border-color: {ACCENT} !important; box-shadow: 0 0 0 3px rgba(214, 164, 89, .18) !important;
 }}
 
-/* --- подвал ------------------------------------------------------------- */
 .footer_inner, .footer-block, footer.footer, .footer_bottom {{
   background: #0c0705 !important; color: {MUTED} !important;
 }}
@@ -392,14 +341,10 @@ input:focus, textarea:focus, select:focus, .form-control:focus {{
 }}
 .footer_inner .bottom_inner, .copyright {{ border-top: 1px solid rgba(243, 232, 216, .08) !important; }}
 
-/* --- разделители и мелочи ----------------------------------------------- */
 hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color: {LINE} !important; }}
 .scroll-top, .fixed_menu, #mobilemenu .menu_item {{ border-radius: 0; }}
 .wrap_icon .count, .basket_count, .icon_count {{ background: {ACCENT} !important; color: {ON_ACCENT} !important; }}
 
-/* --- то, что не поймал автоматический проход ---------------------------- */
-
-/* метки на карточках: у шаблона они синяя, зелёная и фиолетовая */
 [class*="sticker_"] {{
   border-radius: 0 !important; padding: 5px 12px !important;
   font-size: 10px !important; font-weight: 600 !important;
@@ -410,37 +355,27 @@ hr, .border, .item-separator, .top_block, .section-title-wrapper {{ border-color
 [class*="sticker_sovetuem"], [class*="sticker_recommend"] {{ background: #3a2a22 !important; }}
 .stickers, .sticker_wrapper {{ background: transparent !important; }}
 
-/* логотип нарисован тёмно-красным по светлому — на тёмной шапке пропадает */
 .logo svg .st0, .logo svg .st1, .logo svg path, .logo svg polygon {{ fill: {INK} !important; }}
 .logo svg {{ transition: opacity .25s ease; }}
 .logo:hover svg {{ opacity: .82; }}
 
-/* выезжающая корзина и мобильный фильтр остались белыми панелями */
 .basket_fly, .basket_fly .wrap_cont, .fly_basket, .basket_fly_wrapper,
 .scrollbar-filter, #mobilefilter {{
   background: {PANEL} !important; color: {INK} !important;
 }}
 
-/* миниатюры галереи — та же тёплая плитка, что и под крупным фото */
 .product-detail-gallery li.bordered, .detail .thumbs li, .slides li.bordered {{
   background: {TILE} !important; border-color: {LINE} !important;
 }}
 
-/* полоса прокрутки в тон */
 ::-webkit-scrollbar {{ width: 11px; height: 11px; }}
 ::-webkit-scrollbar-track {{ background: {GROUND}; }}
 ::-webkit-scrollbar-thumb {{ background: #3a2a22; border-radius: 999px; border: 3px solid {GROUND}; }}
 ::-webkit-scrollbar-thumb:hover {{ background: {ACCENT_DEEP}; }}
 """
 
-
 LAYOUT = f"""
 
-/* ======================================================================
-   Сетка каталога, шапка и баннер. Разметка прежняя, меняется раскладка.
-   ====================================================================== */
-
-/* --- шапка: липкая, тёмная, со стеклом ---------------------------------- */
 .header_wrap, .header-wrapper, header > .header-wrapper {{
   position: sticky !important; top: 0; z-index: 900;
   background: rgba(18, 11, 8, .94) !important;
@@ -459,7 +394,6 @@ LAYOUT = f"""
 .logo img {{ transition: transform .3s ease; }}
 .logo:hover img {{ transform: scale(1.03); }}
 
-/* телефон и вход */
 .header_wrap .phone a, .header_wrap .phone .no-decript {{
   font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 18px !important;
   font-weight: 600 !important; letter-spacing: -.01em; color: {INK} !important;
@@ -469,7 +403,6 @@ LAYOUT = f"""
   font-size: 15px !important; font-weight: 500 !important;
 }}
 
-/* иконки: крупнее, с мягкой подложкой при наведении */
 .header_wrap .wrap_icon, .header_wrap .wrap_icon_block {{
   width: 46px !important; height: 46px !important;
   border-radius: 0 !important; transition: background-color .2s ease;
@@ -488,9 +421,6 @@ LAYOUT = f"""
 .header_wrap .burger:hover, .header_wrap .menu-burger:hover {{ background: rgba(243, 232, 216, .08) !important; }}
 .fixed_side_panel, .right_fixed_panel, .fix_menu {{ border-radius: 0 !important; overflow: hidden; }}
 
-/* --- сетка каталога: крупные карточки ---------------------------------- */
-/* clearfix бутстрапа (::before/::after у .row) в grid становится ячейкой
-   и оставляет первую клетку пустой */
 .catalog_block.items.row::before, .catalog_block.items.row::after {{ display: none !important; content: none !important; }}
 @media (min-width: 1200px) {{
   .catalog_block.items.row {{
@@ -522,7 +452,6 @@ LAYOUT = f"""
   .catalog_item .price, .price_value {{ font-size: 27px !important; }}
 }}
 
-/* заголовок раздела и панель сортировки */
 .page-top, .section-content-wrapper > .page-top {{ padding: 40px 0 10px !important; }}
 .page-top .topic {{ margin-bottom: 6px !important; }}
 .sort_header, .panel_sort, .display_wrapper {{
@@ -531,7 +460,6 @@ LAYOUT = f"""
 }}
 .sort_header .sort_item a, .sort_header a {{ font-size: 14px !important; }}
 
-/* кнопка покупки видна сразу, а не при наведении */
 .catalog_item .footer_button {{
   display: block !important; opacity: 1 !important; visibility: visible !important;
   position: static !important; height: auto !important; margin-top: 16px !important;
@@ -539,14 +467,9 @@ LAYOUT = f"""
 .catalog_item .footer_button .counter_wrapp {{ display: flex !important; gap: 10px; align-items: center; }}
 .catalog_item .footer_button .btn {{ flex: 1 1 auto; justify-content: center; }}
 
-
-
-/* --- карточка товара --------------------------------------------------- */
-
-/* окно «поделиться» вылезает за правый край; clip не ломает липкую шапку */
 .wrapper1 {{ overflow-x: clip; }}
 
-/* колонки: галерея крупнее блока покупки */
+
 @media (min-width: 992px) {{
   body .product-info .flexbox--row > .product-detail-gallery {{
     flex: 0 0 54% !important; max-width: 54% !important;
@@ -556,7 +479,6 @@ LAYOUT = f"""
   }}
 }}
 
-/* галерея во всю колонку и в квадрат: было 450 px в колонке на 645 */
 body .product-detail-gallery .product-detail-gallery__container {{ width: 100% !important; }}
 body .product-detail-gallery .product-detail-gallery__slider {{
   width: 100% !important; max-width: none !important;
@@ -585,7 +507,6 @@ body .product-detail-gallery .product-detail-gallery__picture {{
   max-width: none !important; max-height: none !important; object-fit: cover;
 }}
 
-/* миниатюры — ряд квадратов вместо полоски в 26 px */
 body .product-detail-gallery__thmb-inner {{
   display: flex !important; flex-wrap: wrap; gap: 10px;
   justify-content: flex-start; margin-top: 14px !important;
@@ -602,7 +523,6 @@ body .product-detail-gallery__thmb-inner img {{
   width: 100% !important; height: 100% !important; object-fit: cover;
 }}
 
-/* правая колонка: цена и покупка сверху, характеристики под ними */
 body .product-main .flexbox--row {{ display: block !important; }}
 body .product-main .product-action.flex-50,
 body .product-main .product-chars.flex-50 {{
@@ -615,13 +535,11 @@ body .product-main .product-chars {{
 }}
 body .product-main .char-side {{ width: 100% !important; }}
 
-/* цена крупная, единица измерения тихая */
 body .detail .prices_block .price_value {{ font-size: clamp(34px, 3.4vw, 48px) !important; }}
 body .detail .prices_block .price_currency {{ font-size: 26px !important; }}
 body .detail .prices_block .price_measure {{ font-size: 14px !important; margin-left: 8px; }}
 body .detail .prices_block {{ margin-bottom: 22px !important; }}
 
-/* кнопка покупки — во всю ширину колонки */
 body .detail .buy_block .counter_wrapp {{
   display: flex !important; gap: 14px; align-items: stretch; flex-wrap: nowrap;
 }}
@@ -631,7 +549,6 @@ body .detail .buy_block .btn {{
   padding: 16px 30px !important; font-size: 15px !important;
 }}
 
-/* характеристики: две колонки с волосяной линией вместо плотного списка */
 body .char-side__title {{
   font-family: Prata, Georgia, serif !important;
   font-size: 21px !important; font-weight: 500 !important;
@@ -651,7 +568,7 @@ body .product-chars .properties__value {{
   font-size: 14px !important; line-height: 1.55; text-align: left !important;
 }}
 
-/* на телефоне подпись характеристики встаёт над значением */
+
 @media (max-width: 600px) {{
   body .product-chars .properties__item {{
     grid-template-columns: 1fr !important; gap: 3px 0; padding: 12px 0 !important;
@@ -662,7 +579,6 @@ body .product-chars .properties__value {{
   body .product-main .product-chars {{ margin-top: 22px !important; padding-top: 22px !important; }}
 }}
 
-/* вкладки внизу: плашки в рамке → простые заголовки с подчёркиванием */
 body .bottom-info .tabs .nav-tabs {{
   border-bottom: 1px solid {LINE} !important; display: flex !important;
   flex-wrap: wrap; gap: 2px; margin-bottom: 0 !important;
@@ -689,14 +605,12 @@ body .bottom-info .ordered-block__title {{
   font-size: 26px !important; font-weight: 500 !important; text-transform: none !important;
 }}
 
-/* боковой блок обратной связи — карточка в тон */
 body .bottom-info-wrapper .side-block {{
   background: {CARD} !important; border: 1px solid {LINE} !important;
   border-radius: 0 !important; overflow: hidden;
 }}
 body .bottom-info-wrapper .side-block__bottom {{ border-top: 1px solid {LINE} !important; }}
 
-/* --- разделы на главной: карусель мелких квадратиков → сетка плиток ----- */
 body .cat_sections.cat_sections .owl-stage-outer {{ overflow: visible !important; }}
 body .cat_sections.cat_sections .owl-stage {{
   display: grid !important;
@@ -755,8 +669,6 @@ body .cat_sections.cat_sections .item.compact .name a {{
   body .cat_sections.cat_sections .item.compact .name a {{ font-size: 14px !important; }}
 }}
 
-/* --- главный баннер ----------------------------------------------------- */
-/* внутри слайда лежит свой .wrapper_inner — он закрашивал подложку */
 .top_slider_wrapp .wrapper_inner, .top_big_banners .wrapper_inner,
 .top_slider_wrapp table, .top_slider_wrapp td {{ background: transparent !important; }}
 .top_slider_wrapp .slides > li .banner_title .section {{
@@ -776,16 +688,6 @@ body .cat_sections.cat_sections .item.compact .name a {{
   background: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important; color: {ON_ACCENT} !important;
 }}
 
-/* ======================================================================
-   Единый стиль: подписи, кнопки, счётчик, поля.
-
-   Отступы кнопок и полей заданы выше одним правилом на все `.btn` и все
-   `input`. Шаблон теми же классами размечает кнопки-значки, счётчик
-   количества и поиск — им общие отступы ломают выравнивание. Ниже эти
-   случаи выделены отдельно; правила идут последними, поэтому побеждают.
-   ====================================================================== */
-
-/* --- кнопки только со значком: квадрат, значок по центру ---------------- */
 .btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn,
 .btn.btn-search, button.btn-search, .top-btn, .btn.subscribe,
 .btn[class*="icon_"], .btn.close {{
@@ -807,7 +709,6 @@ body .cat_sections.cat_sections .item.compact .name a {{
 .btn.wish_item svg, .btn.compare_item svg, .btn.btn-search svg {{
   width: 17px !important; height: 17px !important; margin: 0 !important;
 }}
-/* кнопка поиска сидит внутри поля, а не рядом с ним */
 body .inline-search-block .search-button-div .btn.btn-search.btn-lg,
 body .search-button-div .btn.btn-search.btn-lg,
 body .search-button-div .btn, body .search-button-div button {{
@@ -817,9 +718,6 @@ body .search-button-div .btn, body .search-button-div button {{
 }}
 .search-button-div {{ right: 6px !important; left: auto !important; }}
 
-/* --- счётчик количества: одна деталь, а не три разных ------------------- */
-/* в шаблоне минус и плюс лежат поверх поля абсолютно — оставляем механику,
-   задаём только геометрию: поле во весь блок, кнопки по краям */
 body .counter_wrapp .counter_block, body .counter_block.md, body .counter_block {{
   position: relative !important; display: inline-block !important;
   width: 138px !important; min-width: 0 !important; max-width: none !important;
@@ -851,9 +749,6 @@ body .catalog_item .counter_block {{ width: 112px !important; height: 46px !impo
 body .catalog_item .counter_block .minus, body .catalog_item .counter_block .plus {{ width: 36px !important; }}
 body .catalog_item .counter_block input {{ padding: 0 36px !important; font-size: 15px !important; line-height: 44px !important; }}
 
-/* --- значки: заливка по цвету текста ------------------------------------ */
-/* встроенные svg-значки шаблона залиты чёрным атрибутом по умолчанию —
-   на тёмном фоне минус, плюс и прочая мелочь исчезали */
 .svg.inline svg, .svg.inline svg rect, .svg.inline svg path,
 .svg.inline svg circle, .svg.inline svg polygon, .svg.inline svg ellipse {{
   fill: currentColor !important;
@@ -861,7 +756,6 @@ body .catalog_item .counter_block input {{ padding: 0 36px !important; font-size
 .svg.inline svg [fill="none"] {{ fill: none !important; }}
 body .counter_block .minus, body .counter_block .plus {{ color: rgba(243, 232, 216, .72) !important; }}
 
-/* --- одна форма для всех мелких подписей -------------------------------- */
 .top_block .title_wrapper > .muted, .section-subtitle,
 body .char-side__title, .ordered-block__title--small,
 .footer_inner .title, footer.footer .title,
@@ -873,24 +767,15 @@ body .char-side__title, .ordered-block__title--small,
 }}
 body .char-side__title {{ margin-bottom: 16px !important; }}
 
-/* артикул и единица измерения — тихая служебная строка */
 .article_block, .article, .price_measure, .item .article_block {{
   font-family: "Golos Text", "Segoe UI", sans-serif !important;
   font-size: 12px !important; letter-spacing: .04em !important;
   color: {MUTED} !important; text-transform: none !important;
 }}
 
-/* --- пустой рейтинг не притворяется оценкой ----------------------------- */
 .catalog_item .rating, .item_block .rating, .votes_block,
 .product-info-headnote .rating {{ opacity: .3; }}
 
-/* ======================================================================
-   Шапка. Правило «все svg в шапке 22 px» выше цепляло и логотип, и стрелку
-   у телефона: логотип ужимался до 22 px, стрелка раздувалась до 22.
-   Здесь всё задано поэлементно; блок идёт последним и побеждает.
-   ====================================================================== */
-
-/* строка шапки — flex вместо обтеканий, всё по вертикальному центру */
 body .header_wrap .logo-row .row > .col-md-12,
 body .header-wrapper .logo-row .row > .col-md-12 {{
   display: flex !important; align-items: center !important;
@@ -899,7 +784,6 @@ body .header-wrapper .logo-row .row > .col-md-12 {{
 body .header_wrap .logo-row [class*="pull-"],
 body .header-wrapper .logo-row [class*="pull-"] {{ float: none !important; height: auto !important; }}
 
-/* бургер */
 body .header_wrap .logo-row .burger, body .header-wrapper .logo-row .burger {{
   height: 44px !important; width: 44px !important; padding: 0 !important;
   margin: 0 16px 0 0 !important; display: inline-flex !important;
@@ -910,7 +794,6 @@ body .header_wrap .logo-row .burger svg, body .header-wrapper .logo-row .burger 
   width: 22px !important; height: 22px !important;
 }}
 
-/* логотип: 54 px высоты, а не 22 */
 body .header_wrap .logo-block, body .header-wrapper .logo-block {{
   height: auto !important; margin: 0 22px 0 0 !important; padding: 0 !important;
 }}
@@ -923,7 +806,6 @@ body .header_wrap .logo svg, body .header-wrapper .logo svg {{
   width: auto !important; height: 54px !important; max-width: none !important;
 }}
 
-/* подпись рядом с логотипом */
 body .header_wrap .logo-row .float_wrapper, body .header-wrapper .logo-row .float_wrapper {{
   height: auto !important; margin: 0 40px 0 0 !important; padding: 0 !important;
 }}
@@ -934,7 +816,6 @@ body .header-wrapper .logo-row .float_wrapper .hidden-sm {{
   color: {MUTED} !important; padding: 0 !important;
 }}
 
-/* телефон: номер, маленькая стрелка, под ним ссылка на звонок */
 body .header_wrap .logo-row .wrap_icon.inner-table-block,
 body .header-wrapper .logo-row .wrap_icon.inner-table-block {{
   width: auto !important; height: auto !important; display: block !important;
@@ -966,11 +847,9 @@ body .header_wrap .callback-block, body .header-wrapper .callback-block {{
 }}
 body .header_wrap .callback-block:hover, body .header-wrapper .callback-block:hover {{ color: {INK} !important; }}
 
-/* правая группа: поиск и вход — значок и подпись в одной пилюле */
 body .header_wrap .right-icons, body .header-wrapper .right-icons {{
   margin-left: auto !important; display: flex !important; align-items: center !important;
-  flex-direction: row-reverse !important;   /* поиск, затем вход — как было при обтекании */
-  gap: 8px !important; height: auto !important; float: none !important;
+  flex-direction: row-reverse !important;  gap: 8px !important; height: auto !important; float: none !important;
 }}
 body .header_wrap .right-icons > .pull-right, body .header-wrapper .right-icons > .pull-right {{
   float: none !important; margin: 0 !important; width: auto !important;
@@ -1009,10 +888,6 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   color: inherit !important;
 }}
 
-/* ======================================================================
-   Корзина и оформление заказа (skin/cart.js). Классы с префиксом ms-,
-   с шаблоном не пересекаются.
-   ====================================================================== */
 .ms-toast {{
   position: fixed; right: 24px; bottom: 24px; z-index: 5000;
   display: flex; align-items: center; gap: 18px;
@@ -1120,6 +995,7 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
 .ms-done__note {{ margin: 26px 0 18px; font-size: 13px; line-height: 1.55; color: {MUTED}; }}
 .ms-done__back {{ font-size: 14px; color: {MUTED} !important; text-decoration: underline; }}
 
+
 @media (max-width: 991px) {{
   .ms-cart {{ grid-template-columns: 1fr; gap: 26px; }}
   .ms-summary {{ position: static; }}
@@ -1134,12 +1010,7 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   .ms-toast {{ right: 12px; left: 12px; bottom: 76px; max-width: none; }}
 }}
 
-/* ======================================================================
-   Главная страница: мозаика разделов, блок о компании, преимущества,
-   подвал. Идёт после блока плиток и переопределяет его сетку.
-   ====================================================================== */
 
-/* --- разделы: мозаика с крупной первой плиткой и подписью на фото ------- */
 @media (min-width: 992px) {{
   body .cat_sections.cat_sections .owl-stage {{
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
@@ -1167,10 +1038,8 @@ body .cat_sections.cat_sections .item.compact .name a {{
   body .cat_sections.cat_sections .owl-item:first-child .item.compact .img.shine {{ aspect-ratio: 2 / 1 !important; }}
 }}
 
-/* заголовок над мозаикой: у шаблона его нет — даём блоку воздух сверху */
 body .CATALOG_SECTIONS {{ padding-top: clamp(40px, 4vw, 64px) !important; padding-bottom: clamp(30px, 3vw, 48px) !important; }}
 
-/* --- хиты продаж: вкладки как подпись, сетка как в каталоге ------------- */
 body .CATALOG_TAB .tab_slider_wrapp .tabs {{ border-bottom: 1px solid {LINE} !important; margin-bottom: 26px !important; }}
 body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a {{
   font-family: Prata, Georgia, serif !important; font-size: 26px !important;
@@ -1182,7 +1051,6 @@ body .CATALOG_TAB .tabs li.cur a, body .CATALOG_TAB .nav-tabs li.active a {{
   color: {INK} !important; box-shadow: inset 0 -2px 0 {ACCENT} !important;
 }}
 
-/* --- о компании: текст слева, фотография с производства справа ---------- */
 body .COMPANY_TEXT .company-block .row.flexbox {{ align-items: stretch !important; margin: 0 !important; width: 100% !important; }}
 body .COMPANY_TEXT .text-block .item, body .COMPANY_TEXT .text-block .item-inner {{ width: 100% !important; }}
 body .COMPANY_TEXT .text-block .text {{
@@ -1202,7 +1070,6 @@ body .COMPANY_TEXT {{ padding-top: clamp(56px, 6vw, 96px) !important; padding-bo
   body .COMPANY_TEXT .image-block .item.video-block {{ min-height: 240px !important; }}
 }}
 
-/* --- преимущества: значки золотом, подписи в одну систему --------------- */
 body .TIZERS .item {{ padding: 26px 18px !important; }}
 body .TIZERS .item .icon, body .TIZERS .item .icon svg, body .TIZERS .item svg {{ color: {GOLD} !important; }}
 body .TIZERS .item .title {{
@@ -1211,25 +1078,15 @@ body .TIZERS .item .title {{
 }}
 body .TIZERS .item .text, body .TIZERS .item .muted {{ font-size: 14px !important; line-height: 1.55 !important; color: {MUTED} !important; }}
 
-/* --- подвал: без пустой полосы между колонками и копирайтом ------------- */
 body .footer-inner .footer_top {{ padding: 56px 0 40px !important; }}
 body .footer-inner .footer_middle {{ display: none !important; }}
 body .footer-inner .footer_bottom {{ padding: 20px 0 !important; border-top: 1px solid rgba(243, 232, 216, .08) !important; }}
 body .footer-inner .footer_bottom, body .footer-inner .footer_bottom * {{ font-size: 12px !important; }}
 body footer .bottom-menu li a, body footer .footer_top .menu li a {{ font-size: 14px !important; line-height: 1.5 !important; }}
 
-/* ======================================================================
-   Наведение без рамок. Раньше при наведении появлялась бордовая рамка:
-   у карточек товара, у плиток разделов, у значков «в избранное» и
-   «сравнить» на странице товара, у «Поиск» и «Войти» в шапке. Здесь всё
-   это снято: реакция на наведение — подъём, тень и цвет значка.
-   ====================================================================== */
-
-/* карточки и плитки: рамка не меняется */
 .item_block:hover .catalog_item, .catalog_item_wrapp:hover .catalog_item {{ border-color: {LINE} !important; }}
 body .cat_sections.cat_sections .item.compact:hover {{ border-color: {LINE} !important; }}
 
-/* кнопки-значки: без рамки в покое и при наведении, круг заливается цветом */
 .btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn,
 .btn.btn-search, button.btn-search, .btn.subscribe, .btn[class*="icon_"], .btn.close,
 body .search-button-div .btn, body .search-button-div button {{
@@ -1241,7 +1098,6 @@ body .search-button-div .btn:hover, body .search-button-div button:hover {{
   border: 0 !important; background: {ACCENT} !important; color: {ON_ACCENT} !important;
 }}
 
-/* шапка: «Поиск» и «Войти» — просто значок с подписью, без пилюли */
 body .header_wrap .right-icons .top-btn, body .header-wrapper .right-icons .top-btn,
 body .header_wrap .right-icons .personal-link, body .header-wrapper .right-icons .personal-link {{
   border: 0 !important; padding: 0 12px !important; background: transparent !important;
@@ -1255,13 +1111,6 @@ body .header_wrap .logo-row .burger:hover, body .header-wrapper .logo-row .burge
   background: transparent !important; color: {ACCENT_HOVER} !important;
 }}
 
-/* ======================================================================
-   Направление «Чёрный шоколад». Блок идёт последним и задаёт форму:
-   квадратные кнопки капителью с разрядкой, волосяные линии вместо плашек,
-   золото как единственный акцент, изделия на тёмной сцене (серия v9).
-   ====================================================================== */
-
-/* --- кнопки: квадрат, капитель с разрядкой ------------------------------ */
 .btn, .btn.btn-default, .btn.btn-lg, .btn.btn-sm, .btn.btn-xs, button.btn, input[type=submit] {{
   font-family: "Golos Text", "Segoe UI", sans-serif !important;
   font-size: 12px !important; font-weight: 600 !important;
@@ -1277,7 +1126,6 @@ body .header_wrap .logo-row .burger:hover, body .header-wrapper .logo-row .burge
   color: {ON_ACCENT} !important; background: {ACCENT} !important; border-color: {ACCENT} !important;
 }}
 
-/* --- логотип золотом, подписи в шапке капителью -------------------------- */
 .logo svg .st0, .logo svg .st1, .logo svg path, .logo svg polygon {{ fill: {GOLD} !important; }}
 body .header_wrap .logo-row .float_wrapper .hidden-sm,
 body .header-wrapper .logo-row .float_wrapper .hidden-sm {{
@@ -1297,7 +1145,6 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   box-shadow: 0 1px 0 {LINE} !important;
 }}
 
-/* --- карточки: волосяная рамка, цена золотом ----------------------------- */
 .item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container {{
   background: {CARD} !important; border: 1px solid {LINE} !important; padding: 16px 16px 18px !important;
 }}
@@ -1329,7 +1176,6 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   background: {ACCENT_SOFT} !important; border-color: {GOLD_LINE} !important; color: {GOLD} !important;
 }}
 
-/* --- страница товара ---------------------------------------------------- */
 body .product-detail-gallery .product-detail-gallery__item {{
   background: {TILE} !important; border: 1px solid {LINE} !important;
 }}
@@ -1348,7 +1194,6 @@ body .bottom-info .tabs .nav-tabs > li > a {{
 }}
 body .bottom-info .tabs .nav-tabs > li.active > a {{ box-shadow: inset 0 -1px 0 {GOLD} !important; }}
 
-/* --- главный баннер: заголовок антиквой, текст сливками ------------------ */
 .top_slider_wrapp .slides > li .banner_title .head-title {{
   font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
   font-size: clamp(38px, 5vw, 76px) !important; line-height: 1.04 !important;
@@ -1361,7 +1206,6 @@ body .bottom-info .tabs .nav-tabs > li.active > a {{ box-shadow: inset 0 -1px 0 
 }}
 .top_slider_wrapp td.img img {{ max-width: min(44vw, 660px) !important; }}
 
-/* --- разделы на главной: ряд квадратов, подпись под фотографией ---------- */
 body .cat_sections.cat_sections .owl-stage {{
   display: flex !important; flex-wrap: wrap !important; justify-content: center !important;
   gap: 16px !important;
@@ -1396,7 +1240,7 @@ body .cat_sections.cat_sections .owl-item:first-child .item.compact .name a {{
   body .cat_sections.cat_sections .item.compact .name a {{ font-size: 16px !important; }}
 }}
 
-/* --- хиты: четыре в ряд, вкладки антиквой ------------------------------- */
+
 @media (min-width: 1200px) {{
   body .CATALOG_TAB .catalog_block.items.row {{ grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 16px !important; }}
 }}
@@ -1406,7 +1250,6 @@ body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a
 }}
 body .CATALOG_TAB .tabs li.cur a, body .CATALOG_TAB .nav-tabs li.active a {{ box-shadow: none !important; }}
 
-/* --- о компании: полоса в золотой рамке, фото справа --------------------- */
 body .COMPANY_TEXT .company-block .row.flexbox {{ border: 1px solid {GOLD_LINE} !important; }}
 body .COMPANY_TEXT .text-block .item, body .COMPANY_TEXT .text-block .item-inner {{ height: 100% !important; }}
 body .COMPANY_TEXT .text-block .text {{ padding: 52px 56px 52px 8px !important; }}
@@ -1420,14 +1263,12 @@ body .COMPANY_TEXT .company-block .title, body .COMPANY_TEXT .top_block .title {
   body .COMPANY_TEXT .image-block .item.video-block {{ border-left: 0 !important; border-top: 1px solid {GOLD_LINE} !important; min-height: 260px !important; }}
 }}
 
-/* --- преимущества: колонки с золотой линией сверху ----------------------- */
 body .TIZERS .item {{ text-align: left !important; padding: 22px 0 0 !important; border-top: 1px solid {GOLD_LINE} !important; }}
 body .TIZERS .item .image {{ display: none !important; }}
 body .TIZERS .item .title {{ font-family: Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 22px !important; margin: 0 0 10px !important; }}
 body .TIZERS .item .value, body .TIZERS .item .text {{ font-size: 14px !important; line-height: 1.65 !important; color: {MUTED} !important; }}
 body .TIZERS .item-wrapper {{ padding-left: 20px !important; padding-right: 20px !important; }}
 
-/* --- корзина -------------------------------------------------------------- */
 .ms-item__name, .ms-item__sum, .ms-summary__row--total, .ms-done__row--total, .ms-empty__title {{
   font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
 }}
@@ -1436,7 +1277,6 @@ body .TIZERS .item-wrapper {{ padding-left: 20px !important; padding-right: 20px
 .ms-toast__link {{ font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 11px 16px; }}
 .ms-item__pic {{ border: 1px solid {LINE}; }}
 
-/* --- подвал ------------------------------------------------------------- */
 .footer_inner, .footer-block, footer.footer, .footer_bottom {{ background: #0c0705 !important; }}
 body .footer-inner .footer_top {{ border-top: 1px solid {LINE} !important; }}
 
@@ -1460,28 +1300,22 @@ body .catalog_item .item-title a::first-letter {{ text-transform: uppercase !imp
 
 
 def main():
-    css = fetch_css()
+    css = re.sub(r"/\*.*?\*/", "", fetch_css(), flags=re.S)
     rules = recolor(css)
     dark = redark(css)
 
-    header = (
-        "/* skin.css — надстройка оформления для mirsladostey164.ru\n"
-        "   Подключается последним, поверх шаблона Aspro Максимум.\n"
-        "   Вёрстка и логика сайта не меняются: только цвет, шрифты и фон.\n"
-        f"   Правил перекраски: {len(rules)}. Собрано скриптом skin/build_skin.py */\n")
-
     body = (FONTS
-            + "\n/* --- перекраска фирменного акцента ------------------------------------ */\n"
+            + "\n\n"
             + "\n".join(rules) + "\n"
-            + "\n/* --- светлая схема шаблона переведена в тёмную --- */\n"
+            + "\n\n"
             + "\n".join(dark) + "\n" + MANUAL + LAYOUT)
 
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
-        f.write(header + body)
+        f.write(body)
 
-    print(f"правил перекрашено: {len(rules)}, затемнено: {len(dark)}")
-    print(f"размер skin.css: {os.path.getsize(OUT) // 1024} КБ")
-    print("записано:", OUT)
+    print(f"recolored rules: {len(rules)}, darkened: {len(dark)}")
+    print(f"skin.css size: {os.path.getsize(OUT) // 1024} KB")
+    print("written:", OUT)
 
 
 if __name__ == "__main__":

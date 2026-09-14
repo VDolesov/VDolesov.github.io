@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Текстовые разделы витрины: компания, помощь, акции, услуги, справочная,
-контакты и личный кабинет. Структура повторяет разделы mirsladostey164.ru.
-"""
 from build import (ADDRESS, EMAIL, PHONE_MAIN, PHONE_MAIN_HREF, PHONE_SECOND,
                    PHONE_SECOND_HREF, SHOPS, breadcrumbs, esc, page, page_hero,
                    write)
@@ -50,8 +46,6 @@ def empty_state(title, text, link_text="Перейти в каталог", link=
           <a class="button button--outline" href="{link}">{esc(link_text)}</a>
         </div>"""
 
-
-# ------------------------------------------------------------------ компания
 
 def build_company():
     body = (prose(
@@ -157,8 +151,6 @@ def build_docs():
               "Реквизиты", "Документы", "", body, active="/company/docs/")
 
 
-# ------------------------------------------------------------------ контакты
-
 def build_contacts():
     shops = "".join(
         f"""        <div class="store-row reveal"><span class="store-row__index">{i + 1:02d}</span>
@@ -197,8 +189,6 @@ def build_contacts():
         "Телефоны, почта и адреса семи фирменных магазинов «Мир сладостей» в Саратове.",
         "/contacts/", main, SECTIONS, "/contacts/"))
 
-
-# -------------------------------------------------------------------- помощь
 
 def build_help():
     body = (steps([
@@ -268,8 +258,6 @@ def build_warranty():
               breadcrumbs(("Главная", "/"), ("Как купить", "/help/"), ("Гарантия на товар", "")),
               "Помощь", "Гарантия<br><em>на товар</em>", "", body, active="/help/warranty/")
 
-
-# ----------------------------------------------------- акции, услуги, справка
 
 def build_sale():
     body = empty_state(

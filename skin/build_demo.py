@@ -1,17 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Готовая версия сайта с новым оформлением.
-
-Страницы боевого сайта берутся как есть, добавляется <base>, чтобы стили,
-скрипты и картинки грузились с исходного домена, и подключается skin.css.
-Вёрстка не правится ни на символ — именно так это будет выглядеть после
-подключения файла на сервере.
-
-Фотографии каталога подменяются обработанной серией: на живом сайте их
-загружают в карточки товаров, здесь подстановка сделана скриптом, чтобы
-результат было видно целиком.
-
-    python skin/build_demo.py
-"""
 import json
 import os
 import re
@@ -22,7 +8,7 @@ APP = os.path.dirname(HERE)
 SITE = "https://www.mirsladostey164.ru"
 PAGES_ORIGIN = "https://vdolesov.github.io"
 OUT = os.path.join(HERE, "demo")
-SERIES = "v9"   # фотосерия каталога: assets/products/<id>-<серия>.webp
+SERIES = "v9"
 
 PAGES = [
     ("index.html", "/"),
@@ -35,10 +21,6 @@ PAGES = [
 
 DEMO_FIX = """
 <style>
-/* Только для этой демонстрации: вкладки «Новинка» и «Рекомендуем» и
-   всплывающая корзина подгружают содержимое запросом к сайту, а вне его
-   домена такой запрос не проходит. Чтобы не показывать пустую крутилку,
-   они здесь скрыты. На сервере всё работает штатно и прятать нечего. */
 li[data-code="NEW"], li[data-code="RECOMMEND"],
 .NEW_slides, .RECOMMEND_slides { display: none !important; }
 .basket_hover_block.loading_block,
@@ -47,11 +29,8 @@ li[data-code="NEW"], li[data-code="RECOMMEND"],
 </style>
 """
 
-
 PHOTO_SCRIPT = """
 <script>
-/* Фотографии обработанной серии подставляются по коду товара из ссылки.
-   На сервере этого скрипта не нужно: файлы загружаются в карточки товаров. */
 (function () {
   var ids = %IDS%;
   var pageId = "%PAGE_ID%";
@@ -65,7 +44,6 @@ PHOTO_SCRIPT = """
     img.src = "%ORIGIN%/assets/products/" + id + "-%SERIES%.webp";
   }
 
-  // страница товара: главное изображение и миниатюры галереи
   if (pageId) {
     document.querySelectorAll(".detail img, .product-detail img, .slides img, .thumbs img")
       .forEach(function (img) { swap(img, pageId); });
@@ -78,7 +56,6 @@ PHOTO_SCRIPT = """
     card.querySelectorAll("img").forEach(function (img) { swap(img, m[1]); });
   });
 
-  // разделы на главной: вместо миниатюр 90x90 — наша серия
   var sections = %SECTIONS%;
   document.querySelectorAll(".cat_sections a.thumb, .sections_wrapper a.thumb")
     .forEach(function (a) {
@@ -95,31 +72,25 @@ PHOTO_SCRIPT = """
 </script>
 """
 
-
 SECTION_PHOTOS = {
-    # раздел на главной → фотография из нашей серии
-    "torty": "749",                 # Шварцвальдский
-    "pirogi": "801",                # осетинский пирог, съёмка производства
-    "vypechka": "746",              # штрудель с вишней
-    "pirozhnye_i_deserty": "757",   # Соната
-    "pechene": "753",               # Суворовское
-    "salaty": "765",                # Русский
-    "vtorye_blyuda": "770",         # котлеты по-киевски
-    "polufabrikaty": "760",         # пельмени
-    "napitki": "763",               # морс клюквенный
+
+    "torty": "749",
+    "pirogi": "801",
+    "vypechka": "746",
+    "pirozhnye_i_deserty": "757",
+    "pechene": "753",
+    "salaty": "765",
+    "vtorye_blyuda": "770",
+    "polufabrikaty": "760",
+    "napitki": "763",
 }
 
-
 BANNER = {
-    # главный баннер: стоковая съёмка заменена своей — подложка и продукт
+
     "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=5",
     "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-cake.webp?v=1",
 }
 
-# текст баннера: формулировки направления «Чёрный шоколад» вместо
-# стокового «Изготовление тортов и пирожных». На сервере это правится в
-# настройках слайда, здесь — подстановкой при сборке. Регулярные выражения,
-# потому что в разметке вокруг текста табуляция и переносы.
 BANNER_COPY = [
     (r'(<div class="section font_upper_md">)Торты(</div>)', r"\1Собственное производство\2"),
     (r'(<span class="head-title">\s*)Изготовление тортов и пирожных(\s*</span>)',
@@ -141,12 +112,6 @@ def swap_banner(html):
 
 
 def unlazy(html):
-    """Раскрывает отложенную загрузку картинок.
-
-    В шаблоне настоящий адрес лежит в data-src (для фона — в data-bg), а в
-    src стоит заглушка-спиннер, которую подставляет скрипт. Вне исходного
-    домена этот скрипт не отрабатывает, поэтому подставляем адреса сразу.
-    """
     def img(match):
         tag = match.group(0)
         real = re.search(r'data-src="([^"]+)"', tag)
@@ -171,13 +136,6 @@ def unlazy(html):
 
 
 def inline_deferred(html):
-    """Встраивает блоки, которые сайт догружает отдельным запросом.
-
-    На главной часть блоков (разделы каталога, вкладки товаров, карта)
-    помечена классом js-load-block и подгружается скриптом по адресу из
-    data-file. Вне исходного домена такой запрос не проходит, поэтому
-    содержимое запрашивается на этапе сборки и вставляется в страницу.
-    """
     pattern = re.compile(r'<div[^>]*js-load-block[^>]*data-file="([^"]+)"[^>]*>')
     for match in list(pattern.finditer(html)):
         url = match.group(1)
@@ -189,14 +147,14 @@ def inline_deferred(html):
                          "Referer": SITE + "/"})
             block = urllib.request.urlopen(request, timeout=45).read().decode("utf-8", "ignore")
         except Exception as exc:
-            print(f"    блок {url}: {exc}")
+            print(f"    block {url}: {exc}")
             continue
 
         opening = match.group(0)
-        # блок больше не нужно догружать скриптом
+
         clean = opening.replace(" js-load-block", "").replace(" loader_circle", "")
         html = html.replace(opening, clean + block, 1)
-        print(f"    встроен блок {url.split('/')[-1]}")
+        print(f"    inlined block {url.split('/')[-1]}")
     return html
 
 
@@ -216,10 +174,8 @@ def build_page(filename, path, ids):
     html = unlazy(html)
     html = swap_banner(html)
 
-    # ресурсы и ссылки продолжают работать с исходного домена
     html = html.replace("<head>", f'<head>\n<base href="{SITE}/">', 1)
 
-    # оформление подключается последним — как это и будет на сервере
     link = f'\n<link rel="stylesheet" href="{PAGES_ORIGIN}/skin/skin.css">\n</head>'
     html = html.replace("</head>", link, 1)
 
@@ -238,12 +194,12 @@ def build_page(filename, path, ids):
 
 def main():
     ids = product_ids()
-    print("страницы:")
+    print("pages:")
     for filename, path in PAGES:
         try:
             build_page(filename, path, ids)
         except Exception as exc:
-            print(f"  {filename}: ошибка {exc}")
+            print(f"  {filename}: error {exc}")
 
 
 if __name__ == "__main__":

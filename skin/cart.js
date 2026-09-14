@@ -1,12 +1,3 @@
-/* Корзина и оформление заказа без сервера.
-
-   Сайт собран статически, поэтому корзина живёт в браузере покупателя
-   (localStorage). Кнопки «В корзину» — родные, из шаблона: скрипт снимает
-   с них запрос к серверу и ведёт учёт сам. Страница /basket/ рисуется
-   заново: список, итог, форма заказа, подтверждение.
-
-   На боевом сайте это делает штатный модуль Битрикса; этот файл нужен
-   только для демонстрации. Данные товаров — в cart-data.js. */
 (function () {
   "use strict";
 
@@ -18,7 +9,6 @@
   var SHOP_MAIL = "mirslad49@mail.ru";
   var SHOP_PHONE = "+7 (8452) 47-35-69";
 
-  // ------------------------------------------------------------ хранилище
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; }
   }
@@ -48,17 +38,16 @@
   }
   function photo(id) {
     return PHOTOS.indexOf(id) !== -1
-      ? ORIGIN + "/assets/products/" + id + "-v9-640.webp"
+      ? ORIGIN + "/assets/products/" + id + "-" + (window.MS_SERIES || "v9") + "-640.webp"
       : (PRODUCTS[id] && PRODUCTS[id].image) || "";
   }
 
-  // --------------------------------------------------------- счётчик в шапке
   function badge() {
     var n = count(load());
     var nodes = document.querySelectorAll(".basket_count, .wrap_basket .count, .header-cart .count, .fixed-basket .count");
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
-      // число лежит в самом глубоком span: .count > span > .items > span
+
       var target = el.querySelector(".items span, .items, .count span:last-child, .count") || el;
       while (target.children.length === 1) target = target.children[0];
       if (target.children.length === 0) target.textContent = String(n);
@@ -70,7 +59,6 @@
     }
   }
 
-  // ------------------------------------------------------- кнопки «В корзину»
   function productIdFrom(el) {
     var holder = el.closest("[data-item]");
     if (holder && holder.getAttribute("data-item")) return holder.getAttribute("data-item");
@@ -141,7 +129,6 @@
     }
   }, true);
 
-  // ------------------------------------------------------- страница корзины
   function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
@@ -327,7 +314,7 @@
 
   function mountCart() {
     if (!/^\/basket\/?$/.test(location.pathname)) return;
-    // содержимое корзины шаблона лежит в .wrapper_inner > .container_inner > .middle > .container
+
     var container = document.querySelector(".wrapper_inner .container_inner .middle > .container")
       || document.querySelector(".wrapper_inner .container_inner .middle")
       || document.querySelector(".wrapper_inner");

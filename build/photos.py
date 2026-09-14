@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Сборка единой фотосерии каталога.
-
-Источники по приоритету:
-  1. build/photos/<id>.jpg — оригиналы с сайта (1100 px), packshot на белом;
-  2. assets/products/pies-<id>-v2.webp — студийная серия пирогов (своих
-     фотографий этих позиций у предприятия нет);
-  3. i.jpg / i1.jpg / i2.jpg — съёмка осетинских пирогов на производстве;
-  4. заглушка для позиции, у которой фотографии нет вовсе.
-
-Итог: assets/products/<id>-v7.webp (1024 px) и <id>-v7-640.webp.
-"""
 import json
 import os
 import sys
@@ -31,19 +19,17 @@ SIZE = 1024
 SPAN = 0.78
 BASE_LINE = 0.84
 
-# прозрачные упаковки и стекло: вырез крошится, показываем кадр целиком
+
 TINT_IDS = {"760", "761", "764", "769", "758", "778"}
-# студийные кадры: собственных фотографий этих пирогов нет
+
 STUDIO = {"736", "737", "738", "739", "741", "772", "773", "774"}
-# съёмка на производстве: файл, центр и полуоси доски, коррекция цвета
+
 REAL = {
     "801": (os.path.join(SITE, "i.jpg"), (720, 1040), (660, 660), (1.00, 1.00, 1.00), 0.97),
     "802": (os.path.join(SITE, "i1.jpg"), (875, 830), (880, 480), (1.05, 1.05, 0.88), 0.80),
     "803": (os.path.join(SITE, "i2.jpg"), (900, 860), (890, 470), (1.02, 1.02, 0.94), 0.90),
 }
 
-
-# --------------------------------------------------------------- морфология
 
 def _dilate(m, n):
     for _ in range(n):
@@ -71,8 +57,6 @@ def _spread(seed, allowed, steps=1400):
     return cur
 
 
-# -------------------------------------------------------------------- сцена
-
 def background():
     ys, xs = np.mgrid[0:SIZE, 0:SIZE]
     d = np.clip(np.hypot(xs - SIZE * .5, ys - SIZE * .40) / (SIZE * .80), 0, 1)
@@ -83,7 +67,6 @@ def background():
 
 
 def finish(im, floor=.55, lift=1.0, shadows=1.0, sat=.96):
-    """Общий грейд каталога: тёплый свет, мягкая виньетка, лёгкое зерно."""
     if shadows != 1.0:
         lut = [min(255, int(255 * (v / 255.) ** shadows)) for v in range(256)]
         im = im.point(lut * 3)
@@ -113,7 +96,6 @@ def finish(im, floor=.55, lift=1.0, shadows=1.0, sat=.96):
 
 
 def place(product, span=SPAN):
-    """Изделие на общей сцене: единый габарит и линия основания."""
     canvas = background()
     pw, ph = product.size
     k = (SIZE * span) / max(pw, ph)
@@ -132,10 +114,7 @@ def place(product, span=SPAN):
     return canvas
 
 
-# -------------------------------------------------------------------- вырез
-
 def cutout(path, white_luma=241, white_sat=16, close=7):
-    """Фоном считается только белое, связанное с рамкой кадра."""
     im = Image.open(path).convert("RGB")
     if max(im.size) > 1400:
         im.thumbnail((1400, 1400), Image.LANCZOS)
@@ -165,7 +144,6 @@ def cutout(path, white_luma=241, white_sat=16, close=7):
 
 
 def tinted(path, span=SPAN):
-    """Без выреза: белый фон снимка перекрашивается в тёплый."""
     im = Image.open(path).convert("RGB")
     w, h = im.size
     k = (SIZE * span) / max(w, h)
@@ -185,7 +163,6 @@ def tinted(path, span=SPAN):
 
 
 def refit_studio(path):
-    """Студийный кадр: сцену сохраняем, изделие приводим к общему габариту."""
     im = Image.open(path).convert("RGB").resize((SIZE, SIZE), Image.LANCZOS)
     a = np.array(im).astype(np.float32)
     edge = np.concatenate([a[:14].reshape(-1, 3), a[-14:].reshape(-1, 3),
@@ -212,7 +189,6 @@ def refit_studio(path):
 
 
 def real_photo(path, center, axes, tint, sat):
-    """Съёмка на производстве: пирог с доской переносится в общую сцену."""
     im = Image.open(path).convert("RGB")
     a = np.array(im).astype(np.float32)
     luma = a.max(axis=-1)
@@ -240,7 +216,6 @@ def real_photo(path, center, axes, tint, sat):
 
 
 def placeholder():
-    """Мягкая заглушка для позиции, у которой фотографии нет."""
     canvas = background()
     d = ImageDraw.Draw(canvas)
     cx, cy, r = SIZE * .5, SIZE * .46, SIZE * .17
@@ -278,25 +253,24 @@ def main():
         try:
             if pid in REAL:
                 out = finish(real_photo(*REAL[pid]), floor=.58, lift=1.10, shadows=.66)
-                kind = "съёмка производства"
+                kind = "production shot"
             elif pid in STUDIO:
                 out = finish(refit_studio(os.path.join(SRC_STUDIO, f"pies-{pid}-v2.webp")))
-                kind = "студийная серия"
+                kind = "studio series"
             elif os.path.exists(hd):
                 out = finish(tinted(hd) if pid in TINT_IDS else place(cutout(hd)))
-                kind = "HD с сайта" + (", без выреза" if pid in TINT_IDS else "")
+                kind = "site HD" + (", no cutout" if pid in TINT_IDS else "")
             else:
                 legacy = [f for f in os.listdir(SRC_LEGACY) if f.endswith(f"-{pid}.jpg")]
                 if legacy:
                     out = finish(place(cutout(os.path.join(SRC_LEGACY, legacy[0]))))
-                    kind = "архивные 350 px"
+                    kind = "archive 350 px"
                 else:
                     out = finish(placeholder())
-                    kind = "заглушка"
+                    kind = "placeholder"
             save(out, pid)
             print(f"  {pid}: {kind}")
         except Exception as exc:
-            print(f"  {pid}: ОШИБКА {exc}")
-
+            print(f"  {pid}: ERROR {exc}")
 
 main()

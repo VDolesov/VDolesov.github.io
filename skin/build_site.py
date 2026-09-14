@@ -1,19 +1,3 @@
-# -*- coding: utf-8 -*-
-"""Полный сайт с новым оформлением — все страницы, все ссылки внутри.
-
-Обходит боевой сайт по внутренним ссылкам, каждую страницу пропускает
-через ту же обработку, что и демонстрация (встраивание отложенных блоков,
-раскрытие ленивых картинок, свой баннер, своя фотосерия), и кладёт в корень
-репозитория по тому же адресу, что и на боевом сайте:
-
-    /catalog/torty/747/  →  catalog/torty/747/index.html
-
-Ссылки между страницами остаются относительными и ведут внутрь. Стили,
-скрипты и картинки шаблона грузятся с исходного домена — их адреса
-переписаны в абсолютные. Файл оформления подключается локально.
-
-    python skin/build_site.py
-"""
 import hashlib
 import io
 import json
@@ -29,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
-from build_demo import (BANNER, BANNER_COPY, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,  # noqa: E402
+from build_demo import (BANNER, BANNER_COPY, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
                         SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
                         swap_banner, unlazy)
 
@@ -39,7 +23,7 @@ SEEDS = ["/", "/catalog/", "/basket/", "/personal/", "/search/", "/contacts/",
 LIMIT = 320
 PAUSE = 0.25
 
-# сюда не ходим: служебные разделы и всё, что требует запроса или входа
+
 SKIP_PREFIX = ("/bitrix/", "/upload/", "/local/", "/ajax/", "/include/",
                "/auth/", "/login/", "/personal/order/", "/personal/cart/",
                "/personal/profile/", "/personal/subscribe/", "/order/")
@@ -49,7 +33,6 @@ ASSET_EXT = (".css", ".js", ".ico", ".png", ".jpg", ".jpeg", ".gif", ".svg",
 
 
 def is_page(path):
-    """Внутренняя страница: без расширения файла и не из служебных разделов."""
     if not path.startswith("/") or path.startswith("//"):
         return False
     if path.startswith(SKIP_PREFIX):
@@ -61,7 +44,6 @@ def is_page(path):
 
 
 def normalize(href, current):
-    """Абсолютный путь страницы или None, если ссылка не внутренняя."""
     href = href.strip()
     if not href or href.startswith(("#", "javascript:", "mailto:", "tel:", "data:")):
         return None
@@ -92,9 +74,6 @@ def fetch(path):
         final = urllib.parse.urlparse(response.geturl()).path
         return response.read().decode("utf-8", "ignore"), final
 
-
-# ------------------------------------------------------------ переписывание
-
 _ATTR_SRC = re.compile(r'\b(src|data-src|data-bg|data-original|poster)="(/(?!/)[^"]*)"', re.I)
 _ATTR_SRCSET = re.compile(r'\b(srcset|data-srcset)="([^"]*)"', re.I)
 _ATTR_HREF = re.compile(r'\bhref="(/(?!/)[^"]*)"', re.I)
@@ -110,7 +89,6 @@ def _asset_href(url):
 
 
 def absolutize_assets(html):
-    """Ресурсы шаблона — с исходного домена; свои (/assets, /skin) — местные."""
     def own(url):
         return url.startswith(("/assets/", "/skin/"))
 
@@ -135,7 +113,6 @@ def absolutize_assets(html):
 
 
 def localize_links(html, current):
-    """Ссылки на страницы — внутрь сайта, без запросов и без исходного домена."""
     def link(m):
         href = m.group(2)
         parsed = urllib.parse.urlparse(href.strip())
@@ -150,16 +127,13 @@ def localize_links(html, current):
         return f"{m.group(1)}{path}{'#' + fragment if fragment else ''}{m.group(3)}"
     html = _A_HREF.sub(link, html)
 
-    # формы поиска и обратной связи некуда отправлять — ведут на каталог
     html = _FORM.sub(lambda m: f'{m.group(1)}/catalog/{m.group(3)}', html)
     return html
-
 
 SCRIPTS = ("cart-data.js", "cart.js")
 
 
 def skin_version():
-    """Короткий отпечаток оформления и скриптов — для сброса кэша браузера."""
     digest = hashlib.md5()
     for name in ("skin.css",) + SCRIPTS:
         with open(os.path.join(HERE, name), "rb") as f:
@@ -178,7 +152,6 @@ def build_page(path, html, ids, version):
     html = absolutize_assets(html)
     html = localize_links(html, path)
 
-    # <base> не нужен: страницы лежат по своим адресам, ссылки относительные
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
 
     link = f'\n<link rel="stylesheet" href="/skin/skin.css?v={version}">\n</head>'
@@ -223,7 +196,7 @@ def main():
         if not final.endswith("/"):
             final += "/"
         if final != path and final in seen:
-            # адрес перенаправился на уже известную страницу
+
             continue
         seen.add(final)
 
@@ -240,12 +213,10 @@ def main():
 
     with io.open(os.path.join(HERE, "site-pages.json"), "w", encoding="utf-8") as f:
         json.dump({"pages": done, "failed": failed, "skin": version}, f, ensure_ascii=False, indent=1)
-    print(f"страниц собрано: {len(done)}, не удалось: {len(failed)}, в очереди осталось: {len(queue)}")
+    print(f"pages built: {len(done)}, failed: {len(failed)}, left in queue: {len(queue)}")
 
 
 def refresh(html):
-    """Приводит собранную страницу к текущим настройкам без обхода сайта:
-    фотосерия, файлы баннера и его текст."""
     html = re.sub(r'(/assets/products/" \+ [^"]+ \+ ")-v\d+\.webp"',
                   lambda m: m.group(1) + "-" + SERIES + '.webp"', html)
     backdrop, product = BANNER.values()
@@ -257,7 +228,6 @@ def refresh(html):
 
 
 def restamp():
-    """Обновляет версию skin.css во всех собранных страницах без обхода сайта."""
     version = skin_version()
     pattern = re.compile(r"/skin/skin\.css\?v=[0-9a-f]+")
     count = 0
@@ -269,13 +239,13 @@ def restamp():
             full = os.path.join(root, name)
             html = io.open(full, encoding="utf-8").read()
             fresh = refresh(pattern.sub(f"/skin/skin.css?v={version}", html))
-            # скрипты корзины: старые подключения убрать, актуальные добавить
+
             fresh = re.sub(r'<script src="/skin/[a-z-]+\.js\?v=[0-9a-f]+"></script>\n?', "", fresh)
             fresh = fresh.replace("</body>", script_tags(version) + "</body>", 1)
             if fresh != html:
                 io.open(full, "w", encoding="utf-8", newline="\n").write(fresh)
                 count += 1
-    print(f"версия {version} проставлена в {count} страницах")
+    print(f"version {version} stamped into {count} pages")
 
 
 if __name__ == "__main__":
