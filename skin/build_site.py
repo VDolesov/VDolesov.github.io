@@ -130,7 +130,7 @@ def localize_links(html, current):
     html = _FORM.sub(lambda m: f'{m.group(1)}/catalog/{m.group(3)}', html)
     return html
 
-SCRIPTS = ("cart-data.js", "cart.js")
+SCRIPTS = ("cart-data.js", "cart.js", "nav.js")
 
 
 def skin_version():

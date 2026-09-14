@@ -31,6 +31,7 @@ def main():
     body = (
             f"window.MS_ORIGIN = {json.dumps(PAGES_ORIGIN)};\n"
             f"window.MS_SERIES = {json.dumps(SERIES)};\n"
+            f"window.MS_SECTIONS = {json.dumps([{'slug': x['slug'], 'name': x['title']} for x in catalog['sections']], ensure_ascii=False)};\n"
             f"window.MS_PHOTOS = {json.dumps(sorted(photos))};\n"
             f"window.MS_PRODUCTS = {json.dumps(products, ensure_ascii=False, indent=1)};\n")
     path = os.path.join(HERE, "cart-data.js")
