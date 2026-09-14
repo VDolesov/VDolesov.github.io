@@ -1500,6 +1500,15 @@ body .element-count-wrapper .element-count {{
   font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 14px !important; color: {MUTED} !important;
   vertical-align: super !important; margin-left: 4px !important;
 }}
+
+body .left_block .menu_top_block ul.left_menu > li > a {{
+  background: transparent !important; border: 0 !important; padding: 9px 0 !important;
+  font-family: Prata, Georgia, serif !important; font-size: 17px !important; font-weight: 400 !important; color: {INK} !important;
+}}
+body .left_block .menu_top_block ul.left_menu > li.current > a,
+body .left_block .menu_top_block ul.left_menu > li > a:hover {{ color: {GOLD} !important; }}
+body .left_block .menu_top_block ul.left_menu > li > a .toggle_block {{ display: none !important; }}
+body .left_block .menu_top_block.menu-type1 {{ padding-top: 6px !important; }}
 """
 
 
