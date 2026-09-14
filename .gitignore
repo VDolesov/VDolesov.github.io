@@ -5,3 +5,4 @@ skin/aspro.css
 skin/hero-preview.jpg
 __pycache__/
 skin/__pycache__/
+skin/cache/

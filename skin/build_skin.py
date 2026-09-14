@@ -1,10 +1,12 @@
+import hashlib
 import os
 import re
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://www.mirsladostey164.ru"
-CACHE = os.path.join(HERE, "aspro.css")
+APP = os.path.dirname(HERE)
+CACHE = os.path.join(HERE, "cache")
 OUT = os.path.join(HERE, "skin.css")
 
 COLOR_MAP = {
@@ -33,24 +35,48 @@ TILE = "#130c09"
 ACCENT_SOFT = "rgba(214, 164, 89, .12)"
 
 
+def bundle_urls():
+    order = {"kernel": 0, "template": 1, "page": 2, "default": 3, "components": 4}
+    seen = {}
+    for root, dirs, files in os.walk(APP):
+        dirs[:] = [d for d in dirs if d not in (".git", "skin", "build", "assets")]
+        if "index.html" not in files:
+            continue
+        html = open(os.path.join(root, "index.html"), encoding="utf-8", errors="ignore").read()
+        links = re.findall(r'<link[^>]+href="([^"]+\.css)[^"]*"', html)
+        links += [SITE + u for u in re.findall(r"'(/bitrix/templates/aspro_max/[^']+\.css)[^']*'", html)]
+        for url in links:
+            if "aspro_max" not in url:
+                continue
+            kind = next((k for k in order if "/" + k in url or "/" + k + "_" in url), "components")
+            seen.setdefault(url, (order[kind], len(seen)))
+    return [u for u, _ in sorted(seen.items(), key=lambda kv: kv[1])]
+
+
 def fetch_css():
-    if os.path.exists(CACHE):
-        return open(CACHE, encoding="utf-8", errors="ignore").read()
-    home = urllib.request.urlopen(
-        urllib.request.Request(SITE, headers={"User-Agent": "Mozilla/5.0"}),
-        timeout=40).read().decode("utf-8", "ignore")
-    href = re.search(r'/bitrix/cache/css/s1/aspro_max/[^"]+\.css[^"]*', home).group(0)
-    css = urllib.request.urlopen(
-        urllib.request.Request(SITE + href, headers={"User-Agent": "Mozilla/5.0"}),
-        timeout=90).read().decode("utf-8", "ignore")
-    open(CACHE, "w", encoding="utf-8").write(css)
-    return css
+    os.makedirs(CACHE, exist_ok=True)
+    parts = []
+    for url in bundle_urls():
+        name = hashlib.md5(url.encode()).hexdigest()[:12] + ".css"
+        path = os.path.join(CACHE, name)
+        if not os.path.exists(path):
+            try:
+                css = urllib.request.urlopen(
+                    urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}),
+                    timeout=90).read().decode("utf-8", "ignore")
+            except Exception as exc:
+                print(f"  skip {url}: {exc}")
+                continue
+            open(path, "w", encoding="utf-8").write(css)
+        parts.append(open(path, encoding="utf-8", errors="ignore").read())
+    return "\n".join(parts)
 
 
 def recolor(css):
     pattern = re.compile(r"([^{}]+)\{([^{}]*)\}")
     targets = tuple(COLOR_MAP)
     rules = []
+    seen = set()
     for match in pattern.finditer(css):
         selector, body = match.group(1).strip(), match.group(2)
         if not any(color in body.lower() for color in targets):
@@ -71,7 +97,10 @@ def recolor(css):
             kept.append(f"{prop.strip()}:{value.strip()}")
         if kept:
             selector = " ".join(selector.split())
-            rules.append(f"{selector}{{{';'.join(kept)}}}")
+            rule = f"{selector}{{{';'.join(kept)}}}"
+            if rule not in seen:
+                seen.add(rule)
+                rules.append(rule)
     return rules
 
 TEXT_MAP = {
@@ -121,7 +150,7 @@ def _mapping(prop):
     prop = prop.strip().lower()
     if prop.startswith(("background", "fill")):
         return FILL_MAP
-    if "border" in prop or "outline" in prop:
+    if "border" in prop or "outline" in prop or prop == "box-shadow":
         return EDGE_MAP
     if prop == "color" or prop.endswith("-color") or prop == "stroke":
         return TEXT_MAP
@@ -162,6 +191,7 @@ def _grey(value, mapping):
 def redark(css):
     pattern = re.compile(r"([^{}]+)\{([^{}]*)\}")
     rules = []
+    seen = set()
     for match in pattern.finditer(css):
         selector, body = match.group(1).strip(), match.group(2)
         if selector.startswith("@") or any(k in selector for k in KEEP_LIGHT):
@@ -179,7 +209,10 @@ def redark(css):
             if fresh != value:
                 kept.append(f"{prop.strip()}:{fresh.strip()}")
         if kept:
-            rules.append(" ".join(selector.split()) + "{" + ";".join(kept) + "}")
+            rule = " ".join(selector.split()) + "{" + ";".join(kept) + "}"
+            if rule not in seen:
+                seen.add(rule)
+                rules.append(rule)
     return rules
 
 FONTS = """@import url("https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600&display=swap");
@@ -1364,6 +1397,53 @@ input:focus, textarea:focus, select:focus, .form-control:focus {{ border-color: 
 .footer_bottom .pays a {{ display: none !important; }}
 .footer_bottom .pays i {{ opacity: .45; }}
 footer .btn, footer span.btn {{ background: {ACCENT} !important; border-color: {ACCENT} !important; color: {ON_ACCENT} !important; }}
+
+.item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container {{
+  background: transparent !important; padding: 0 0 6px !important;
+}}
+.item_block:hover .catalog_item, .catalog_item_wrapp:hover .catalog_item {{ box-shadow: none !important; transform: none !important; }}
+.catalog_item .image_wrapper_block, .product-item-image-wrapper,
+body .cat_sections.cat_sections .item.compact .img.shine,
+body .cat_sections.cat_sections .owl-item:first-child .item.compact .img.shine,
+body .product-detail-gallery .product-detail-gallery__item,
+body .product-detail-gallery__thmb-inner > *, .ms-item__pic {{ background: {GROUND} !important; }}
+.catalog_item .item-title, .product-item-title {{ margin-top: 16px !important; }}
+.catalog_item .article_block, .catalog_item .article {{ display: none !important; }}
+.catalog_item .footer_button {{ margin-top: 12px !important; }}
+.item_block .catalog_item .stickers, .catalog_item .stickers {{ left: 0 !important; top: 0 !important; }}
+
+@media (min-width: 1200px) {{
+  body .cat_sections.cat_sections .owl-item {{ width: calc((100% - 8 * 14px) / 9) !important; }}
+  body .cat_sections.cat_sections .owl-stage {{ gap: 14px !important; justify-content: flex-start !important; }}
+  body .cat_sections.cat_sections .item.compact .name a,
+  body .cat_sections.cat_sections .owl-item:first-child .item.compact .name a {{ font-size: 17px !important; }}
+}}
+body .cat_sections.cat_sections .item.compact .name {{ padding: 12px 0 0 !important; }}
+body .CATALOG_SECTIONS .sections_wrapper::before {{
+  content: "Что печём"; display: block;
+  font-family: Prata, Georgia, serif; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.1;
+  color: {INK}; margin: 0 0 26px;
+}}
+body .CATALOG_SECTIONS {{ padding-top: clamp(48px, 5vw, 72px) !important; }}
+
+body .product-info-headnote .rating, body .product-info .rating {{ display: none !important; }}
+body .wrapper_inner > .left_block.product-side {{ display: none !important; }}
+body .ordered-block.goods:not(:has(.catalog_item)) {{ display: none !important; }}
+body .bottom-info .ordered-block.goods {{ margin-top: 40px !important; }}
+
+body .MAPS [class*="ground-pane"] {{ filter: grayscale(1) invert(.92) brightness(.72) contrast(.92) sepia(.35); }}
+body .MAPS .contacts_map, body .MAPS .map_type_2 .items {{ background: {PANEL} !important; }}
+body .MAPS {{ padding-bottom: clamp(40px, 4vw, 64px) !important; }}
+footer .btn, footer span.btn {{ border-radius: 0 !important; }}
+body .footer-inner .footer_top {{ padding: 48px 0 36px !important; }}
+
+.catalog_item .inner_wrap, .catalog_item_wrapp .inner_wrap {{ box-shadow: none !important; }}
+body .cat_sections.cat_sections .item.compact .name a {{ white-space: normal !important; text-overflow: clip !important; overflow: visible !important; line-height: 1.25 !important; }}
+
+body .catalog_block .item, body .catalog_item_wrapp.catalog_item, body .item_block .catalog_item,
+body .catalog_item .inner_wrap, body .catalog_item .item_info {{ height: auto !important; min-height: 0 !important; }}
+body .catalog_item .inner_wrap {{ display: flex !important; flex-direction: column !important; }}
+body .catalog_item .footer_button {{ margin-top: 14px !important; }}
 """
 
 
