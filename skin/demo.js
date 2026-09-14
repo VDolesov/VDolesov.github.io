@@ -18,7 +18,9 @@
     ask: ["Задать вопрос",
       "На рабочем сайте вопрос уходит менеджеру. В демо-версии формы не отправляются — напишите нам на почту или позвоните."],
     contacts: ["Контакты",
-      "г. Саратов, ул. Бахметьевская, 49. Магазины: ТЦ «Солнечный», ул. Тархова 29А/1 и кулинария на кольце НИИ."]
+      "г. Саратов, ул. Бахметьевская, 49. Магазины: ТЦ «Солнечный», ул. Тархова 29А/1 и кулинария на кольце НИИ."],
+    form: ["Форма",
+      "На рабочем сайте эта форма отправляется на сервер. В демо-версии формы не отправляются — позвоните или напишите нам."]
   };
 
   function esc(s) {
@@ -73,6 +75,14 @@
     e.preventDefault(); e.stopImmediatePropagation();
     if (!name && (t.getAttribute("href") === "/auth/" || t.classList.contains("personal-link"))) name = "auth";
     modal(NOTES[name] ? name : "callback");
+  }, true);
+
+  document.addEventListener("submit", function (e) {
+    var form = e.target;
+    if (!form || form.classList.contains("ms-form") || form.classList.contains("ms-search")) return;
+    if (form.querySelector('input[name="q"]')) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    modal("form");
   }, true);
 
   function authPage() {

@@ -249,6 +249,7 @@ def refresh(html):
     for old, new in ALIAS.items():
         html = html.replace(f'href="{old}"', f'href="{new}"')
     html = _COUNTER.sub("", html)
+    html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
     return html
 
 
