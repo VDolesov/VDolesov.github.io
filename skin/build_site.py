@@ -92,6 +92,12 @@ _ATTR_HREF = re.compile(r'\bhref="(/(?!/)[^"]*)"', re.I)
 _CSS_URL = re.compile(r"url\((['\"]?)(/(?!/)[^'\")]*)\1\)", re.I)
 _A_HREF = re.compile(r'(<a\s[^>]*?href=")([^"]*)(")', re.I | re.S)
 _FORM = re.compile(r'(<form\b[^>]*?\baction=")([^"]*)(")', re.I)
+_LOAD = re.compile(r"(BX\.(?:loadCSS|loadScript|load)\(\[)([^\]]*)(\])")
+
+
+def absolutize_loads(html):
+    return _LOAD.sub(lambda m: m.group(1) + m.group(2).replace("'/bitrix/", f"'{SITE}/bitrix/")
+                     .replace("'/local/", f"'{SITE}/local/") + m.group(3), html)
 
 
 def _asset_href(url):
@@ -163,6 +169,7 @@ def build_page(path, html, ids, version):
     html = swap_banner(html)
     html = absolutize_assets(html)
     html = localize_links(html, path)
+    html = absolutize_loads(html)
     html = _COUNTER.sub("", html)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
@@ -249,6 +256,7 @@ def refresh(html):
     for old, new in ALIAS.items():
         html = html.replace(f'href="{old}"', f'href="{new}"')
     html = _COUNTER.sub("", html)
+    html = absolutize_loads(html)
     html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
     return html
 

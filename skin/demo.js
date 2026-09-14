@@ -85,6 +85,22 @@
     modal("form");
   }, true);
 
+  function absolute(files) {
+    return [].concat(files).map(function (f) {
+      return typeof f === "string" && /^\/(bitrix|local|upload)\//.test(f) ? "https://www.mirsladostey164.ru" + f : f;
+    });
+  }
+  if (window.BX) {
+    ["loadCSS", "loadScript", "load"].forEach(function (name) {
+      var orig = BX[name];
+      if (typeof orig !== "function") return;
+      BX[name] = function (files) {
+        arguments[0] = absolute(files);
+        return orig.apply(this, arguments);
+      };
+    });
+  }
+
   function authPage() {
     if (!/^\/auth\/?$/.test(location.pathname)) return;
     var container = document.querySelector(".wrapper_inner .container_inner .middle > .container");
