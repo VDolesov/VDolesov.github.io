@@ -57,17 +57,45 @@ def place(product, span=SPAN, sharpen=50):
     layer = layer.filter(ImageFilter.GaussianBlur(SIZE * .018)).point(lambda x: int(x * .70))
     canvas = Image.composite(Image.new("RGB", (SIZE, SIZE), (0, 0, 0)), canvas, layer)
 
-    rgb = product.convert("RGB")
-    rgb = ImageEnhance.Contrast(rgb).enhance(1.08)
-    rgb = ImageEnhance.Brightness(rgb).enhance(.96)
+    rgb = natural(product.convert("RGB"))
     if sharpen:
-        rgb = rgb.filter(ImageFilter.UnsharpMask(radius=1.6, percent=sharpen, threshold=2))
+        rgb = rgb.filter(ImageFilter.UnsharpMask(radius=1.2, percent=sharpen, threshold=3))
 
     edge = alpha.filter(ImageFilter.GaussianBlur(3)).point(lambda x: 255 - int((255 - x) * .35))
     rgb = Image.composite(rgb, ImageEnhance.Brightness(rgb).enhance(.6), edge)
     rgb.putalpha(alpha)
     canvas.paste(rgb, (px, py), rgb)
     return canvas
+
+
+def natural(rgb):
+    soft = rgb.filter(ImageFilter.GaussianBlur(1.1))
+    rgb = Image.blend(rgb, soft, .38)
+    arr = np.asarray(rgb).astype(np.float32) / 255
+    wide = np.asarray(rgb.filter(ImageFilter.GaussianBlur(14))).astype(np.float32) / 255
+    arr = arr + (wide - arr) * .12
+
+    mx, mn = arr.max(axis=2), arr.min(axis=2)
+    delta = mx - mn
+    sat = np.where(mx > 0, delta / np.maximum(mx, 1e-6), 0)
+    r, g, b = arr[..., 0], arr[..., 1], arr[..., 2]
+    hue = np.zeros_like(mx)
+    m = delta > 1e-6
+    rm, gm, bm = (mx == r) & m, (mx == g) & m & ~(mx == r), (mx == b) & m & ~(mx == r) & ~(mx == g)
+    hue[rm] = ((g - b)[rm] / delta[rm]) % 6
+    hue[gm] = (b - r)[gm] / delta[gm] + 2
+    hue[bm] = (r - g)[bm] / delta[bm] + 4
+    hue = hue / 6
+    warm = np.clip(1 - np.abs(hue - .07) / .09, 0, 1)
+    scale = .88 - .16 * warm - .10 * np.clip((sat - .55) / .45, 0, 1)
+    grey = mx[..., None]
+    arr = grey + (arr - grey) * scale[..., None]
+
+    arr = .025 + arr * .955
+    arr = np.where(arr > .74, .74 + (arr - .74) * .84, arr)
+    arr[..., 0] *= .985
+    arr[..., 2] *= 1.02
+    return Image.fromarray((np.clip(arr, 0, 1) * 255).astype(np.uint8), "RGB")
 
 
 def finish(im):
@@ -136,15 +164,22 @@ def sheet():
 
 
 def main():
+    from pies_ai import ITEMS as AI, frame
+    from plates import BOWL, PLATE, PLATTER, plated
     catalog = json.load(open(os.path.join(HERE, "catalog.json"), encoding="utf-8"))
-    ids = sys.argv[1:] or [i["id"] for i in catalog["items"]] + sorted(PIES)
+    ids = sys.argv[1:] or sorted({i["id"] for i in catalog["items"]} | set(AI))
     for pid in ids:
         try:
-            try:
-                cut, span, kind = cutout(pid)
-                im = place(cut, span)
-            except FileNotFoundError:
-                im, kind = placeholder(), "placeholder"
+            if pid in AI:
+                im, kind = frame(pid), "ai render"
+            elif pid in BOWL or pid in PLATE or pid in PLATTER:
+                im, kind = place(plated(pid), .88 if pid in PLATTER else .80, sharpen=25), "plated"
+            else:
+                try:
+                    cut, span, kind = cutout(pid)
+                    im = place(cut, span, sharpen=30)
+                except FileNotFoundError:
+                    im, kind = placeholder(), "placeholder"
             save(finish(im), pid)
             print(f"  {pid}: {kind}", flush=True)
         except Exception as exc:

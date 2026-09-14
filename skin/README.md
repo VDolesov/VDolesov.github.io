@@ -71,11 +71,11 @@ python skin/hero_choc.py           # rebuild hero-bg.jpg
 
 ## Photos
 
-Series v9: every catalog item is a neural cutout placed on the same dark scene — cocoa ground, warm light from above, a pool of light on the table, a contact shadow. The three Ossetian pies (801–803), the strawberry cake (752, no photo on the live site) and the about-block photo are AI-generated (FLUX, raw renders in `build/sources/ai/`, composed by `build/pies_ai.py`) and graded onto the same scene. Files live in `../assets/products/` and are named by product id: `747-v9.webp` (1024) and `747-v9-640.webp`.
+Series v9: every catalog item is a neural cutout placed on the same dark scene — cocoa ground, warm light from above, a pool of light on the table, a contact shadow. Before placing, `natural()` in `build/photos_v9.py` calms the source shots (the originals are over-sharpened and over-saturated): halos softened, saturation pulled down with extra weight on oranges, highlights rolled off, blacks lifted a touch. `python build/photos_v9.py` rebuilds the whole series and dispatches plated items and AI renders itself. The three Ossetian pies (801–803), the strawberry cake (752, no photo on the live site) and the about-block photo are AI-generated (FLUX, raw renders in `build/sources/ai/`, composed by `build/pies_ai.py`) and graded onto the same scene. Files live in `../assets/products/` and are named by product id: `747-v9.webp` (1024) and `747-v9-640.webp`.
 
 Salads, ready meals and semi-finished products are re-plated: the food is masked out of its plastic tray and composed into a dark ceramic bowl or plate before it goes onto the scene (`build/plates.py` next to `photos_v9.py`).
 
-On the live site upload them into the product cards; the file name is the element id. The demo swaps them in with a script.
+On the live site upload them into the product cards; the file name is the element id. The demo swaps them into the built pages at build time (`swap_photos` in `build_demo.py`), so no white originals flash before the dark ones.
 
 ## Hero
 

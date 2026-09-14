@@ -1598,6 +1598,38 @@ body .inline-search-block .close-block:hover .close-icons::before, body .inline-
 body.ms-modal-open {{ overflow: hidden; }}
 @media (max-width: 600px) {{ .ms-modal__box {{ padding: 28px 22px 26px; }} .ms-modal__title {{ font-size: 22px; }} }}
 
+body .catalog_section_list.type_sections_5, body .catalog_section_list.items {{
+  display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin: 0 0 40px !important;
+}}
+body .catalog_section_list.row::before, body .catalog_section_list.row::after {{ display: none !important; }}
+body .catalog_section_list .item_block {{ width: auto !important; max-width: none !important; padding: 0 !important; margin: 0 !important; float: none !important; }}
+body .catalog_section_list .section_item {{
+  background: transparent !important; border: 0 !important; box-shadow: none !important;
+  padding: 0 !important; height: auto !important; transform: none !important;
+}}
+body .catalog_section_list .section_item_inner, body .catalog_section_list .section_item_inner tbody,
+body .catalog_section_list .section_item_inner tr {{ display: block !important; width: 100% !important; }}
+body .catalog_section_list td.image {{ display: block !important; width: 100% !important; height: auto !important; padding: 0 !important; }}
+body .catalog_section_list td.image a.thumb {{ display: block !important; aspect-ratio: 1; background: {TILE} !important; overflow: hidden; }}
+body .catalog_section_list td.image img {{
+  width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important;
+  object-fit: cover; transition: transform .4s;
+}}
+body .catalog_section_list .section_item:hover td.image img {{ transform: scale(1.03); }}
+body .catalog_section_list td.section_info {{ display: block !important; width: 100% !important; padding: 12px 0 0 !important; text-align: left !important; vertical-align: top !important; }}
+body .catalog_section_list td.section_info ul {{ margin: 0 !important; padding: 0 !important; }}
+body .catalog_section_list .name {{ text-align: left !important; }}
+body .catalog_section_list .name a.dark_link, body .catalog_section_list .name a.dark_link span.font_md {{
+  display: block !important; font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  font-size: 18px !important; line-height: 1.25 !important; color: {INK} !important; text-transform: lowercase !important;
+}}
+body .catalog_section_list .name a.dark_link span.font_md::first-letter {{ text-transform: uppercase !important; }}
+body .catalog_section_list .name a.dark_link:hover span.font_md {{ color: {ACCENT} !important; }}
+body .catalog_section_list .element-count2 {{ display: block !important; margin-top: 5px !important; font-size: 13px !important; color: {MUTED} !important; }}
+@media (max-width: 1199px) {{ body .catalog_section_list.type_sections_5, body .catalog_section_list.items {{ grid-template-columns: repeat(4, minmax(0, 1fr)); }} }}
+@media (max-width: 767px) {{ body .catalog_section_list.type_sections_5, body .catalog_section_list.items {{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }} body .catalog_section_list .name a.dark_link span.font_md {{ font-size: 15px !important; }} }}
+@media (max-width: 480px) {{ body .catalog_section_list.type_sections_5, body .catalog_section_list.items {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }} }}
+
 .ms-search-root {{ padding: 4px 0 48px; }}
 .ms-search {{ display: flex; gap: 12px; max-width: 720px; margin-bottom: 26px; }}
 .ms-search__input {{ flex: 1 1 auto; min-width: 0; }}

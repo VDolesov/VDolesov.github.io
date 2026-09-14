@@ -123,7 +123,7 @@ def unlazy(html):
         tag = re.sub(r'(?<![-\w])src="[^"]*"', f'src="{real.group(1)}"', tag, count=1)
         if 'src="' not in tag:
             tag = tag.replace("<img", f'<img src="{real.group(1)}"', 1)
-        return tag.replace(" lazy", "")
+        return re.sub(r'class="lazy\s*', 'class="', tag.replace(" lazy", ""))
 
     html = re.sub(r"<img[^>]*>", img, html)
 
@@ -169,6 +169,60 @@ def fetch(path):
 def product_ids():
     data = json.load(open(os.path.join(APP, "build", "catalog.json"), encoding="utf-8"))
     return [item["id"] for item in data["items"]]
+
+
+def photo_url(pid):
+    return f"{PAGES_ORIGIN}/assets/products/{pid}-{SERIES}.webp"
+
+
+def photo_files():
+    data = json.load(open(os.path.join(APP, "build", "catalog.json"), encoding="utf-8"))
+    have = {f.split("-")[0] for f in os.listdir(os.path.join(APP, "assets", "products"))
+            if f.endswith(f"-{SERIES}.webp")}
+    files = {}
+    for item in data["items"]:
+        name = os.path.basename(item.get("image") or "")
+        if name and item["id"] in have:
+            files[name.lower()] = item["id"]
+    return files, have
+
+
+_PHOTO_ATTR = re.compile(r'((?:src|data-src|href|data-original)=")([^"]*?/([0-9a-f]{32}\.(?:jpe?g|png)))(")', re.I)
+_CARD_IMG = re.compile(r'(<a href="/catalog/[a-z_]+/(\d+)/"[^>]*class="thumb[^"]*"[^>]*>)(.*?)(</a>)', re.S)
+_SECTION_IMG = re.compile(r'(<a href="/catalog/([a-z_]+)/"[^>]*class="thumb[^"]*"[^>]*>)(.*?)(</a>)', re.S)
+_IMG = re.compile(r"<img\b[^>]*>")
+_SRCSET = re.compile(r'\s(?:srcset|data-srcset)="[^"]*"')
+
+
+def swap_photos(html, page_id=None):
+    files, have = photo_files()
+
+    def attr(m):
+        pid = files.get(m.group(3).lower())
+        return m.group(1) + photo_url(pid) + m.group(4) if pid else m.group(0)
+    html = _PHOTO_ATTR.sub(attr, html)
+
+    if page_id in have:
+        url = photo_url(page_id)
+        html = re.sub(r'(<a\b[^>]*data-fancybox="gallery"[^>]*\bhref=")[^"]*(")', lambda m: m.group(1) + url + m.group(2), html)
+        html = re.sub(r'(<a\b[^>]*\bhref=")[^"]*("[^>]*data-fancybox="gallery")', lambda m: m.group(1) + url + m.group(2), html)
+        html = _IMG.sub(lambda m: _SRCSET.sub("", re.sub(r'\s(src|data-src)="[^"]*"', lambda a: f' {a.group(1)}="{url}"', m.group(0)))
+                        if "product-detail-gallery" in m.group(0) else m.group(0), html)
+
+    def retarget(m, pid):
+        def img(tag):
+            tag = re.sub(r'\s(src|data-src)="[^"]*"', lambda a: f' {a.group(1)}="{photo_url(pid)}"', tag.group(0))
+            return _SRCSET.sub("", tag)
+        return m.group(1) + _IMG.sub(img, m.group(3)) + m.group(4)
+
+    html = _CARD_IMG.sub(lambda m: retarget(m, m.group(2)) if m.group(2) in have else m.group(0), html)
+    html = _SECTION_IMG.sub(lambda m: retarget(m, SECTION_PHOTOS[m.group(2)])
+                            if m.group(2) in SECTION_PHOTOS else m.group(0), html)
+
+    def srcset(m):
+        return "" if re.search(r"[0-9a-f]{32}\.(?:jpe?g|png)", m.group(0), re.I) else m.group(0)
+    html = _SRCSET.sub(srcset, html)
+    return _IMG.sub(lambda m: re.sub(r'class="lazy\s*', 'class="', m.group(0)) if "/assets/products/" in m.group(0) else m.group(0), html)
 
 
 def build_page(filename, path, ids):

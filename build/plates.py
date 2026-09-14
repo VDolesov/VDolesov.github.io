@@ -160,7 +160,7 @@ def main():
     ids = sys.argv[1:] or sorted(set(BOWL) | PLATE | PLATTER)
     for pid in ids:
         try:
-            im = place(plated(pid), .88 if pid in PLATTER else .80, sharpen=35)
+            im = place(plated(pid), .88 if pid in PLATTER else .80, sharpen=25)
             save(finish(im), pid)
             print(f"  {pid}: plated", flush=True)
         except Exception as exc:
