@@ -26,6 +26,8 @@ def main():
             "weight": item.get("weight") or "",
             "url": f"/catalog/{item['section']}/{item['id']}/",
             "image": item.get("image") or "",
+            "section": item["section"],
+            "composition": item.get("composition") or "",
         }
 
     body = (

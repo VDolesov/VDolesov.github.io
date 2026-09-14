@@ -27,6 +27,15 @@ PAUSE = 0.25
 SKIP_PREFIX = ("/bitrix/", "/upload/", "/local/", "/ajax/", "/include/",
                "/auth/", "/login/", "/personal/order/", "/personal/cart/",
                "/personal/profile/", "/personal/subscribe/", "/order/")
+ALIAS = {
+    "/personal/": "/auth/",
+    "/company/index.php/": "/company/",
+    "/include/licenses_detail.php": "/company/agreement/",
+    "/include/licenses_pologenie.php": "/company/personal-data/",
+}
+SOURCE = {alias: path for path, alias in ALIAS.items() if path.endswith(".php")}
+DROP = ("/info/brands/rss/",)
+_COUNTER = re.compile(r"<!-- Yandex\.Metrika counter -->.*?<!-- /Yandex\.Metrika counter -->", re.S)
 ASSET_EXT = (".css", ".js", ".ico", ".png", ".jpg", ".jpeg", ".gif", ".svg",
              ".webp", ".woff", ".woff2", ".ttf", ".eot", ".xml", ".json",
              ".pdf", ".mp4", ".txt", ".zip", ".doc", ".docx", ".xls", ".xlsx")
@@ -54,6 +63,9 @@ def normalize(href, current):
     if not path.startswith("/"):
         path = urllib.parse.urljoin(current, path)
     path = re.sub(r"/{2,}", "/", path)
+    alias = ALIAS.get(path, ALIAS.get(path + "/"))
+    if alias:
+        return alias
     if not path.endswith("/"):
         path += "/"
     return path if is_page(path) else None
@@ -130,7 +142,7 @@ def localize_links(html, current):
     html = _FORM.sub(lambda m: f'{m.group(1)}/catalog/{m.group(3)}', html)
     return html
 
-SCRIPTS = ("cart-data.js", "cart.js", "nav.js")
+SCRIPTS = ("cart-data.js", "cart.js", "nav.js", "search.js", "demo.js")
 
 
 def skin_version():
@@ -151,6 +163,7 @@ def build_page(path, html, ids, version):
     html = swap_banner(html)
     html = absolutize_assets(html)
     html = localize_links(html, path)
+    html = _COUNTER.sub("", html)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
 
@@ -170,20 +183,21 @@ def write(path, html):
     folder = os.path.join(APP, *[p for p in path.split("/") if p])
     os.makedirs(folder, exist_ok=True)
     with io.open(os.path.join(folder, "index.html"), "w", encoding="utf-8", newline="\n") as f:
-        f.write(html)
+        f.write(html.replace("\r\n", "\n"))
 
 
-def main():
+def main(targets=None):
     ids = product_ids()
     version = skin_version()
-    queue = list(SEEDS)
+    queue = list(targets or SEEDS)
     seen = set(queue)
     done, failed = [], []
+    manifest = os.path.join(HERE, "site-pages.json")
 
     while queue and len(done) < LIMIT:
         path = queue.pop(0)
         try:
-            raw, final = fetch(path)
+            raw, final = fetch(SOURCE.get(path, path))
         except urllib.error.HTTPError as exc:
             failed.append((path, exc.code))
             print(f"  {path}: {exc.code}")
@@ -193,6 +207,7 @@ def main():
             print(f"  {path}: {exc}")
             continue
 
+        final = ALIAS.get(final, final)
         if not final.endswith("/"):
             final += "/"
         if final != path and final in seen:
@@ -200,18 +215,23 @@ def main():
             continue
         seen.add(final)
 
-        for link in sorted(discover(raw, final)):
-            if link not in seen:
-                seen.add(link)
-                queue.append(link)
-
         html = build_page(final, raw, ids, version)
+        if not targets:
+            for link in sorted(discover(html, final)):
+                if link not in seen and link not in DROP:
+                    seen.add(link)
+                    queue.append(link)
         write(final, html)
         done.append(final)
         print(f"  {final}")
         time.sleep(PAUSE)
 
-    with io.open(os.path.join(HERE, "site-pages.json"), "w", encoding="utf-8") as f:
+    if targets and os.path.exists(manifest):
+        with io.open(manifest, encoding="utf-8") as f:
+            previous = json.load(f)
+        done = sorted(set(previous["pages"]) | set(done))
+        failed = previous["failed"] + failed
+    with io.open(manifest, "w", encoding="utf-8") as f:
         json.dump({"pages": done, "failed": failed, "skin": version}, f, ensure_ascii=False, indent=1)
     print(f"pages built: {len(done)}, failed: {len(failed)}, left in queue: {len(queue)}")
 
@@ -226,6 +246,9 @@ def refresh(html):
         html = re.sub(pattern, new, html)
     for old, new in IMAGES.items():
         html = html.replace(old, PAGES_ORIGIN + new)
+    for old, new in ALIAS.items():
+        html = html.replace(f'href="{old}"', f'href="{new}"')
+    html = _COUNTER.sub("", html)
     return html
 
 
@@ -254,4 +277,4 @@ if __name__ == "__main__":
     if "--stamp" in sys.argv:
         restamp()
     else:
-        main()
+        main(["/" + arg.strip("/") + "/" for arg in sys.argv[1:] if not arg.startswith("-")])
