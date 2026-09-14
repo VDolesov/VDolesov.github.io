@@ -27,6 +27,7 @@ li[data-code="NEW"], li[data-code="RECOMMEND"],
 .loading_block_content { background-image: none !important; }
 .wrap_basket .basket_hover_block { display: none !important; }
 .filter-panel.sort_header, .filter-panel-wrapper, #mobilefilter { display: none !important; }
+.CATALOG_TAB .tabs_wrapper { display: none !important; }
 </style>
 """
 
@@ -100,6 +101,7 @@ BANNER_COPY = [
      r"\1Торты, пироги и десерты, которые мы печём сами. "
      r"Заберите в одном из двух магазинов или закажите доставку по Саратову.\2"),
     (r'(class="btn btn-default btn-lg"[^>]*>\s*)Перейти в каталог(\s*</a>)', r"\1Выбрать торт\2"),
+    (r'(<a href=")/catalog/(" class="font_upper muted">)Весь каталог(</a>)', r"\1/catalog/?hit=1\2Все хиты\3"),
     (r'(<img class="plaxy"[^>]*(?:alt|title)=")Изготовление тортов и пирожных(")', r"\1Торт «Шварцвальдский»\2"),
 ]
 

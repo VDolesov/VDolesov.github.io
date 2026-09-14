@@ -1646,6 +1646,21 @@ html body .topic .topic__count, html body .catalog_section_list .element-count2 
   font-weight: 500 !important; font-variant-numeric: lining-nums tabular-nums;
 }}
 
+body .CATALOG_TAB .tab_slider_wrapp ul.tabs {{ border-bottom: 0 !important; margin: 0 !important; }}
+body .CATALOG_TAB .tab_slider_wrapp ul.tabs > li {{ margin: 0 0 0 22px !important; padding: 0 !important; }}
+body .CATALOG_TAB .tab_slider_wrapp ul.tabs > li:first-child {{ margin-left: 0 !important; }}
+body .CATALOG_TAB .tab_slider_wrapp ul.tabs > li span {{
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: .14em !important; text-transform: uppercase !important; line-height: 1 !important;
+  color: {MUTED} !important; border-bottom: 1px solid transparent !important; padding: 0 0 7px !important; cursor: pointer;
+}}
+body .CATALOG_TAB .tab_slider_wrapp ul.tabs > li.cur span {{ color: {INK} !important; border-bottom-color: {GOLD} !important; }}
+body .CATALOG_TAB .tab_slider_wrapp ul.tabs > li:not(.cur) span:hover {{ color: {INK} !important; }}
+body .CATALOG_TAB .top_block .right_block_wrapper {{ display: flex !important; align-items: baseline !important; gap: 28px !important; }}
+body .CATALOG_TAB .top_block .right_block_wrapper .tabs_wrapper {{ margin: 0 !important; }}
+body .CATALOG_TAB .top_block .right_block_wrapper a.font_upper.muted {{ margin: 0 !important; padding-bottom: 7px !important; }}
+.ms-search__sections--foot {{ margin-top: 40px; }}
+
 .ms-search-root {{ padding: 4px 0 48px; }}
 .ms-search {{ display: flex; gap: 12px; max-width: 720px; margin-bottom: 26px; }}
 .ms-search__input {{ flex: 1 1 auto; min-width: 0; }}

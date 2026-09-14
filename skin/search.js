@@ -96,6 +96,24 @@
     root.innerHTML = html;
     var input = root.querySelector(".ms-search__input");
     if (!query.trim() && input) input.focus();
+    markInCart(root);
+  }
+
+  function renderBadge(root, badge, label) {
+    var ids = Object.keys(PRODUCTS).filter(function (id) {
+      return (PRODUCTS[id].badges || []).indexOf(badge) !== -1;
+    }).sort(function (a, b) { return PRODUCTS[a].name.localeCompare(PRODUCTS[b].name, "ru"); });
+    var n = ids.length;
+    root.innerHTML = '<div class="ms-search__count">' + n + ' ' + plural(n, "товар", "товара", "товаров") +
+      ' со стикером «' + esc(label) + '»</div>' +
+      '<div class="ms-grid">' + ids.map(card).join("") + '</div>' +
+      '<div class="ms-search__sections ms-search__sections--foot">' + SECTIONS.map(function (s) {
+        return '<a href="/catalog/' + esc(s.slug) + '/">' + esc(s.name) + '</a>';
+      }).join("") + '</div>';
+    markInCart(root);
+  }
+
+  function markInCart(root) {
     var cart = {};
     try { cart = JSON.parse(localStorage.getItem("ms_cart") || "{}"); } catch (e) {}
     for (var id in cart) {
@@ -107,9 +125,10 @@
   function mount() {
     var path = location.pathname.replace(/\/+$/, "/");
     var m = location.search.match(/[?&]q=([^&]*)/);
+    var hit = path === "/catalog/" && /[?&]hit=/.test(location.search);
     var query = m ? decodeURIComponent(m[1].replace(/\+/g, " ")) : "";
     var isSearch = path === "/search/";
-    if (!isSearch && !(path === "/catalog/" && m)) return;
+    if (!isSearch && !hit && !(path === "/catalog/" && m)) return;
 
     var container = document.querySelector(".wrapper_inner .container_inner .middle > .container");
     if (!container) return;
@@ -118,6 +137,12 @@
     container.innerHTML = "";
     container.appendChild(root);
     var title = document.getElementById("pagetitle");
+    if (hit) {
+      if (title) title.textContent = "Хиты";
+      document.title = "Хиты — Мир Сладостей";
+      renderBadge(root, "хит", "Хит");
+      return;
+    }
     if (title) title.textContent = query.trim() ? "Поиск" : "Поиск по каталогу";
     document.title = (query.trim() ? "Поиск: " + query : "Поиск") + " — Мир Сладостей";
     render(root, query);

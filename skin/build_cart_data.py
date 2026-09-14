@@ -28,6 +28,7 @@ def main():
             "image": item.get("image") or "",
             "section": item["section"],
             "composition": item.get("composition") or "",
+            "badges": [b.lower() for b in item.get("badges", [])],
         }
 
     body = (
