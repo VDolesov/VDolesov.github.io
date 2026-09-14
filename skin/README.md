@@ -26,7 +26,7 @@ Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Tex
 | About block | text + video block | gold-framed band with a production photo |
 | Header | plain | sticky, plus a section navigation strip (`nav.js`) |
 | Product page | 450 px photo, narrow specs column | full-column photo, specs under the buy block |
-| Hero | stock photo | Schwarzwald cake under a light pool on cocoa |
+| Hero | stock photo | generated chocolate cake under a light pool on cocoa |
 | Section and product names | all caps | sentence case via CSS |
 | Cart | Bitrix module | demo only: client-side cart and checkout (`cart.js`) |
 
@@ -63,7 +63,7 @@ python skin/build_skin.py          # rebuild skin.css
 python skin/build_site.py          # crawl the live site and rebuild all pages
 python skin/build_site.py --stamp  # restamp skin version, photo series, hero files and copy into built pages
 python skin/build_cart_data.py     # rebuild cart data (products, sections)
-python skin/hero_choc.py           # rebuild hero-bg.jpg, hero-cake.webp, about.jpg
+python skin/hero_choc.py           # rebuild hero-bg.jpg, hero-cake.webp
 ```
 
 `build_site.py` crawls the live site by internal links (73 pages) and writes each page under its own URL. Links stay relative, template assets load from the original domain. Photo series, hero files and slide copy are set in `build_demo.py` (`SERIES`, `BANNER`, `BANNER_COPY`, `IMAGES`); `--stamp` applies them to already built pages.
@@ -82,7 +82,7 @@ The slide is two images: a wide backdrop and a product on the right.
 
 ```
 hero-bg.jpg      2400x1060   cocoa with a warm light pool on the right
-hero-cake.webp   1308x880    Schwarzwald cake, transparent WebP, light pool and shadow baked in
+hero-cake.webp   1308x880    generated chocolate cake (FLUX, `build/sources/ai/hero-cake.png`), transparent WebP, light pool and shadow baked in
 ```
 
 Upload them into the banner element that currently holds `890366e70949176749ee46def14a193b.jpg` (backdrop) and `a76586772deb02b99d66c209bfda9c22.png` (product). Light and shadow are baked into the product image because the template moves the product as the viewport changes.

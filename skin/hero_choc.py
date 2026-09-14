@@ -11,11 +11,11 @@ BUILD = os.path.join(SITE, "frontend_mir_slad-main", "apps", "noir-classic", "bu
 OUT = os.path.join(APP, "assets")
 
 sys.path.insert(0, BUILD)
-from photos_v8 import neural_cutout
+from photos_v8 import neural_cutout, upscale
 
 BG_W, BG_H = 2400, 1060
 CAKE_W, CAKE_H = 1308, 880
-SOURCE = os.path.join(BUILD, "photos", "749.jpg")
+SOURCE = os.path.join(BUILD, "sources", "ai", "hero-cake.png")
 
 GROUND = np.array([16, 10, 8], np.float32)
 LIT = np.array([74, 46, 33], np.float32)
@@ -35,7 +35,7 @@ def backdrop():
 
 
 def cake():
-    im = neural_cutout(Image.open(SOURCE))
+    im = neural_cutout(upscale(Image.open(SOURCE).convert("RGB")), restore_inside=False)
     rgb = im.convert("RGB")
     rgb = ImageEnhance.Contrast(rgb).enhance(1.08)
     rgb = ImageEnhance.Brightness(rgb).enhance(.96)
@@ -46,7 +46,7 @@ def cake():
     rgb.putalpha(alpha)
     im = rgb
 
-    box_w, box_h = int(CAKE_W * .80), int(CAKE_H * .82)
+    box_w, box_h = int(CAKE_W * .84), int(CAKE_H * .90)
     im.thumbnail((box_w, box_h), Image.LANCZOS)
     x = (CAKE_W - im.width) // 2
     y = int(CAKE_H * .86) - im.height
@@ -68,26 +68,6 @@ def cake():
 
     canvas.alpha_composite(im, (x, max(0, y)))
     return canvas
-
-
-def about():
-    im = Image.open(os.path.join(SITE, "i1.jpg")).convert("RGB").crop((230, 330, 1920, 1440))
-    w, h = 1440, 610
-    k = max(w / im.width, h / im.height)
-    im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
-    left, top = (im.width - w) // 2, int((im.height - h) * .55)
-    im = im.crop((left, top, left + w, top + h))
-    im = ImageEnhance.Brightness(im).enhance(.72)
-    im = ImageEnhance.Contrast(im).enhance(1.08)
-    im = ImageEnhance.Color(im).enhance(.9)
-    r, g, b = im.split()
-    r = r.point(lambda v: min(255, int(v * 1.04)))
-    b = b.point(lambda v: int(v * .9))
-    im = Image.merge("RGB", (r, g, b))
-    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
-    e = np.clip(np.hypot((xs / w - .55) / .75, (ys / h - .5) / .85), 0, 1) ** 1.4
-    mask = Image.fromarray(((1 - e * .7) * 255).astype(np.uint8), "L").filter(ImageFilter.GaussianBlur(50))
-    return Image.composite(im, ImageEnhance.Brightness(im).enhance(.25), mask)
 
 
 def preview(bg, ck):
@@ -112,11 +92,7 @@ def main():
     ck_path = os.path.join(OUT, "hero-cake.webp")
     ck.save(ck_path, "WEBP", quality=88, method=6)
 
-    ab = about()
-    ab_path = os.path.join(OUT, "about.jpg")
-    ab.save(ab_path, quality=84, optimize=True, progressive=True)
-
-    for path in (bg_path, ck_path, ab_path, preview(bg, ck)):
+    for path in (bg_path, ck_path, preview(bg, ck)):
         print(f"  {os.path.basename(path)}  {os.path.getsize(path) // 1024} KB")
 
 
