@@ -61,16 +61,17 @@ A manual layer follows: type, cards, header, grid, hero, home blocks, cart; the 
 ```
 python skin/build_skin.py          # rebuild skin.css
 python skin/build_site.py          # crawl the live site and rebuild all pages
+python skin/build_site.py contacts/stores company/agreement   # rebuild only the given pages
 python skin/build_site.py --stamp  # restamp skin version, photo series, hero files and copy into built pages
 python skin/build_cart_data.py     # rebuild cart data (products, sections)
 python skin/hero_choc.py           # rebuild hero-bg.jpg
 ```
 
-`build_site.py` crawls the live site by internal links (73 pages) and writes each page under its own URL. Links stay relative, template assets load from the original domain. Photo series, hero files and slide copy are set in `build_demo.py` (`SERIES`, `BANNER`, `BANNER_COPY`, `IMAGES`); `--stamp` applies them to already built pages.
+`build_site.py` crawls the live site by internal links (81 pages) and writes each page under its own URL. Links stay relative, template assets load from the original domain. Links the demo cannot serve are aliased (`ALIAS`: the account page to `/auth/`, the two policy pages under `/company/`), the Metrika counter is stripped so demo visits do not land in the live site's statistics. Photo series, hero files and slide copy are set in `build_demo.py` (`SERIES`, `BANNER`, `BANNER_COPY`, `IMAGES`); `--stamp` applies them to already built pages.
 
 ## Photos
 
-Series v9: every catalog item is a neural cutout placed on the same dark scene — cocoa ground, warm light from above, a pool of light on the table, a contact shadow. The three Ossetian pies (801–803) and the about-block photo are AI-generated (FLUX, prompts and seeds in `build/pies_ai.py`, raw renders in `build/sources/ai/`) and graded onto the same scene. Files live in `../assets/products/` and are named by product id: `747-v9.webp` (1024) and `747-v9-640.webp`.
+Series v9: every catalog item is a neural cutout placed on the same dark scene — cocoa ground, warm light from above, a pool of light on the table, a contact shadow. The three Ossetian pies (801–803), the strawberry cake (752, no photo on the live site) and the about-block photo are AI-generated (FLUX, raw renders in `build/sources/ai/`, composed by `build/pies_ai.py`) and graded onto the same scene. Files live in `../assets/products/` and are named by product id: `747-v9.webp` (1024) and `747-v9-640.webp`.
 
 Salads, ready meals and semi-finished products are re-plated: the food is masked out of its plastic tray and composed into a dark ceramic bowl or plate before it goes onto the scene (`build/plates.py` next to `photos_v9.py`).
 
@@ -114,7 +115,9 @@ vtorye_blyuda        770   polufabrikaty 760   napitki    763
 
 The demo is static, so the cart lives in the browser: `cart.js` intercepts the template's "add to cart" buttons, keeps the cart in localStorage, renders `/basket/` (list, quantities, total, checkout form, confirmation with an order number) and offers to send the order by e-mail. Product data is `cart-data.js`, generated from `build/catalog.json`. `nav.js` adds the section navigation strip under the header from the same data.
 
-On the live site neither script is needed — Bitrix handles the cart and orders; the `ms-*` styles in `skin.css` do not interfere.
+`search.js` answers the header search (`/catalog/?q=` and `/search/?q=`) from the same product data: name, section and composition, with a crude Russian stem. `demo.js` catches the template's popup forms (call back, subscribe, question, account, quick view): quick view opens the product page, the rest show a note with the phones instead of a request the static demo cannot send.
+
+On the live site none of these scripts is needed — Bitrix handles the cart, orders, search and forms; the `ms-*` styles in `skin.css` do not interfere.
 
 ## Out of scope
 

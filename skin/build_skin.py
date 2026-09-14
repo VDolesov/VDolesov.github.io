@@ -605,13 +605,17 @@ body .detail .prices_block .price_measure {{ font-size: 14px !important; margin-
 body .detail .prices_block {{ margin-bottom: 22px !important; }}
 
 body .detail .buy_block .counter_wrapp {{
-  display: flex !important; gap: 14px; align-items: stretch; flex-wrap: nowrap;
+  display: flex !important; gap: 14px; align-items: stretch; flex-wrap: wrap; width: auto !important;
 }}
-body .detail .buy_block .counter_block_inner {{ flex: 0 0 auto; }}
+body .detail .buy_block .counter_block_inner {{ flex: 0 0 auto; width: auto !important; margin: 0 !important; }}
+body .detail .buy_block .counter_block_inner .counter_block {{ width: 136px !important; }}
+body .detail .buy_block .button_block {{ flex: 1 1 140px; width: auto !important; min-width: 0; margin: 0 !important; }}
 body .detail .buy_block .btn {{
-  flex: 1 1 auto; justify-content: center;
-  padding: 16px 30px !important; font-size: 15px !important;
+  display: flex; width: 100% !important; min-width: 0 !important; justify-content: center; align-items: center;
+  padding: 0 22px !important; font-size: 12px !important; height: 56px !important; line-height: 56px !important;
+  white-space: nowrap !important;
 }}
+body .detail .buy_block .btn[style*="none"] {{ display: none !important; }}
 
 body .char-side__title {{
   font-family: Prata, Georgia, serif !important;
@@ -967,7 +971,7 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   background: {ACCENT} !important; color: {ON_ACCENT} !important; font-weight: 600; font-size: 13px;
 }}
 .ms-toast__link:hover {{ background: {ACCENT_HOVER} !important; }}
-.to-cart.ms-added {{ background: #3a2a22 !important; border-color: #3a2a22 !important; }}
+.to-cart.ms-added, .btn.btn-default.to-cart.ms-added {{ background: #3a2a22 !important; border-color: #3a2a22 !important; color: {INK} !important; }}
 .basket_count.ms-has-items, .wrap_basket .count.ms-has-items {{ background: {ACCENT} !important; color: {ON_ACCENT} !important; }}
 
 .ms-basket-root {{ padding: 8px 0 40px; }}
@@ -1439,7 +1443,8 @@ footer .btn, footer span.btn {{ border-radius: 0 !important; }}
 body .footer-inner .footer_top {{ padding: 48px 0 36px !important; }}
 
 .catalog_item .inner_wrap, .catalog_item_wrapp .inner_wrap {{ box-shadow: none !important; }}
-body .cat_sections.cat_sections .item.compact .name a {{ white-space: normal !important; text-overflow: clip !important; overflow: visible !important; line-height: 1.25 !important; }}
+body .cat_sections.cat_sections .item.compact .name a {{ white-space: normal !important; text-overflow: clip !important; overflow: visible !important; line-height: 1.25 !important; hyphens: auto; overflow-wrap: break-word; }}
+body .cat_sections.cat_sections .item.compact, body .cat_sections.cat_sections .item.compact .name {{ overflow: visible !important; }}
 
 body .catalog_block .item, body .catalog_item_wrapp.catalog_item, body .item_block .catalog_item,
 body .catalog_item .inner_wrap, body .catalog_item .item_info {{ height: auto !important; min-height: 0 !important; }}
@@ -1518,10 +1523,11 @@ body .left_block .menu_top_block.menu-type1 {{ padding-top: 6px !important; }}
 }}
 .top_slider_wrapp .slides > li.box {{ min-height: 640px !important; }}
 .top_slider_wrapp .slides > li .wrapper_inner, .top_slider_wrapp table, .top_slider_wrapp td.text {{ min-height: 640px !important; }}
+.top_slider_wrapp .slides > li .wrapper_inner {{ padding-top: 0 !important; }}
+.top_slider_wrapp .flexslider, .top_slider_wrapp .flexslider .slides > li,
+.top_slider_wrapp .flexslider .slides > li td, .top_slider_wrapp .flexslider .slides > li tr {{ height: auto !important; }}
 .top_slider_wrapp td.text {{ vertical-align: middle !important; }}
 @media (max-width: 767px) {{
-  .top_slider_wrapp .flexslider, .top_slider_wrapp .flexslider .slides > li,
-  .top_slider_wrapp .flexslider .slides > li td, .top_slider_wrapp .flexslider .slides > li tr {{ height: auto !important; }}
   .top_slider_wrapp .slides > li.box {{ min-height: 560px !important; position: relative; background-position: 74% 30% !important; }}
   .top_slider_wrapp .slides > li .main_info {{ background-image: none !important; }}
   .top_slider_wrapp .slides > li.box::after {{
@@ -1622,7 +1628,7 @@ body.ms-modal-open {{ overflow: hidden; }}
   .ms-card__body {{ padding: 12px 12px 16px; }}
   .ms-card__name {{ font-size: 15px; }}
   .ms-card__price {{ font-size: 19px; margin: 10px 0 12px; }}
-  .ms-card__btn {{ width: 100%; display: flex !important; justify-content: center; }}
+  .ms-card__btn {{ width: 100%; display: flex !important; justify-content: center; padding: 0 10px !important; letter-spacing: .1em !important; }}
   .ms-search {{ flex-direction: column; }}
 }}
 """
