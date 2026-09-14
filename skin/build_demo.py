@@ -86,8 +86,8 @@ SECTION_PHOTOS = {
 }
 
 BANNER = {
-    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=5",
-    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-cake.webp?v=2",
+    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=6",
+    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-bg.jpg?v=6",
 }
 IMAGES = {
     "https://www.mirsladostey164.ru/images/contacts_image.jpg": "/assets/about.jpg?v=2",

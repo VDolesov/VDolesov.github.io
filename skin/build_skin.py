@@ -1509,6 +1509,24 @@ body .left_block .menu_top_block ul.left_menu > li.current > a,
 body .left_block .menu_top_block ul.left_menu > li > a:hover {{ color: {GOLD} !important; }}
 body .left_block .menu_top_block ul.left_menu > li > a .toggle_block {{ display: none !important; }}
 body .left_block .menu_top_block.menu-type1 {{ padding-top: 6px !important; }}
+
+.top_slider_wrapp td.img {{ display: none !important; }}
+.top_slider_wrapp .slides > li.box, .top_slider_wrapp .slides > li .main_info {{
+  background-position: 68% 50% !important; background-size: cover !important;
+}}
+.top_slider_wrapp .slides > li.box {{ min-height: 640px !important; }}
+.top_slider_wrapp .slides > li .wrapper_inner, .top_slider_wrapp table, .top_slider_wrapp td.text {{ min-height: 640px !important; }}
+.top_slider_wrapp td.text {{ vertical-align: middle !important; }}
+@media (max-width: 767px) {{
+  .top_slider_wrapp .slides > li.box {{ min-height: 520px !important; }}
+  .top_slider_wrapp .slides > li .wrapper_inner, .top_slider_wrapp table, .top_slider_wrapp td.text {{ min-height: 520px !important; }}
+  .top_slider_wrapp .slides > li.box, .top_slider_wrapp .slides > li .main_info {{ background-position: 62% 50% !important; }}
+  .top_slider_wrapp .slides > li .banner_title .head-title {{ text-shadow: 0 2px 24px rgba(0, 0, 0, .7); }}
+}}
+
+.top_slider_wrapp td.text {{ width: 100% !important; }}
+.top_slider_wrapp td.text .banner_title, .top_slider_wrapp td.text .banner_text {{ max-width: 540px !important; }}
+.top_slider_wrapp .slides > li .banner_title .head-title {{ display: block !important; }}
 """
 
 
