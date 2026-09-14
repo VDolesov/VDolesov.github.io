@@ -1,223 +1,126 @@
-# Скин для действующего сайта
+# Skin for the live site
 
-Новое оформление для mirsladostey164.ru **без изменения вёрстки и логики**.
-Сайт остаётся на 1С-Битрикс с шаблоном Aspro Максимум: те же компоненты, те
-же адреса, тот же порядок работы. Меняется только внешний слой — цвет,
-шрифты, фон, карточки.
+A new look for mirsladostey164.ru without touching markup or logic. The site stays on 1C-Bitrix with the Aspro Max template; only the visual layer changes — colours, type, backgrounds, cards, layout inside existing blocks.
 
-Подключается одним файлом. Откатывается тоже одним — достаточно убрать
-строку подключения.
+One file to install, one line to roll back.
 
-**Готовая версия:** https://vdolesov.github.io/ — весь сайт целиком с
-подключённым оформлением: главная, каталог со всеми разделами и всеми
-товарами, корзина, контакты, страницы компании и помощи. Все ссылки
-ведут внутрь, адреса страниц совпадают с боевым сайтом.
+Live demo: https://vdolesov.github.io/ — the whole site with the skin: home, every catalog section and product, cart, contacts, company and help pages.
 
-## Направление «Чёрный шоколад»
+## Direction
 
-Почти чёрное какао, карамельное золото, антиква, тонкие линии, много
-воздуха. Ориентир — витрины шоколатье: изделие на тёмном под световым
-пятном, ничего лишнего вокруг.
+Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Text for copy, square corners, no frames.
 
-| | Было | Стало |
+| | Before | After |
 | --- | --- | --- |
-| Схема | светлая | тёмная: фон `#120b08`, текст `#f3e8d8` (сливки) |
-| Акцент | `#f3103a` — яркий красно-розовый | `#d6a459` — карамельное золото, единственный акцент |
-| Наведение | `#f42d52` | `#e6b96f` |
-| Полосы секций | серые `#f7f7f7` | `#170e0b` |
-| Заголовки | Montserrat | Prata — антиква, одно начертание |
-| Основной текст | Montserrat | Golos Text, 16 px, увеличенный интерлиньяж |
-| Кнопки | прямоугольные, красные, белая надпись | квадратные, золотые, тёмная надпись капителью с разрядкой |
-| Карточки товара | белые, плоские, с рамкой | `#1b110d`, волосяная рамка, без скруглений, цена золотом |
-| Фото товара | на белом | серия v9 — изделие на тёмной сцене в тон странице |
-| Метки на товарах | синяя, зелёная, фиолетовая | «хит» золотом, «новинка» контуром, «советуем» коричневым |
-| Логотип | тёмно-красный | золотой |
-| Подвал | серый | `#0c0705` с золотыми подписями |
-| Разделы на главной | карусель из квадратиков 90×90 | ряд квадратных плиток с подписью под фото, шесть в ряд |
-| Хиты на главной | четыре узкие карточки | четыре карточки с волосяной рамкой, вкладки антиквой |
-| «О компании» | текст и видео-блок | полоса в золотой рамке, фото с производства справа |
-| Преимущества | значки со строками | четыре колонки с золотой линией сверху |
-| Сетка каталога | четыре узкие карточки в ряд | три крупные, с воздухом между ними |
-| Шапка | обычная, уезжает при прокрутке | липкая, тёмная, подписи капителью |
-| Карточка товара | фото 450 px, характеристики в узкой колонке | фото во всю колонку, характеристики через волосяные линии |
-| Кнопка «В корзину» | появлялась при наведении | видна сразу, контурная, при наведении золотая |
-| Главный баннер | стоковый торт на деревянном столе | торт «Шварцвальдский» под световым пятном на какао |
-| Названия разделов и товаров | капсом | строчными с заглавной (в разметке остаётся капс) |
-| Корзина | родной модуль | в демонстрации — своя, в браузере: добавление, счётчик, заказ |
-| Поля ввода | белые | тёмные, квадратные |
+| Scheme | light | dark: ground `#120b08`, text `#f3e8d8` |
+| Accent | `#f3103a` | `#d6a459`, hover `#e6b96f` |
+| Headings | Montserrat | Prata |
+| Copy | Montserrat | Golos Text 16 px |
+| Buttons | red, rounded, white caption | gold, square, dark spaced small caps |
+| Product cards | white with border | frameless, photo on a dark scene, gold price |
+| Product photos | on white | series v9 — cutout on a dark scene matching the page |
+| Labels | blue / green / purple | gold "hit", outlined "new", brown "recommended" |
+| Logo | dark red | gold |
+| Home sections | 90×90 carousel | one row of square tiles with captions |
+| Home hits | four narrow cards | four frameless cards, tabs in Prata |
+| About block | text + video block | gold-framed band with a production photo |
+| Header | plain | sticky, plus a section navigation strip (`nav.js`) |
+| Product page | 450 px photo, narrow specs column | full-column photo, specs under the buy block |
+| Hero | stock photo | Schwarzwald cake under a light pool on cocoa |
+| Section and product names | all caps | sentence case via CSS |
+| Cart | Bitrix module | demo only: client-side cart and checkout (`cart.js`) |
 
-Структура страниц, адреса и порядок блоков не трогаются: покупатель
-узнаёт сайт.
+## Install
 
-## Как подключить
-
-1. Положите `skin.css` в шаблон, например
-   `/bitrix/templates/aspro_max/css/skin.css`.
-2. Подключите его **последним**, после стилей шаблона — в `header.php`
-   шаблона или через настройки:
+1. Copy `skin.css` into the template, e.g. `/bitrix/templates/aspro_max/css/skin.css`.
+2. Include it **last**, after the template styles:
 
    ```php
    $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . '/css/skin.css');
    ```
 
-   Либо просто добавьте в `<head>`:
+   or in `<head>`:
 
    ```html
    <link rel="stylesheet" href="/bitrix/templates/aspro_max/css/skin.css">
    ```
 
-3. Сбросьте кэш сайта: *Настройки → Автокеширование → Очистить файлы кэша*.
+3. Clear the site cache: *Settings → Autocaching → Clear cache files*.
 
-Порядок подключения важен: скин должен идти после основного CSS шаблона,
-иначе часть правил не применится.
+Order matters: the skin must load after the template CSS.
 
-## Как собран
+## How it is built
 
-`skin.css` не написан вручную целиком. Скрипт `build_skin.py` берёт боевой
-CSS шаблона и делает по нему два прохода:
+`build_skin.py` fetches every Aspro CSS bundle the pages reference (template, page, default, component bundles; cached in `skin/cache/`) and makes two passes:
 
-1. находит **все** правила с фирменным красным (260 штук) и переписывает их
-   золотом;
-2. находит правила, рассчитанные на белый фон — тёмный текст, белые заливки,
-   светлые рамки, — и переписывает их тёмными (909 правил).
+1. every rule using the brand red is rewritten with the gold accent;
+2. every rule of the light scheme — dark text, white fills, light borders and shadows — is rewritten dark, keeping the original selectors so specificity matches and the later file wins.
 
-Оба прохода сохраняют исходные селекторы. Это принципиально: в шаблоне
-сотни мест с `!important` и длинными селекторами, перебить их одиночными
-ручными правилами невозможно — а правило с тем же селектором в файле,
-который подключён последним, выигрывает.
-
-Поверх добавляется ручной слой: шрифты, карточки, шапка, сетка, баннер,
-главная, корзина; последним идёт блок направления «Чёрный шоколад».
+A manual layer follows: type, cards, header, grid, hero, home blocks, cart; the final block is the direction itself.
 
 ```
-python skin/build_skin.py          # пересобрать skin.css
-python skin/build_site.py          # обойти боевой сайт и собрать все страницы
-python skin/build_site.py --stamp  # обновить версию skin.css, серию фото и баннер в страницах
-python skin/build_cart_data.py     # пересобрать данные корзины
+python skin/build_skin.py          # rebuild skin.css
+python skin/build_site.py          # crawl the live site and rebuild all pages
+python skin/build_site.py --stamp  # restamp skin version, photo series, hero files and copy into built pages
+python skin/build_cart_data.py     # rebuild cart data (products, sections)
+python skin/hero_choc.py           # rebuild hero-bg.jpg, hero-cake.webp, about.jpg
 ```
 
-`build_site.py` обходит боевой сайт по внутренним ссылкам (73 страницы) и
-кладёт каждую в корень репозитория по её же адресу. Ссылки между страницами
-остаются относительными, ресурсы шаблона грузятся с исходного домена.
-Список собранных страниц — в `skin/site-pages.json`. Серия фотографий,
-файлы и текст баннера задаются в `build_demo.py` (`SERIES`, `BANNER`,
-`BANNER_COPY`); `--stamp` доводит уже собранные страницы до этих настроек
-без нового обхода.
+`build_site.py` crawls the live site by internal links (73 pages) and writes each page under its own URL. Links stay relative, template assets load from the original domain. Photo series, hero files and slide copy are set in `build_demo.py` (`SERIES`, `BANNER`, `BANNER_COPY`, `IMAGES`); `--stamp` applies them to already built pages.
 
-Если в шаблоне что-то поменяется, достаточно перезапустить сборку.
+## Photos
 
-## Фотографии
+Series v9: every catalog item is a neural cutout placed on the same dark scene — cocoa ground, warm light from above, a pool of light on the table, a contact shadow. Ossetian pies shot at the bakery are composed on the same scene. Files live in `../assets/products/` and are named by product id: `747-v9.webp` (1024) and `747-v9-640.webp`.
 
-Серия v9: все позиции каталога сняты «в одном павильоне» — нейросетевой
-вырез изделия поставлен на тёмную сцену в тон странице: почти чёрное какао,
-тёплое световое пятно сверху, лужица света на столе, контактная тень.
-Осетинские пироги с производства собраны на той же сцене. Файлы лежат в
-`../assets/products/` и названы по коду товара: `747-v9.webp` — это торт
-«Прага», `747-v9-640.webp` — уменьшенная версия.
+On the live site upload them into the product cards; the file name is the element id. The demo swaps them in with a script.
 
-Чтобы использовать их на сайте, загрузите файлы в карточки товаров
-инфоблока: имя файла совпадает с ID элемента. В демонстрации подмена сделана
-скриптом — на живом сайте так делать не нужно.
+## Hero
 
-## Главный баннер
-
-Слайд на главной собран из двух картинок: широкой подложки на весь блок и
-вырезанного продукта справа. Обе заменены своими:
+The slide is two images: a wide backdrop and a product on the right.
 
 ```
-hero-bg.jpg      2400x1060   какао с тёплым световым пятном справа
-hero-cake.webp   1308x880    торт «Шварцвальдский», прозрачный WebP,
-                             лужица света и тень запечены в картинку
+hero-bg.jpg      2400x1060   cocoa with a warm light pool on the right
+hero-cake.webp   1308x880    Schwarzwald cake, transparent WebP, light pool and shadow baked in
 ```
 
-На сайте они загружаются в тот же элемент баннера, где сейчас лежат
-`890366e70949176749ee46def14a193b.jpg` (фон слайда) и
-`a76586772deb02b99d66c209bfda9c22.png` (изображение справа).
+Upload them into the banner element that currently holds `890366e70949176749ee46def14a193b.jpg` (backdrop) and `a76586772deb02b99d66c209bfda9c22.png` (product). Light and shadow are baked into the product image because the template moves the product as the viewport changes.
 
-Свет и тень запечены в картинку продукта, а не в подложку: шаблон двигает
-продукт при смене ширины экрана, и пятно света едет вместе с ним.
-
-Текст слайда в демонстрации заменён при сборке (в настройках слайда на
-сайте его нужно ввести вручную):
+Slide copy used in the demo (set it in the slide settings):
 
 ```
-подпись      Собственное производство
-заголовок    Прага. Шварцвальд. Сластёна.
-текст        Торты, пироги и десерты, которые мы печём сами. Заберите в одном
-             из двух магазинов или закажите доставку по Саратову.
-кнопка       Выбрать торт
+label     Собственное производство
+title     Прага. Шварцвальд. Сластёна.
+text      Торты, пироги и десерты, которые мы печём сами. Заберите в одном из двух магазинов или закажите доставку по Саратову.
+button    Выбрать торт
 ```
 
-Пересобрать файлы: `python skin/hero_choc.py` (заодно пересобирает фото
-блока «О компании» — `about.jpg`).
+## Home sections
 
-## Разделы на главной
+The template renders sections as an Owl carousel with 90×90 images. The skin lays it out as one row of square tiles (nine on desktop, four on tablet, three on phone), captions under the photos, arrows hidden. The carousel script keeps running; only its layout is overridden.
 
-Блок разделов в шаблоне — карусель (Owl Carousel) с картинками 90×90.
-Скин переводит её в ряд квадратных плиток: шесть в ряд на десктопе,
-остаток по центру; четыре на планшете, две на телефоне. Подпись стоит под
-фотографией, стрелки спрятаны — все девять разделов видны сразу.
-
-Сама карусель при этом остаётся на месте и продолжает работать: скин только
-перекрывает её раскладку, скрипт не отключается.
-
-**Важно про картинки.** Сейчас в разделы загружены изображения 90×90 —
-на плитке 215 px они будут мыльными. Нужно либо загрузить в разделы
-картинки покрупнее (от 800 px по широкой стороне), либо увеличить размер
-превью в настройках компонента. В демонстрации на плитки подставлены
-фотографии из серии — по одной характерной позиции на раздел:
+Section images on the site are 90×90 and will look soft on 140–215 px tiles — upload larger images (800 px+) or raise the preview size in the component settings. The demo uses one product photo per section:
 
 ```
-ТОРТЫ               749  Шварцвальдский
-ПИРОГИ              801  осетинский пирог, съёмка производства
-ВЫПЕЧКА             746  штрудель с вишней
-ПИРОЖНЫЕ И ДЕСЕРТЫ  757  Соната
-ПЕЧЕНЬЕ             753  Суворовское
-САЛАТЫ              765  Русский
-ВТОРЫЕ БЛЮДА        770  котлеты по-киевски
-ПОЛУФАБРИКАТЫ       760  пельмени
-НАПИТКИ             763  морс клюквенный
+torty                749   pirogi   801   vypechka        746
+pirozhnye_i_deserty  757   pechene  753   salaty          765
+vtorye_blyuda        770   polufabrikaty 760   napitki    763
 ```
 
-Эти файлы лежат в `../assets/products/`, их можно загрузить в разделы как есть.
+## Product page
 
-## Карточка товара
+- gallery fills its column and is squared; thumbnails are 84 px squares;
+- columns split 54 / 46 in favour of the photo;
+- price and buy block on top, specs below through a gold line;
+- specs are two columns with hairlines; on phones the label moves above the value;
+- bottom tabs are spaced small caps, the active one underlined in gold;
+- empty ratings, the duplicate side block and the empty "you may also like" block are hidden.
 
-Было: фотография 450 px в колонке шириной 645, а справа блок покупки и
-характеристики поделены пополам — обе половины по 322 px. Стало:
+## Demo cart
 
-- галерея занимает колонку целиком и приведена к квадрату; при нескольких
-  фотографиях миниатюры выстраиваются в ряд квадратов 84 px;
-- колонки поделены 54 / 46 в пользу фотографии;
-- справа цена и покупка идут сверху во всю ширину, характеристики — под
-  ними, через золотую линию;
-- цена набрана антиквой золотом, кнопка «В корзину» растянута по ширине,
-  «Купить в один клик» — контурная;
-- характеристики выстроены в две колонки: подпись и значение, каждая
-  строка отделена волосяной линией. На телефоне подпись встаёт над значением;
-- вкладки внизу (отзывы, как купить, оплата, доставка) — капитель с
-  разрядкой, активная подчёркнута золотом.
+The demo is static, so the cart lives in the browser: `cart.js` intercepts the template's "add to cart" buttons, keeps the cart in localStorage, renders `/basket/` (list, quantities, total, checkout form, confirmation with an order number) and offers to send the order by e-mail. Product data is `cart-data.js`, generated from `build/catalog.json`. `nav.js` adds the section navigation strip under the header from the same data.
 
-Галерея в шаблоне — карусель; скин не отключает её, а перекрывает
-раскладку, поэтому переключение по миниатюрам продолжает работать.
+On the live site neither script is needed — Bitrix handles the cart and orders; the `ms-*` styles in `skin.css` do not interfere.
 
-## Корзина в демонстрации
+## Out of scope
 
-Сайт-демонстрация статический, серверной части у него нет. Чтобы заказчик
-мог пройти путь покупателя целиком, корзина сделана в браузере:
-`skin/cart.js` перехватывает родные кнопки «В корзину» шаблона, хранит
-корзину в localStorage, перерисовывает страницу `/basket/` (список,
-количество, итог, форма заказа, подтверждение с номером) и предлагает
-отправить заказ на почту магазина. Данные товаров — `skin/cart-data.js`,
-генерируется из `build/catalog.json` скриптом `build_cart_data.py`.
-
-**На рабочем сайте этот скрипт не нужен** — там корзиной и заказами
-занимается штатный модуль Битрикса. Стили корзины (классы `ms-*`) в
-`skin.css` ему не мешают.
-
-## Что осталось за рамками
-
-Скин не трогает разметку, поэтому не может изменить содержимое страниц,
-порядок блоков или состав карточки товара. Раскладку в пределах имеющихся
-элементов он меняет: сетка каталога переведена в три колонки, шапка сделана
-липкой, кнопка покупки выведена из состояния «при наведении».
+The skin does not change markup, so it cannot change page content, block order or the product card composition. Layout inside existing elements is fair game: catalog grid, sticky header, buy button always visible.
