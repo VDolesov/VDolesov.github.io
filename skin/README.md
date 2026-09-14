@@ -14,7 +14,7 @@ Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Tex
 | --- | --- | --- |
 | Scheme | light | dark: ground `#120b08`, text `#f3e8d8` |
 | Accent | `#f3103a` | `#d6a459`, hover `#e6b96f` |
-| Headings | Montserrat | Prata |
+| Headings | Montserrat | Prata, digits in Golos Text via a `unicode-range` face |
 | Copy | Montserrat | Golos Text 16 px |
 | Buttons | red, rounded, white caption | gold, square, dark spaced small caps |
 | Product cards | white with border | frameless, photo on a dark scene, gold price |
@@ -32,7 +32,7 @@ Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Tex
 
 ## Install
 
-1. Copy `skin.css` into the template, e.g. `/bitrix/templates/aspro_max/css/skin.css`.
+1. Copy `skin.css` and the `fonts` folder next to it into the template, e.g. `/bitrix/templates/aspro_max/css/skin.css` and `/bitrix/templates/aspro_max/css/fonts/golos-text-latin.woff2` (the digits face, referenced relatively).
 2. Include it **last**, after the template styles:
 
    ```php

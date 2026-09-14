@@ -216,6 +216,13 @@ def redark(css):
     return rules
 
 FONTS = """@import url("https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600&display=swap");
+@font-face {
+  font-family: "Golos Digits";
+  src: url("fonts/golos-text-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+  unicode-range: U+0030-0039;
+}
 """
 
 MANUAL = f"""
@@ -246,7 +253,7 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4,
 .topic, .topic span, .title_block, .top_block .title, .section_title,
 .front-block .title, .detail .element-title, .item-title, .item-title a,
 .popup-window-titlebar, .basket-title, .page-top .topic, .tabs_section .title {{
-  font-family: Prata, Georgia, serif !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important;
   font-weight: 400 !important;
   letter-spacing: 0;
   text-transform: none !important;
@@ -344,7 +351,7 @@ h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
 .catalog_item .item-title, .product-item-title {{ margin-top: 14px !important; }}
 .item-title a, .product-item-title a {{ font-size: 18px !important; line-height: 1.28 !important; letter-spacing: -.01em; }}
 .catalog_item .price, .price_matrix_wrapper .price, .product-item-price-current, .price_value {{
-  font-family: Prata, Georgia, serif !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important;
   font-size: 24px !important; font-weight: 500 !important; color: {INK} !important;
 }}
 
@@ -620,7 +627,7 @@ body .detail .buy_block .btn {{
 body .detail .buy_block .btn[style*="none"] {{ display: none !important; }}
 
 body .char-side__title {{
-  font-family: Prata, Georgia, serif !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important;
   font-size: 21px !important; font-weight: 500 !important;
   margin-bottom: 14px !important; text-transform: none !important;
 }}
@@ -671,7 +678,7 @@ body .bottom-info .tab-content > .tab-pane > .bordered {{
   padding: 28px 0 0 !important; border-radius: 0 !important;
 }}
 body .bottom-info .ordered-block__title {{
-  font-family: Prata, Georgia, serif !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important;
   font-size: 26px !important; font-weight: 500 !important; text-transform: none !important;
 }}
 
@@ -727,7 +734,7 @@ body .cat_sections.cat_sections .item.compact .name {{
   padding: 16px 16px 18px !important; margin: 0 !important; text-align: center;
 }}
 body .cat_sections.cat_sections .item.compact .name a {{
-  font-family: Prata, Georgia, serif !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important;
   font-size: 18px !important; font-weight: 500 !important;
   letter-spacing: .01em !important; line-height: 1.25 !important;
 }}
@@ -990,11 +997,11 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
 }}
 .ms-item__pic img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
 .ms-item__name {{
-  font-family: Prata, Georgia, serif !important; font-size: 19px !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 19px !important;
   font-weight: 500 !important; color: {INK} !important; line-height: 1.25;
 }}
 .ms-item__meta {{ margin-top: 6px; font-size: 13px; color: {MUTED}; }}
-.ms-item__sum {{ min-width: 92px; text-align: right; font-family: Prata, Georgia, serif; font-size: 21px; }}
+.ms-item__sum {{ min-width: 92px; text-align: right; font-family: "Golos Digits", Prata, Georgia, serif; font-size: 21px; }}
 .ms-item__remove {{
   width: 36px; height: 36px; border-radius: 0; border: 1px solid {LINE};
   background: transparent; color: {MUTED}; font-size: 20px; line-height: 1; cursor: pointer;
@@ -1019,7 +1026,7 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
 .ms-summary__row {{ display: flex; justify-content: space-between; font-size: 14px; color: {MUTED}; padding: 6px 0; }}
 .ms-summary__row--total {{
   margin-top: 8px; padding-top: 16px; border-top: 1px solid {LINE};
-  color: {INK}; font-family: Prata, Georgia, serif; font-size: 26px;
+  color: {INK}; font-family: "Golos Digits", Prata, Georgia, serif; font-size: 26px;
 }}
 .ms-summary__btn {{ display: flex !important; justify-content: center; width: 100%; margin-top: 18px; }}
 .ms-summary__note {{ margin-top: 16px; font-size: 12px; line-height: 1.55; color: {MUTED}; }}
@@ -1029,7 +1036,7 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: {GOLD}; margin-bottom: 10px;
 }}
 .ms-order__title, .ms-done__title {{
-  font-family: Prata, Georgia, serif !important; font-size: clamp(26px, 2.8vw, 36px) !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: clamp(26px, 2.8vw, 36px) !important;
   font-weight: 500 !important; margin: 0 0 26px !important; color: {INK} !important;
 }}
 .ms-form {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; max-width: 860px; }}
@@ -1052,14 +1059,14 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
 .ms-form__error {{ grid-column: 1 / -1; color: #e0596f; font-size: 14px; }}
 
 .ms-empty {{ padding: 40px 0 20px; max-width: 520px; }}
-.ms-empty__title {{ font-family: Prata, Georgia, serif; font-size: 30px; margin-bottom: 10px; }}
+.ms-empty__title {{ font-family: "Golos Digits", Prata, Georgia, serif; font-size: 30px; margin-bottom: 10px; }}
 .ms-empty__text {{ color: {MUTED}; margin: 0 0 24px; }}
 
 .ms-done {{ max-width: 720px; padding: 10px 0 20px; }}
 .ms-done__text {{ font-size: 16px; line-height: 1.6; margin: 0 0 24px; }}
 .ms-done__list {{ border-top: 1px solid {LINE}; margin-bottom: 26px; }}
 .ms-done__row {{ display: flex; justify-content: space-between; gap: 20px; padding: 11px 0; border-bottom: 1px solid {LINE}; font-size: 15px; }}
-.ms-done__row--total {{ font-family: Prata, Georgia, serif; font-size: 22px; }}
+.ms-done__row--total {{ font-family: "Golos Digits", Prata, Georgia, serif; font-size: 22px; }}
 .ms-done__actions {{ display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }}
 .ms-done__phone {{ font-size: 16px; font-weight: 600; color: {INK} !important; margin-left: 6px; }}
 .ms-done__note {{ margin: 26px 0 18px; font-size: 13px; line-height: 1.55; color: {MUTED}; }}
@@ -1112,7 +1119,7 @@ body .CATALOG_SECTIONS {{ padding-top: clamp(40px, 4vw, 64px) !important; paddin
 
 body .CATALOG_TAB .tab_slider_wrapp .tabs {{ border-bottom: 1px solid {LINE} !important; margin-bottom: 26px !important; }}
 body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a {{
-  font-family: Prata, Georgia, serif !important; font-size: 26px !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 26px !important;
   font-weight: 500 !important; text-transform: none !important; letter-spacing: -.01em !important;
   padding: 0 0 14px !important; background: transparent !important; border: 0 !important;
   color: {MUTED} !important;
@@ -1143,7 +1150,7 @@ body .COMPANY_TEXT {{ padding-top: clamp(56px, 6vw, 96px) !important; padding-bo
 body .TIZERS .item {{ padding: 26px 18px !important; }}
 body .TIZERS .item .icon, body .TIZERS .item .icon svg, body .TIZERS .item svg {{ color: {GOLD} !important; }}
 body .TIZERS .item .title {{
-  font-family: Prata, Georgia, serif !important; font-size: 19px !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 19px !important;
   font-weight: 500 !important; margin: 14px 0 8px !important; text-transform: none !important;
 }}
 body .TIZERS .item .text, body .TIZERS .item .muted {{ font-size: 14px !important; line-height: 1.55 !important; color: {MUTED} !important; }}
@@ -1229,10 +1236,10 @@ body .header_wrap .right-icons .name, body .header-wrapper .right-icons .name {{
   .item-title a, .product-item-title a {{ font-size: 20px !important; }}
   .catalog_item .price, .price_value {{ font-size: 22px !important; }}
 }}
-.item-title a, .product-item-title a {{ font-family: Prata, Georgia, serif !important; font-weight: 400 !important; }}
+.item-title a, .product-item-title a {{ font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important; }}
 .catalog_item .price, .price_matrix_wrapper .price, .product-item-price-current, .price_value,
 .catalog_item .price .price_value, .catalog_item .price .price_currency {{
-  color: {GOLD} !important; font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  color: {GOLD} !important; font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
 }}
 .catalog_item .footer_button .btn, .catalog_item .footer_button .btn.to-cart,
 .catalog_item .footer_button .btn.btn-default {{
@@ -1252,7 +1259,7 @@ body .product-detail-gallery .product-detail-gallery__item {{
 body .product-detail-gallery__thmb-inner > * {{ width: 84px !important; height: 84px !important; }}
 body .detail .prices_block .price_value, body .detail .prices_block .price_currency,
 body .detail .price_value {{
-  color: {GOLD} !important; font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  color: {GOLD} !important; font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
 }}
 body .product-main .product-chars {{ border-top: 1px solid {GOLD_LINE} !important; }}
 body .product-chars .properties__item {{ grid-template-columns: 180px 1fr; padding: 13px 0 !important; }}
@@ -1265,7 +1272,7 @@ body .bottom-info .tabs .nav-tabs > li > a {{
 body .bottom-info .tabs .nav-tabs > li.active > a {{ box-shadow: inset 0 -1px 0 {GOLD} !important; }}
 
 .top_slider_wrapp .slides > li .banner_title .head-title {{
-  font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
   font-size: clamp(38px, 5vw, 76px) !important; line-height: 1.04 !important;
   letter-spacing: 0 !important; text-transform: none !important; color: {INK} !important;
 }}
@@ -1298,7 +1305,7 @@ body .cat_sections.cat_sections .item.compact .name {{
 }}
 body .cat_sections.cat_sections .item.compact .name a,
 body .cat_sections.cat_sections .owl-item:first-child .item.compact .name a {{
-  font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
   font-size: 20px !important; color: {INK} !important; text-shadow: none !important;
 }}
 @media (max-width: 1199px) {{
@@ -1317,7 +1324,7 @@ body .cat_sections.cat_sections .owl-item:first-child .item.compact .name a {{
 }}
 body .CATALOG_TAB .tab_slider_wrapp .tabs {{ border-bottom: 1px solid {GOLD_LINE} !important; }}
 body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a {{
-  font-family: Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 34px !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 34px !important;
 }}
 body .CATALOG_TAB .tabs li.cur a, body .CATALOG_TAB .nav-tabs li.active a {{ box-shadow: none !important; }}
 
@@ -1336,12 +1343,12 @@ body .COMPANY_TEXT .company-block .title, body .COMPANY_TEXT .top_block .title {
 
 body .TIZERS .item {{ text-align: left !important; padding: 22px 0 0 !important; border-top: 1px solid {GOLD_LINE} !important; }}
 body .TIZERS .item .image {{ display: none !important; }}
-body .TIZERS .item .title {{ font-family: Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 22px !important; margin: 0 0 10px !important; }}
+body .TIZERS .item .title {{ font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 22px !important; margin: 0 0 10px !important; }}
 body .TIZERS .item .value, body .TIZERS .item .text {{ font-size: 14px !important; line-height: 1.65 !important; color: {MUTED} !important; }}
 body .TIZERS .item-wrapper {{ padding-left: 20px !important; padding-right: 20px !important; }}
 
 .ms-item__name, .ms-item__sum, .ms-summary__row--total, .ms-done__row--total, .ms-empty__title {{
-  font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
 }}
 .ms-item__sum, .ms-summary__row--total {{ color: {GOLD}; }}
 .ms-summary {{ background: transparent; border: 1px solid {GOLD_LINE}; }}
@@ -1428,7 +1435,7 @@ body .product-detail-gallery__thmb-inner > *, .ms-item__pic {{ background: {GROU
 body .cat_sections.cat_sections .item.compact .name {{ padding: 12px 0 0 !important; }}
 body .CATALOG_SECTIONS .sections_wrapper::before {{
   content: "Что печём"; display: block;
-  font-family: Prata, Georgia, serif; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.1;
+  font-family: "Golos Digits", Prata, Georgia, serif; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.1;
   color: {INK}; margin: 0 0 26px;
 }}
 body .CATALOG_SECTIONS {{ padding-top: clamp(48px, 5vw, 72px) !important; }}
@@ -1461,7 +1468,7 @@ body .left_block .menu_top_block .slide-block__head {{
 }}
 body .left_block .menu_top_block ul.menu > li > a {{
   background: transparent !important; border: 0 !important; padding: 9px 0 !important;
-  font-family: Prata, Georgia, serif !important; font-size: 17px !important; font-weight: 400 !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 17px !important; font-weight: 400 !important;
   text-transform: lowercase !important; letter-spacing: 0 !important; color: {INK} !important;
 }}
 body .left_block .menu_top_block ul.menu > li > a .name {{ display: inline-block !important; }}
@@ -1512,7 +1519,7 @@ body .element-count-wrapper .element-count {{
 
 body .left_block .menu_top_block ul.left_menu > li > a {{
   background: transparent !important; border: 0 !important; padding: 9px 0 !important;
-  font-family: Prata, Georgia, serif !important; font-size: 17px !important; font-weight: 400 !important; color: {INK} !important;
+  font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 17px !important; font-weight: 400 !important; color: {INK} !important;
 }}
 body .left_block .menu_top_block ul.left_menu > li.current > a,
 body .left_block .menu_top_block ul.left_menu > li > a:hover {{ color: {GOLD} !important; }}
@@ -1589,7 +1596,7 @@ body .inline-search-block .close-block:hover .close-icons::before, body .inline-
 }}
 .ms-modal__close:hover {{ color: {INK}; }}
 .ms-modal__label {{ font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: {GOLD}; margin-bottom: 12px; }}
-.ms-modal__title {{ font-family: Prata, Georgia, serif; font-size: 26px; font-weight: 400; margin: 0 0 12px; color: {INK}; }}
+.ms-modal__title {{ font-family: "Golos Digits", Prata, Georgia, serif; font-size: 26px; font-weight: 400; margin: 0 0 12px; color: {INK}; }}
 .ms-modal__text {{ font-size: 15px; line-height: 1.6; color: {MUTED}; margin: 0 0 20px; }}
 .ms-modal__contacts {{ display: flex; flex-direction: column; gap: 8px; }}
 .ms-modal__contacts a {{ font-size: 17px; color: {INK} !important; text-decoration: none; }}
@@ -1620,7 +1627,7 @@ body .catalog_section_list td.section_info {{ display: block !important; width: 
 body .catalog_section_list td.section_info ul {{ margin: 0 !important; padding: 0 !important; }}
 body .catalog_section_list .name {{ text-align: left !important; }}
 body .catalog_section_list .name a.dark_link, body .catalog_section_list .name a.dark_link span.font_md {{
-  display: block !important; font-family: Prata, Georgia, serif !important; font-weight: 400 !important;
+  display: block !important; font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
   font-size: 18px !important; line-height: 1.25 !important; color: {INK} !important; text-transform: lowercase !important;
 }}
 body .catalog_section_list .name a.dark_link span.font_md::first-letter {{ text-transform: uppercase !important; }}
@@ -1630,13 +1637,22 @@ body .catalog_section_list .element-count2 {{ display: block !important; margin-
 @media (max-width: 767px) {{ body .catalog_section_list.type_sections_5, body .catalog_section_list.items {{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }} body .catalog_section_list .name a.dark_link span.font_md {{ font-size: 15px !important; }} }}
 @media (max-width: 480px) {{ body .catalog_section_list.type_sections_5, body .catalog_section_list.items {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }} }}
 
+html body .catalog_item .price, html body .catalog_item .price .price_value, html body .catalog_item .price .price_currency,
+html body .price_matrix_wrapper .price, html body .product-item-price-current, html body .price_value,
+html body .detail .prices_block .price_value, html body .detail .prices_block .price_currency,
+html body .ms-item__sum, html body .ms-summary__row--total, html body .ms-done__row--total,
+html body .ms-card__price, html body .ms-done__title, html body .ms-modal__contacts a, html body .page-top .topic .count,
+html body .topic .topic__count, html body .catalog_section_list .element-count2 {{
+  font-weight: 500 !important; font-variant-numeric: lining-nums tabular-nums;
+}}
+
 .ms-search-root {{ padding: 4px 0 48px; }}
 .ms-search {{ display: flex; gap: 12px; max-width: 720px; margin-bottom: 26px; }}
 .ms-search__input {{ flex: 1 1 auto; min-width: 0; }}
 .ms-search__hint {{ color: {MUTED}; font-size: 15px; }}
 .ms-search__count {{ font-size: 14px; color: {MUTED}; margin-bottom: 22px; }}
 .ms-search__empty {{ max-width: 620px; }}
-.ms-search__title {{ font-family: Prata, Georgia, serif; font-size: 26px; margin-bottom: 10px; }}
+.ms-search__title {{ font-family: "Golos Digits", Prata, Georgia, serif; font-size: 26px; margin-bottom: 10px; }}
 .ms-search__empty p {{ color: {MUTED}; margin: 0 0 18px; }}
 .ms-search__sections {{ display: flex; flex-wrap: wrap; gap: 8px; }}
 .ms-search__sections a {{
@@ -1651,9 +1667,9 @@ body .catalog_section_list .element-count2 {{ display: block !important; margin-
 .ms-card:hover .ms-card__pic img {{ transform: scale(1.03); }}
 .ms-card__body {{ display: flex; flex-direction: column; flex: 1 1 auto; padding: 16px 18px 20px; }}
 .ms-card__section {{ font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: {MUTED}; margin-bottom: 8px; }}
-.ms-card__name {{ font-family: Prata, Georgia, serif; font-size: 17px; line-height: 1.3; color: {INK} !important; text-decoration: none; }}
+.ms-card__name {{ font-family: "Golos Digits", Prata, Georgia, serif; font-size: 17px; line-height: 1.3; color: {INK} !important; text-decoration: none; }}
 .ms-card__name:hover {{ color: {ACCENT} !important; }}
-.ms-card__price {{ margin: 12px 0 16px; font-family: Prata, Georgia, serif; font-size: 22px; color: {GOLD}; }}
+.ms-card__price {{ margin: 12px 0 16px; font-family: "Golos Digits", Prata, Georgia, serif; font-size: 22px; color: {GOLD}; }}
 .ms-card__price small {{ font-family: "Golos Text", "Segoe UI", sans-serif; font-size: 13px; color: {MUTED}; margin-left: 4px; }}
 .ms-card__btn.btn.btn-lg {{ margin-top: auto; align-self: flex-start; padding: 0 24px !important; height: 48px; line-height: 48px; }}
 @media (max-width: 1199px) {{ .ms-grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }} }}
