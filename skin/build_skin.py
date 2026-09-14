@@ -1444,6 +1444,38 @@ body .catalog_block .item, body .catalog_item_wrapp.catalog_item, body .item_blo
 body .catalog_item .inner_wrap, body .catalog_item .item_info {{ height: auto !important; min-height: 0 !important; }}
 body .catalog_item .inner_wrap {{ display: flex !important; flex-direction: column !important; }}
 body .catalog_item .footer_button {{ margin-top: 14px !important; }}
+
+.catalog_item .rating, .item_block .rating, .votes_block, .product-item-container .rating {{ display: none !important; }}
+body .left_block .menu_top_block .slide-block__head {{
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: .14em !important; text-transform: uppercase !important; color: {GOLD} !important;
+  padding: 0 0 14px !important; background: transparent !important;
+}}
+body .left_block .menu_top_block ul.menu > li > a {{
+  background: transparent !important; border: 0 !important; padding: 9px 0 !important;
+  font-family: Prata, Georgia, serif !important; font-size: 17px !important; font-weight: 400 !important;
+  text-transform: lowercase !important; letter-spacing: 0 !important; color: {INK} !important;
+}}
+body .left_block .menu_top_block ul.menu > li > a .name {{ display: inline-block !important; }}
+body .left_block .menu_top_block ul.menu > li > a .name::first-letter {{ text-transform: uppercase !important; }}
+body .left_block .menu_top_block ul.menu > li.current > a, body .left_block .menu_top_block ul.menu > li > a:hover {{ color: {GOLD} !important; }}
+body .left_block .menu_top_block ul.menu > li > a .toggle_block {{ display: none !important; }}
+body .left_block .subscribe-block, body .left_block .side-block {{ background: transparent !important; border: 0 !important; padding: 28px 0 0 !important; }}
+body .page-top .topic .count, body .topic .topic__count, body .page-top .count {{
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 13px !important; color: {MUTED} !important;
+  background: transparent !important; border: 0 !important; vertical-align: super; margin-left: 6px;
+}}
+body .filter-panel .filter_title span, body .filter-panel .dropdown-select__title {{ font-size: 13px !important; color: {MUTED} !important; }}
+
+body [class*="ground-pane"] {{ filter: grayscale(1) invert(.92) brightness(.72) contrast(.92) sepia(.35); }}
+body .contacts img, body .contacts_block img {{ filter: none; }}
+
+@media (max-width: 600px) {{
+  body .cat_sections.cat_sections .owl-item {{ width: calc((100% - 2 * 10px) / 3) !important; }}
+  body .cat_sections.cat_sections .owl-stage {{ gap: 10px !important; justify-content: flex-start !important; }}
+  body .cat_sections.cat_sections .item.compact .name a {{ font-size: 14px !important; }}
+  body .cat_sections.cat_sections .item.compact .name {{ padding-top: 8px !important; }}
+}}
 """
 
 

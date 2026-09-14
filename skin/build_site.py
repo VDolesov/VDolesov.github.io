@@ -13,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
-from build_demo import (BANNER, BANNER_COPY, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
+from build_demo import (BANNER, BANNER_COPY, IMAGES, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
                         SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
                         swap_banner, unlazy)
 
@@ -224,6 +224,8 @@ def refresh(html):
     html = re.sub(r"/assets/hero-(?:mosaic|cake)\.(?:webp|png)\?v=\d+", product, html)
     for pattern, new in BANNER_COPY:
         html = re.sub(pattern, new, html)
+    for old, new in IMAGES.items():
+        html = html.replace(old, PAGES_ORIGIN + new)
     return html
 
 

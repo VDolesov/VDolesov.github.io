@@ -86,9 +86,11 @@ SECTION_PHOTOS = {
 }
 
 BANNER = {
-
     "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=5",
     "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-cake.webp?v=1",
+}
+IMAGES = {
+    "https://www.mirsladostey164.ru/images/contacts_image.jpg": "/assets/about.jpg?v=2",
 }
 
 BANNER_COPY = [
@@ -105,6 +107,8 @@ BANNER_COPY = [
 
 def swap_banner(html):
     for old, new in BANNER.items():
+        html = html.replace(old, PAGES_ORIGIN + new)
+    for old, new in IMAGES.items():
         html = html.replace(old, PAGES_ORIGIN + new)
     for pattern, new in BANNER_COPY:
         html = re.sub(pattern, new, html)
