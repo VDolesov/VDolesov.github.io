@@ -782,8 +782,8 @@ body .cat_sections.cat_sections .item.compact .name a {{
 body .inline-search-block .search-button-div .btn.btn-search.btn-lg,
 body .search-button-div .btn.btn-search.btn-lg,
 body .search-button-div .btn, body .search-button-div button {{
-  width: 42px !important; height: 42px !important; padding: 0 !important;
-  min-width: 0 !important; border-radius: 0 !important;
+  width: auto !important; height: 42px !important; padding: 0 16px !important;
+  min-width: 42px !important; border-radius: 0 !important; overflow: visible !important;
   display: inline-flex !important; align-items: center !important; justify-content: center !important;
 }}
 .search-button-div {{ right: 6px !important; left: auto !important; }}
@@ -1558,7 +1558,7 @@ body .left_block .menu_top_block.menu-type1 {{ padding-top: 6px !important; }}
 
 body .inline-search-block.fixed .search-input {{
   height: 84px !important; border: 0 !important; background: transparent !important;
-  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 20px !important; padding: 0 !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 20px !important; padding: 0 110px 0 0 !important;
 }}
 body .inline-search-block.fixed .search-input::placeholder {{ color: {MUTED}; }}
 body .inline-search-block.fixed .search-button-div .btn-search {{
