@@ -273,4 +273,5 @@ def main():
         except Exception as exc:
             print(f"  {pid}: ERROR {exc}")
 
-main()
+if __name__ == "__main__":
+    main()
