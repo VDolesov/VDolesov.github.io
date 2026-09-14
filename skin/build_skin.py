@@ -254,6 +254,8 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4,
 }}
 .topic, .page-top .topic {{ font-size: clamp(34px, 4vw, 56px) !important; line-height: 1.08 !important; }}
 h1 {{ font-size: clamp(32px, 3.6vw, 50px); line-height: 1.1; }}
+@media (max-width: 400px) {{ h1, h1#pagetitle {{ font-size: 26px !important; }} }}
+body .topic__heading, body .topic__inner {{ overflow: visible !important; white-space: normal !important; }}
 h2, .title_block, .top_block .title {{ font-size: clamp(26px, 2.8vw, 40px) !important; line-height: 1.14; }}
 h3 {{ font-size: clamp(20px, 1.8vw, 26px); }}
 .top_block .title_wrapper > .muted, .section-subtitle {{
@@ -609,7 +611,7 @@ body .detail .buy_block .counter_wrapp {{
 }}
 body .detail .buy_block .counter_block_inner {{ flex: 0 0 auto; width: auto !important; margin: 0 !important; }}
 body .detail .buy_block .counter_block_inner .counter_block {{ width: 136px !important; }}
-body .detail .buy_block .button_block {{ flex: 1 1 140px; width: auto !important; min-width: 0; margin: 0 !important; }}
+body .detail .buy_block .button_block {{ flex: 1 0 150px; width: auto !important; min-width: 0; margin: 0 !important; }}
 body .detail .buy_block .btn {{
   display: flex; width: 100% !important; min-width: 0 !important; justify-content: center; align-items: center;
   padding: 0 22px !important; font-size: 12px !important; height: 56px !important; line-height: 56px !important;
@@ -1621,14 +1623,14 @@ body.ms-modal-open {{ overflow: hidden; }}
 .ms-card__name:hover {{ color: {ACCENT} !important; }}
 .ms-card__price {{ margin: 12px 0 16px; font-family: Prata, Georgia, serif; font-size: 22px; color: {GOLD}; }}
 .ms-card__price small {{ font-family: "Golos Text", "Segoe UI", sans-serif; font-size: 13px; color: {MUTED}; margin-left: 4px; }}
-.ms-card__btn {{ margin-top: auto; align-self: flex-start; }}
+.ms-card__btn.btn.btn-lg {{ margin-top: auto; align-self: flex-start; padding: 0 24px !important; height: 48px; line-height: 48px; }}
 @media (max-width: 1199px) {{ .ms-grid {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }} }}
 @media (max-width: 767px) {{
   .ms-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }}
   .ms-card__body {{ padding: 12px 12px 16px; }}
   .ms-card__name {{ font-size: 15px; }}
   .ms-card__price {{ font-size: 19px; margin: 10px 0 12px; }}
-  .ms-card__btn {{ width: 100%; display: flex !important; justify-content: center; padding: 0 10px !important; letter-spacing: .1em !important; }}
+  .ms-card__btn.btn.btn-lg {{ width: 100%; display: flex !important; align-items: center; justify-content: center; padding: 0 10px !important; letter-spacing: .1em !important; }}
   .ms-search {{ flex-direction: column; }}
 }}
 """
