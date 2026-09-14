@@ -24,11 +24,11 @@ INK = "#f3e8d8"
 MUTED = "rgba(243, 232, 216, .55)"
 GROUND = "#120b08"
 PANEL = "#170e0b"
-CARD = "#1b110d"
+CARD = "#1c1310"
 FIELD = "#0e0806"
-LINE = "rgba(243, 232, 216, .12)"
+LINE = "rgba(243, 232, 216, .07)"
 GOLD = "#d6a459"
-GOLD_LINE = "rgba(214, 164, 89, .5)"
+GOLD_LINE = "rgba(214, 164, 89, .38)"
 TILE = "#130c09"
 ACCENT_SOFT = "rgba(214, 164, 89, .12)"
 
@@ -128,6 +128,37 @@ def _mapping(prop):
     return None
 
 
+HEX = re.compile(r"(?<![0-9a-fA-F#])#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?![0-9a-fA-F])")
+
+
+def _grey(value, mapping):
+    def swap(match):
+        h = match.group(1)
+        if len(h) == 3:
+            h = "".join(c * 2 for c in h)
+        r, g, b = int(h[:2], 16), int(h[2:4], 16), int(h[4:], 16)
+        if max(r, g, b) - min(r, g, b) > 24:
+            return match.group(0)
+        luma = r * .299 + g * .587 + b * .114
+        if mapping is FILL_MAP:
+            if luma >= 248:
+                return CARD
+            if luma >= 222:
+                return PANEL
+            if 28 <= luma <= 140:
+                return PANEL
+        elif mapping is EDGE_MAP:
+            if luma >= 96:
+                return LINE
+        elif mapping is TEXT_MAP:
+            if luma <= 96:
+                return INK
+            if luma <= 180:
+                return MUTED
+        return match.group(0)
+    return HEX.sub(swap, value)
+
+
 def redark(css):
     pattern = re.compile(r"([^{}]+)\{([^{}]*)\}")
     rules = []
@@ -144,7 +175,7 @@ def redark(css):
             mapping = _mapping(prop)
             if mapping is None or "url(" in value.lower():
                 continue
-            fresh = _swap(value, mapping)
+            fresh = _grey(_swap(value, mapping), mapping)
             if fresh != value:
                 kept.append(f"{prop.strip()}:{fresh.strip()}")
         if kept:
@@ -1296,6 +1327,43 @@ body .catalog_item .item-title a::first-letter {{ text-transform: uppercase !imp
 .page-top .topic, h1#pagetitle, .detail .topic h1 {{ text-transform: lowercase !important; }}
 .page-top .topic::first-letter, h1#pagetitle::first-letter {{ text-transform: uppercase !important; }}
 .drag-block.SALE:not(:has(*)), .drag-block.REVIEWS:not(:has(*)) {{ display: none !important; }}
+
+.item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container,
+.catalog_item .image_wrapper_block, .product-item-image-wrapper,
+body .cat_sections.cat_sections .item.compact .img.shine,
+body .cat_sections.cat_sections .owl-item:first-child .item.compact .img.shine,
+body .product-detail-gallery .product-detail-gallery__item,
+body .product-detail-gallery__thmb-inner > *,
+.ms-item__pic, .ms-summary, body .bottom-info-wrapper .side-block {{ border: 0 !important; }}
+body .product-detail-gallery__thmb-inner > .active {{ box-shadow: inset 0 0 0 1px {GOLD} !important; }}
+body .counter_wrapp .counter_block, body .counter_block.md, body .counter_block {{
+  border: 0 !important; background: {FIELD} !important;
+}}
+.catalog_item .footer_button .btn, .catalog_item .footer_button .btn.to-cart,
+.catalog_item .footer_button .btn.btn-default {{
+  border: 0 !important; background: #2a1d17 !important;
+}}
+.catalog_item .footer_button .btn:hover, .catalog_item .footer_button .btn.to-cart:hover {{
+  background: {ACCENT} !important; color: {ON_ACCENT} !important;
+}}
+.header_wrap, .header-wrapper, header > .header-wrapper {{ box-shadow: none !important; }}
+input[type="text"], input[type="tel"], input[type="email"], input[type="password"],
+input[type="search"], input[type="number"], textarea, select, .form-control, .input-group .form-control {{
+  border-color: transparent !important;
+}}
+input:focus, textarea:focus, select:focus, .form-control:focus {{ border-color: {GOLD_LINE} !important; box-shadow: none !important; }}
+.ms-qty, .ms-item__remove, .ms-choice label {{ border-color: transparent !important; background: {FIELD}; }}
+.ms-choice label:has(input:checked) {{ border-color: {GOLD_LINE} !important; }}
+.btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn, .btn.btn-search, button.btn-search {{ background: #2a1d17 !important; }}
+
+.content_wrapper_block, .block_container.bordered, .contacts_map.bordered, .basket_sort,
+.map_type_2 .item, .item.initied, .footer_top, .bordered {{ border-color: transparent !important; }}
+.footer-inner, .footer-inner .maxwidth-theme, footer .maxwidth-theme, .footer_top, .footer_bottom,
+.footer_inner, .footer-block, footer.footer {{ background: #0c0705 !important; }}
+.footer_bottom {{ border-top: 0 !important; }}
+.footer_bottom .pays a {{ display: none !important; }}
+.footer_bottom .pays i {{ opacity: .45; }}
+footer .btn, footer span.btn {{ background: {ACCENT} !important; border-color: {ACCENT} !important; color: {ON_ACCENT} !important; }}
 """
 
 
