@@ -36,6 +36,8 @@ ALIAS = {
 SOURCE = {alias: path for path, alias in ALIAS.items() if path.endswith(".php")}
 DROP = ("/info/brands/rss/",)
 _COUNTER = re.compile(r"<!-- Yandex\.Metrika counter -->.*?<!-- /Yandex\.Metrika counter -->", re.S)
+_BEACON = re.compile(r"<script>new Image\(\)\.src='https?://[^']*spread\.php[^<]*</script>")
+PRELOAD = '<link rel="preload" as="image" href="%s">\n'
 ASSET_EXT = (".css", ".js", ".ico", ".png", ".jpg", ".jpeg", ".gif", ".svg",
              ".webp", ".woff", ".woff2", ".ttf", ".eot", ".xml", ".json",
              ".pdf", ".mp4", ".txt", ".zip", ".doc", ".docx", ".xls", ".xlsx")
@@ -148,7 +150,7 @@ def localize_links(html, current):
     html = _FORM.sub(lambda m: f'{m.group(1)}/catalog/{m.group(3)}', html)
     return html
 
-SCRIPTS = ("cart-data.js", "cart.js", "nav.js", "search.js", "demo.js")
+SCRIPTS = ("cart-data.js", "cart.js", "nav.js", "search.js", "demo.js", "motion.js")
 
 
 def skin_version():
@@ -172,19 +174,30 @@ def build_page(path, html, ids, version):
     html = absolutize_loads(html)
     html = swap_photos(html, page_id(path))
     html = _COUNTER.sub("", html)
+    html = _BEACON.sub("", html)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
 
     link = f'\n<link rel="stylesheet" href="/skin/skin.css?v={version}">\n</head>'
     html = html.replace("</head>", link, 1)
+    html = preload_hero(html, path)
 
-    match = re.search(r"/catalog/[a-z_]+/(\d+)/", path)
-    script = (PHOTO_SCRIPT.replace("%IDS%", json.dumps(ids))
-                          .replace("%ORIGIN%", PAGES_ORIGIN)
-                          .replace("%SERIES%", SERIES)
-                          .replace("%PAGE_ID%", match.group(1) if match else "")
-                          .replace("%SECTIONS%", json.dumps(SECTION_PHOTOS)))
-    return html.replace("</body>", script + DEMO_FIX + "\n" + script_tags(version) + "</body>", 1)
+    return html.replace("</body>", photo_script(path, ids) + DEMO_FIX + "\n" + script_tags(version) + "</body>", 1)
+
+
+def preload_hero(html, path):
+    html = re.sub(r'<link rel="preload" as="image" href="[^"]*/assets/hero-[^"]*">\n', "", html)
+    if path == "/":
+        html = html.replace("</head>", PRELOAD % (PAGES_ORIGIN + list(BANNER.values())[0]) + "</head>", 1)
+    return html
+
+
+def photo_script(path, ids):
+    return (PHOTO_SCRIPT.replace("%IDS%", json.dumps(ids))
+                        .replace("%ORIGIN%", PAGES_ORIGIN)
+                        .replace("%SERIES%", SERIES)
+                        .replace("%PAGE_ID%", page_id(path) or "")
+                        .replace("%SECTIONS%", json.dumps(SECTION_PHOTOS)))
 
 
 def write(path, html):
@@ -263,8 +276,12 @@ def refresh(html, path=""):
     for old, new in ALIAS.items():
         html = html.replace(f'href="{old}"', f'href="{new}"')
     html = _COUNTER.sub("", html)
+    html = _BEACON.sub("", html)
     html = absolutize_loads(html)
     html = swap_photos(html, page_id(path))
+    html = preload_hero(html, "/" if path.endswith("pages_mirror/index.html") else path)
+    html = re.sub(r"<script>\n\(function \(\) \{\n  var ids = .*?</script>",
+                  lambda m: photo_script(path, product_ids()).strip(), html, count=1, flags=re.S)
     html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
     return html
 
@@ -274,7 +291,7 @@ def restamp():
     pattern = re.compile(r"/skin/skin\.css\?v=[0-9a-f]+")
     count = 0
     for root, dirs, files in os.walk(APP):
-        dirs[:] = [d for d in dirs if d not in (".git", "skin", "build", "assets")]
+        dirs[:] = [d for d in dirs if d not in (".git", "skin", "build", "assets") and not re.fullmatch(r"v\d+", d)]
         for name in files:
             if name != "index.html":
                 continue

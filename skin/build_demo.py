@@ -38,7 +38,7 @@ PHOTO_SCRIPT = """
   var pageId = "%PAGE_ID%";
 
   function swap(img, id) {
-    if (img.dataset.skinDone || img.closest(".stickers")) return;
+    if (img.dataset.skinDone || img.closest(".stickers") || /\\/assets\\/products\\//.test(img.getAttribute("src") || "")) return;
     img.dataset.skinDone = "1";
     img.removeAttribute("srcset");
     img.removeAttribute("data-src");
@@ -61,7 +61,7 @@ PHOTO_SCRIPT = """
   var sections = %SECTIONS%;
   document.querySelectorAll(".cat_sections a.thumb, .sections_wrapper a.thumb")
     .forEach(function (a) {
-      var m = (a.getAttribute("href") || "").match(/\/catalog\/([a-z_]+)\/$/);
+      var m = (a.getAttribute("href") || "").match(/\\/catalog\\/([a-z_]+)\\/$/);
       if (!m || !sections[m[1]]) return;
       var img = a.querySelector("img");
       if (!img) return;
@@ -211,8 +211,8 @@ def product_ids():
     return [item["id"] for item in data["items"]]
 
 
-def photo_url(pid):
-    return f"{PAGES_ORIGIN}/assets/products/{pid}-{SERIES}.webp"
+def photo_url(pid, size=None):
+    return f"{PAGES_ORIGIN}/assets/products/{pid}-{SERIES}{'-' + str(size) if size else ''}.webp"
 
 
 def photo_files():
@@ -251,8 +251,10 @@ def swap_photos(html, page_id=None):
 
     def retarget(m, pid):
         def img(tag):
-            tag = re.sub(r'\s(src|data-src)="[^"]*"', lambda a: f' {a.group(1)}="{photo_url(pid)}"', tag.group(0))
-            return _SRCSET.sub("", tag)
+            tag = re.sub(r'\s(src|data-src)="[^"]*"', lambda a: f' {a.group(1)}="{photo_url(pid, 640)}"', tag.group(0))
+            tag = re.sub(r'\s(?:loading|decoding)="[^"]*"', "", _SRCSET.sub("", tag))
+            return tag.replace("<img", f'<img srcset="{photo_url(pid, 640)} 640w, {photo_url(pid)} 1024w" '
+                                       'sizes="(max-width: 600px) 50vw, (max-width: 1199px) 33vw, 340px" loading="lazy" decoding="async"', 1)
         return m.group(1) + _IMG.sub(img, m.group(3)) + m.group(4)
 
     html = _CARD_IMG.sub(lambda m: retarget(m, m.group(2)) if m.group(2) in have else m.group(0), html)

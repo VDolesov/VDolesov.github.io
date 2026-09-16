@@ -134,8 +134,8 @@
     if (!container) return;
     var root = document.createElement("div");
     root.className = "ms-search-root";
-    container.innerHTML = "";
-    container.appendChild(root);
+    container.innerHTML = '<div class="maxwidth-theme"></div>';
+    container.firstChild.appendChild(root);
     var title = document.getElementById("pagetitle");
     if (hit) {
       if (title) title.textContent = "Хиты";

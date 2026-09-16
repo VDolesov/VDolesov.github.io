@@ -76,11 +76,10 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 
 <script  src="https://www.mirsladostey164.ru/bitrix/cache/js/s1/aspro_max/template_06cd0198cb10009eae4cf545a63e4da3/template_06cd0198cb10009eae4cf545a63e4da3_v1.js?1782209341795426"></script>
 <script>var _ba = _ba || []; _ba.push(["aid", "ad3db4bedb44825186b8a1a5fda1b2ec"]); _ba.push(["host", "www.mirsladostey164.ru"]); (function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
-<script>new Image().src='https://mirsladostey164.ru/bitrix/spread.php?s=QklUUklYX1NNX1NBTEVfVUlEATUyNGNjNDE2ZmMzYmU4MGU0NTUzYTRjNTI2NDNiZDNiATE4MjA1MjMwNzIBLwEBAQI%3D&k=5c895d2f5e8e52d67c912008544fd4f1';
-</script>
+
 
 			
-<link rel="stylesheet" href="/skin/skin.css?v=a784a8cb">
+<link rel="stylesheet" href="/skin/skin.css?v=754222a2">
 </head>
 <body class=" site_s1  fill_bg_n catalog-delayed-btn-" id="main" data-site="/">
 		
@@ -1119,7 +1118,7 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
   var pageId = "";
 
   function swap(img, id) {
-    if (img.dataset.skinDone || img.closest(".stickers")) return;
+    if (img.dataset.skinDone || img.closest(".stickers") || /\/assets\/products\//.test(img.getAttribute("src") || "")) return;
     img.dataset.skinDone = "1";
     img.removeAttribute("srcset");
     img.removeAttribute("data-src");
@@ -1164,10 +1163,11 @@ li[data-code="NEW"], li[data-code="RECOMMEND"],
 .CATALOG_TAB .tabs_wrapper { display: none !important; }
 </style>
 
-<script src="/skin/cart-data.js?v=a784a8cb"></script>
-<script src="/skin/cart.js?v=a784a8cb"></script>
-<script src="/skin/nav.js?v=a784a8cb"></script>
-<script src="/skin/search.js?v=a784a8cb"></script>
-<script src="/skin/demo.js?v=a784a8cb"></script>
+<script src="/skin/cart-data.js?v=754222a2"></script>
+<script src="/skin/cart.js?v=754222a2"></script>
+<script src="/skin/nav.js?v=754222a2"></script>
+<script src="/skin/search.js?v=754222a2"></script>
+<script src="/skin/demo.js?v=754222a2"></script>
+<script src="/skin/motion.js?v=754222a2"></script>
 </body>
 </html>

@@ -107,11 +107,10 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 <script  src="https://www.mirsladostey164.ru/bitrix/cache/js/s1/aspro_max/page_c5373189514e1483598a9576c543e755/page_c5373189514e1483598a9576c543e755_v1.js?1782284679183438"></script>
 <script  src="https://www.mirsladostey164.ru/bitrix/cache/js/s1/aspro_max/default_4c6d5da04e30ff4921b45219d8253a76/default_4c6d5da04e30ff4921b45219d8253a76_v1.js?178228467977858"></script>
 <script>var _ba = _ba || []; _ba.push(["aid", "ad3db4bedb44825186b8a1a5fda1b2ec"]); _ba.push(["host", "www.mirsladostey164.ru"]); _ba.push(["ad[ct][item]", "eyJwcm9kdWN0X2lkIjo3NjgsImlibG9ja19pZCI6MjYsInByb2R1Y3RfdGl0bGUiOiJcdTA0MjFcdTA0MTBcdTA0MWJcdTA0MTBcdTA0MjIgJnF1b3Q7XHUwNDIyXHUwNDExXHUwNDE4XHUwNDFiXHUwNDE4XHUwNDIxXHUwNDE4JnF1b3Q7IiwiY2F0ZWdvcnlfaWQiOiIxNTgiLCJjYXRlZ29yeSI6eyIxNTgiOiJcdTA0MjFcdTA0MTBcdTA0MWJcdTA0MTBcdTA0MjJcdTA0MmIifSwicHJpY2UiOjEwMDAsImN1cnJlbmN5IjoiUlVCIn0="]);_ba.push(["ad[ct][user_id]", function(){return BX.message("USER_ID") ? BX.message("USER_ID") : 0;}]);_ba.push(["ad[ct][recommendation]", function() {var rcmId = "";var cookieValue = BX.getCookie("BITRIX_SM_RCM_PRODUCT_LOG");var productId = 768;var cItems = [];var cItem;if (cookieValue){cItems = cookieValue.split(".");}var i = cItems.length;while (i--){cItem = cItems[i].split("-");if (cItem[0] == productId){rcmId = cItem[1];break;}}return rcmId;}]);_ba.push(["ad[ct][v]", "2"]);(function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
-<script>new Image().src='https://mirsladostey164.ru/bitrix/spread.php?s=QklUUklYX1NNX1NBTEVfVUlEATdkNmI0YzUzZTNlMDI5OWE1ZTcyOGE2YWY1ZGM5ODViATE4MjA1MjMxNjEBLwEBAQI%3D&k=baaa6d2a1f6e606b263db421f3fac976';
-</script>
+
 
 			
-<link rel="stylesheet" href="/skin/skin.css?v=a784a8cb">
+<link rel="stylesheet" href="/skin/skin.css?v=754222a2">
 </head>
 <body class=" site_s1  fill_bg_n catalog-delayed-btn-" id="main" data-site="/">
 		
@@ -2435,7 +2434,7 @@ BX.message({});
   var pageId = "768";
 
   function swap(img, id) {
-    if (img.dataset.skinDone || img.closest(".stickers")) return;
+    if (img.dataset.skinDone || img.closest(".stickers") || /\/assets\/products\//.test(img.getAttribute("src") || "")) return;
     img.dataset.skinDone = "1";
     img.removeAttribute("srcset");
     img.removeAttribute("data-src");
@@ -2480,10 +2479,11 @@ li[data-code="NEW"], li[data-code="RECOMMEND"],
 .CATALOG_TAB .tabs_wrapper { display: none !important; }
 </style>
 
-<script src="/skin/cart-data.js?v=a784a8cb"></script>
-<script src="/skin/cart.js?v=a784a8cb"></script>
-<script src="/skin/nav.js?v=a784a8cb"></script>
-<script src="/skin/search.js?v=a784a8cb"></script>
-<script src="/skin/demo.js?v=a784a8cb"></script>
+<script src="/skin/cart-data.js?v=754222a2"></script>
+<script src="/skin/cart.js?v=754222a2"></script>
+<script src="/skin/nav.js?v=754222a2"></script>
+<script src="/skin/search.js?v=754222a2"></script>
+<script src="/skin/demo.js?v=754222a2"></script>
+<script src="/skin/motion.js?v=754222a2"></script>
 </body>
 </html>

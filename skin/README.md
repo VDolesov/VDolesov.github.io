@@ -108,9 +108,15 @@ vtorye_blyuda        770   polufabrikaty 760   napitki    763
 
 The demo is static, so the cart lives in the browser: `cart.js` intercepts the template's "add to cart" buttons, keeps the cart in localStorage, renders `/basket/` (list, quantities, total, checkout form, confirmation with an order number) and offers to send the order by e-mail. Product data is `cart-data.js`, generated from `build/catalog.json`. `nav.js` adds the section navigation strip under the header from the same data.
 
+`motion.js` adds the reveal-on-scroll animation (IntersectionObserver, honours `prefers-reduced-motion`); the hover and hero entrance animations are pure CSS in `skin.css`. Favourites (the heart on cards) live in localStorage next to the cart and show up as a «Отложенные» list on `/basket/#delayed`.
+
 `search.js` answers the header search (`/catalog/?q=` and `/search/?q=`) from the same product data: name, section and composition, with a crude Russian stem. `demo.js` catches the template's popup forms (call back, subscribe, question, account, quick view): quick view opens the product page, the rest show a note with the phones instead of a request the static demo cannot send.
 
-On the live site none of these scripts is needed — Bitrix handles the cart, orders, search and forms; the `ms-*` styles in `skin.css` do not interfere.
+On the live site none of these scripts is needed — Bitrix handles the cart, favourites, orders, search and forms; `motion.js` is the one optional extra (drop it next to `skin.css` and include it after the template scripts). The `ms-*` styles in `skin.css` do not interfere.
+
+## Weight and caching
+
+Pages are served by GitHub Pages: gzip, `Cache-Control: max-age=600`; `skin.css` and the scripts carry a content hash in the query string, so a new build is picked up at once and an unchanged one stays cached. Product cards use the 640 px variant with a 1024 px `srcset` for retina, `loading="lazy"` and `decoding="async"`; the first hero image is preloaded. The demo sets no cookies of its own (cart and favourites are in localStorage); the Metrika counter and the Bitrix session beacon are stripped so demo visits do not reach the live site's statistics. Template CSS/JS still come from mirsladostey164.ru with that server's caching.
 
 ## Out of scope
 

@@ -1689,7 +1689,23 @@ body .top_slider_wrapp .flex-direction-nav .flex-next {{ right: 24px !important;
   body .top_slider_wrapp .flex-control-nav {{ bottom: 14px !important; justify-content: flex-start !important; padding: 0 16px !important; }}
 }}
 
-body .basket_fly .opener {{ background: {PANEL} !important; border: 1px solid {GOLD_LINE} !important; border-right: 0 !important; }}
+body .basket_fly .opener {{ background: {PANEL} !important; border: 1px solid {GOLD_LINE} !important; border-right: 0 !important; width: 72px !important; left: -72px !important; }}
+body .basket_fly .opener .basket_count, body .basket_fly .opener .wish_count {{ width: 72px !important; height: 72px !important; position: relative !important; }}
+body .basket_fly .opener .wraps_icon_block {{
+  display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+  gap: 7px !important; width: 100% !important; height: 100% !important; padding: 0 !important; margin: 0 !important; position: static !important;
+}}
+body .basket_fly .opener .wraps_icon_block .svg {{ position: static !important; margin: 0 !important; display: block !important; line-height: 0 !important; }}
+body .basket_fly .opener .wraps_icon_block::after {{
+  font-family: "Golos Text", "Segoe UI", sans-serif; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; line-height: 1;
+}}
+body .basket_fly .opener .wraps_icon_block.basket::after {{ content: "корзина"; color: {ON_ACCENT}; }}
+body .basket_fly .opener .wraps_icon_block.delay::after {{ content: "отложено"; color: rgba(243, 232, 216, .7); }}
+body .basket_fly .opener .wish_count:hover .wraps_icon_block.delay::after {{ color: {ACCENT}; }}
+body .basket_fly .opener .count {{ position: absolute !important; top: 6px !important; right: 6px !important; left: auto !important; bottom: auto !important; margin: 0 !important; }}
+body .basket_fly .opener .basket_count.ms-has-items .wraps_icon_block .svg, body .basket_fly .opener .wish_count.ms-has-items .wraps_icon_block .svg {{ transform: none; }}
+body .basket_fly .opener .count span.colored_theme_bg.ms-pop {{ animation: ms-pop .4s ease; }}
+@keyframes ms-pop {{ 0% {{ transform: scale(.6); }} 60% {{ transform: scale(1.15); }} 100% {{ transform: scale(1); }} }}
 body .basket_fly .opener .basket_count {{ background: {ACCENT} !important; }}
 body .basket_fly .opener .basket_count svg path {{ fill: {ON_ACCENT} !important; }}
 body .basket_fly .opener .wish_count {{ background: transparent !important; border-top: 1px solid {GOLD_LINE} !important; }}
@@ -1704,6 +1720,50 @@ body .basket_fly .opener .count span.colored_theme_bg span {{ background: transp
 body .basket_fly .opener .wish_count .count span.colored_theme_bg {{ background: rgba(243, 232, 216, .85) !important; }}
 body .basket_fly .opener .count.empty_items {{ display: none !important; }}
 body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !important; }}
+
+.ms-delayed {{ margin-top: 56px; padding-top: 40px; border-top: 1px solid {LINE}; padding-bottom: 40px; }}
+.ms-delayed[hidden] {{ display: none; }}
+.ms-fav {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 8px; }}
+.ms-fav__item {{ display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; background: {CARD}; padding: 14px; }}
+.ms-fav__pic {{ display: block; width: 96px; height: 96px; background: {GROUND}; overflow: hidden; }}
+.ms-fav__pic img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
+.ms-fav__name {{ display: block; font-family: "Golos Digits", Prata, Georgia, serif; font-size: 16px; line-height: 1.3; color: {INK} !important; }}
+.ms-fav__name:hover {{ color: {ACCENT} !important; }}
+.ms-fav__price {{ margin: 6px 0 12px; font-size: 13px; color: {MUTED}; }}
+.ms-fav__actions {{ display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }}
+.ms-fav__buy.btn {{ height: 40px !important; line-height: 40px !important; padding: 0 16px !important; font-size: 11px !important; }}
+.ms-fav__remove {{ background: none; border: 0; padding: 0; font-size: 13px; color: {MUTED}; text-decoration: underline; cursor: pointer; }}
+.ms-fav__remove:hover {{ color: {INK}; }}
+.wish_item.added svg path, .wish_item.in svg path {{ fill: {ACCENT} !important; }}
+
+.ms-reveal {{ opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1); }}
+.ms-reveal.is-in {{ opacity: 1; transform: none; }}
+.ms-reveal--2 {{ transition-delay: .08s; }} .ms-reveal--3 {{ transition-delay: .16s; }} .ms-reveal--4 {{ transition-delay: .24s; }}
+.ms-reveal--5 {{ transition-delay: .32s; }} .ms-reveal--6 {{ transition-delay: .4s; }}
+@keyframes ms-rise {{ from {{ opacity: 0; transform: translateY(22px); }} to {{ opacity: 1; transform: none; }} }}
+body .top_slider_wrapp .slides > li.flex-active-slide .banner_title .section {{ animation: ms-rise .7s .1s cubic-bezier(.2, .7, .2, 1) both; }}
+body .top_slider_wrapp .slides > li.flex-active-slide .banner_title .head-title {{ animation: ms-rise .8s .2s cubic-bezier(.2, .7, .2, 1) both; }}
+body .top_slider_wrapp .slides > li.flex-active-slide .banner_text {{ animation: ms-rise .8s .35s cubic-bezier(.2, .7, .2, 1) both; }}
+body .top_slider_wrapp .slides > li.flex-active-slide .banner_buttons {{ animation: ms-rise .8s .5s cubic-bezier(.2, .7, .2, 1) both; }}
+body .catalog_item, body .catalog_item .inner_wrap {{ transition: transform .35s cubic-bezier(.2, .7, .2, 1), background-color .35s !important; }}
+body .catalog_item:hover {{ transform: translateY(-4px); }}
+body .catalog_item .image_wrapper_block img, body .ms-card__pic img, body .cat_sections.cat_sections .item.compact .img.shine img {{ transition: transform .6s cubic-bezier(.2, .7, .2, 1) !important; }}
+body .catalog_item:hover .image_wrapper_block img {{ transform: scale(1.04); }}
+body .ms-card {{ transition: transform .35s cubic-bezier(.2, .7, .2, 1); }}
+body .ms-card:hover {{ transform: translateY(-4px); }}
+body .catalog_section_list .section_item {{ transition: transform .35s cubic-bezier(.2, .7, .2, 1) !important; }}
+body .catalog_section_list .section_item:hover {{ transform: translateY(-4px) !important; }}
+.btn, .btn.btn-default, button.btn {{ transition: background-color .25s, border-color .25s, color .25s, transform .2s !important; }}
+.btn.btn-default:active {{ transform: translateY(1px); }}
+.ms-nav__inner a {{ position: relative; }}
+.ms-nav__inner a::after {{ content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 1px; background: {GOLD}; transform: scaleX(0); transform-origin: left; transition: transform .3s cubic-bezier(.2, .7, .2, 1); }}
+.ms-nav__inner a:hover::after, .ms-nav__inner a.is-current::after {{ transform: scaleX(1); }}
+@media (prefers-reduced-motion: reduce) {{
+  .ms-reveal {{ opacity: 1; transform: none; transition: none; }}
+  body .top_slider_wrapp .slides > li.flex-active-slide .banner_title .section, body .top_slider_wrapp .slides > li.flex-active-slide .banner_title .head-title,
+  body .top_slider_wrapp .slides > li.flex-active-slide .banner_text, body .top_slider_wrapp .slides > li.flex-active-slide .banner_buttons {{ animation: none; }}
+  body .catalog_item:hover, body .ms-card:hover, body .catalog_section_list .section_item:hover {{ transform: none !important; }}
+}}
 
 .ms-search-root {{ padding: 4px 0 48px; }}
 .ms-search {{ display: flex; gap: 12px; max-width: 720px; margin-bottom: 26px; }}
