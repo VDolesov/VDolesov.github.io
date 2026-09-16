@@ -1689,6 +1689,22 @@ body .top_slider_wrapp .flex-direction-nav .flex-next {{ right: 24px !important;
   body .top_slider_wrapp .flex-control-nav {{ bottom: 14px !important; justify-content: flex-start !important; padding: 0 16px !important; }}
 }}
 
+body .basket_fly .opener {{ background: {PANEL} !important; border: 1px solid {GOLD_LINE} !important; border-right: 0 !important; }}
+body .basket_fly .opener .basket_count {{ background: {ACCENT} !important; }}
+body .basket_fly .opener .basket_count svg path {{ fill: {ON_ACCENT} !important; }}
+body .basket_fly .opener .wish_count {{ background: transparent !important; border-top: 1px solid {GOLD_LINE} !important; }}
+body .basket_fly .opener .wish_count svg path {{ fill: rgba(243, 232, 216, .7) !important; }}
+body .basket_fly .opener .wish_count:hover svg path {{ fill: {ACCENT} !important; }}
+body .basket_fly .opener .count span.colored_theme_bg {{
+  background: {INK} !important; color: {GROUND} !important; border-radius: 0 !important;
+  min-width: 18px !important; height: 18px !important; line-height: 18px !important; padding: 0 5px !important;
+  font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 11px !important; font-weight: 600 !important;
+}}
+body .basket_fly .opener .count span.colored_theme_bg span {{ background: transparent !important; color: inherit !important; }}
+body .basket_fly .opener .wish_count .count span.colored_theme_bg {{ background: rgba(243, 232, 216, .85) !important; }}
+body .basket_fly .opener .count.empty_items {{ display: none !important; }}
+body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !important; }}
+
 .ms-search-root {{ padding: 4px 0 48px; }}
 .ms-search {{ display: flex; gap: 12px; max-width: 720px; margin-bottom: 26px; }}
 .ms-search__input {{ flex: 1 1 auto; min-width: 0; }}
