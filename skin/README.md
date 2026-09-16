@@ -26,7 +26,7 @@ Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Tex
 | About block | text + video block | gold-framed band with a production photo |
 | Header | plain | sticky, plus a section navigation strip (`nav.js`) |
 | Product page | 450 px photo, narrow specs column | full-column photo, specs under the buy block |
-| Hero | stock photo | full-bleed cherry chocolate cake, copy on the dark left half |
+| Hero | stock photo | three full-bleed slides (cakes, pies, cakes to order), copy on the dark left half |
 | Section and product names | all caps | sentence case via CSS |
 | Cart | Bitrix module | demo only: client-side cart and checkout (`cart.js`) |
 
@@ -79,16 +79,9 @@ On the live site upload them into the product cards; the file name is the elemen
 
 ## Hero
 
-The slide is one full-bleed photo: `hero-bg.jpg` (2400x1060) — the cherry chocolate cake on a slate stand, placed on the right, the left half darkened for the copy. The template's product image on the right is hidden by the skin (`td.img`), so only the backdrop needs uploading into the banner element that currently holds `890366e70949176749ee46def14a193b.jpg`. Rebuild with `python skin/hero_choc.py` (source: `assets/hero-noir.webp`).
+Three slides, each one full-bleed photo (2400x1060) with the subject on the right and the left half darkened for the copy: `hero-bg.jpg` (cherry chocolate cake), `hero-2.jpg` (meat pie), `hero-3.jpg` (strawberry cake). `skin/hero_choc.py` builds them from `assets/hero-noir.webp` and the AI renders in `build/sources/ai/` (`SLIDES` at the top of the script). The template's product image on the right is hidden by the skin (`td.img`).
 
-Slide copy used in the demo (set it in the slide settings):
-
-```
-label     Собственное производство
-title     Изготовление тортов и пирожных
-text      Торты, пироги и десерты, которые мы печём сами. Заберите в одном из двух магазинов или закажите доставку по Саратову.
-button    Выбрать торт
-```
+The demo clones the template's single slide three times at build time (`SLIDES` in `build_demo.py` — file, label, title, text, button, link) and switches the theme's slider settings to fade / 8 s in `demo.js`; on phones the slideshow is off and slides swipe. On the live site these are three banner elements plus the theme's "big banner" settings.
 
 ## Home sections
 

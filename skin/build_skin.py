@@ -1661,6 +1661,34 @@ body .CATALOG_TAB .top_block .right_block_wrapper .tabs_wrapper {{ margin: 0 !im
 body .CATALOG_TAB .top_block .right_block_wrapper a.font_upper.muted {{ margin: 0 !important; padding-bottom: 7px !important; }}
 .ms-search__sections--foot {{ margin-top: 40px; }}
 
+body .top_slider_wrapp .flex-control-nav {{
+  position: absolute !important; left: 0 !important; right: 0 !important; top: auto !important; bottom: 26px !important; z-index: 5 !important;
+  height: auto !important; display: flex !important; align-items: center !important; justify-content: center !important;
+  gap: 10px !important; margin: 0 !important; padding: 0 !important; width: auto !important; text-align: center !important;
+}}
+body .top_slider_wrapp .flex-control-nav li {{ margin: 0 !important; padding: 0 !important; display: block !important; }}
+body .top_slider_wrapp .flex-control-nav li a {{
+  display: block !important; width: 28px !important; height: 2px !important; border-radius: 0 !important;
+  background: rgba(243, 232, 216, .28) !important; box-shadow: none !important; text-indent: -9999px !important;
+  transition: background .3s !important; cursor: pointer;
+}}
+body .top_slider_wrapp .flex-control-nav li a.flex-active, body .top_slider_wrapp .flex-control-nav li a:hover {{ background: {GOLD} !important; }}
+body .top_slider_wrapp .flex-control-nav, body .top_slider_wrapp .flex-control-nav li {{ list-style: none !important; }}
+body .top_slider_wrapp .flex-control-nav li a::before, body .top_slider_wrapp .flex-control-nav li a::after {{ display: none !important; content: none !important; }}
+body .top_slider_wrapp .flex-direction-nav a {{
+  width: 44px !important; height: 44px !important; border-radius: 0 !important;
+  background: rgba(18, 11, 8, .55) !important; border: 1px solid {GOLD_LINE} !important; opacity: 0 !important;
+  transition: opacity .3s, background .3s !important;
+}}
+body .top_slider_wrapp .flexslider:hover .flex-direction-nav a {{ opacity: 1 !important; }}
+body .top_slider_wrapp .flex-direction-nav a:hover {{ background: {ACCENT_SOFT} !important; }}
+body .top_slider_wrapp .flex-direction-nav .flex-prev {{ left: 24px !important; }}
+body .top_slider_wrapp .flex-direction-nav .flex-next {{ right: 24px !important; }}
+@media (max-width: 767px) {{
+  body .top_slider_wrapp .flex-direction-nav {{ display: none !important; }}
+  body .top_slider_wrapp .flex-control-nav {{ bottom: 14px !important; justify-content: flex-start !important; padding: 0 16px !important; }}
+}}
+
 .ms-search-root {{ padding: 4px 0 48px; }}
 .ms-search {{ display: flex; gap: 12px; max-width: 720px; margin-bottom: 26px; }}
 .ms-search__input {{ flex: 1 1 auto; min-width: 0; }}

@@ -15,7 +15,7 @@ sys.path.insert(0, HERE)
 
 from build_demo import (BANNER, BANNER_COPY, IMAGES, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
                         SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
-                        swap_banner, swap_photos, unlazy)
+                        expand_slides, swap_banner, swap_photos, unlazy)
 
 HOSTS = {"www.mirsladostey164.ru", "mirsladostey164.ru"}
 SEEDS = ["/", "/catalog/", "/basket/", "/personal/", "/search/", "/contacts/",
@@ -257,6 +257,7 @@ def refresh(html, path=""):
     html = re.sub(r"/assets/hero-(?:mosaic|cake)\.(?:webp|png)\?v=\d+", product, html)
     for pattern, new in BANNER_COPY:
         html = re.sub(pattern, new, html)
+    html = expand_slides(html)
     for old, new in IMAGES.items():
         html = html.replace(old, PAGES_ORIGIN + new)
     for old, new in ALIAS.items():

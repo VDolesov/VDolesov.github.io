@@ -85,6 +85,12 @@
     modal("form");
   }, true);
 
+  if (window.arMaxOptions && arMaxOptions.THEME) {
+    arMaxOptions.THEME.BIGBANNER_ANIMATIONTYPE = "FADE";
+    arMaxOptions.THEME.BIGBANNER_ANIMATIONSPEED = "900";
+    arMaxOptions.THEME.BIGBANNER_SLIDESSHOWSPEED = window.innerWidth < 768 ? "0" : "8000";
+  }
+
   function absolute(files) {
     return [].concat(files).map(function (f) {
       return typeof f === "string" && /^\/(bitrix|local|upload)\//.test(f) ? "https://www.mirsladostey164.ru" + f : f;

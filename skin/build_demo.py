@@ -88,9 +88,47 @@ SECTION_PHOTOS = {
 }
 
 BANNER = {
-    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=6",
-    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-bg.jpg?v=6",
+    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=7",
+    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-bg.jpg?v=7",
 }
+SLIDES = [
+    {"file": "/assets/hero-bg.jpg?v=7", "label": "Собственное производство", "title": "Изготовление тортов и пирожных",
+     "text": "Торты, пироги и десерты, которые мы печём сами. Заберите в одном из двух магазинов или закажите доставку по Саратову.",
+     "button": "Выбрать торт", "href": "/catalog/torty/"},
+    {"file": "/assets/hero-2.jpg?v=1", "label": "Пироги", "title": "Пироги на каждый день",
+     "text": "С мясом, капустой, рыбой и вишней — к обеду и к чаю. Заберите в магазине или закажите доставку.",
+     "button": "К пирогам", "href": "/catalog/pirogi/"},
+    {"file": "/assets/hero-3.jpg?v=1", "label": "На праздник", "title": "Торт на праздник — под заказ",
+     "text": "Назовите дату, повод и начинку — остальное сделаем мы. Соберём торт так, как вы его задумали.",
+     "button": "Заказать торт", "href": "/catalog/torty/"},
+]
+_SLIDE_LIST = re.compile(r'(<ul class="slides">)(.*?)(</ul>)', re.S)
+_SLIDE = re.compile(r"<li\b.*?</li>", re.S)
+
+
+def expand_slides(html):
+    def build(m):
+        first = _SLIDE.search(m.group(2))
+        if not first or "top_slider_wrapp" not in html[max(0, m.start() - 3000):m.start()]:
+            return m.group(0)
+        template = first.group(0)
+        out = []
+        for i, slide in enumerate(SLIDES):
+            li = re.sub(r"https?://[^\"' )]*/assets/hero-[a-z0-9]+\.jpg\?v=\d+", PAGES_ORIGIN + slide["file"], template)
+            li = re.sub(r'data-slide_index="\d+"', f'data-slide_index="{i}"', li)
+            li = re.sub(r'id="(bx_\d+_\d+)(?:_s\d+)?"', lambda a: f'id="{a.group(1)}' + (f'_s{i}' if i else "") + '"', li)
+            li = re.sub(r'(<div class="section font_upper_md">)[^<]*(</div>)', lambda a: a.group(1) + slide["label"] + a.group(2), li)
+            li = re.sub(r'(<span class="head-title">\s*)[^<]*?(\s*</span>)', lambda a: a.group(1) + slide["title"] + a.group(2), li)
+            li = re.sub(r'(<div class="banner_text">)[^<]*(</div>)', lambda a: a.group(1) + slide["text"] + a.group(2), li)
+            li = re.sub(r'(<a href=")[^"]*(" class="btn btn-default btn-lg"[^>]*>\s*)[^<]*?(\s*</a>)',
+                        lambda a: a.group(1) + slide["href"] + a.group(2) + slide["button"] + a.group(3), li)
+            li = re.sub(r'<img class="plaxy"[^>]*>',
+                        lambda a: re.sub(r'(alt|title)="[^"]*"', lambda b: b.group(1) + '="' + slide["title"] + '"', a.group(0)), li)
+            out.append(li)
+        return m.group(1) + "\n".join(out) + m.group(3)
+    return _SLIDE_LIST.sub(build, html, count=1)
+
+
 IMAGES = {
     "https://www.mirsladostey164.ru/images/contacts_image.jpg": "/assets/about.jpg?v=2",
 }
@@ -113,7 +151,7 @@ def swap_banner(html):
         html = html.replace(old, PAGES_ORIGIN + new)
     for pattern, new in BANNER_COPY:
         html = re.sub(pattern, new, html)
-    return html
+    return expand_slides(html)
 
 
 def unlazy(html):
