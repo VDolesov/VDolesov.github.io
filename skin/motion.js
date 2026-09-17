@@ -51,10 +51,67 @@
     }, 8000);
   }
 
+  var FINE = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  function heroParallax() {
+    var wrap = document.querySelector(".top_slider_wrapp");
+    if (!wrap || wrap.classList.contains("ms-parallax") || !FINE || window.innerWidth < 768) return;
+    var slides = wrap.querySelectorAll(".slides > li.box");
+    if (!slides.length) return;
+    var layers = [], copies = [];
+    for (var i = 0; i < slides.length; i++) {
+      var li = slides[i];
+      var src = li.getAttribute("data-bg") || li.getAttribute("data-src");
+      if (!src) {
+        var m = /url\((['"]?)(.*?)\1\)/.exec(li.style.backgroundImage || "");
+        src = m && m[2];
+      }
+      if (!src) continue;
+      var par = document.createElement("div");
+      par.className = "ms-hero-par";
+      par.innerHTML = '<div class="ms-hero-bg"></div><div class="ms-hero-glow"></div>';
+      par.firstChild.style.backgroundImage = "url(" + src + ")";
+      li.insertBefore(par, li.firstChild);
+      layers.push(par);
+      var copy = li.querySelector(".wrapper_inner");
+      if (copy) copies.push(copy);
+    }
+    if (!layers.length) return;
+    wrap.classList.add("ms-parallax");
+
+    var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+    function frame() {
+      cx += (tx - cx) * .09;
+      cy += (ty - cy) * .09;
+      var bg = "translate3d(" + (-cx * 26).toFixed(2) + "px," + (-cy * 16).toFixed(2) + "px,0)";
+      var fg = "translate3d(" + (cx * 12).toFixed(2) + "px," + (cy * 8).toFixed(2) + "px,0)";
+      for (var i = 0; i < layers.length; i++) layers[i].style.transform = bg;
+      for (var j = 0; j < copies.length; j++) copies[j].style.transform = fg;
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > .002 ? requestAnimationFrame(frame) : null;
+    }
+    function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+
+    wrap.addEventListener("mousemove", function (e) {
+      var box = wrap.getBoundingClientRect();
+      tx = (e.clientX - box.left) / box.width - .5;
+      ty = (e.clientY - box.top) / box.height - .5;
+      wrap.style.setProperty("--mx", ((tx + .5) * 100).toFixed(1) + "%");
+      wrap.style.setProperty("--my", ((ty + .5) * 100).toFixed(1) + "%");
+      wrap.classList.add("is-hover");
+      kick();
+    });
+    wrap.addEventListener("mouseleave", function () {
+      tx = 0; ty = 0;
+      wrap.classList.remove("is-hover");
+      kick();
+    });
+  }
+
   function ready(fn) {
     if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn);
   }
   ready(function () {
+    heroParallax();
     prepare(document);
     var pending = null;
     new MutationObserver(function () {

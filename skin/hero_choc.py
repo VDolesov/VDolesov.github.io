@@ -13,16 +13,39 @@ BG_W, BG_H = 2400, 1060
 GROUND = (16, 10, 8)
 
 SLIDES = [
-    ("hero-bg.jpg", os.path.join(OUT, "hero-noir.webp"), (1.04, .84)),
-    ("hero-2.jpg", os.path.join(AI, "801.png"), (1.02, .90)),
-    ("hero-3.jpg", os.path.join(AI, "752.png"), (1.01, .92)),
+    ("hero-bg.jpg", os.path.join(OUT, "hero-noir.webp"), (1.04, .84), 1.0),
+    ("hero-2.jpg", os.path.join(AI, "801.png"), (1.02, .90), 1.0),
+    ("hero-3.jpg", os.path.join(AI, "hero-cake.png"), (1.03, .90), .83),
 ]
 
 
-def backdrop(source, grade):
-    photo = Image.open(source).convert("RGB")
-    k = BG_H / photo.height
-    photo = photo.resize((round(photo.width * k), BG_H), Image.LANCZOS)
+def fit_height(photo, fit):
+    h = round(BG_H * fit)
+    k = h / photo.height
+    body = photo.resize((round(photo.width * k), h), Image.LANCZOS)
+    if h >= BG_H:
+        return body
+    top = (BG_H - h) // 2
+    w = body.width
+
+    def band(strip, height):
+        return strip.resize((w, height), Image.LANCZOS).filter(ImageFilter.GaussianBlur(10))
+
+    out = Image.new("RGB", (w, BG_H))
+    out.paste(band(body.crop((0, 0, w, 6)), top + 40), (0, 0))
+    out.paste(band(body.crop((0, h - 6, w, h)), BG_H - top - h + 40), (0, top + h - 40))
+    mask = Image.new("L", (w, h), 255)
+    ramp = np.array(mask).astype(np.float32)
+    ys = np.arange(h, dtype=np.float32)
+    edge = np.minimum(np.clip(ys / 36, 0, 1), np.clip((h - 1 - ys) / 36, 0, 1))
+    ramp *= edge[:, None]
+    mask = Image.fromarray(ramp.astype(np.uint8), "L")
+    out.paste(body, (0, top), mask)
+    return out
+
+
+def backdrop(source, grade, fit=1.0):
+    photo = fit_height(Image.open(source).convert("RGB"), fit)
     r, g, b = photo.split()
     r = r.point(lambda v: min(255, int(v * grade[0])))
     b = b.point(lambda v: int(v * grade[1]))
@@ -64,10 +87,10 @@ def preview(bg, name):
 def main():
     os.makedirs(OUT, exist_ok=True)
     wanted = sys.argv[1:]
-    for name, source, grade in SLIDES:
+    for name, source, grade, fit in SLIDES:
         if wanted and name not in wanted:
             continue
-        bg = backdrop(source, grade)
+        bg = backdrop(source, grade, fit)
         bg_path = os.path.join(OUT, name)
         bg.save(bg_path, quality=86, optimize=True, progressive=True)
         for path in (bg_path, preview(bg, name)):
