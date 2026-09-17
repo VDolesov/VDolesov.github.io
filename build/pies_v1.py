@@ -10,7 +10,7 @@ SITE = os.path.dirname(HERE)
 SRC = os.path.join(HERE, "sources", "ai", "v1-pies")
 OUT = os.path.join(SITE, "v1", "assets", "products")
 PREVIEW = os.path.join(HERE, "preview-v1-pies")
-VERSION = 7
+VERSION = 8
 
 SIZE = 1024
 SPAN = 0.78
