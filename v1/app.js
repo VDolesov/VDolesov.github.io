@@ -136,15 +136,19 @@
     if (!item || !dialog) return;
     state.dialogProductId = item.id;
     const image = qs("[data-dialog-image]", dialog);
-    image.src = item.image;
-    if (hasResponsiveImage(item.image)) {
-      image.srcset = responsiveSrcset(item.image, item.hd);
-      image.sizes = "(max-width: 760px) 90vw, 520px";
-    } else {
-      image.removeAttribute("srcset");
-      image.removeAttribute("sizes");
-    }
+    const best = item.hd ? largeImage(item.image) : item.image;
+    image.removeAttribute("srcset");
+    image.removeAttribute("sizes");
+    image.classList.remove("is-ready");
+    image.removeAttribute("src");
     image.alt = item.name;
+    const loader = new Image();
+    loader.src = best;
+    loader.decode().catch(() => {}).then(() => {
+      if (state.dialogProductId !== item.id) return;
+      image.src = best;
+      image.classList.add("is-ready");
+    });
     qs("[data-dialog-category]", dialog).textContent = `${CATEGORY_META[item.category].label} · Арт. ${item.article}`;
     qs("[data-dialog-name]", dialog).textContent = item.name;
     qs("[data-dialog-description]", dialog).textContent = item.description;

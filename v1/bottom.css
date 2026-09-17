@@ -77,3 +77,6 @@
 @media (max-width: 520px) {
   .about__content h2 { font-size: clamp(38px, 12vw, 55px); }
 }
+
+.product-dialog__image img { opacity: 0; }
+.product-dialog__image img.is-ready { opacity: 1; transition: opacity .35s ease; }
