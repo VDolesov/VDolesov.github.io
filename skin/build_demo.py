@@ -217,14 +217,15 @@ def photo_url(pid, size=None):
 
 def photo_files():
     data = json.load(open(os.path.join(APP, "build", "catalog.json"), encoding="utf-8"))
-    have = {f.split("-")[0] for f in os.listdir(os.path.join(APP, "assets", "products"))
-            if f.endswith(f"-{SERIES}.webp")}
+    listing = os.listdir(os.path.join(APP, "assets", "products"))
+    have = {f.split("-")[0] for f in listing if f.endswith(f"-{SERIES}.webp")}
+    big = {f.split("-")[0] for f in listing if f.endswith(f"-{SERIES}-2048.webp")}
     files = {}
     for item in data["items"]:
         name = os.path.basename(item.get("image") or "")
         if name and item["id"] in have:
             files[name.lower()] = item["id"]
-    return files, have
+    return files, have, big
 
 
 _PHOTO_ATTR = re.compile(r'((?:src|data-src|href|data-original)=")([^"]*?/([0-9a-f]{32}\.(?:jpe?g|png)))(")', re.I)
@@ -235,7 +236,7 @@ _SRCSET = re.compile(r'\s(?:srcset|data-srcset)="[^"]*"')
 
 
 def swap_photos(html, page_id=None):
-    files, have = photo_files()
+    files, have, big = photo_files()
 
     def attr(m):
         pid = files.get(m.group(3).lower())
@@ -244,8 +245,9 @@ def swap_photos(html, page_id=None):
 
     if page_id in have:
         url = photo_url(page_id)
-        html = re.sub(r'(<a\b[^>]*data-fancybox="gallery"[^>]*\bhref=")[^"]*(")', lambda m: m.group(1) + url + m.group(2), html)
-        html = re.sub(r'(<a\b[^>]*\bhref=")[^"]*("[^>]*data-fancybox="gallery")', lambda m: m.group(1) + url + m.group(2), html)
+        zoom = photo_url(page_id, 2048) if page_id in big else url
+        html = re.sub(r'(<a\b[^>]*data-fancybox="gallery"[^>]*\bhref=")[^"]*(")', lambda m: m.group(1) + zoom + m.group(2), html)
+        html = re.sub(r'(<a\b[^>]*\bhref=")[^"]*("[^>]*data-fancybox="gallery")', lambda m: m.group(1) + zoom + m.group(2), html)
         html = _IMG.sub(lambda m: _SRCSET.sub("", re.sub(r'\s(src|data-src)="[^"]*"', lambda a: f' {a.group(1)}="{url}"', m.group(0)))
                         if "product-detail-gallery" in m.group(0) else m.group(0), html)
 
