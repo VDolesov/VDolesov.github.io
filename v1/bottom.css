@@ -63,3 +63,17 @@
 @media (max-width: 520px) {
   .foot__grid { grid-template-columns: 1fr; }
 }
+
+.breadcrumbs a { padding: 8px 0; }
+.product-card__badge { font-size: 10px; }
+@media (max-width: 800px) {
+  .about { grid-template-columns: minmax(0, 1fr); }
+  .product-card__add { padding: 10px 0 8px; }
+  .foot__col a, .foot__col button, .foot__callback { padding: 6px 0; }
+  .map-store__phone { display: inline-block; padding: 6px 0; }
+  .foot__row a { display: inline-block; padding: 4px 0; }
+  .map-block__more { display: inline-block; padding: 8px 0; }
+}
+@media (max-width: 520px) {
+  .about__content h2 { font-size: clamp(38px, 12vw, 55px); }
+}
