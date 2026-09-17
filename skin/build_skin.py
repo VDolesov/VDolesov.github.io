@@ -1538,6 +1538,7 @@ body .left_block .menu_top_block.menu-type1 {{ padding-top: 6px !important; }}
 .top_slider_wrapp td.text {{ vertical-align: middle !important; }}
 @media (max-width: 767px) {{
   .top_slider_wrapp .slides > li.box {{ min-height: 560px !important; position: relative; background-position: 74% 30% !important; }}
+  .top_slider_wrapp .slides > li.box[data-slide_index="1"] {{ background-position: 84% 30% !important; }}
   .top_slider_wrapp .slides > li.box[data-slide_index="2"] {{ background-position: 96% 30% !important; }}
   .top_slider_wrapp .slides > li .main_info {{ background-image: none !important; }}
   .top_slider_wrapp .slides > li.box::after {{

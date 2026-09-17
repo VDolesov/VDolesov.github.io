@@ -14,9 +14,9 @@ GROUND = (16, 10, 8)
 MODEL_SR = os.path.join(APP, "build", "models", "FSRCNN_x3.pb")
 
 SLIDES = [
-    ("hero-bg.jpg", os.path.join(OUT, "hero-noir.webp"), (1.04, .84), 1.0, .5),
-    ("hero-2.jpg", os.path.join(AI, "801.png"), (1.02, .90), 1.0, .5),
-    ("hero-3.jpg", os.path.join(AI, "hero-cake.png"), (1.02, .92), .9, 1.0),
+    {"name": "hero-bg.jpg", "source": os.path.join(OUT, "hero-noir.webp"), "grade": (1.04, .84)},
+    {"name": "hero-2.jpg", "source": os.path.join(AI, "hero-pie.png"), "grade": (1.02, .92), "fit": .9, "shift": 160},
+    {"name": "hero-3.jpg", "source": os.path.join(AI, "hero-cake.png"), "grade": (1.02, .92), "fit": .9, "vpos": 1.0},
 ]
 
 
@@ -66,14 +66,14 @@ def fit_height(photo, fit, vpos):
     return out
 
 
-def backdrop(source, grade, fit=1.0, vpos=.5):
+def backdrop(source, grade, fit=1.0, vpos=.5, shift=0):
     photo = fit_height(Image.open(source).convert("RGB"), fit, vpos)
     r, g, b = photo.split()
     r = r.point(lambda v: min(255, int(v * grade[0])))
     b = b.point(lambda v: int(v * grade[1]))
     photo = ImageEnhance.Contrast(Image.merge("RGB", (r, g, b))).enhance(1.05)
 
-    x0 = BG_W - photo.width
+    x0 = BG_W - photo.width + shift
     strip = photo.crop((0, 0, 60, BG_H)).resize((BG_W, BG_H), Image.LANCZOS).filter(ImageFilter.GaussianBlur(40))
     canvas = strip.copy()
     canvas.paste(photo, (x0, 0))
@@ -109,10 +109,11 @@ def preview(bg, name):
 def main():
     os.makedirs(OUT, exist_ok=True)
     wanted = sys.argv[1:]
-    for name, source, grade, fit, vpos in SLIDES:
+    for slide in SLIDES:
+        name = slide["name"]
         if wanted and name not in wanted:
             continue
-        bg = backdrop(source, grade, fit, vpos)
+        bg = backdrop(slide["source"], slide["grade"], slide.get("fit", 1.0), slide.get("vpos", .5), slide.get("shift", 0))
         bg_path = os.path.join(OUT, name)
         bg.save(bg_path, quality=86, optimize=True, progressive=True)
         for path in (bg_path, preview(bg, name)):
