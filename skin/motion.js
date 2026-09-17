@@ -69,7 +69,7 @@
       if (!src) continue;
       var par = document.createElement("div");
       par.className = "ms-hero-par";
-      par.innerHTML = '<div class="ms-hero-bg"></div><div class="ms-hero-glow"></div>';
+      par.innerHTML = '<div class="ms-hero-bg"></div>';
       par.firstChild.style.backgroundImage = "url(" + src + ")";
       li.insertBefore(par, li.firstChild);
       layers.push(par);
@@ -95,14 +95,10 @@
       var box = wrap.getBoundingClientRect();
       tx = (e.clientX - box.left) / box.width - .5;
       ty = (e.clientY - box.top) / box.height - .5;
-      wrap.style.setProperty("--mx", ((tx + .5) * 100).toFixed(1) + "%");
-      wrap.style.setProperty("--my", ((ty + .5) * 100).toFixed(1) + "%");
-      wrap.classList.add("is-hover");
       kick();
     });
     wrap.addEventListener("mouseleave", function () {
       tx = 0; ty = 0;
-      wrap.classList.remove("is-hover");
       kick();
     });
   }

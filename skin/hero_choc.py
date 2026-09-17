@@ -11,21 +11,43 @@ AI = os.path.join(APP, "build", "sources", "ai")
 
 BG_W, BG_H = 2400, 1060
 GROUND = (16, 10, 8)
+MODEL_SR = os.path.join(APP, "build", "models", "FSRCNN_x3.pb")
 
 SLIDES = [
-    ("hero-bg.jpg", os.path.join(OUT, "hero-noir.webp"), (1.04, .84), 1.0),
-    ("hero-2.jpg", os.path.join(AI, "801.png"), (1.02, .90), 1.0),
-    ("hero-3.jpg", os.path.join(AI, "hero-cake.png"), (1.03, .90), .83),
+    ("hero-bg.jpg", os.path.join(OUT, "hero-noir.webp"), (1.04, .84), 1.0, .5),
+    ("hero-2.jpg", os.path.join(AI, "801.png"), (1.02, .90), 1.0, .5),
+    ("hero-3.jpg", os.path.join(AI, "hero-cake.png"), (1.02, .92), .9, 1.0),
 ]
 
 
-def fit_height(photo, fit):
+def enlarge(photo, height):
+    size = (round(photo.width * height / photo.height), height)
+    if photo.height >= height:
+        return photo.resize(size, Image.LANCZOS)
+    try:
+        import shutil
+        import tempfile
+
+        import cv2
+    except ImportError:
+        return photo.resize(size, Image.LANCZOS)
+    model = os.path.join(tempfile.gettempdir(), os.path.basename(MODEL_SR))
+    if not os.path.exists(model):
+        shutil.copyfile(MODEL_SR, model)
+    sr = cv2.dnn_superres.DnnSuperResImpl_create()
+    sr.readModel(model)
+    sr.setModel("fsrcnn", 3)
+    big = sr.upsample(cv2.cvtColor(np.array(photo), cv2.COLOR_RGB2BGR))
+    big = Image.fromarray(cv2.cvtColor(big, cv2.COLOR_BGR2RGB))
+    return big.resize(size, Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=1.0, percent=24, threshold=3))
+
+
+def fit_height(photo, fit, vpos):
     h = round(BG_H * fit)
-    k = h / photo.height
-    body = photo.resize((round(photo.width * k), h), Image.LANCZOS)
+    body = enlarge(photo, h)
     if h >= BG_H:
         return body
-    top = (BG_H - h) // 2
+    top = round((BG_H - h) * vpos)
     w = body.width
 
     def band(strip, height):
@@ -44,8 +66,8 @@ def fit_height(photo, fit):
     return out
 
 
-def backdrop(source, grade, fit=1.0):
-    photo = fit_height(Image.open(source).convert("RGB"), fit)
+def backdrop(source, grade, fit=1.0, vpos=.5):
+    photo = fit_height(Image.open(source).convert("RGB"), fit, vpos)
     r, g, b = photo.split()
     r = r.point(lambda v: min(255, int(v * grade[0])))
     b = b.point(lambda v: int(v * grade[1]))
@@ -87,10 +109,10 @@ def preview(bg, name):
 def main():
     os.makedirs(OUT, exist_ok=True)
     wanted = sys.argv[1:]
-    for name, source, grade, fit in SLIDES:
+    for name, source, grade, fit, vpos in SLIDES:
         if wanted and name not in wanted:
             continue
-        bg = backdrop(source, grade, fit)
+        bg = backdrop(source, grade, fit, vpos)
         bg_path = os.path.join(OUT, name)
         bg.save(bg_path, quality=86, optimize=True, progressive=True)
         for path in (bg_path, preview(bg, name)):
