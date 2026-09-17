@@ -5,12 +5,15 @@ import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 from rembg import new_session, remove
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from photos_v9 import natural
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.dirname(HERE)
 SRC = os.path.join(HERE, "sources", "ai", "v1-pies")
 OUT = os.path.join(SITE, "v1", "assets", "products")
 PREVIEW = os.path.join(HERE, "preview-v1-pies")
-VERSION = 8
+VERSION = 9
 
 SIZE = 1024
 SPAN = 0.78
@@ -35,7 +38,12 @@ def cutout(im):
                      alpha_matting_erode_size=8)
         a = np.array(cut.getchannel("A"))
         alpha = a if alpha is None else np.maximum(alpha, a)
-    cut = im.convert("RGBA")
+    graded = Image.blend(im, natural(im), .3)
+    graded = ImageEnhance.Contrast(graded).enhance(1.06)
+    graded = ImageEnhance.Color(graded).enhance(1.08)
+    r, g, b = graded.split()
+    graded = Image.merge("RGB", (r.point(lambda v: min(255, int(v * 1.02))), g, b.point(lambda v: int(v * .93))))
+    cut = graded.convert("RGBA")
     cut.putalpha(Image.fromarray(alpha, "L"))
     box = cut.getbbox()
     return cut.crop(box) if box else cut
@@ -55,7 +63,7 @@ def place(product, span=SPAN):
     k = (SIZE * span) / max(pw, ph)
     nw, nh = max(1, int(pw * k)), max(1, int(ph * k))
     product = product.resize((nw, nh), Image.LANCZOS)
-    product = product.filter(ImageFilter.UnsharpMask(radius=2, percent=45, threshold=2))
+    product = product.filter(ImageFilter.UnsharpMask(radius=2, percent=30, threshold=3))
     px, py = (SIZE - nw) // 2, int(SIZE * BASE_LINE) - nh
 
     shadow = Image.new("L", (SIZE, SIZE), 0)
