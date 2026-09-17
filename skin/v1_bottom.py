@@ -123,9 +123,8 @@ def patch(path, with_map):
         html = html.replace('<link rel="stylesheet" href="/v1/pages.css?v=9">',
                             '<link rel="stylesheet" href="/v1/pages.css?v=9">\n'
                             f'  <link rel="stylesheet" href="/v1/bottom.css?v={VERSION}">', 1)
-        html = html.replace('<script src="/v1/app.js?v=9" defer></script>',
-                            '<script src="/v1/app.js?v=9" defer></script>\n'
-                            f'  <script src="/v1/bottom.js?v={VERSION}" defer></script>', 1)
+        html = re.sub(r'(<script src="/v1/app\.js\?v=\d+" defer></script>)',
+                      lambda m: m.group(1) + f'\n  <script src="/v1/bottom.js?v={VERSION}" defer></script>', html, count=1)
     html = re.sub(r"/v1/bottom\.(css|js)\?v=\d+", lambda m: f"/v1/bottom.{m.group(1)}?v={VERSION}", html)
     if with_map:
         html = re.sub(r'\n\s*<section class="map-block".*?</section>\n', "\n", html, count=1, flags=re.S)

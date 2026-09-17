@@ -24,7 +24,8 @@
   const money = value => new Intl.NumberFormat("ru-RU").format(value) + " ₽";
   const hasResponsiveImage = image => /-v\d+\.webp$/.test(image);
   const smallImage = image => hasResponsiveImage(image) ? image.replace(/\.webp$/, "-640.webp") : image;
-  const responsiveSrcset = image => `${smallImage(image)} 640w, ${image} 1024w`;
+  const largeImage = image => image.replace(/\.webp$/, "-2048.webp");
+  const responsiveSrcset = (image, hd) => `${smallImage(image)} 640w, ${image} 1024w${hd ? `, ${largeImage(image)} 2048w` : ""}`;
 
   function readStore(key, fallback) {
     try {
@@ -61,7 +62,7 @@
       <article class="product-card${featured ? " reveal is-visible" : ""}" data-card-id="${item.id}">
         <div class="product-card__visual">
           <button class="product-card__image" type="button" data-quick-view="${item.id}" aria-label="Подробнее: ${escapeHtml(item.name)}">
-            <img src="${item.image}"${responsive ? ` srcset="${responsiveSrcset(item.image)}" sizes="${sizes}"` : ""} alt="${escapeHtml(item.name)}" width="1024" height="1024" loading="lazy" decoding="async">
+            <img src="${item.image}"${responsive ? ` srcset="${responsiveSrcset(item.image, item.hd)}" sizes="${sizes}"` : ""} alt="${escapeHtml(item.name)}" width="1024" height="1024" loading="lazy" decoding="async">
           </button>
           ${item.badge ? `<span class="product-card__badge">${escapeHtml(item.badge)}</span>` : ""}
           <button class="product-card__favorite${isFavorite ? " is-active" : ""}" type="button" data-favorite="${item.id}" aria-label="${isFavorite ? "Убрать из избранного" : "Добавить в избранное"}" aria-pressed="${isFavorite}">
@@ -136,6 +137,13 @@
     state.dialogProductId = item.id;
     const image = qs("[data-dialog-image]", dialog);
     image.src = item.image;
+    if (hasResponsiveImage(item.image)) {
+      image.srcset = responsiveSrcset(item.image, item.hd);
+      image.sizes = "(max-width: 760px) 90vw, 520px";
+    } else {
+      image.removeAttribute("srcset");
+      image.removeAttribute("sizes");
+    }
     image.alt = item.name;
     qs("[data-dialog-category]", dialog).textContent = `${CATEGORY_META[item.category].label} · Арт. ${item.article}`;
     qs("[data-dialog-name]", dialog).textContent = item.name;

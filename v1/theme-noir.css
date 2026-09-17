@@ -48,6 +48,9 @@ body.theme-noir { background: #120a11; }
   background-image: url("assets/hero-noir.webp");
   background-position: center center;
 }
+@media (min-width: 1700px) {
+  .theme-noir .hero__media { background-image: url("assets/hero-noir-2560.webp"); }
+}
 
 .theme-noir .hero__shade {
   background:

@@ -27,6 +27,9 @@
                           "772", "773", "774", "775", "776",
                           "801", "802", "803"]);
   const V9_IDS = new Set(["801", "802", "803"]);
+  const HD_IDS = new Set(["742", "743", "744", "745", "746", "747", "748", "749", "751", "756", "757", "760", "761",
+                          "762", "763", "764", "765", "768", "769", "770", "771", "775", "776", "778", "780", "781",
+                          "782", "783", "801", "802", "803"]);
 
   const product = (id, category, name, price, unit, badge = "") => ({
     id: String(id),
@@ -37,6 +40,7 @@
     badge,
     article: `20${id}`,
     image: `/v1/assets/products/${category}-${id}-v${V9_IDS.has(String(id)) ? 9 : V6_IDS.has(String(id)) ? 6 : 5}.webp`,
+    hd: HD_IDS.has(String(id)),
     description: CATEGORY_META[category].description,
     availability: ["cakes", "pies"].includes(category) ? "Предзаказ от 24 часов" : "Наличие уточнит менеджер"
   });
