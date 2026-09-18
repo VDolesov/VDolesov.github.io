@@ -183,9 +183,9 @@
     qs("[data-dialog-description]", dialog).textContent = item.description;
     qs("[data-dialog-price]", dialog).textContent = money(item.price);
     qs("[data-dialog-unit]", dialog).textContent = `Цена за ${item.unit}`;
-    const tags = qsa(".product-dialog__tags span", dialog);
-    if (tags[0]) tags[0].textContent = item.availability;
-    if (tags[1]) tags[1].textContent = "Собственное производство";
+    const tagBox = qs(".product-dialog__tags", dialog);
+    if (tagBox) tagBox.innerHTML = [item.availability, item.weight ? `Вес ${item.weight}` : "", "Собственное производство"]
+      .filter(Boolean).map(text => `<span>${escapeHtml(text)}</span>`).join("");
     qs("[data-dialog-qty]", dialog).value = 1;
     dialog.showModal();
   }
