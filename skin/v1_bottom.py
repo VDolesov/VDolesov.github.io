@@ -4,7 +4,7 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 V1 = os.path.join(os.path.dirname(HERE), "v1")
-VERSION = "9"
+VERSION = "10"
 
 STORES = [
     ("51.610035,46.000893", "ТЦ «Солнечный», г. Саратов, ул. Тархова 29А/1"),
@@ -17,85 +17,6 @@ STORES = [
 ]
 PHONE = ("+78452473569", "+7 (8452) 47-35-69")
 DEMO_NOTE = "В демо-версии формы не отправляются — позвоните нам: +7 (8452) 47-35-69"
-
-CONTACT = ("Елена Михайловна Сидорова", "info@mirsladostey64.ru", "+7 (8452) 47-35-69", "+78452473569")
-
-COMMON_REQUIREMENTS = [
-    "знание и соблюдение санитарных норм",
-    "добросовестное выполнение должностных обязанностей",
-    "медицинская книжка или готовность оформить её в первый месяц работы",
-]
-COMMON_TERMS = [
-    "стабильная выплата зарплаты два раза в месяц",
-    "официальное трудоустройство по ТК РФ",
-    "бесплатное питание для сотрудников",
-    "дружный коллектив",
-]
-
-VACANCIES = [
-    {
-        "title": "Наборщик готовой продукции",
-        "meta": "Ночная смена · график 5/2 с 20:00 до 6:00",
-        "salary": "от 25 000 ₽",
-        "intro": "На склад готовой продукции требуется наборщик.",
-        "duties": ["набор готовой продукции по накладным и отправка её в торговую сеть",
-                   "контроль качества готовой продукции и упаковки",
-                   "соблюдение технологических инструкций"],
-        "requirements": ["опыт работы не важен"] + COMMON_REQUIREMENTS,
-        "terms": ["график работы 5/2 с 20:00 до 6:00"] + COMMON_TERMS,
-    },
-    {
-        "title": "Кондитер в слоечный цех",
-        "meta": "Ночная смена · график 5/2 с 18:00 до 5:00",
-        "salary": "35 000 ₽",
-        "intro": "Приглашаем на работу кондитера слоечного цеха.",
-        "duties": ["изготовление слоёных изделий по технологическим картам на современном оборудовании",
-                   "контроль качества сырья, полуфабрикатов и готовой продукции",
-                   "соблюдение технологических инструкций"],
-        "requirements": ["опыт работы не менее одного года"] + COMMON_REQUIREMENTS,
-        "terms": ["график работы 5/2 с 18:00 до 5:00"] + COMMON_TERMS,
-    },
-    {
-        "title": "Повар-универсал",
-        "meta": "Ночная смена · график 5/2 с 18:00 до 5:00",
-        "salary": "37 000 ₽",
-        "intro": "Приглашаем на работу повара в ночную смену.",
-        "duties": ["изготовление горячих блюд по технологическим картам",
-                   "контроль качества сырья, полуфабрикатов и готовой продукции",
-                   "соблюдение технологических инструкций"],
-        "requirements": ["опыт работы не менее одного года"] + COMMON_REQUIREMENTS,
-        "terms": ["график работы 5/2 с 18:00 до 5:00"] + COMMON_TERMS,
-    },
-]
-
-
-def items(values):
-    return "".join(f"<li>{v}</li>" for v in values)
-
-
-def vacancy(i, v):
-    return f'''        <article class="vacancy reveal">
-          <div class="vacancy__head">
-            <span class="vacancy__index">{i:02d}</span>
-            <div>
-              <h3>{v["title"]}</h3>
-              <p>{v["meta"]}</p>
-            </div>
-            <strong>{v["salary"]}</strong>
-          </div>
-          <details class="vacancy__details">
-            <summary>Обязанности, требования, условия<span aria-hidden="true"></span></summary>
-            <div class="vacancy__body">
-              <p>{v["intro"]}</p>
-              <h4>Обязанности</h4><ul>{items(v["duties"])}</ul>
-              <h4>Требования</h4><ul>{items(v["requirements"])}</ul>
-              <h4>Условия</h4><ul>{items(v["terms"])}</ul>
-            </div>
-          </details>
-        </article>'''
-
-
-
 
 def store_items():
     out = []
@@ -127,20 +48,6 @@ MAP_BLOCK = f'''
     </section>
 '''
 
-VACANCIES_BLOCK = f'''
-    <section class="vacancies" id="vacancies" aria-labelledby="vacanciesTitle">
-      <div class="shell">
-        <div class="vacancies__head">
-          <h2 id="vacanciesTitle">Вакансии</h2>
-          <p class="vacancies__contact">Контактное лицо — {CONTACT[0]}. Резюме на <a href="mailto:{CONTACT[1]}">{CONTACT[1]}</a>, вопросы по телефону <a href="tel:{CONTACT[3]}">{CONTACT[2]}</a>.</p>
-        </div>
-        <div class="vacancy-list">
-{chr(10).join(vacancy(i + 1, v) for i, v in enumerate(VACANCIES))}
-        </div>
-      </div>
-    </section>
-'''
-
 FOOTER = f'''<footer class="foot" id="footer">
     <div class="shell">
       <div class="foot__grid">
@@ -155,7 +62,7 @@ FOOTER = f'''<footer class="foot" id="footer">
           <a href="/v1/about/">О компании</a>
           <a href="/v1/contacts/">Контакты</a>
           <a href="/v1/contacts/#storesTitle">Магазины</a>
-          <a href="/v1/#vacancies">Вакансии</a>
+          <a href="#" data-demo-note="Раздел «Вакансии» пока пуст — наполним, когда появятся открытые позиции">Вакансии</a>
           <a href="mailto:mirslad49@mail.ru">Написать нам</a>
         </div>
         <div class="foot__col">
@@ -221,7 +128,7 @@ def patch(path, with_map):
     html = re.sub(r"/v1/bottom\.(css|js)\?v=\d+", lambda m: f"/v1/bottom.{m.group(1)}?v={VERSION}", html)
     if with_map:
         html = re.sub(r'\n\s*<section class="(?:map-block|vacancies)".*?</section>\n', "\n", html, count=2, flags=re.S)
-        html = html.replace("  </main>", MAP_BLOCK + VACANCIES_BLOCK + "  </main>", 1)
+        html = html.replace("  </main>", MAP_BLOCK + "  </main>", 1)
     if html != original:
         io.open(path, "w", encoding="utf-8", newline="\n").write(html)
         return True
