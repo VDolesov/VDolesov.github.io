@@ -4,7 +4,7 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 V1 = os.path.join(os.path.dirname(HERE), "v1")
-VERSION = "4"
+VERSION = "5"
 
 STORES = [
     ("51.610035,46.000893", "ТЦ «Солнечный», г. Саратов, ул. Тархова 29А/1"),
