@@ -33,6 +33,21 @@ def product(pid):
     return cutout(pid)
 
 
+LAYOUT = json.load(open(os.path.join(HERE, "v1_layout.json"), encoding="utf-8"))
+DEFAULTS = {"pastry": (.60, .80), "pies": (.76, .89)}
+
+
+def placement(name, cut):
+    box = LAYOUT.get(name)
+    if not box:
+        span, base = DEFAULTS.get(name.split("-")[0], (.80, .866))
+        return span, base, .5
+    x0, x1, y0, y1 = box
+    pw, ph = cut.size
+    k = min((x1 - x0) / pw, (y1 - y0) / ph)
+    return k * max(pw, ph), y1, (x0 + x1) / 2
+
+
 def save(im, name):
     os.makedirs(PREVIEW, exist_ok=True)
     base = os.path.join(OUT, f"{name}-v{VERSION}")
@@ -50,8 +65,9 @@ def main(wanted):
             continue
         name = f"{categories[pid]}-{pid}"
         try:
-            cut, span, kind = product(pid)
-            im = pies_v1.finish(pies_v1.place(grade(up_rgba(cut)), span))
+            cut, _, kind = product(pid)
+            span, base, center = placement(name, cut)
+            im = pies_v1.finish(pies_v1.place(grade(up_rgba(cut)), span, base, center))
             save(im, name)
             print(f"  {name}: {kind}", flush=True)
         except Exception as exc:

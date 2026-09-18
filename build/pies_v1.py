@@ -57,14 +57,14 @@ def background():
     return Image.fromarray((light + (shade - light) * (d ** 1.35)[..., None]).astype(np.uint8), "RGB")
 
 
-def place(product, span=SPAN):
+def place(product, span=SPAN, base=BASE_LINE, center=.5):
     canvas = background()
     pw, ph = product.size
     k = (SIZE * span) / max(pw, ph)
     nw, nh = max(1, int(pw * k)), max(1, int(ph * k))
     product = product.resize((nw, nh), Image.LANCZOS)
     product = product.filter(ImageFilter.UnsharpMask(radius=2, percent=30, threshold=3))
-    px, py = (SIZE - nw) // 2, int(SIZE * BASE_LINE) - nh
+    px, py = int(SIZE * center - nw / 2), int(SIZE * base) - nh
 
     shadow = Image.new("L", (SIZE, SIZE), 0)
     ImageDraw.Draw(shadow).ellipse(
