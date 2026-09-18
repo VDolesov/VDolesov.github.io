@@ -87,15 +87,44 @@
     grid.innerHTML = featured.map(item => productCardMarkup(item, true)).join("");
   }
 
+  const LAYOUT = { q: "й", w: "ц", e: "у", r: "к", t: "е", y: "н", u: "г", i: "ш", o: "щ", p: "з", "[": "х", "]": "ъ",
+    a: "ф", s: "ы", d: "в", f: "а", g: "п", h: "р", j: "о", k: "л", l: "д", ";": "ж", "'": "э",
+    z: "я", x: "ч", c: "с", v: "м", b: "и", n: "т", m: "ь", ",": "б", ".": "ю" };
+  const normalize = value => String(value).toLocaleLowerCase("ru").replace(/ё/g, "е").replace(/[^a-zа-я0-9\[\];',.]+/g, " ").trim();
+  const switchLayout = value => value.replace(/[a-z\[\];',.]/g, char => LAYOUT[char] || char);
+  const closeEnough = (a, b) => {
+    if (a === b) return true;
+    if (Math.abs(a.length - b.length) > 1) return false;
+    let i = 0, j = 0, edits = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) { i++; j++; continue; }
+      if (++edits > 1) return false;
+      if (a.length > b.length) i++; else if (b.length > a.length) j++; else { i++; j++; }
+    }
+    return edits + (a.length - i) + (b.length - j) <= 1;
+  };
+  const wordMatches = (word, term) => {
+    if (word.startsWith(term)) return true;
+    if (term.length < 5 || /^\d+$/.test(term)) return false;
+    return [term.length - 1, term.length, term.length + 1].some(len => len <= word.length && closeEnough(word.slice(0, len), term));
+  };
+  const searchWords = item => normalize(`${item.name} ${CATEGORY_META[item.category].label} арт ${item.article}`).split(" ");
+  const matchesTerms = (item, terms) => terms.every(term => searchWords(item).some(word => wordMatches(word, term)));
+
+  function searchProducts(items, rawQuery) {
+    const query = normalize(rawQuery);
+    if (!query) return items;
+    const terms = query.split(" ");
+    const found = items.filter(item => matchesTerms(item, terms));
+    if (found.length || !/[a-z]/.test(query)) return found;
+    const switched = switchLayout(query).split(" ");
+    return items.filter(item => matchesTerms(item, switched));
+  }
+
   function getFilteredProducts() {
-    const query = state.query.trim().toLocaleLowerCase("ru");
-    let result = PRODUCTS.filter(item => {
-      const matchesCategory = state.category === "all"
-        || (state.category === "favorites" && state.favorites.has(item.id))
-        || item.category === state.category;
-      const matchesQuery = !query || `${item.name} ${CATEGORY_META[item.category].label}`.toLocaleLowerCase("ru").includes(query);
-      return matchesCategory && matchesQuery;
-    });
+    let result = searchProducts(PRODUCTS.filter(item => state.category === "all"
+      || (state.category === "favorites" && state.favorites.has(item.id))
+      || item.category === state.category), state.query);
 
     if (state.sort === "price-asc") result.sort((a, b) => a.price - b.price);
     if (state.sort === "price-desc") result.sort((a, b) => b.price - a.price);
