@@ -97,3 +97,7 @@
   .product-dialog__image { padding: 16px 16px 0; }
   .product-dialog__image img[src*="-v"] { max-height: none; }
 }
+
+@media (min-width: 2600px) {
+  .theme-noir .hero__media, .page-hero__media { left: calc(50% - 1280px); right: calc(50% - 1280px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+}
