@@ -3492,8 +3492,8 @@ body .left_block .menu_top_block.menu-type1 { padding-top: 6px !important; }
 .top_slider_wrapp .slides > li.box, .top_slider_wrapp .slides > li .main_info {
   background-position: 68% 50% !important; background-size: cover !important;
 }
-.top_slider_wrapp .slides > li.box { min-height: 640px !important; }
-.top_slider_wrapp .slides > li .wrapper_inner, .top_slider_wrapp table, .top_slider_wrapp td.text { min-height: 640px !important; }
+.top_slider_wrapp .slides > li.box { min-height: max(640px, 33.34vw) !important; }
+.top_slider_wrapp .slides > li .wrapper_inner, .top_slider_wrapp table, .top_slider_wrapp td.text { min-height: max(640px, 33.34vw) !important; }
 .top_slider_wrapp .slides > li .wrapper_inner { padding-top: 0 !important; }
 .top_slider_wrapp .flexslider, .top_slider_wrapp .flexslider .slides > li,
 .top_slider_wrapp .flexslider .slides > li td, .top_slider_wrapp .flexslider .slides > li tr { height: auto !important; }
