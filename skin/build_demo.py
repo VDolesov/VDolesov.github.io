@@ -232,7 +232,7 @@ _PHOTO_ATTR = re.compile(r'((?:src|data-src|href|data-original)=")([^"]*?/([0-9a
 _CARD_IMG = re.compile(r'(<a href="/catalog/[a-z_]+/(\d+)/"[^>]*class="thumb[^"]*"[^>]*>)(.*?)(</a>)', re.S)
 _SECTION_IMG = re.compile(r'(<a href="/catalog/([a-z_]+)/"[^>]*class="thumb[^"]*"[^>]*>)(.*?)(</a>)', re.S)
 _IMG = re.compile(r"<img\b[^>]*>")
-_SRCSET = re.compile(r'\s(?:srcset|data-srcset)="[^"]*"')
+_SRCSET = re.compile(r'\s(?:srcset|data-srcset|sizes)="[^"]*"')
 
 
 def swap_photos(html, page_id=None):
