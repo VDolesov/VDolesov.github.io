@@ -1693,7 +1693,7 @@ body .top_slider_wrapp .flex-direction-nav .flex-next::after {{ transform: trans
 body .top_slider_wrapp .flexslider:hover .flex-direction-nav a, body .top_slider_wrapp .flex-direction-nav a:hover {{ opacity: 1 !important; }}
 body .top_slider_wrapp .flex-direction-nav a:hover {{ background: {INK} !important; transform: scale(1.05); }}
 body .top_slider_wrapp .flex-direction-nav > li {{ position: static !important; margin: 0 !important; }}
-body .top_slider_wrapp .flex-direction-nav a {{ top: auto !important; bottom: 32px !important; margin: 0 !important; }}
+body .top_slider_wrapp .flex-direction-nav a {{ top: auto !important; bottom: 32px !important; margin: 0 !important; z-index: 6 !important; }}
 body .top_slider_wrapp .flex-direction-nav .flex-prev {{ left: auto !important; right: 96px !important; }}
 body .top_slider_wrapp .flex-direction-nav .flex-next {{ right: 36px !important; }}
 @media (max-width: 767px) {{
