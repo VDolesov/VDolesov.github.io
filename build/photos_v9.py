@@ -17,9 +17,9 @@ SERIES = "v9"
 
 SPAN = .78
 BASE_LINE = .84
-GROUND = (16, 10, 8)
-LIT = (74, 46, 33)
-POOL = (92, 62, 44)
+GROUND = (34, 23, 17)
+LIT = (100, 66, 47)
+POOL = (116, 81, 58)
 
 
 def scene():
