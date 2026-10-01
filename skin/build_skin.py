@@ -1374,6 +1374,7 @@ body .catalog_item .item-title a::first-letter {{ text-transform: uppercase !imp
 .page-top .topic, h1#pagetitle, .detail .topic h1 {{ text-transform: lowercase !important; }}
 .page-top .topic::first-letter, h1#pagetitle::first-letter {{ text-transform: uppercase !important; }}
 .drag-block.SALE:not(:has(*)), .drag-block.REVIEWS:not(:has(*)) {{ display: none !important; }}
+body .drag-block.COMPANY_TEXT {{ display: none !important; }}
 
 .item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container,
 .catalog_item .image_wrapper_block, .product-item-image-wrapper,
