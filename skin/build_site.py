@@ -15,7 +15,7 @@ sys.path.insert(0, HERE)
 
 from build_demo import (BANNER, BANNER_COPY, IMAGES, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
                         SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
-                        expand_slides, swap_banner, swap_photos, unlazy)
+                        add_faq, expand_slides, swap_banner, swap_photos, unlazy)
 
 HOSTS = {"www.mirsladostey164.ru", "mirsladostey164.ru"}
 SEEDS = ["/", "/catalog/", "/basket/", "/personal/", "/search/", "/contacts/",
@@ -173,6 +173,7 @@ def build_page(path, html, ids, version):
     html = localize_links(html, path)
     html = absolutize_loads(html)
     html = swap_photos(html, page_id(path))
+    html = add_faq(html)
     html = _COUNTER.sub("", html)
     html = _BEACON.sub("", html)
 
@@ -283,6 +284,7 @@ def refresh(html, path=""):
     html = re.sub(r"<script>\n\(function \(\) \{\n  var ids = .*?</script>",
                   lambda m: photo_script(path, product_ids()).strip(), html, count=1, flags=re.S)
     html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
+    html = add_faq(html)
     return html
 
 

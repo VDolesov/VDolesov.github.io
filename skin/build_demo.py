@@ -129,6 +129,50 @@ def expand_slides(html):
     return _SLIDE_LIST.sub(build, html, count=1)
 
 
+FAQ = [
+    ("Когда заказ считается оформленным?",
+     "После заявки менеджер проверит наличие, согласует дату, время и итоговую стоимость. "
+     "Заказ считается подтверждённым после разговора с менеджером."),
+    ("За сколько заказывать праздничный торт?",
+     "Чем сложнее оформление и больше вес, тем раньше стоит обсудить заказ. Назовите дату, количество гостей "
+     "и желаемый вкус — менеджер предложит доступный срок."),
+    ("Можно ли изменить состав?",
+     "Пожелания можно указать в комментарии. Возможность замены ингредиентов зависит от рецептуры "
+     "и подтверждается кондитером до оформления."),
+    ("Как уточнить аллергены и хранение?",
+     "Сообщите менеджеру об аллергиях и ограничениях заранее. Точный состав, срок и температуру хранения "
+     "конкретного изделия уточняйте при подтверждении заказа."),
+]
+FAQ_ITEMS = "".join(
+    f'        <details class="ms-faq__item"><summary>{q}<i aria-hidden="true"></i></summary>'
+    f'<div class="ms-faq__answer">{a}</div></details>\n' for q, a in FAQ)
+FAQ_BLOCK = (
+    '<div class="drag-block container ms-faq-block" data-order="7">\n'
+    '  <div class="maxwidth-theme">\n'
+    '    <div class="ms-faq">\n'
+    '      <div class="ms-faq__intro">\n'
+    '        <span class="ms-faq__eyebrow">Перед заказом</span>\n'
+    '        <h3 class="ms-faq__title">Важные детали</h3>\n'
+    '        <p class="ms-faq__lead">Коротко о подтверждении, индивидуальных заказах и составе. '
+    'Если ситуация особенная, лучше сразу рассказать о ней менеджеру.</p>\n'
+    '      </div>\n'
+    '      <div class="ms-faq__list">\n'
+    f'{FAQ_ITEMS}'
+    '      </div>\n'
+    '    </div>\n'
+    '  </div>\n'
+    '</div>\n')
+_TIZERS = re.compile(r'<div class="drag-block container TIZERS[^"]*"')
+_FAQ_BLOCK = re.compile(r'<div class="drag-block container ms-faq-block".*?</div>\n(?=<div class="drag-block container TIZERS)', re.S)
+
+
+def add_faq(html):
+    html = _FAQ_BLOCK.sub("", html)
+    if not _TIZERS.search(html):
+        return html
+    return _TIZERS.sub(lambda m: FAQ_BLOCK + m.group(0), html, count=1)
+
+
 IMAGES = {
     "https://www.mirsladostey164.ru/images/contacts_image.jpg": "/assets/about.jpg?v=2",
 }
