@@ -34,6 +34,7 @@ def product(pid):
 
 
 LAYOUT = json.load(open(os.path.join(HERE, "v1_layout.json"), encoding="utf-8"))
+CATEGORIES = json.load(open(os.path.join(HERE, "v1_categories.json"), encoding="utf-8"))
 DEFAULTS = {"pastry": (.60, .80), "pies": (.76, .89)}
 
 
