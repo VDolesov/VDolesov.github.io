@@ -3337,6 +3337,7 @@ body .catalog_item .item-title a::first-letter { text-transform: uppercase !impo
 .page-top .topic::first-letter, h1#pagetitle::first-letter { text-transform: uppercase !important; }
 .drag-block.SALE:not(:has(*)), .drag-block.REVIEWS:not(:has(*)) { display: none !important; }
 body .drag-block.COMPANY_TEXT { display: none !important; }
+body .logo-row .top-description, body .logo-row .top-description.addr { font-size: 15px !important; line-height: 22px !important; color: rgba(243, 232, 216, .82) !important; opacity: 1 !important; }
 
 .item_block .catalog_item, .catalog_item_wrapp .catalog_item, .product-item-container,
 .catalog_item .image_wrapper_block, .product-item-image-wrapper,
