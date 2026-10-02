@@ -1449,6 +1449,16 @@ body .bottom-info .ordered-block.goods {{ margin-top: 40px !important; }}
 
 body .MAPS [class*="ground-pane"] {{ filter: grayscale(1) invert(.92) brightness(.72) contrast(.92) sepia(.35); }}
 body .MAPS .contacts_map, body .MAPS .map_type_2 .items {{ background: {PANEL} !important; }}
+body .ymaps-b-balloon, body .ymaps-b-balloon::after, body .ymaps-b-balloon::before,
+body [class*="-balloon__layout"], body [class*="-balloon__content"], body [class*="-balloon__tail"] {{
+  background: {CARD} !important; color: {INK} !important; border-radius: 0 !important; box-shadow: none !important;
+}}
+body .ymaps-b-balloon {{ border: 1px solid {GOLD_LINE} !important; }}
+body [class*="-balloon"] .map_info_store .title a, body [class*="-balloon"] .map_info_store a.dark_link {{ color: {INK} !important; }}
+body [class*="-balloon"] .map_info_store .title a:hover, body [class*="-balloon"] .map_info_store a:hover {{ color: {GOLD} !important; }}
+body [class*="-balloon"] .map_info_store .title-prop {{ color: rgba(243, 232, 216, .55) !important; }}
+body .ymaps-b-balloon .ymaps-b-balloon__close svg path {{ fill: {INK} !important; }}
+body .ymaps-b-balloon .ymaps-b-balloon__close svg {{ opacity: .8 !important; }}
 body .MAPS {{ padding-bottom: clamp(40px, 4vw, 64px) !important; }}
 footer .btn, footer span.btn {{ border-radius: 0 !important; }}
 body .footer-inner .footer_top {{ padding: 48px 0 36px !important; }}
