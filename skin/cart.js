@@ -57,6 +57,10 @@
       if (countBox) countBox.classList.toggle("empty_items", n === 0);
       if (el.getAttribute("title")) el.setAttribute("title", n ? "В корзине: " + n : "Корзина пуста");
     }
+    var links = document.querySelectorAll("a.basket-link.basket, a.basket-link.in-cart");
+    for (var k = 0; k < links.length; k++) {
+      links[k].setAttribute("title", n ? "В корзине: " + n : "Корзина пуста");
+    }
   }
 
   var FAV_KEY = "ms_fav";

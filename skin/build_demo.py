@@ -26,6 +26,7 @@ li[data-code="NEW"], li[data-code="RECOMMEND"],
 .basket_hover_block.loading_block,
 .loading_block_content { background-image: none !important; }
 .wrap_basket .basket_hover_block { display: none !important; }
+.basket_wrapp .wrap_cont .basket_sort { display: none !important; }
 .filter-panel.sort_header, .filter-panel-wrapper, #mobilefilter { display: none !important; }
 .CATALOG_TAB .tabs_wrapper { display: none !important; }
 </style>
