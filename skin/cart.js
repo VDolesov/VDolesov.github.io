@@ -10,7 +10,15 @@
   var SHOP_PHONE = "+7 (8452) 47-35-69";
 
   function load() {
-    try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; }
+    var raw = {};
+    try { raw = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; }
+    var cart = {}, dropped = false;
+    Object.keys(raw).forEach(function (id) {
+      var qty = parseInt(raw[id], 10);
+      if (PRODUCTS[id] && qty > 0) cart[id] = qty; else dropped = true;
+    });
+    if (dropped) { try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch (e) {} }
+    return cart;
   }
   function save(cart) {
     try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch (e) {}
@@ -65,7 +73,11 @@
 
   var FAV_KEY = "ms_fav";
   function loadFav() {
-    try { return JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); } catch (e) { return []; }
+    var raw = [];
+    try { raw = JSON.parse(localStorage.getItem(FAV_KEY) || "[]") || []; } catch (e) { return []; }
+    var list = raw.filter(function (id) { return !!PRODUCTS[id]; });
+    if (list.length !== raw.length) { try { localStorage.setItem(FAV_KEY, JSON.stringify(list)); } catch (e) {} }
+    return list;
   }
   function saveFav(list) {
     try { localStorage.setItem(FAV_KEY, JSON.stringify(list)); } catch (e) {}
