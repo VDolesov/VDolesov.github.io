@@ -168,6 +168,13 @@
       if (wid && PRODUCTS[wid]) favToast(wid, toggleFav(wid));
       return;
     }
+    var side = e.target.closest ? e.target.closest(".basket_wrapp") : null;
+    if (side) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      var delayed = e.target.closest(".wish_count, .wraps_icon_block.delay, [href*='#delayed']");
+      location.href = delayed ? "/basket/#delayed" : "/basket/";
+      return;
+    }
     var t = e.target.closest ? e.target.closest(".to-cart, .in-cart, .one_click, .basket_fly .basket-link, .basket-link") : null;
     if (!t) return;
     if (t.classList.contains("delay") || (t.getAttribute("href") || "").indexOf("#delayed") !== -1) {
