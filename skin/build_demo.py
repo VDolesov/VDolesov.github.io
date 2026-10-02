@@ -141,6 +141,8 @@ BANNER_COPY = [
     (r'(class="btn btn-default btn-lg"[^>]*>\s*)Перейти в каталог(\s*</a>)', r"\1Выбрать торт\2"),
     (r'(<a href=")/catalog/(" class="font_upper muted">)Весь каталог(</a>)', r"\1/catalog/?hit=1\2Все хиты\3"),
     (r'(<img class="plaxy"[^>]*(?:alt|title)=")Изготовление тортов и пирожных(")', r"\1Торт «Шварцвальдский»\2"),
+    (r'(<div class="top-description addr">\s*)Кондитерские изделия<br>\s*и кулинария Саратова(\s*</div>)',
+     r"\1Кондитерские<br> и кулинарные изделия\2"),
 ]
 
 
