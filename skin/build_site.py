@@ -106,6 +106,31 @@ def absolutize_loads(html):
                      .replace("'/local/", f"'{SITE}/local/") + m.group(3), html)
 
 
+_SOURCE_CSS = re.compile(r'(<link\b[^>]*?href=")(https://www\.mirsladostey164\.ru/bitrix/cache/css/[^"?]+\.css)(?:\?[^"]*)?(")')
+_SOURCE_JUNK = re.compile(r'[ \t]*<link\b[^>]*?href="https://www\.mirsladostey164\.ru/bitrix/js/'
+                          r'(?:ui/buttons/src/css/ui\.buttons\.ie|main/core/css/core_finder\.min)\.css[^"]*"[^>]*>\n?')
+_ROOT_URL = re.compile(r"""url\(\s*(['"]?)/(?!/)""")
+VENDOR = os.path.join(APP, "vendor", "css")
+
+
+def vendor_css(html):
+    def local(m):
+        url = m.group(2)
+        cached = os.path.join(HERE, "cache", hashlib.md5(url.encode()).hexdigest()[:12] + ".css")
+        if not os.path.exists(cached):
+            return m.group(0)
+        name = url.rsplit("/", 1)[1]
+        target = os.path.join(VENDOR, name)
+        if not os.path.exists(target):
+            os.makedirs(VENDOR, exist_ok=True)
+            css = io.open(cached, encoding="utf-8", errors="ignore").read()
+            css = _ROOT_URL.sub(lambda u: f"url({u.group(1)}{SITE}/", css)
+            io.open(target, "w", encoding="utf-8", newline="\n").write(css)
+        return f"{m.group(1)}/vendor/css/{name}{m.group(3)}"
+    html = _SOURCE_JUNK.sub("", html)
+    return _SOURCE_CSS.sub(local, html)
+
+
 def _asset_href(url):
     base = url.split("?", 1)[0].split("#", 1)[0]
     return (base.lower().endswith(ASSET_EXT)
@@ -114,7 +139,7 @@ def _asset_href(url):
 
 def absolutize_assets(html):
     def own(url):
-        return url.startswith(("/assets/", "/skin/"))
+        return url.startswith(("/assets/", "/skin/", "/vendor/"))
 
     html = _ATTR_SRC.sub(lambda m: m.group(0) if own(m.group(2))
                          else f'{m.group(1)}="{SITE}{m.group(2)}"', html)
@@ -180,6 +205,7 @@ def build_page(path, html, ids, version):
     html = add_faq(html)
     html = _COUNTER.sub("", html)
     html = _MONTSERRAT.sub("", html)
+    html = vendor_css(html)
     html = _BEACON.sub("", html)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
@@ -285,6 +311,7 @@ def refresh(html, path=""):
         html = html.replace(f'href="{old}"', f'href="{new}"')
     html = _COUNTER.sub("", html)
     html = _MONTSERRAT.sub("", html)
+    html = vendor_css(html)
     html = _BEACON.sub("", html)
     html = absolutize_loads(html)
     html = swap_photos(html, page_id(path))
