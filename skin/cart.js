@@ -8,6 +8,8 @@
   var ORIGIN = window.MS_ORIGIN || "";
   var SHOP_MAIL = "mirslad49@mail.ru";
   var SHOP_PHONE = "+7 (8452) 47-35-69";
+  var FREE_DELIVERY = 3000;
+  var DELIVERY_FEE = 150;
 
   function load() {
     var raw = {};
@@ -176,6 +178,14 @@
     return true;
   }
 
+  function goDelayed() {
+    if (/^\/basket\/?$/.test(location.pathname) && location.hash === "#delayed") {
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+    } else {
+      location.href = "/basket/#delayed";
+    }
+  }
+
   document.addEventListener("click", function (e) {
     var w = e.target.closest ? e.target.closest(".wish_item") : null;
     if (w) {
@@ -188,14 +198,14 @@
     if (side) {
       e.preventDefault(); e.stopImmediatePropagation();
       var delayed = e.target.closest(".wish_count, .wraps_icon_block.delay, [href*='#delayed']");
-      location.href = delayed ? "/basket/#delayed" : "/basket/";
+      if (delayed) goDelayed(); else location.href = "/basket/";
       return;
     }
     var t = e.target.closest ? e.target.closest(".to-cart, .in-cart, .one_click, .basket_fly .basket-link, .basket-link") : null;
     if (!t) return;
     if (t.classList.contains("delay") || (t.getAttribute("href") || "").indexOf("#delayed") !== -1) {
       e.preventDefault(); e.stopImmediatePropagation();
-      location.href = "/basket/#delayed";
+      goDelayed();
       return;
     }
 
@@ -244,11 +254,37 @@
     '</div>';
   }
 
+  function deliveryFee(sum, mode) {
+    return mode === "delivery" && sum < FREE_DELIVERY ? DELIVERY_FEE : 0;
+  }
+
+  function shipBlock(sum) {
+    var left = Math.max(0, FREE_DELIVERY - sum);
+    var pct = Math.min(100, sum / FREE_DELIVERY * 100);
+    return '<div class="ms-ship' + (left ? "" : " is-free") + '">' +
+      '<div class="ms-ship__head"><span>' + (left ? "До бесплатной доставки" : "Доставка по Саратову — бесплатно") + '</span>' +
+        (left ? '<b>' + money(left) + '</b>' : "") + '</div>' +
+      '<div class="ms-ship__bar"><i style="width:' + pct.toFixed(1) + '%"></i></div>' +
+      '<div class="ms-ship__hint">' + (left
+        ? "Доставляем только по Саратову. От " + money(FREE_DELIVERY) + " — бесплатно, иначе " + money(DELIVERY_FEE) + "."
+        : "Доставляем только по Саратову.") + '</div>' +
+    '</div>';
+  }
+
+  function summaryRows(cart, mode) {
+    var n = count(cart), sum = total(cart), fee = deliveryFee(sum, mode);
+    var ship = mode === "delivery" ? (fee ? money(fee) : "бесплатно") : "самовывоз, бесплатно";
+    return '<div class="ms-summary__row"><span>' + n + ' ' + plural(n, "товар", "товара", "товаров") + '</span><span>' + money(sum) + '</span></div>' +
+      '<div class="ms-summary__row"><span>Доставка</span><span>' + ship + '</span></div>' +
+      '<div class="ms-summary__row ms-summary__row--total"><span>Итого</span><span>' + money(sum + fee) + '</span></div>';
+  }
+
   function orderText(order) {
     var lines = ["Заказ " + order.number + " — Мир Сладостей", ""];
     order.items.forEach(function (it) {
       lines.push(it.name + " × " + it.qty + " — " + money(it.price * it.qty).replace(/ /g, " "));
     });
+    if (order.delivery === "delivery") lines.push("", "Доставка: " + (order.fee ? money(order.fee).replace(/ /g, " ") : "бесплатно"));
     lines.push("", "Итого: " + money(order.total).replace(/ /g, " "));
     lines.push("", "Имя: " + order.name, "Телефон: " + order.phone,
       "Получение: " + (order.delivery === "delivery" ? "доставка, " + order.address : "самовывоз"));
@@ -260,7 +296,10 @@
   function renderCart(root) {
     var cart = load();
     var ids = Object.keys(cart);
-    var n = count(cart);
+    var picked = root.querySelector('input[name="delivery"]:checked');
+    var mode = picked ? picked.value : "pickup";
+    var kept = {};
+    root.querySelectorAll(".ms-form input[type=text], .ms-form input[type=tel]").forEach(function (el) { kept[el.name] = el.value; });
 
     if (!ids.length) {
       root.innerHTML = '<div class="ms-empty">' +
@@ -273,10 +312,10 @@
     var html = '<div class="ms-cart">' +
       '<div class="ms-cart__list">' + ids.map(function (id) { return itemRow(id, cart[id]); }).join("") + '</div>' +
       '<aside class="ms-summary">' +
-        '<div class="ms-summary__row"><span>' + n + ' ' + plural(n, "товар", "товара", "товаров") + '</span><span>' + money(total(cart)) + '</span></div>' +
-        '<div class="ms-summary__row ms-summary__row--total"><span>Итого</span><span>' + money(total(cart)) + '</span></div>' +
+        shipBlock(total(cart)) +
+        '<div class="ms-summary__rows">' + summaryRows(cart, mode) + '</div>' +
         '<a class="btn btn-default btn-lg ms-summary__btn" href="#order">Оформить заказ</a>' +
-        '<div class="ms-summary__note">Самовывоз сегодня — бесплатно.<br>Доставка по Саратову — бесплатно при заказе от 3000 ₽.</div>' +
+        '<div class="ms-summary__note">Самовывоз из магазина — бесплатно, в день заказа.<br>Доставка — только по Саратову, на следующий день.</div>' +
       '</aside>' +
     '</div>' +
     '<section class="ms-order" id="order">' +
@@ -287,10 +326,10 @@
         '<label class="ms-field"><span>Телефон</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+7 (___) ___-__-__"></label>' +
         '<div class="ms-field ms-field--wide"><span>Получение</span>' +
           '<div class="ms-choice">' +
-            '<label><input type="radio" name="delivery" value="pickup" checked><b>Самовывоз</b><small>ул. Бахметьевская, 49 · сегодня</small></label>' +
-            '<label><input type="radio" name="delivery" value="delivery"><b>Доставка</b><small>по Саратову и Энгельсу · завтра</small></label>' +
+            '<label><input type="radio" name="delivery" value="pickup"' + (mode === "pickup" ? " checked" : "") + '><b>Самовывоз</b><small>ул. Бахметьевская, 49 · сегодня</small></label>' +
+            '<label><input type="radio" name="delivery" value="delivery"' + (mode === "delivery" ? " checked" : "") + '><b>Доставка</b><small>только по Саратову · завтра</small></label>' +
           '</div></div>' +
-        '<label class="ms-field ms-field--wide ms-field--address" hidden><span>Адрес доставки</span><input name="address" type="text" autocomplete="street-address"></label>' +
+        '<label class="ms-field ms-field--wide ms-field--address"' + (mode === "delivery" ? "" : " hidden") + '><span>Адрес доставки в Саратове</span><input name="address" type="text" autocomplete="street-address" placeholder="улица, дом, квартира"></label>' +
         '<label class="ms-field"><span>Желаемая дата и время</span><input name="date" type="text" placeholder="например, суббота к 12:00"></label>' +
         '<label class="ms-field"><span>Комментарий</span><input name="comment" type="text" placeholder="надпись на торте, свечи, аллергии"></label>' +
         '<div class="ms-form__foot">' +
@@ -301,6 +340,10 @@
       '</form>' +
     '</section>';
     root.innerHTML = html;
+    Object.keys(kept).forEach(function (name) {
+      var el = root.querySelector('.ms-form [name="' + name + '"]');
+      if (el) el.value = kept[name];
+    });
 
     if (location.hash === "#order") {
       setTimeout(function () {
@@ -329,6 +372,8 @@
       }
       if (e.target.name === "delivery") {
         root.querySelector(".ms-field--address").hidden = e.target.value !== "delivery";
+        var rows = root.querySelector(".ms-summary__rows");
+        if (rows) rows.innerHTML = summaryRows(load(), e.target.value);
       }
     });
     root.addEventListener("submit", function (e) {
@@ -345,7 +390,7 @@
         err.hidden = false; err.textContent = "Заполните: " + problems.join(", ") + ".";
         return;
       }
-      var c = load();
+      var c = load(), sum = total(c), fee = deliveryFee(sum, f.delivery.value);
       var order = {
         number: nextNumber(),
         date: f.date.value.trim(), comment: f.comment.value.trim(),
@@ -354,7 +399,7 @@
         items: Object.keys(c).map(function (id) {
           return { id: id, name: PRODUCTS[id].name, price: PRODUCTS[id].price, qty: c[id] };
         }),
-        total: total(c), created: new Date().toISOString()
+        fee: fee, total: sum + fee, created: new Date().toISOString()
       };
       try {
         var orders = JSON.parse(localStorage.getItem(ORDER_KEY) || "[]");
@@ -387,6 +432,7 @@
       '<div class="ms-done__list">' + order.items.map(function (it) {
         return '<div class="ms-done__row"><span>' + esc(it.name) + ' × ' + it.qty + '</span><span>' + money(it.price * it.qty) + '</span></div>';
       }).join("") +
+      (order.delivery === "delivery" ? '<div class="ms-done__row"><span>Доставка по Саратову</span><span>' + (order.fee ? money(order.fee) : "бесплатно") + '</span></div>' : "") +
       '<div class="ms-done__row ms-done__row--total"><span>Итого</span><span>' + money(order.total) + '</span></div></div>' +
       '<div class="ms-done__actions">' +
         '<a class="btn btn-default btn-lg" href="' + mail + '">Отправить заказ на почту</a>' +
@@ -406,7 +452,14 @@
 
   function renderFav(root) {
     var ids = loadFav().filter(function (id) { return PRODUCTS[id]; });
-    if (!ids.length) { root.innerHTML = ""; root.hidden = true; return; }
+    if (!ids.length) {
+      if (location.hash !== "#delayed") { root.innerHTML = ""; root.hidden = true; return; }
+      root.hidden = false;
+      root.innerHTML = '<div class="ms-order__label">Отложенные</div>' +
+        '<h2 class="ms-order__title">Пока ничего не отложено</h2>' +
+        '<p class="ms-fav__empty">Нажмите на сердечко на карточке товара — он появится здесь, и его можно будет добавить в корзину позже.</p>';
+      return;
+    }
     root.hidden = false;
     root.innerHTML = '<div class="ms-order__label">Отложенные</div>' +
       '<h2 class="ms-order__title">' + ids.length + ' ' + plural(ids.length, "товар", "товара", "товаров") + ' на потом</h2>' +
@@ -453,11 +506,16 @@
       var list = loadFav().filter(function (x) { return x !== id; });
       saveFav(list); markFav(id, false); renderFav(fav);
     });
-    if (location.hash === "#delayed" && !fav.hidden) {
+    function toDelayed() {
+      renderFav(fav);
       setTimeout(function () {
         window.scrollTo({ top: fav.getBoundingClientRect().top + window.scrollY - 110, behavior: "smooth" });
       }, 120);
     }
+    if (location.hash === "#delayed") toDelayed();
+    window.addEventListener("hashchange", function () {
+      if (location.hash === "#delayed") toDelayed();
+    });
   }
 
   function ready(fn) {

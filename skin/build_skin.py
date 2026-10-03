@@ -1803,9 +1803,17 @@ body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !im
 .ms-fav__buy.btn {{ height: 40px !important; line-height: 40px !important; padding: 0 16px !important; font-size: 11px !important; }}
 .ms-fav__remove {{ background: none; border: 0; padding: 0; font-size: 13px; color: {MUTED}; text-decoration: underline; cursor: pointer; }}
 .ms-fav__remove:hover {{ color: {INK}; }}
+.ms-fav__empty {{ margin: 0; max-width: 560px; font-size: 14px; line-height: 1.6; color: {MUTED}; }}
 .wish_item.added svg path, .wish_item.in svg path {{ fill: {ACCENT} !important; }}
 body .wish_item.in.colored_theme_bg, body .wish_item.added.colored_theme_bg {{ background: {ACCENT} !important; }}
 body .wish_item.in.colored_theme_bg svg path, body .wish_item.added.colored_theme_bg svg path {{ fill: {ON_ACCENT} !important; }}
+.ms-ship {{ margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid {LINE}; }}
+.ms-ship__head {{ display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13px; color: {INK}; }}
+.ms-ship__head b {{ font-weight: 600; color: {GOLD}; white-space: nowrap; }}
+.ms-ship__bar {{ position: relative; height: 4px; margin-top: 12px; background: rgba(243, 232, 216, .12); overflow: hidden; }}
+.ms-ship__bar i {{ position: absolute; inset: 0 auto 0 0; background: {ACCENT}; transition: width .4s ease; }}
+.ms-ship__hint {{ margin-top: 10px; font-size: 12px; line-height: 1.5; color: {MUTED}; }}
+.ms-ship.is-free .ms-ship__head {{ color: {GOLD}; }}
 
 .ms-reveal {{ opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1); }}
 .ms-reveal.is-in {{ opacity: 1; transform: none; }}
