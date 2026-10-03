@@ -122,3 +122,10 @@ Pages are served by GitHub Pages: gzip, `Cache-Control: max-age=600`; `skin.css`
 ## Out of scope
 
 The skin does not change markup, so it cannot change page content, block order or the product card composition. Layout inside existing elements is fair game: catalog grid, sticky header, buy button always visible.
+
+## Speed
+
+- Fonts are self-hosted in `skin/fonts/` (Prata, Golos Text: cyrillic, cyrillic-ext, latin, latin-ext) and the two above-the-fold files are preloaded at the top of `<head>` (`FONT_PRELOAD` in `build_site.py`). The unused Montserrat links of the template are stripped.
+- Hero slides are WebP (`hero_choc.py` writes both `.jpg` and `.webp`, the pages use `.webp`).
+- `vendor_css()` in `build_site.py` serves the template stylesheets from `vendor/css/` when a copy exists in `skin/cache/` (root-relative `url()` rewritten to the live site); IE-only and file-finder stylesheets are dropped.
+- Scripts are still loaded from the live site, so the demo waits for it. Once it answers again, copying those scripts into `vendor/` the same way removes that dependency.
