@@ -261,7 +261,7 @@
     qs("[data-progress-label]").textContent = minimumRemaining ? "До минимальной суммы заказа" : remaining ? "До бесплатной доставки" : "Бесплатная доставка доступна";
     qs("[data-progress-value]").textContent = minimumRemaining ? money(minimumRemaining) : remaining ? money(remaining) : "Готово";
     const deliveryNode = qs("[data-cart-delivery]");
-    if (deliveryNode) deliveryNode.textContent = total >= FREE_DELIVERY ? "Доставка: бесплатно" : `Доставка по Саратову: ${money(DELIVERY_FEE)} · самовывоз бесплатно`;
+    if (deliveryNode) deliveryNode.textContent = total >= FREE_DELIVERY ? "Доставка по Саратову: бесплатно" : `Доставка по Саратову: ${money(DELIVERY_FEE)} · самовывоз бесплатно`;
     const checkout = qs("[data-checkout]");
     if (checkout) checkout.textContent = minimumRemaining ? `Добавьте ещё ${money(minimumRemaining)}` : "Перейти к оформлению";
   }
