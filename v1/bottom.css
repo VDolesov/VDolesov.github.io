@@ -16,6 +16,14 @@
 .map-block__map { position: relative; min-width: 0; min-height: 300px; overflow: hidden; background: #1b1219; }
 .map-block__map .ymaps-b-balloon__content, .map-block__map [class*="balloon__content"] { color: #1b1413; font-family: var(--sans); font-size: 13px; }
 .map-block__map [class*="balloon"] a { color: #8f1737; }
+.map-ctrl { position: absolute; top: 16px; left: 16px; z-index: 1000; display: flex; gap: 10px; pointer-events: none; }
+.map-ctrl__group { display: flex; pointer-events: auto; background: rgba(18, 10, 17, .9); border: 1px solid rgba(199, 168, 117, .45); box-shadow: 0 6px 18px rgba(0, 0, 0, .35); }
+.map-ctrl__group button { min-width: 42px; height: 42px; padding: 0 14px; border: 0; background: none; color: #f2e6d6; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: .02em; cursor: pointer; transition: background-color .2s, color .2s; }
+.map-ctrl__group button[data-zoom] { padding: 0; font-size: 24px; font-weight: 400; line-height: 1; }
+.map-ctrl__group button + button { border-left: 1px solid rgba(199, 168, 117, .3); }
+.map-ctrl__group button:hover { color: #e7c98f; background: rgba(199, 168, 117, .1); }
+.map-ctrl__group button.is-active { color: #150c14; background: #c7a875; }
+.map-ctrl__group button:focus-visible { outline: 2px solid #e7c98f; outline-offset: -2px; }
 .map-note { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; color: rgba(242, 230, 214, .5); font-size: 13px; text-align: center; }
 
 .foot { padding: 60px 0 0; color: #f2e6d6; background: #090408; border-top: 1px solid rgba(199, 168, 117, .12); }

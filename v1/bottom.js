@@ -35,11 +35,34 @@
     };
   });
 
-  function build() {
-    var map = new ymaps.Map(box, { center: [51.565, 46.0], zoom: 11 }, { suppressMapOpenBlock: true });
-    ["zoomControl", "typeSelector"].forEach(function (name) {
-      try { map.controls.add(name); } catch (e) {}
+  function controls(map) {
+    var panel = document.createElement("div");
+    panel.className = "map-ctrl";
+    panel.innerHTML =
+      '<div class="map-ctrl__group">' +
+        '<button type="button" data-zoom="-1" aria-label="Отдалить">&minus;</button>' +
+        '<button type="button" data-zoom="1" aria-label="Приблизить">+</button>' +
+      '</div>' +
+      '<div class="map-ctrl__group">' +
+        '<button type="button" data-type="yandex#map" class="is-active">Схема</button>' +
+        '<button type="button" data-type="yandex#hybrid">Спутник</button>' +
+      '</div>';
+    box.appendChild(panel);
+    panel.addEventListener("click", function (event) {
+      var button = event.target.closest("button");
+      if (!button) return;
+      if (button.hasAttribute("data-zoom")) {
+        map.setZoom(map.getZoom() + Number(button.getAttribute("data-zoom")), { duration: 200, checkZoomRange: true });
+        return;
+      }
+      map.setType(button.getAttribute("data-type"));
+      [].forEach.call(panel.querySelectorAll("[data-type]"), function (b) { b.classList.toggle("is-active", b === button); });
     });
+  }
+
+  function build() {
+    var map = new ymaps.Map(box, { center: [51.565, 46.0], zoom: 11, controls: [] }, { suppressMapOpenBlock: true });
+    controls(map);
     stores.forEach(function (store) {
       var html = '<strong>' + store.title + '</strong>' +
         (store.phone ? '<br><a href="' + store.phone.getAttribute("href") + '">' + store.phone.textContent + '</a>' : '');
