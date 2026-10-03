@@ -1,10 +1,13 @@
 import json
 import os
 import re
+import sys
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(APP, "build"))
+from data import EXTRA
 SITE = "https://www.mirsladostey164.ru"
 PAGES_ORIGIN = "https://vdolesov.github.io"
 OUT = os.path.join(HERE, "demo")
@@ -275,7 +278,7 @@ def fetch(path):
 
 def product_ids():
     data = json.load(open(os.path.join(APP, "build", "catalog.json"), encoding="utf-8"))
-    return [item["id"] for item in data["items"]]
+    return [item["id"] for item in data["items"]] + [item["id"] for item in EXTRA]
 
 
 def photo_url(pid, size=None):

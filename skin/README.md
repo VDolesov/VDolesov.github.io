@@ -64,6 +64,7 @@ python skin/build_site.py          # crawl the live site and rebuild all pages
 python skin/build_site.py contacts/stores company/agreement   # rebuild only the given pages
 python skin/build_site.py --stamp  # restamp skin version, photo series, hero files and copy into built pages
 python skin/build_cart_data.py     # rebuild cart data (products, sections)
+python skin/add_pies.py            # Ossetian pies 801-803 (build/data.py EXTRA, v1 prices): pages cloned from 736, cards on top of /catalog/pirogi/
 python skin/hero_choc.py           # rebuild hero-bg.jpg
 ```
 

@@ -8,7 +8,7 @@ APP = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(APP, "build"))
 sys.path.insert(0, HERE)
 
-from data import pretty
+from data import EXTRA, pretty
 from build_demo import PAGES_ORIGIN, SERIES
 
 
@@ -29,6 +29,18 @@ def main():
             "section": item["section"],
             "composition": item.get("composition") or "",
             "badges": [b.lower() for b in item.get("badges", [])],
+        }
+    for item in EXTRA:
+        products[item["id"]] = {
+            "name": item["name"],
+            "price": item["price"],
+            "unit": item["unit"],
+            "weight": item["weight"],
+            "url": f"/catalog/{item['section']}/{item['id']}/",
+            "image": "",
+            "section": item["section"],
+            "composition": item["composition"],
+            "badges": [b.lower() for b in item["badges"]],
         }
 
     body = (
