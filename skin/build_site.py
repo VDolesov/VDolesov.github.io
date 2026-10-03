@@ -38,6 +38,9 @@ DROP = ("/info/brands/rss/",)
 _COUNTER = re.compile(r"<!-- Yandex\.Metrika counter -->.*?<!-- /Yandex\.Metrika counter -->", re.S)
 _BEACON = re.compile(r"<script>new Image\(\)\.src='https?://[^']*spread\.php[^<]*</script>")
 PRELOAD = '<link rel="preload" as="image" href="%s">\n'
+FONT_FILES = ("golos-text-cyrillic.woff2", "prata-cyrillic.woff2")
+FONT_PRELOAD = "".join(f'<link rel="preload" as="font" type="font/woff2" href="/skin/fonts/{name}" crossorigin>\n'
+                       for name in FONT_FILES)
 ASSET_EXT = (".css", ".js", ".ico", ".png", ".jpg", ".jpeg", ".gif", ".svg",
              ".webp", ".woff", ".woff2", ".ttf", ".eot", ".xml", ".json",
              ".pdf", ".mp4", ".txt", ".zip", ".doc", ".docx", ".xls", ".xlsx")
@@ -188,9 +191,11 @@ def build_page(path, html, ids, version):
 
 def preload_hero(html, path):
     html = re.sub(r'<link rel="preload" as="image" href="[^"]*/assets/hero-[^"]*">\n', "", html)
+    html = re.sub(r'<link rel="preload" as="font" type="font/woff2" href="/skin/fonts/[^"]*" crossorigin>\n', "", html)
+    early = FONT_PRELOAD
     if path == "/":
-        html = html.replace("</head>", PRELOAD % (PAGES_ORIGIN + list(BANNER.values())[0]) + "</head>", 1)
-    return html
+        early += PRELOAD % (PAGES_ORIGIN + list(BANNER.values())[0])
+    return re.sub(r"(<head\b[^>]*>\n?)", lambda m: m.group(1) + early, html, count=1)
 
 
 def photo_script(path, ids):
