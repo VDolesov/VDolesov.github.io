@@ -92,17 +92,17 @@ SECTION_PHOTOS = {
 }
 
 BANNER = {
-    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.jpg?v=7",
-    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-bg.jpg?v=7",
+    "/upload/iblock/890/890366e70949176749ee46def14a193b.jpg": "/assets/hero-bg.webp?v=8",
+    "/upload/iblock/a76/a76586772deb02b99d66c209bfda9c22.png": "/assets/hero-bg.webp?v=8",
 }
 SLIDES = [
-    {"file": "/assets/hero-bg.jpg?v=7", "label": "Собственное производство", "title": "Изготовление тортов и пирожных",
+    {"file": "/assets/hero-bg.webp?v=8", "label": "Собственное производство", "title": "Изготовление тортов и пирожных",
      "text": "Торты, пироги и десерты, которые мы печём сами. Заберите в магазине или закажите доставку по Саратову.",
      "button": "Выбрать торт", "href": "/catalog/torty/"},
-    {"file": "/assets/hero-2.jpg?v=2", "label": "Пироги", "title": "Пироги на каждый день",
+    {"file": "/assets/hero-2.webp?v=3", "label": "Пироги", "title": "Пироги на каждый день",
      "text": "С мясом, капустой, рыбой и вишней — к обеду и к чаю. Заберите в магазине или закажите доставку по Саратову.",
      "button": "К пирогам", "href": "/catalog/pirogi/"},
-    {"file": "/assets/hero-3.jpg?v=3", "label": "На праздник", "title": "Торт на праздник — под заказ",
+    {"file": "/assets/hero-3.webp?v=4", "label": "На праздник", "title": "Торт на праздник — под заказ",
      "text": "Назовите дату, повод и начинку — остальное сделаем мы. Соберём торт так, как вы его задумали.",
      "button": "Заказать торт", "href": "/catalog/torty/"},
 ]
@@ -118,7 +118,7 @@ def expand_slides(html):
         template = first.group(0)
         out = []
         for i, slide in enumerate(SLIDES):
-            li = re.sub(r"https?://[^\"' )]*/assets/hero-[a-z0-9]+\.jpg\?v=\d+", PAGES_ORIGIN + slide["file"], template)
+            li = re.sub(r"https?://[^\"' )]*/assets/hero-[a-z0-9]+\.(?:jpg|webp)\?v=\d+", PAGES_ORIGIN + slide["file"], template)
             li = re.sub(r'data-slide_index="\d+"', f'data-slide_index="{i}"', li)
             li = re.sub(r'id="(bx_\d+_\d+)(?:_s\d+)?"', lambda a: f'id="{a.group(1)}' + (f'_s{i}' if i else "") + '"', li)
             li = re.sub(r'(<div class="section font_upper_md">)[^<]*(</div>)', lambda a: a.group(1) + slide["label"] + a.group(2), li)

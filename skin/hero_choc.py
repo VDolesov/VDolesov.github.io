@@ -116,7 +116,9 @@ def main():
         bg = backdrop(slide["source"], slide["grade"], slide.get("fit", 1.0), slide.get("vpos", .5), slide.get("shift", 0))
         bg_path = os.path.join(OUT, name)
         bg.save(bg_path, quality=86, optimize=True, progressive=True)
-        for path in (bg_path, preview(bg, name)):
+        webp_path = bg_path.replace(".jpg", ".webp")
+        bg.save(webp_path, "WEBP", quality=85, method=6)
+        for path in (bg_path, webp_path, preview(bg, name)):
             print(f"  {os.path.basename(path)}  {os.path.getsize(path) // 1024} KB")
 
 
