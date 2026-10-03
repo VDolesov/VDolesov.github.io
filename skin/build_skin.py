@@ -1856,6 +1856,72 @@ body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !im
 .ms-fav__remove {{ background: none; border: 0; padding: 0; font-size: 13px; color: {MUTED}; text-decoration: underline; cursor: pointer; }}
 .ms-fav__remove:hover {{ color: {INK}; }}
 .bx-yandex-map, .bx-yandex-map * {{ font-family: "Golos Text", "Segoe UI", sans-serif; }}
+html.ms-lock, html.ms-lock body {{ overflow: hidden !important; }}
+.ms-drawer {{ position: fixed; inset: 0; z-index: 3000; }}
+.ms-drawer[hidden] {{ display: none; }}
+.ms-drawer__shade {{ position: absolute; inset: 0; background: rgba(8, 5, 4, .62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .3s ease; }}
+.ms-drawer__panel {{
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(580px, 100%);
+  display: flex; flex-direction: column; background: {PANEL}; border-left: 1px solid {LINE};
+  box-shadow: -24px 0 60px rgba(0, 0, 0, .45); transform: translateX(100%);
+  transition: transform .38s cubic-bezier(.2, .7, .2, 1); outline: none;
+}}
+.ms-drawer.is-open .ms-drawer__shade {{ opacity: 1; }}
+.ms-drawer.is-open .ms-drawer__panel {{ transform: none; }}
+.ms-drawer__head {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding: 40px 40px 26px; border-bottom: 1px solid {LINE}; }}
+.ms-drawer__eyebrow {{ font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: {INK}; }}
+.ms-drawer__title {{ margin-top: 8px; font-family: Prata, Georgia, serif; font-size: 56px; line-height: 1.05; color: {INK}; }}
+.ms-drawer__close {{
+  flex: none; width: 64px; height: 64px; border-radius: 50%; border: 1px solid {GOLD_LINE}; background: none;
+  color: {INK}; font-size: 32px; line-height: 1; cursor: pointer; transition: border-color .2s, color .2s;
+}}
+.ms-drawer__close:hover, .ms-drawer__close:focus-visible {{ border-color: {GOLD}; color: {GOLD}; outline: none; }}
+.ms-drawer__content {{ flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 0 40px 28px; }}
+.ms-drawer__content .ms-ship {{ margin: 24px 0 0; padding-bottom: 20px; }}
+.ms-drawer__list {{
+  flex: 1; min-height: 0; overflow-y: auto; margin-right: -14px; padding-right: 14px;
+  scrollbar-width: thin; scrollbar-color: {GOLD_LINE} transparent;
+}}
+.ms-drawer__item {{ display: grid; grid-template-columns: 96px minmax(0, 1fr) 32px; gap: 8px 20px; padding: 22px 0; border-bottom: 1px solid {LINE}; }}
+.ms-drawer__pic {{ grid-row: span 2; display: block; width: 96px; height: 96px; background: {GROUND}; overflow: hidden; }}
+.ms-drawer__pic img {{ display: block; width: 100%; height: 100%; object-fit: cover; }}
+.ms-drawer__name {{ display: block; font-family: "Golos Digits", Prata, Georgia, serif; font-size: 20px; line-height: 1.25; color: {INK} !important; }}
+.ms-drawer__name:hover {{ color: {GOLD} !important; }}
+.ms-drawer__meta {{ margin-top: 6px; font-size: 13px; color: {MUTED}; }}
+.ms-drawer__remove {{ align-self: start; width: 32px; height: 32px; padding: 0; border: 0; background: none; color: {MUTED}; font-size: 24px; line-height: 1; cursor: pointer; }}
+.ms-drawer__remove:hover {{ color: {INK}; }}
+.ms-drawer__row {{ grid-column: 2 / span 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; }}
+.ms-drawer__qty {{ display: inline-flex; align-items: center; height: 40px; background: {FIELD}; }}
+.ms-drawer__qty button {{ width: 40px; height: 40px; padding: 0; border: 0; background: none; color: {INK}; font-size: 18px; cursor: pointer; }}
+.ms-drawer__qty button:hover {{ color: {GOLD}; }}
+.ms-drawer__qty span {{ min-width: 30px; text-align: center; font-size: 15px; color: {INK}; }}
+.ms-drawer__sum {{ font-family: "Golos Digits", Prata, Georgia, serif; font-size: 20px; color: {GOLD}; white-space: nowrap; }}
+.ms-drawer__foot {{ padding-top: 24px; }}
+.ms-drawer__total {{ display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-size: 20px; color: {INK}; }}
+.ms-drawer__total b {{ font-family: "Golos Digits", Prata, Georgia, serif; font-size: 44px; font-weight: 400; line-height: 1; }}
+.ms-drawer__note {{ margin: 12px 0 20px; font-size: 13px; color: {MUTED}; }}
+.ms-drawer .ms-drawer__go.btn {{ display: flex !important; align-items: center; justify-content: center; width: 100%; height: 62px !important; line-height: 1 !important; }}
+.ms-drawer__fine {{ margin-top: 14px; font-size: 12px; color: {MUTED}; text-align: center; }}
+@media (max-height: 820px) and (min-width: 601px) {{
+  .ms-drawer__head {{ padding: 26px 40px 18px; }}
+  .ms-drawer__title {{ font-size: 42px; }}
+  .ms-drawer__close {{ width: 52px; height: 52px; font-size: 28px; }}
+  .ms-drawer__item {{ padding: 16px 0; }}
+  .ms-drawer__total b {{ font-size: 36px; }}
+  .ms-drawer .ms-drawer__go.btn {{ height: 54px !important; }}
+}}
+.ms-drawer__empty {{ padding: 36px 0; }}
+.ms-drawer__empty p {{ margin: 0 0 24px; font-size: 15px; line-height: 1.6; color: {MUTED}; }}
+@media (max-width: 600px) {{
+  .ms-drawer__head {{ padding: 24px 20px 18px; }}
+  .ms-drawer__title {{ font-size: 40px; }}
+  .ms-drawer__close {{ width: 48px; height: 48px; font-size: 26px; }}
+  .ms-drawer__content {{ padding: 0 20px 20px; }}
+  .ms-drawer__item {{ grid-template-columns: 72px minmax(0, 1fr) 32px; gap: 8px 14px; padding: 18px 0; }}
+  .ms-drawer__pic {{ width: 72px; height: 72px; }}
+  .ms-drawer__name {{ font-size: 17px; }}
+  .ms-drawer__total b {{ font-size: 34px; }}
+}}
 .ms-fav__empty {{ margin: 0; max-width: 560px; font-size: 14px; line-height: 1.6; color: {MUTED}; }}
 .wish_item.added svg path, .wish_item.in svg path {{ fill: {ACCENT} !important; }}
 body .wish_item.in.colored_theme_bg, body .wish_item.added.colored_theme_bg {{ background: {ACCENT} !important; }}

@@ -178,6 +178,141 @@
     return true;
   }
 
+  function unmarkInCart(id) {
+    var buttons = document.querySelectorAll('.to-cart[data-item="' + id + '"]');
+    for (var i = 0; i < buttons.length; i++) {
+      var btn = buttons[i];
+      var twin = btn.parentElement && btn.parentElement.querySelector('.in-cart[data-item="' + id + '"]');
+      if (twin) { btn.style.display = ""; twin.style.display = "none"; }
+      else { btn.classList.remove("ms-added"); var s = btn.querySelector("span"); if (s) s.textContent = "В корзину"; }
+    }
+  }
+
+  function onBasketPage() {
+    return /^\/basket\/?$/.test(location.pathname);
+  }
+  function sectionName(slug) {
+    var list = window.MS_SECTIONS || [];
+    for (var i = 0; i < list.length; i++) if (list[i].slug === slug) return list[i].name;
+    return "";
+  }
+
+  var drawer = null, lastFocus = null, closing = null;
+
+  function drawerRow(id, qty) {
+    var p = PRODUCTS[id], img = photo(id);
+    var meta = [sectionName(p.section), money(p.price) + " / " + esc(p.unit || "шт")].filter(Boolean).join(" · ");
+    return '<div class="ms-drawer__item" data-id="' + id + '">' +
+      '<a class="ms-drawer__pic" href="' + esc(p.url) + '">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : "") + '</a>' +
+      '<div class="ms-drawer__body">' +
+        '<a class="ms-drawer__name" href="' + esc(p.url) + '">' + esc(p.name) + '</a>' +
+        '<div class="ms-drawer__meta">' + meta + '</div>' +
+      '</div>' +
+      '<button type="button" class="ms-drawer__remove" data-dact="remove" aria-label="Убрать">&times;</button>' +
+      '<div class="ms-drawer__row">' +
+        '<div class="ms-drawer__qty">' +
+          '<button type="button" data-dact="minus" aria-label="Меньше">&minus;</button>' +
+          '<span>' + qty + '</span>' +
+          '<button type="button" data-dact="plus" aria-label="Больше">+</button>' +
+        '</div>' +
+        '<div class="ms-drawer__sum">' + money(p.price * qty) + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderDrawer() {
+    var content = drawer.querySelector(".ms-drawer__content");
+    var cart = load(), ids = Object.keys(cart);
+    if (!ids.length) {
+      content.innerHTML = '<div class="ms-drawer__empty">' +
+        '<p>В корзине пока пусто. Загляните в каталог — торты, пироги и выпечка ждут.</p>' +
+        '<a class="btn btn-default btn-lg ms-drawer__go" href="/catalog/">Перейти в каталог</a></div>';
+      return;
+    }
+    var sum = total(cart);
+    var scroll = content.querySelector(".ms-drawer__list");
+    var top = scroll ? scroll.scrollTop : 0;
+    content.innerHTML = shipBlock(sum) +
+      '<div class="ms-drawer__list">' + ids.map(function (id) { return drawerRow(id, cart[id]); }).join("") + '</div>' +
+      '<div class="ms-drawer__foot">' +
+        '<div class="ms-drawer__total"><span>Товары</span><b>' + money(sum) + '</b></div>' +
+        '<div class="ms-drawer__note">' + (sum >= FREE_DELIVERY
+          ? "Доставка по Саратову: бесплатно · самовывоз бесплатно"
+          : "Доставка по Саратову: " + money(DELIVERY_FEE) + " · самовывоз бесплатно") + '</div>' +
+        '<a class="btn btn-default btn-lg ms-drawer__go" href="/basket/#order">Перейти к оформлению</a>' +
+        '<div class="ms-drawer__fine">Наличие, итоговую стоимость и время подтверждает менеджер.</div>' +
+      '</div>';
+    var list = content.querySelector(".ms-drawer__list");
+    if (list) list.scrollTop = top;
+  }
+
+  function buildDrawer() {
+    drawer = document.createElement("div");
+    drawer.className = "ms-drawer";
+    drawer.hidden = true;
+    drawer.innerHTML = '<div class="ms-drawer__shade" data-dclose></div>' +
+      '<aside class="ms-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="ms-drawer-title" tabindex="-1">' +
+        '<div class="ms-drawer__head">' +
+          '<div><div class="ms-drawer__eyebrow">Ваш заказ</div><div class="ms-drawer__title" id="ms-drawer-title">Корзина</div></div>' +
+          '<button type="button" class="ms-drawer__close" data-dclose aria-label="Закрыть корзину">&times;</button>' +
+        '</div>' +
+        '<div class="ms-drawer__content"></div>' +
+      '</aside>';
+    document.body.appendChild(drawer);
+    drawer.addEventListener("click", function (e) {
+      if (e.target.closest("[data-dclose]")) { closeDrawer(); return; }
+      var b = e.target.closest("[data-dact]");
+      if (!b) return;
+      var id = b.closest(".ms-drawer__item").getAttribute("data-id");
+      var c = load(), act = b.getAttribute("data-dact");
+      if (act === "plus") c[id] += 1;
+      if (act === "minus") c[id] = Math.max(1, c[id] - 1);
+      if (act === "remove") { delete c[id]; unmarkInCart(id); }
+      save(c);
+      renderDrawer();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && drawer && !drawer.hidden) closeDrawer();
+    });
+  }
+
+  function openDrawer() {
+    if (!drawer) buildDrawer();
+    clearTimeout(closing);
+    renderDrawer();
+    lastFocus = document.activeElement;
+    drawer.hidden = false;
+    document.documentElement.classList.add("ms-lock");
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { drawer.classList.add("is-open"); });
+    });
+    var close = drawer.querySelector(".ms-drawer__close");
+    if (close) close.focus({ preventScroll: true });
+  }
+
+  function closeDrawer() {
+    if (!drawer || drawer.hidden) return;
+    drawer.classList.remove("is-open");
+    document.documentElement.classList.remove("ms-lock");
+    closing = setTimeout(function () { drawer.hidden = true; }, 380);
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+
+  function goCart() {
+    if (onBasketPage()) {
+      var root = document.querySelector(".ms-basket-root");
+      if (root) window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" });
+      return;
+    }
+    openDrawer();
+  }
+
+  function isCartLink(a) {
+    if (!a || !a.getAttribute) return false;
+    var href = a.getAttribute("href") || "";
+    return /^(https?:\/\/[^/]+)?\/basket\/?$/.test(href);
+  }
+
   function goDelayed() {
     if (/^\/basket\/?$/.test(location.pathname) && location.hash === "#delayed") {
       window.dispatchEvent(new HashChangeEvent("hashchange"));
@@ -198,7 +333,13 @@
     if (side) {
       e.preventDefault(); e.stopImmediatePropagation();
       var delayed = e.target.closest(".wish_count, .wraps_icon_block.delay, [href*='#delayed']");
-      if (delayed) goDelayed(); else location.href = "/basket/";
+      if (delayed) goDelayed(); else goCart();
+      return;
+    }
+    var link = e.target.closest ? e.target.closest("a") : null;
+    if (isCartLink(link) && !e.target.closest(".ms-drawer")) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      goCart();
       return;
     }
     var t = e.target.closest ? e.target.closest(".to-cart, .in-cart, .one_click, .basket_fly .basket-link, .basket-link") : null;
@@ -225,7 +366,7 @@
     }
     if (t.classList.contains("in-cart") || t.classList.contains("basket-link")) {
       e.preventDefault(); e.stopImmediatePropagation();
-      location.href = "/basket/";
+      goCart();
     }
   }, true);
 
