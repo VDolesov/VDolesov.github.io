@@ -1855,6 +1855,7 @@ body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !im
 .ms-fav__buy.btn {{ height: 40px !important; line-height: 40px !important; padding: 0 16px !important; font-size: 11px !important; }}
 .ms-fav__remove {{ background: none; border: 0; padding: 0; font-size: 13px; color: {MUTED}; text-decoration: underline; cursor: pointer; }}
 .ms-fav__remove:hover {{ color: {INK}; }}
+.bx-yandex-map, .bx-yandex-map * {{ font-family: "Golos Text", "Segoe UI", sans-serif; }}
 .ms-fav__empty {{ margin: 0; max-width: 560px; font-size: 14px; line-height: 1.6; color: {MUTED}; }}
 .wish_item.added svg path, .wish_item.in svg path {{ fill: {ACCENT} !important; }}
 body .wish_item.in.colored_theme_bg, body .wish_item.added.colored_theme_bg {{ background: {ACCENT} !important; }}

@@ -36,6 +36,7 @@ ALIAS = {
 SOURCE = {alias: path for path, alias in ALIAS.items() if path.endswith(".php")}
 DROP = ("/info/brands/rss/",)
 _COUNTER = re.compile(r"<!-- Yandex\.Metrika counter -->.*?<!-- /Yandex\.Metrika counter -->", re.S)
+_MONTSERRAT = re.compile(r'[ \t]*<link rel="(?:preload|stylesheet)" href="https://fonts\.googleapis\.com/css\?family=Montserrat[^"]*"[^>]*>\n?')
 _BEACON = re.compile(r"<script>new Image\(\)\.src='https?://[^']*spread\.php[^<]*</script>")
 PRELOAD = '<link rel="preload" as="image" href="%s">\n'
 FONT_FILES = ("golos-text-cyrillic.woff2", "prata-cyrillic.woff2")
@@ -178,6 +179,7 @@ def build_page(path, html, ids, version):
     html = swap_photos(html, page_id(path))
     html = add_faq(html)
     html = _COUNTER.sub("", html)
+    html = _MONTSERRAT.sub("", html)
     html = _BEACON.sub("", html)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
@@ -282,6 +284,7 @@ def refresh(html, path=""):
     for old, new in ALIAS.items():
         html = html.replace(f'href="{old}"', f'href="{new}"')
     html = _COUNTER.sub("", html)
+    html = _MONTSERRAT.sub("", html)
     html = _BEACON.sub("", html)
     html = absolutize_loads(html)
     html = swap_photos(html, page_id(path))
