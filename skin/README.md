@@ -129,3 +129,7 @@ The skin does not change markup, so it cannot change page content, block order o
 - Hero slides are WebP (`hero_choc.py` writes both `.jpg` and `.webp`, the pages use `.webp`).
 - `vendor_css()` in `build_site.py` serves the template stylesheets from `vendor/css/` when a copy exists in `skin/cache/` (root-relative `url()` rewritten to the live site); IE-only and file-finder stylesheets are dropped.
 - Scripts are still loaded from the live site, so the demo waits for it. Once it answers again, copying those scripts into `vendor/` the same way removes that dependency.
+
+## Removed sections
+
+`skin/strip.py` runs on every built and restamped page: it drops every link block to `/help/warranty/` (the page itself is gone and the crawler skips it), the footer "Help" column (the remaining footer columns are widened to fill the row), the delayed list links and the card wish buttons. `skin.css` also hides any delayed UI the template script may add later, and `cart.js` no longer has a delayed list.

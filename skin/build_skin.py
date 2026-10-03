@@ -1821,42 +1821,25 @@ body .basket_fly .opener .wraps_icon_block::after {{
   font-family: "Golos Text", "Segoe UI", sans-serif; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; line-height: 1;
 }}
 body .basket_fly .opener .wraps_icon_block.basket::after {{ content: "корзина"; color: {ON_ACCENT}; }}
-body .basket_fly .opener .wraps_icon_block.delay::after {{ content: "отложено"; color: rgba(243, 232, 216, .7); }}
-body .basket_fly .opener .wish_count:hover .wraps_icon_block.delay::after {{ color: {ACCENT}; }}
 body .basket_fly .opener .count {{ position: absolute !important; top: 6px !important; right: 6px !important; left: auto !important; bottom: auto !important; margin: 0 !important; }}
 body .basket_fly .opener .basket_count.ms-has-items .wraps_icon_block .svg, body .basket_fly .opener .wish_count.ms-has-items .wraps_icon_block .svg {{ transform: none; }}
 body .basket_fly .opener .count span.colored_theme_bg.ms-pop {{ animation: ms-pop .4s ease; }}
 @keyframes ms-pop {{ 0% {{ transform: scale(.6); }} 60% {{ transform: scale(1.15); }} 100% {{ transform: scale(1); }} }}
 body .basket_fly .opener .basket_count {{ background: {ACCENT} !important; }}
 body .basket_fly .opener .basket_count svg path {{ fill: {ON_ACCENT} !important; }}
-body .basket_fly .opener .wish_count {{ background: transparent !important; border-top: 1px solid {GOLD_LINE} !important; }}
-body .basket_fly .opener .wish_count svg path {{ fill: rgba(243, 232, 216, .7) !important; }}
-body .basket_fly .opener .wish_count:hover svg path {{ fill: {ACCENT} !important; }}
 body .basket_fly .opener .count span.colored_theme_bg {{
   background: {INK} !important; color: {GROUND} !important; border-radius: 0 !important;
   min-width: 18px !important; height: 18px !important; line-height: 18px !important; padding: 0 5px !important;
   font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 11px !important; font-weight: 600 !important;
 }}
 body .basket_fly .opener .count span.colored_theme_bg span {{ background: transparent !important; color: inherit !important; }}
-body .basket_fly .opener .wish_count .count span.colored_theme_bg {{ background: rgba(243, 232, 216, .85) !important; }}
 body .basket_fly .opener .count.empty_items {{ display: none !important; }}
 body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !important; }}
 
-.ms-delayed {{ margin-top: 56px; padding-top: 40px; border-top: 1px solid {LINE}; padding-bottom: 40px; }}
-.ms-delayed[hidden] {{ display: none; }}
-.ms-fav {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 8px; }}
-.ms-fav__item {{ display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; background: {CARD}; padding: 14px; }}
-.ms-fav__pic {{ display: block; width: 96px; height: 96px; background: {GROUND}; overflow: hidden; }}
-.ms-fav__pic img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
-.ms-fav__name {{ display: block; font-family: "Golos Digits", Prata, Georgia, serif; font-size: 16px; line-height: 1.3; color: {INK} !important; }}
-.ms-fav__name:hover {{ color: {ACCENT} !important; }}
-.ms-fav__price {{ margin: 6px 0 12px; font-size: 13px; color: {MUTED}; }}
-.ms-fav__actions {{ display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }}
-.ms-fav__buy.btn {{ height: 40px !important; line-height: 40px !important; padding: 0 16px !important; font-size: 11px !important; }}
-.ms-fav__remove {{ background: none; border: 0; padding: 0; font-size: 13px; color: {MUTED}; text-decoration: underline; cursor: pointer; }}
-.ms-fav__remove:hover {{ color: {INK}; }}
 .bx-yandex-map, .bx-yandex-map * {{ font-family: "Golos Text", "Segoe UI", sans-serif; }}
 html.ms-lock, html.ms-lock body {{ overflow: hidden !important; }}
+.wish_item, .wish_item_button, body .basket_fly .opener .wish_count, .basket-link.delay, .wrap_icon.delay,
+.wraps_icon_block.delay, a[href*="#delayed"] {{ display: none !important; }}
 .ms-drawer {{ position: fixed; inset: 0; z-index: 3000; }}
 .ms-drawer[hidden] {{ display: none; }}
 .ms-drawer__shade {{ position: absolute; inset: 0; background: rgba(8, 5, 4, .62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .3s ease; }}
@@ -1922,10 +1905,6 @@ html.ms-lock, html.ms-lock body {{ overflow: hidden !important; }}
   .ms-drawer__name {{ font-size: 17px; }}
   .ms-drawer__total b {{ font-size: 34px; }}
 }}
-.ms-fav__empty {{ margin: 0; max-width: 560px; font-size: 14px; line-height: 1.6; color: {MUTED}; }}
-.wish_item.added svg path, .wish_item.in svg path {{ fill: {ACCENT} !important; }}
-body .wish_item.in.colored_theme_bg, body .wish_item.added.colored_theme_bg {{ background: {ACCENT} !important; }}
-body .wish_item.in.colored_theme_bg svg path, body .wish_item.added.colored_theme_bg svg path {{ fill: {ON_ACCENT} !important; }}
 .ms-ship {{ margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid {LINE}; }}
 .ms-ship__head {{ display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13px; color: {INK}; }}
 .ms-ship__head b {{ font-weight: 600; color: {GOLD}; white-space: nowrap; }}

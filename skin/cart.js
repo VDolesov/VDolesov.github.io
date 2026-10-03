@@ -73,52 +73,6 @@
     }
   }
 
-  var FAV_KEY = "ms_fav";
-  function loadFav() {
-    var raw = [];
-    try { raw = JSON.parse(localStorage.getItem(FAV_KEY) || "[]") || []; } catch (e) { return []; }
-    var list = raw.filter(function (id) { return !!PRODUCTS[id]; });
-    if (list.length !== raw.length) { try { localStorage.setItem(FAV_KEY, JSON.stringify(list)); } catch (e) {} }
-    return list;
-  }
-  function saveFav(list) {
-    try { localStorage.setItem(FAV_KEY, JSON.stringify(list)); } catch (e) {}
-    favBadge();
-  }
-  function favBadge() {
-    var n = loadFav().length;
-    var nodes = document.querySelectorAll(".wish_count, .basket-link.delay, .wrap_icon.delay, #mobilemenu a[href*='delayed']");
-    for (var i = 0; i < nodes.length; i++) {
-      var el = nodes[i];
-      var target = el.querySelector(".items span, .items, .count span:last-child, .count");
-      if (target) {
-        while (target.children.length === 1) target = target.children[0];
-        if (target.children.length === 0) target.textContent = String(n);
-      }
-      el.classList.toggle("empty", n === 0);
-      el.classList.toggle("ms-has-items", n > 0);
-      var countBox = el.querySelector(".count");
-      if (countBox) countBox.classList.toggle("empty_items", n === 0);
-      if (el.getAttribute("title")) el.setAttribute("title", n ? "Отложено: " + n : "Список отложенных пуст");
-    }
-  }
-  function markFav(id, on) {
-    var nodes = document.querySelectorAll('.wish_item[data-item="' + id + '"]');
-    for (var i = 0; i < nodes.length; i++) {
-      var el = nodes[i];
-      if (el.classList.contains("in")) el.style.display = on ? "" : "none";
-      else if (el.classList.contains("to")) el.style.display = on ? "none" : "";
-      else el.classList.toggle("added", on);
-    }
-  }
-  function toggleFav(id) {
-    var list = loadFav(), at = list.indexOf(id);
-    if (at === -1) list.push(id); else list.splice(at, 1);
-    saveFav(list);
-    markFav(id, at === -1);
-    return at === -1;
-  }
-
   function productIdFrom(el) {
     var holder = el.closest("[data-item]");
     if (holder && holder.getAttribute("data-item")) return holder.getAttribute("data-item");
@@ -155,19 +109,6 @@
     setTimeout(function () { box.classList.add("is-on"); }, 20);
     setTimeout(function () { box.classList.remove("is-on"); }, 4200);
     setTimeout(function () { if (box.parentNode) box.parentNode.removeChild(box); }, 4800);
-  }
-  function favToast(id, on) {
-    var p = PRODUCTS[id] || { name: "Товар" };
-    var old = document.querySelector(".ms-toast");
-    if (old) old.parentNode.removeChild(old);
-    var box = document.createElement("div");
-    box.className = "ms-toast";
-    box.innerHTML = '<div class="ms-toast__text"><b>' + esc(p.name) + '</b> — ' + (on ? "отложено" : "убрано из отложенных") + '</div>' +
-      (on ? '<a class="ms-toast__link" href="/basket/#delayed">Отложенные</a>' : "");
-    document.body.appendChild(box);
-    setTimeout(function () { box.classList.add("is-on"); }, 20);
-    setTimeout(function () { box.classList.remove("is-on"); }, 3200);
-    setTimeout(function () { if (box.parentNode) box.parentNode.removeChild(box); }, 3800);
   }
   function add(id, qty) {
     if (!PRODUCTS[id]) return false;
@@ -313,27 +254,11 @@
     return /^(https?:\/\/[^/]+)?\/basket\/?$/.test(href);
   }
 
-  function goDelayed() {
-    if (/^\/basket\/?$/.test(location.pathname) && location.hash === "#delayed") {
-      window.dispatchEvent(new HashChangeEvent("hashchange"));
-    } else {
-      location.href = "/basket/#delayed";
-    }
-  }
-
   document.addEventListener("click", function (e) {
-    var w = e.target.closest ? e.target.closest(".wish_item") : null;
-    if (w) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      var wid = w.getAttribute("data-item") || productIdFrom(w);
-      if (wid && PRODUCTS[wid]) favToast(wid, toggleFav(wid));
-      return;
-    }
     var side = e.target.closest ? e.target.closest(".basket_wrapp") : null;
     if (side) {
       e.preventDefault(); e.stopImmediatePropagation();
-      var delayed = e.target.closest(".wish_count, .wraps_icon_block.delay, [href*='#delayed']");
-      if (delayed) goDelayed(); else goCart();
+      goCart();
       return;
     }
     var link = e.target.closest ? e.target.closest("a") : null;
@@ -344,11 +269,6 @@
     }
     var t = e.target.closest ? e.target.closest(".to-cart, .in-cart, .one_click, .basket_fly .basket-link, .basket-link") : null;
     if (!t) return;
-    if (t.classList.contains("delay") || (t.getAttribute("href") || "").indexOf("#delayed") !== -1) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      goDelayed();
-      return;
-    }
 
     if (t.classList.contains("to-cart")) {
       e.preventDefault(); e.stopImmediatePropagation();
@@ -591,34 +511,6 @@
     });
   }
 
-  function renderFav(root) {
-    var ids = loadFav().filter(function (id) { return PRODUCTS[id]; });
-    if (!ids.length) {
-      if (location.hash !== "#delayed") { root.innerHTML = ""; root.hidden = true; return; }
-      root.hidden = false;
-      root.innerHTML = '<div class="ms-order__label">Отложенные</div>' +
-        '<h2 class="ms-order__title">Пока ничего не отложено</h2>' +
-        '<p class="ms-fav__empty">Нажмите на сердечко на карточке товара — он появится здесь, и его можно будет добавить в корзину позже.</p>';
-      return;
-    }
-    root.hidden = false;
-    root.innerHTML = '<div class="ms-order__label">Отложенные</div>' +
-      '<h2 class="ms-order__title">' + ids.length + ' ' + plural(ids.length, "товар", "товара", "товаров") + ' на потом</h2>' +
-      '<div class="ms-fav">' + ids.map(function (id) {
-        var p = PRODUCTS[id], img = photo(id);
-        return '<div class="ms-fav__item" data-id="' + id + '">' +
-          '<a class="ms-fav__pic" href="' + esc(p.url) + '">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : "") + '</a>' +
-          '<div class="ms-fav__body">' +
-            '<a class="ms-fav__name" href="' + esc(p.url) + '">' + esc(p.name) + '</a>' +
-            '<div class="ms-fav__price">' + money(p.price) + ' / ' + esc(p.unit || "шт") + '</div>' +
-            '<div class="ms-fav__actions">' +
-              '<button type="button" class="btn btn-default ms-fav__buy" data-fav-act="buy">В корзину</button>' +
-              '<button type="button" class="ms-fav__remove" data-fav-act="remove">Убрать</button>' +
-            '</div>' +
-          '</div></div>';
-      }).join("") + '</div>';
-  }
-
   function mountCart() {
     if (!/^\/basket\/?$/.test(location.pathname)) return;
 
@@ -633,30 +525,6 @@
     wrap.appendChild(root);
     bindCart(root);
     renderCart(root);
-
-    var fav = document.createElement("section");
-    fav.className = "ms-delayed";
-    fav.id = "delayed";
-    wrap.appendChild(fav);
-    renderFav(fav);
-    fav.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-fav-act]");
-      if (!b) return;
-      var id = b.closest(".ms-fav__item").getAttribute("data-id");
-      if (b.getAttribute("data-fav-act") === "buy") { add(id, 1); toast(id, 1); renderCart(root); }
-      var list = loadFav().filter(function (x) { return x !== id; });
-      saveFav(list); markFav(id, false); renderFav(fav);
-    });
-    function toDelayed() {
-      renderFav(fav);
-      setTimeout(function () {
-        window.scrollTo({ top: fav.getBoundingClientRect().top + window.scrollY - 110, behavior: "smooth" });
-      }, 120);
-    }
-    if (location.hash === "#delayed") toDelayed();
-    window.addEventListener("hashchange", function () {
-      if (location.hash === "#delayed") toDelayed();
-    });
   }
 
   function ready(fn) {
@@ -664,10 +532,8 @@
   }
   ready(function () {
     badge();
-    favBadge();
     var cart = load();
     for (var id in cart) markInCart(id);
-    loadFav().forEach(function (fid) { markFav(fid, true); });
     mountCart();
   });
 })();
