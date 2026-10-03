@@ -171,7 +171,7 @@ def footer(sections):
         <span class="brand__mark brand__mark--mill" aria-hidden="true"></span>
         <span class="brand__text">Мир сладостей</span>
       </a>
-      <p>Кондитерские изделия и кулинария<br>в Саратове и Энгельсе.</p>
+      <p>Кондитерские изделия и кулинария<br>в Саратове.</p>
       <div class="footer-phones">
         <a class="footer-phone" href="tel:{PHONE_MAIN_HREF}">{PHONE_MAIN}</a>
         <a href="tel:{PHONE_SECOND_HREF}">{PHONE_SECOND}</a>
