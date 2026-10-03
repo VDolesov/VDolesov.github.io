@@ -1804,6 +1804,8 @@ body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !im
 .ms-fav__remove {{ background: none; border: 0; padding: 0; font-size: 13px; color: {MUTED}; text-decoration: underline; cursor: pointer; }}
 .ms-fav__remove:hover {{ color: {INK}; }}
 .wish_item.added svg path, .wish_item.in svg path {{ fill: {ACCENT} !important; }}
+body .wish_item.in.colored_theme_bg, body .wish_item.added.colored_theme_bg {{ background: {ACCENT} !important; }}
+body .wish_item.in.colored_theme_bg svg path, body .wish_item.added.colored_theme_bg svg path {{ fill: {ON_ACCENT} !important; }}
 
 .ms-reveal {{ opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1); }}
 .ms-reveal.is-in {{ opacity: 1; transform: none; }}
