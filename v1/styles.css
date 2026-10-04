@@ -347,6 +347,8 @@ h2 em, h1 em { color: var(--wine); font-weight: 400; }
 .faq details { border-bottom: 1px solid var(--line); }
 .faq summary { min-height: 96px; display: grid; grid-template-columns: 1fr 28px; gap: 24px; align-items: center; list-style: none; cursor: pointer; font-family: var(--serif); font-size: clamp(20px, 1.8vw, 27px); line-height: 1.15; }
 .faq summary::-webkit-details-marker { display: none; }
+.faq summary:focus { outline: none; }
+.faq summary:focus-visible { outline: 1px solid rgba(199, 168, 117, .55); outline-offset: 4px; }
 .faq summary span { position: relative; width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 50%; }
 .faq summary span::before, .faq summary span::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 1px; background: currentColor; transform: translate(-50%, -50%); transition: transform .25s ease; }
 .faq summary span::after { transform: translate(-50%, -50%) rotate(90deg); }

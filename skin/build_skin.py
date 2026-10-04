@@ -1454,6 +1454,8 @@ body .ms-faq-block {{ padding: clamp(48px, 5vw, 76px) 0 clamp(8px, 1vw, 16px) !i
 }}
 .ms-faq__item > summary::-webkit-details-marker {{ display: none; }}
 .ms-faq__item > summary:hover {{ color: {GOLD}; }}
+.ms-faq__item > summary:focus {{ outline: none; }}
+.ms-faq__item > summary:focus-visible {{ outline: 1px solid {GOLD_LINE}; outline-offset: 4px; }}
 .ms-faq__item > summary i {{
   position: relative; flex: none; width: 28px; height: 28px; border: 1px solid {GOLD_LINE}; border-radius: 50%;
 }}
