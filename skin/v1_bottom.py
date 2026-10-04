@@ -4,7 +4,7 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 V1 = os.path.join(os.path.dirname(HERE), "v1")
-VERSION = "12"
+VERSION = "13"
 
 STORES = [
     ("51.610035,46.000893", "ТЦ «Солнечный», г. Саратов, ул. Тархова 29А/1"),
@@ -71,13 +71,6 @@ FOOTER = f'''<footer class="foot" id="footer">
           <a href="/v1/#delivery">Условия оплаты</a>
           <a href="/v1/#delivery">Самовывоз</a>
           <a href="/v1/#faq">Перед заказом</a>
-        </div>
-        <div class="foot__col">
-          <h3>Помощь</h3>
-          <a href="/v1/#faq">Как оформить заказ</a>
-          <a href="/v1/#custom">Торт на заказ</a>
-          <button type="button" data-open-cart aria-controls="cartDrawer" aria-expanded="false">Корзина</button>
-          <a href="/v1/#faq">Состав и аллергены</a>
         </div>
         <div class="foot__contact">
           <button class="foot__subscribe" type="button" data-demo-note="{DEMO_NOTE}">
