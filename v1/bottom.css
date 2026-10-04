@@ -48,10 +48,6 @@
 .foot__bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0 22px; border-top: 1px solid rgba(199, 168, 117, .14); color: rgba(242, 230, 214, .42); font-size: 12px; }
 .foot__pays { display: flex; align-items: center; gap: 18px; color: rgba(242, 230, 214, .55); }
 .pay { display: inline-flex; align-items: center; font-weight: 800; letter-spacing: .04em; font-style: italic; font-size: 14px; }
-.pay--mc { position: relative; width: 30px; height: 18px; }
-.pay--mc::before, .pay--mc::after { content: ""; position: absolute; top: 0; width: 18px; height: 18px; border-radius: 50%; background: rgba(242, 230, 214, .5); }
-.pay--mc::before { left: 0; }
-.pay--mc::after { left: 12px; background: rgba(242, 230, 214, .25); }
 .pay--mir { font-style: normal; letter-spacing: .08em; }
 
 @media (max-width: 1180px) {
