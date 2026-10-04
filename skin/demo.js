@@ -18,7 +18,7 @@
     ask: ["Задать вопрос",
       "На рабочем сайте вопрос уходит менеджеру. В демо-версии формы не отправляются — напишите нам на почту или позвоните."],
     contacts: ["Контакты",
-      "г. Саратов, ул. Бахметьевская, 49. Магазины: ТЦ «Солнечный», ул. Тархова 29А/1 и кулинария на кольце НИИ."],
+      "г. Саратов, ул. Бахметьевская, 49. Адреса всех семи фирменных магазинов — в разделе «Контакты»."],
     form: ["Форма",
       "На рабочем сайте эта форма отправляется на сервер. В демо-версии формы не отправляются — позвоните или напишите нам."]
   };
@@ -120,5 +120,22 @@
   function ready(fn) {
     if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn);
   }
+  function cookieNote() {
+    try { if (localStorage.getItem("ms_cookie_note")) return; } catch (e) { return; }
+    var box = document.createElement("div");
+    box.className = "ms-cookie";
+    box.setAttribute("role", "region");
+    box.setAttribute("aria-label", "Уведомление о cookie");
+    box.innerHTML = '<p class="ms-cookie__text">Сайт использует cookie и хранилище браузера: они нужны для работы корзины и карты магазинов. ' +
+      'Подробнее — в <a href="/company/agreement/">политике обработки персональных данных</a>.</p>' +
+      '<button type="button" class="btn btn-default ms-cookie__ok">Хорошо</button>';
+    document.body.appendChild(box);
+    box.querySelector(".ms-cookie__ok").addEventListener("click", function () {
+      try { localStorage.setItem("ms_cookie_note", "1"); } catch (e) {}
+      box.parentNode.removeChild(box);
+    });
+  }
+
   ready(authPage);
+  ready(cookieNote);
 })();

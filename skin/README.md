@@ -133,3 +133,7 @@ The skin does not change markup, so it cannot change page content, block order o
 ## Removed sections
 
 `skin/strip.py` runs on every built and restamped page: it drops every link block to `/help/warranty/` (the page itself is gone and the crawler skips it), the footer "Help" column (the remaining footer columns are widened to fill the row), the delayed list links and the card wish buttons. `skin.css` also hides any delayed UI the template script may add later, and `cart.js` no longer has a delayed list.
+
+## Legal copy
+
+`skin/legal.py` runs after `strip.py` on every page. It aligns the order, payment and return wording with how the demo cart actually works (order confirmed by the manager's call, real payment methods, food-appropriate refusal and quality answers), fixes the requisites (BIK, KPP, `#requisites` anchor, seller line in the footer copyright), replaces the old `mirsladostey64.ru` mailbox, template meta descriptions and the Drag'n'drop label, adds the "appearance may differ" note on product pages and a consent checkbox to the review form. The licenses and brands pages are removed. `cart.js` enforces the 800 ₽ minimum order, shows delivery as "up to 150 ₽" below 3000 ₽ and links the privacy policy under the order form; `demo.js` shows a one-time cookie notice.

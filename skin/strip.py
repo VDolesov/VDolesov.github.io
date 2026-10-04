@@ -76,6 +76,8 @@ def widen_footer(html):
 
 def strip_sections(html):
     html = drop_link_blocks(html, "/help/warranty/")
+    html = drop_link_blocks(html, "/company/licenses/")
+    html = drop_link_blocks(html, "/info/brands/")
     html = widen_footer(drop_column(html, 'data-parent="#bottom_help"'))
     html = drop_link_blocks(html, "/basket/#delayed")
     html = drop_class_blocks(html, "wish_item_button")

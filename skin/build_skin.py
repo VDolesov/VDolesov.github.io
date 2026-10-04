@@ -1837,6 +1837,22 @@ body .basket_fly .opener .count.empty_items {{ display: none !important; }}
 body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !important; }}
 
 .bx-yandex-map, .bx-yandex-map * {{ font-family: "Golos Text", "Segoe UI", sans-serif; }}
+.ms-cookie {{
+  position: fixed; left: 24px; bottom: 24px; z-index: 2500; display: flex; align-items: center; gap: 18px;
+  max-width: 560px; padding: 18px 20px; background: {CARD}; border: 1px solid {GOLD_LINE}; box-shadow: 0 12px 36px rgba(0, 0, 0, .45);
+}}
+.ms-cookie__text {{ margin: 0; font-size: 13px; line-height: 1.55; color: {MUTED}; }}
+.ms-cookie__text a {{ color: {INK} !important; text-decoration: underline; }}
+.ms-cookie .ms-cookie__ok.btn {{ flex: none; height: 42px !important; line-height: 42px !important; padding: 0 20px !important; }}
+.ms-form__legal {{ grid-column: 1 / -1; margin-top: 4px; font-size: 12px; line-height: 1.55; color: {MUTED}; }}
+.ms-form__legal a, .ms-consent a {{ color: {INK} !important; text-decoration: underline; }}
+.ms-consent {{ margin: 14px 0 4px; font-size: 13px; line-height: 1.5; color: {MUTED}; }}
+.ms-consent label {{ display: flex; gap: 10px; align-items: flex-start; font-weight: 400 !important; cursor: pointer; }}
+.ms-consent input {{ flex: none; width: 16px; height: 16px; margin: 2px 0 0; accent-color: {ACCENT}; }}
+.btn.is-disabled {{ opacity: .45; pointer-events: none; cursor: default; }}
+@media (max-width: 600px) {{
+  .ms-cookie {{ left: 12px; right: 12px; bottom: 12px; flex-direction: column; align-items: stretch; gap: 12px; }}
+}}
 html.ms-lock, html.ms-lock body {{ overflow: hidden !important; }}
 .wish_item, .wish_item_button, body .basket_fly .opener .wish_count, .basket-link.delay, .wrap_icon.delay,
 .wraps_icon_block.delay, a[href*="#delayed"] {{ display: none !important; }}

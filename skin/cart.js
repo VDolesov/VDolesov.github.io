@@ -10,6 +10,7 @@
   var SHOP_PHONE = "+7 (8452) 47-35-69";
   var FREE_DELIVERY = 3000;
   var DELIVERY_FEE = 150;
+  var MIN_ORDER = 800;
 
   function load() {
     var raw = {};
@@ -179,8 +180,8 @@
         '<div class="ms-drawer__total"><span>Товары</span><b>' + money(sum) + '</b></div>' +
         '<div class="ms-drawer__note">' + (sum >= FREE_DELIVERY
           ? "Доставка по Саратову: бесплатно · самовывоз бесплатно"
-          : "Доставка по Саратову: " + money(DELIVERY_FEE) + " · самовывоз бесплатно") + '</div>' +
-        '<a class="btn btn-default btn-lg ms-drawer__go" href="/basket/#order">Перейти к оформлению</a>' +
+          : "Доставка по Саратову: до " + money(DELIVERY_FEE) + ", в радиусе 3 км от центра — бесплатно · самовывоз бесплатно") + '</div>' +
+        checkoutButton(sum, "ms-drawer__go", "/basket/#order", "Перейти к оформлению") +
         '<div class="ms-drawer__fine">Наличие, итоговую стоимость и время подтверждает менеджер.</div>' +
       '</div>';
     var list = content.querySelector(".ms-drawer__list");
@@ -315,11 +316,31 @@
     '</div>';
   }
 
-  function deliveryFee(sum, mode) {
-    return mode === "delivery" && sum < FREE_DELIVERY ? DELIVERY_FEE : 0;
+  function shippingText(sum, mode) {
+    if (mode !== "delivery") return "самовывоз, бесплатно";
+    return sum >= FREE_DELIVERY ? "бесплатно" : "до " + money(DELIVERY_FEE);
+  }
+  function totalLabel(sum, mode) {
+    return mode === "delivery" && sum < FREE_DELIVERY ? "Итого без доставки" : "Итого";
+  }
+  function belowMinimum(sum) {
+    return sum < MIN_ORDER;
+  }
+  function checkoutButton(sum, cls, href, label) {
+    if (belowMinimum(sum)) {
+      return '<span class="btn btn-default btn-lg ' + cls + ' is-disabled" aria-disabled="true">Минимальный заказ — ' + money(MIN_ORDER) + '</span>';
+    }
+    return '<a class="btn btn-default btn-lg ' + cls + '" href="' + href + '">' + label + '</a>';
   }
 
   function shipBlock(sum) {
+    if (belowMinimum(sum)) {
+      return '<div class="ms-ship">' +
+        '<div class="ms-ship__head"><span>До минимальной суммы заказа</span><b>' + money(MIN_ORDER - sum) + '</b></div>' +
+        '<div class="ms-ship__bar"><i style="width:' + Math.min(100, sum / MIN_ORDER * 100).toFixed(1) + '%"></i></div>' +
+        '<div class="ms-ship__hint">Минимальная сумма заказа — ' + money(MIN_ORDER) + '.</div>' +
+      '</div>';
+    }
     var left = Math.max(0, FREE_DELIVERY - sum);
     var pct = Math.min(100, sum / FREE_DELIVERY * 100);
     return '<div class="ms-ship' + (left ? "" : " is-free") + '">' +
@@ -327,17 +348,17 @@
         (left ? '<b>' + money(left) + '</b>' : "") + '</div>' +
       '<div class="ms-ship__bar"><i style="width:' + pct.toFixed(1) + '%"></i></div>' +
       '<div class="ms-ship__hint">' + (left
-        ? "Доставляем только по Саратову. От " + money(FREE_DELIVERY) + " — бесплатно, иначе " + money(DELIVERY_FEE) + "."
+        ? "Доставляем только по Саратову: в радиусе 3 км от центра и при заказе от " + money(FREE_DELIVERY) +
+          " — бесплатно, дальше по городу — " + money(DELIVERY_FEE) + "."
         : "Доставляем только по Саратову.") + '</div>' +
     '</div>';
   }
 
   function summaryRows(cart, mode) {
-    var n = count(cart), sum = total(cart), fee = deliveryFee(sum, mode);
-    var ship = mode === "delivery" ? (fee ? money(fee) : "бесплатно") : "самовывоз, бесплатно";
+    var n = count(cart), sum = total(cart);
     return '<div class="ms-summary__row"><span>' + n + ' ' + plural(n, "товар", "товара", "товаров") + '</span><span>' + money(sum) + '</span></div>' +
-      '<div class="ms-summary__row"><span>Доставка</span><span>' + ship + '</span></div>' +
-      '<div class="ms-summary__row ms-summary__row--total"><span>Итого</span><span>' + money(sum + fee) + '</span></div>';
+      '<div class="ms-summary__row"><span>Доставка</span><span>' + shippingText(sum, mode) + '</span></div>' +
+      '<div class="ms-summary__row ms-summary__row--total"><span>' + totalLabel(sum, mode) + '</span><span>' + money(sum) + '</span></div>';
   }
 
   function orderText(order) {
@@ -345,8 +366,8 @@
     order.items.forEach(function (it) {
       lines.push(it.name + " × " + it.qty + " — " + money(it.price * it.qty).replace(/ /g, " "));
     });
-    if (order.delivery === "delivery") lines.push("", "Доставка: " + (order.fee ? money(order.fee).replace(/ /g, " ") : "бесплатно"));
-    lines.push("", "Итого: " + money(order.total).replace(/ /g, " "));
+    if (order.delivery === "delivery") lines.push("", "Доставка: " + order.shipping.replace(/ /g, " "));
+    lines.push("", totalLabel(order.total, order.delivery) + ": " + money(order.total).replace(/ /g, " "));
     lines.push("", "Имя: " + order.name, "Телефон: " + order.phone,
       "Получение: " + (order.delivery === "delivery" ? "доставка, " + order.address : "самовывоз"));
     if (order.date) lines.push("Когда: " + order.date);
@@ -375,7 +396,7 @@
       '<aside class="ms-summary">' +
         shipBlock(total(cart)) +
         '<div class="ms-summary__rows">' + summaryRows(cart, mode) + '</div>' +
-        '<a class="btn btn-default btn-lg ms-summary__btn" href="#order">Оформить заказ</a>' +
+        checkoutButton(total(cart), "ms-summary__btn", "#order", "Оформить заказ") +
         '<div class="ms-summary__note">Самовывоз из магазина — бесплатно, в день заказа.<br>Доставка — только по Саратову, на следующий день.</div>' +
       '</aside>' +
     '</div>' +
@@ -395,8 +416,11 @@
         '<label class="ms-field"><span>Комментарий</span><input name="comment" type="text" placeholder="надпись на торте, свечи, аллергии"></label>' +
         '<div class="ms-form__foot">' +
           '<button type="submit" class="btn btn-default btn-lg">Подтвердить заказ</button>' +
-          '<div class="ms-form__hint">Менеджер перезвонит, чтобы подтвердить состав и время.</div>' +
+          '<div class="ms-form__hint">Менеджер перезвонит, чтобы подтвердить состав, время и стоимость доставки.</div>' +
         '</div>' +
+        '<div class="ms-form__legal">Нажимая «Подтвердить заказ», вы соглашаетесь с ' +
+          '<a href="/company/agreement/" target="_blank">политикой обработки персональных данных</a>. ' +
+          'Имя, телефон и адрес нужны только для выполнения заказа.</div>' +
         '<div class="ms-form__error" hidden></div>' +
       '</form>' +
     '</section>';
@@ -447,11 +471,16 @@
       if (!f.name.value.trim()) problems.push("имя");
       if (phone.length < 10) problems.push("телефон");
       if (f.delivery.value === "delivery" && !f.address.value.trim()) problems.push("адрес доставки");
+      var c = load(), sum = total(c);
+      if (belowMinimum(sum)) {
+        err.hidden = false;
+        err.textContent = "Минимальная сумма заказа — " + money(MIN_ORDER) + ": добавьте ещё " + money(MIN_ORDER - sum) + ".";
+        return;
+      }
       if (problems.length) {
         err.hidden = false; err.textContent = "Заполните: " + problems.join(", ") + ".";
         return;
       }
-      var c = load(), sum = total(c), fee = deliveryFee(sum, f.delivery.value);
       var order = {
         number: nextNumber(),
         date: f.date.value.trim(), comment: f.comment.value.trim(),
@@ -460,7 +489,7 @@
         items: Object.keys(c).map(function (id) {
           return { id: id, name: PRODUCTS[id].name, price: PRODUCTS[id].price, qty: c[id] };
         }),
-        fee: fee, total: sum + fee, created: new Date().toISOString()
+        shipping: shippingText(sum, f.delivery.value), total: sum, created: new Date().toISOString()
       };
       try {
         var orders = JSON.parse(localStorage.getItem(ORDER_KEY) || "[]");
@@ -493,8 +522,8 @@
       '<div class="ms-done__list">' + order.items.map(function (it) {
         return '<div class="ms-done__row"><span>' + esc(it.name) + ' × ' + it.qty + '</span><span>' + money(it.price * it.qty) + '</span></div>';
       }).join("") +
-      (order.delivery === "delivery" ? '<div class="ms-done__row"><span>Доставка по Саратову</span><span>' + (order.fee ? money(order.fee) : "бесплатно") + '</span></div>' : "") +
-      '<div class="ms-done__row ms-done__row--total"><span>Итого</span><span>' + money(order.total) + '</span></div></div>' +
+      (order.delivery === "delivery" ? '<div class="ms-done__row"><span>Доставка по Саратову</span><span>' + order.shipping + '</span></div>' : "") +
+      '<div class="ms-done__row ms-done__row--total"><span>' + totalLabel(order.total, order.delivery) + '</span><span>' + money(order.total) + '</span></div></div>' +
       '<div class="ms-done__actions">' +
         '<a class="btn btn-default btn-lg" href="' + mail + '">Отправить заказ на почту</a>' +
         '<button type="button" class="btn btn-transparent btn-lg" data-copy>Скопировать заказ</button>' +
