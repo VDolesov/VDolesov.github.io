@@ -813,7 +813,6 @@ body .cat_sections.cat_sections .item.compact .name a {{
   background: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important; color: {ON_ACCENT} !important;
 }}
 
-.btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn,
 .btn.btn-search, button.btn-search, .top-btn, .btn.subscribe,
 .btn[class*="icon_"], .btn.close {{
   width: 42px !important; height: 42px !important;
@@ -824,14 +823,10 @@ body .cat_sections.cat_sections .item.compact .name a {{
   border: 1px solid {LINE} !important; background: transparent !important;
   transition: border-color .2s ease, background-color .2s ease;
 }}
-.btn.wish_item:hover, .btn.compare_item:hover, .btn.btn-search:hover, .top-btn:hover {{
+.btn.btn-search:hover, .top-btn:hover {{
   border-color: {ACCENT} !important; background: {ACCENT_SOFT} !important;
 }}
-.catalog_item .btn.wish_item, .catalog_item .btn.compare_item,
-.catalog_item .wish_item.btn, .catalog_item .compare_item.btn {{
-  width: 36px !important; height: 36px !important;
-}}
-.btn.wish_item svg, .btn.compare_item svg, .btn.btn-search svg {{
+.btn.btn-search svg {{
   width: 17px !important; height: 17px !important; margin: 0 !important;
 }}
 body .inline-search-block .search-button-div .btn.btn-search.btn-lg,
@@ -1186,33 +1181,6 @@ body .CATALOG_TAB .tabs li.cur a, body .CATALOG_TAB .nav-tabs li.active a {{
   color: {INK} !important; box-shadow: inset 0 -2px 0 {ACCENT} !important;
 }}
 
-body .COMPANY_TEXT .company-block .row.flexbox {{ align-items: stretch !important; margin: 0 !important; width: 100% !important; }}
-body .COMPANY_TEXT .text-block .item, body .COMPANY_TEXT .text-block .item-inner {{ width: 100% !important; }}
-body .COMPANY_TEXT .text-block .text {{
-  width: 100% !important; max-width: 560px !important; margin: 0 !important; padding: 0 40px 0 0 !important;
-  font-size: 16px !important; line-height: 1.7 !important;
-}}
-body .COMPANY_TEXT .text-block .text p {{ font-size: 16px !important; line-height: 1.7 !important; }}
-body .COMPANY_TEXT .image-block .item.video-block {{
-  width: 100% !important; min-height: 360px !important; height: 100% !important;
-  border-radius: 0 !important; overflow: hidden;
-  background: {PANEL} url("/assets/about.jpg?v=1") center / cover no-repeat !important;
-  border: 1px solid {LINE} !important;
-}}
-body .COMPANY_TEXT {{ padding-top: clamp(56px, 6vw, 96px) !important; padding-bottom: clamp(56px, 6vw, 96px) !important; }}
-@media (max-width: 991px) {{
-  body .COMPANY_TEXT .text-block .text {{ max-width: none !important; padding: 0 0 26px !important; }}
-  body .COMPANY_TEXT .image-block .item.video-block {{ min-height: 240px !important; }}
-}}
-
-body .TIZERS .item {{ padding: 26px 18px !important; }}
-body .TIZERS .item .icon, body .TIZERS .item .icon svg, body .TIZERS .item svg {{ color: {GOLD} !important; }}
-body .TIZERS .item .title {{
-  font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 19px !important;
-  font-weight: 500 !important; margin: 14px 0 8px !important; text-transform: none !important;
-}}
-body .TIZERS .item .text, body .TIZERS .item .muted {{ font-size: 14px !important; line-height: 1.55 !important; color: {MUTED} !important; }}
-
 body .footer-inner .footer_top {{ padding: 56px 0 40px !important; }}
 body .footer-inner .footer_middle {{ display: none !important; }}
 body .footer-inner .footer_bottom {{ padding: 20px 0 !important; border-top: 1px solid rgba(243, 232, 216, .08) !important; }}
@@ -1222,12 +1190,10 @@ body footer .bottom-menu li a, body footer .footer_top .menu li a {{ font-size: 
 .item_block:hover .catalog_item, .catalog_item_wrapp:hover .catalog_item {{ border-color: {LINE} !important; }}
 body .cat_sections.cat_sections .item.compact:hover {{ border-color: {LINE} !important; }}
 
-.btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn,
 .btn.btn-search, button.btn-search, .btn.subscribe, .btn[class*="icon_"], .btn.close,
 body .search-button-div .btn, body .search-button-div button {{
   border: 0 !important; background: {CARD} !important;
 }}
-.btn.wish_item:hover, .btn.compare_item:hover, .wish_item.btn:hover, .compare_item.btn:hover,
 .btn.btn-search:hover, button.btn-search:hover,
 body .search-button-div .btn:hover, body .search-button-div button:hover {{
   border: 0 !important; background: {ACCENT} !important; color: {ON_ACCENT} !important;
@@ -1386,25 +1352,6 @@ body .CATALOG_TAB .tab_slider_wrapp .tabs li a, body .CATALOG_TAB .nav-tabs li a
 }}
 body .CATALOG_TAB .tabs li.cur a, body .CATALOG_TAB .nav-tabs li.active a {{ box-shadow: none !important; }}
 
-body .COMPANY_TEXT .company-block .row.flexbox {{ border: 1px solid {GOLD_LINE} !important; }}
-body .COMPANY_TEXT .text-block .item, body .COMPANY_TEXT .text-block .item-inner {{ height: 100% !important; }}
-body .COMPANY_TEXT .text-block .text {{ padding: 52px 56px 52px 8px !important; }}
-body .COMPANY_TEXT .image-block .item.video-block {{
-  border: 0 !important; border-left: 1px solid {GOLD_LINE} !important; min-height: 420px !important;
-  background-image: url("/assets/about.jpg?v=2") !important;
-}}
-body .COMPANY_TEXT .company-block .title, body .COMPANY_TEXT .top_block .title {{ font-size: clamp(30px, 3vw, 44px) !important; }}
-@media (max-width: 991px) {{
-  body .COMPANY_TEXT .text-block .text {{ padding: 28px 24px !important; }}
-  body .COMPANY_TEXT .image-block .item.video-block {{ border-left: 0 !important; border-top: 1px solid {GOLD_LINE} !important; min-height: 260px !important; }}
-}}
-
-body .TIZERS .item {{ text-align: left !important; padding: 22px 0 0 !important; border-top: 1px solid {GOLD_LINE} !important; }}
-body .TIZERS .item .image {{ display: none !important; }}
-body .TIZERS .item .title {{ font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important; font-size: 22px !important; margin: 0 0 10px !important; }}
-body .TIZERS .item .value, body .TIZERS .item .text {{ font-size: 14px !important; line-height: 1.65 !important; color: {MUTED} !important; }}
-body .TIZERS .item-wrapper {{ padding-left: 20px !important; padding-right: 20px !important; }}
-
 .ms-item__name, .ms-item__sum, .ms-summary__row--total, .ms-done__row--total, .ms-empty__title {{
   font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
 }}
@@ -1432,7 +1379,6 @@ body .catalog_item .item-title a::first-letter {{ text-transform: uppercase !imp
 .page-top .topic, h1#pagetitle, .detail .topic h1 {{ text-transform: lowercase !important; }}
 .page-top .topic::first-letter, h1#pagetitle::first-letter {{ text-transform: uppercase !important; }}
 .drag-block.SALE:not(:has(*)), .drag-block.REVIEWS:not(:has(*)) {{ display: none !important; }}
-body .drag-block.COMPANY_TEXT {{ display: none !important; }}
 
 body .ms-faq-block {{ padding: clamp(48px, 5vw, 76px) 0 clamp(8px, 1vw, 16px) !important; }}
 .ms-faq {{ display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: clamp(32px, 5vw, 90px); }}
@@ -1503,7 +1449,7 @@ input:focus, textarea:focus, select:focus, .form-control:focus {{ border-color: 
 .ms-form input[type="text"], .ms-form input[type="tel"], .ms-form .ms-choice label {{ border: 1px solid {GOLD_LINE} !important; }}
 .ms-form input[type="text"]:focus, .ms-form input[type="tel"]:focus, .ms-form .ms-choice label:has(input:checked) {{ border-color: {ACCENT} !important; }}
 .ms-field[hidden] {{ display: none !important; }}
-.btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn, .btn.btn-search, button.btn-search {{ background: #2a1d17 !important; }}
+.btn.btn-search, button.btn-search {{ background: #2a1d17 !important; }}
 
 .content_wrapper_block, .block_container.bordered, .contacts_map.bordered, .basket_sort,
 .map_type_2 .item, .item.initied, .footer_top, .bordered {{ border-color: transparent !important; }}
@@ -1816,7 +1762,7 @@ body .top_slider_wrapp .flex-direction-nav .flex-next {{ right: 20px !important;
 }}
 
 body .basket_fly .opener {{ background: {PANEL} !important; border: 1px solid {GOLD_LINE} !important; border-right: 0 !important; width: 72px !important; left: -72px !important; }}
-body .basket_fly .opener .basket_count, body .basket_fly .opener .wish_count {{ width: 72px !important; height: 72px !important; position: relative !important; }}
+body .basket_fly .opener .basket_count {{ width: 72px !important; height: 72px !important; position: relative !important; }}
 body .basket_fly .opener .wraps_icon_block {{
   display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
   gap: 7px !important; width: 100% !important; height: 100% !important; padding: 0 !important; margin: 0 !important; position: static !important;
@@ -1827,7 +1773,7 @@ body .basket_fly .opener .wraps_icon_block::after {{
 }}
 body .basket_fly .opener .wraps_icon_block.basket::after {{ content: "корзина"; color: {ON_ACCENT}; }}
 body .basket_fly .opener .count {{ position: absolute !important; top: 6px !important; right: 6px !important; left: auto !important; bottom: auto !important; margin: 0 !important; }}
-body .basket_fly .opener .basket_count.ms-has-items .wraps_icon_block .svg, body .basket_fly .opener .wish_count.ms-has-items .wraps_icon_block .svg {{ transform: none; }}
+body .basket_fly .opener .basket_count.ms-has-items .wraps_icon_block .svg {{ transform: none; }}
 body .basket_fly .opener .count span.colored_theme_bg.ms-pop {{ animation: ms-pop .4s ease; }}
 @keyframes ms-pop {{ 0% {{ transform: scale(.6); }} 60% {{ transform: scale(1.15); }} 100% {{ transform: scale(1); }} }}
 body .basket_fly .opener .basket_count {{ background: {ACCENT} !important; }}

@@ -82,4 +82,5 @@ def strip_sections(html):
     html = drop_link_blocks(html, "/basket/#delayed")
     html = drop_class_blocks(html, "wish_item_button")
     html = drop_class_blocks(html, "drag-block container TIZERS", exact=False)
+    html = drop_class_blocks(html, "drag-block container COMPANY_TEXT", exact=False)
     return html
