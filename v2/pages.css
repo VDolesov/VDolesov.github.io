@@ -1,7 +1,3 @@
-/* Дополнительные стили многостраничного каркаса (внутренние страницы). */
-
-/* Оригинальный логотип-мельница mirsladostey164.ru.
-   Подключён CSS-маской, чтобы наследовать цвет темы (currentColor). */
 .brand__mark--mill {
   flex: 0 0 auto;
   width: 82px;
@@ -14,7 +10,6 @@
   .brand__mark--mill { width: 62px; height: 32px; }
 }
 
-/* Компактный тёмный баннер внутренних страниц вместо полноэкранного hero */
 .page-hero {
   position: relative;
   display: grid;
@@ -47,7 +42,6 @@
 .page-hero h1 em { color: #d6b783; font-style: italic; }
 .page-hero__lead { max-width: 520px; margin: 20px 0 0; color: rgba(255,241,224,.62); line-height: 1.7; }
 
-/* Хлебные крошки — как в каркасе оригинала */
 .breadcrumbs {
   display: flex;
   flex-wrap: wrap;
@@ -62,18 +56,15 @@
 .breadcrumbs a:hover { color: #efd7ae; }
 .breadcrumbs span[aria-hidden] { color: rgba(234,220,202,.3); }
 
-/* Полоса ссылок на разделы каталога (slug'и оригинала) */
 .category-links { display: flex; gap: 8px; padding: 30px 0 6px; overflow-x: auto; scrollbar-width: none; }
 .category-links::-webkit-scrollbar { display: none; }
 a.filter-chip { display: inline-flex; align-items: center; }
 .theme-noir a.filter-chip.is-current { color: #170c14; border-color: #d0ae76; background: #d0ae76; pointer-events: none; }
 
-/* Витрина разделов на странице /catalog/ */
 .section-rail { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(199,168,117,.18); }
 .section-rail .category-tile { min-height: 300px; }
 .section-rail .category-tile__visual { width: min(64%, 200px); top: 40px; }
 
-/* Контакты */
 .contacts-block { padding: 110px 0 140px; color: #eadcca; background: #100810; }
 .contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; }
 .contact-card { padding: 34px 0 30px; border-top: 1px solid rgba(199,168,117,.25); }
@@ -91,7 +82,6 @@ a.filter-chip { display: inline-flex; align-items: center; }
 .store-row h3 { margin: 0 0 6px; font-family: var(--serif); font-size: clamp(21px, 1.8vw, 28px); font-weight: 400; }
 .store-row p { margin: 0; color: var(--muted); font-size: 13px; }
 
-/* О компании: лента вех */
 .timeline { padding: 130px 0 150px; color: #eadcca; background: #120a11; }
 .timeline__list { display: grid; margin-top: 65px; border-top: 1px solid rgba(199,168,117,.22); }
 .timeline-row { display: grid; grid-template-columns: 180px 1fr; gap: 40px; padding: 36px 0; border-bottom: 1px solid rgba(199,168,117,.14); }
@@ -114,13 +104,6 @@ a.filter-chip { display: inline-flex; align-items: center; }
   .timeline-row { grid-template-columns: 1fr; gap: 12px; }
 }
 
-/* ======================================================================
-   Разделы, добавленные при переходе на структуру mirsladostey164.ru:
-   выпадающее меню, страница товара, корзина, оформление, текстовые
-   разделы, поиск и отложенные.
-   ====================================================================== */
-
-/* --- шапка: выпадающие разделы и иконки --------------------------------- */
 .nav-group { position: relative; }
 .nav-group__title { position: relative; display: inline-flex; align-items: center; gap: 7px; padding-block: 12px; }
 .nav-group__title i { width: 5px; height: 5px; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg) translateY(-2px); }
@@ -145,7 +128,6 @@ a.filter-chip { display: inline-flex; align-items: center; }
 .icon-link__count { position: absolute; top: -3px; right: -3px; min-width: 19px; height: 19px; display: grid; place-items: center; padding: 0 5px; border-radius: 10px; color: var(--white); background: var(--wine-bright); font-size: 10px; font-weight: 700; }
 .header-phone span { white-space: nowrap; }
 
-/* --- страница товара ---------------------------------------------------- */
 .product-page { padding: 130px 0 120px; color: #eadcca; background: #100810; }
 .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 80px); align-items: start; }
 .product-gallery { position: relative; overflow: hidden; border: 1px solid rgba(199, 168, 117, .18); background: #1a0e16; }
@@ -195,7 +177,6 @@ a.filter-chip { display: inline-flex; align-items: center; }
 .related-card__name { font-family: var(--serif); font-size: 18px; line-height: 1.2; }
 .related-card__price { color: rgba(234, 220, 202, .55); font-size: 13px; }
 
-/* --- корзина и оформление ---------------------------------------------- */
 .basket-page, .order-page { padding: 90px 0 120px; color: #eadcca; background: #100810; }
 .basket-layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(30px, 5vw, 70px); align-items: start; }
 .basket-list { display: grid; }
@@ -236,7 +217,6 @@ a.filter-chip { display: inline-flex; align-items: center; }
 .order-summary__empty { color: rgba(234, 220, 202, .5); font-size: 14px; }
 .order-summary__empty a { border-bottom: 1px solid currentColor; }
 
-/* --- текстовые разделы -------------------------------------------------- */
 .text-page { padding: 90px 0 120px; color: #eadcca; background: #100810; }
 .text-page .shell { max-width: 900px; }
 .text-page p { margin-bottom: 20px; color: rgba(234, 220, 202, .68); font-size: 16px; line-height: 1.8; }

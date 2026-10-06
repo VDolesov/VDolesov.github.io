@@ -35,7 +35,7 @@
   }
 
   function writeStore(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) { /* приватный режим */ }
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) {}
   }
 
   function escapeHtml(value) {
@@ -55,8 +55,6 @@
   function findProduct(id) {
     return PRODUCTS.find(item => item.id === String(id));
   }
-
-  // ------------------------------------------------------------- каталог
 
   function cardMarkup(item) {
     const isFavorite = state.favorites.has(item.id);
@@ -171,8 +169,6 @@
     qs("[data-dialog-qty]", dialog).value = 1;
     dialog.showModal();
   }
-
-  // ---------------------------------------------------------------- корзина
 
   function cartLines() {
     return Object.entries(state.cart)
@@ -319,8 +315,6 @@
       `Итого: ${money(cartTotal())}`].join("\n");
   }
 
-  // ------------------------------------------------------------------ drawer
-
   function openCart(trigger = null) {
     const drawer = qs("[data-cart-drawer]");
     if (!drawer) return;
@@ -354,8 +348,6 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("is-visible"), 2600);
   }
-
-  // ------------------------------------------------------------------ события
 
   function initEvents() {
     document.addEventListener("click", event => {

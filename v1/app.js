@@ -37,7 +37,7 @@
   }
 
   function writeStore(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) { /* local file privacy mode */ }
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) {}
   }
 
   function escapeHtml(value) {
