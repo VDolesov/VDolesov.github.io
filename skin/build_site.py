@@ -319,7 +319,7 @@ def refresh(html, path=""):
     html = _BEACON.sub("", html)
     html = absolutize_loads(html)
     html = swap_photos(html, page_id(path))
-    html = preload_hero(html, "/" if path.endswith("pages_mirror/index.html") else path)
+    html = preload_hero(html, path)
     html = re.sub(r"<script>\n\(function \(\) \{\n  var ids = .*?</script>",
                   lambda m: photo_script(path, product_ids()).strip(), html, count=1, flags=re.S)
     html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
@@ -338,8 +338,8 @@ def restamp():
                 continue
             full = os.path.join(root, name)
             html = io.open(full, encoding="utf-8").read()
-            fresh = refresh(pattern.sub(f"/skin/skin.css?v={version}", html), full.replace(os.sep, "/"))
-
+            rel = os.path.relpath(root, APP).replace(os.sep, "/")
+            fresh = refresh(pattern.sub(f"/skin/skin.css?v={version}", html), "/" if rel == "." else f"/{rel}/")
             fresh = re.sub(r'<script src="/skin/[a-z-]+\.js\?v=[0-9a-f]+"></script>\n?', "", fresh)
             fresh = fresh.replace("</body>", script_tags(version) + "</body>", 1)
             if fresh != html:

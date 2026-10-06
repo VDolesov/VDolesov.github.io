@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from photos_v9 import GROUND, POOL, SIZE, finish, save, scene
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.dirname(os.path.dirname(HERE))
+APP = os.path.dirname(HERE)
 RAW = os.path.join(HERE, "sources", "ai")
 
 ITEMS = {"801": "801.png", "802": "802.png", "803": "803.png", "752": "752.png"}
@@ -63,7 +63,7 @@ def main():
     targets = sys.argv[1:] or list(ITEMS) + ["about"]
     for pid in targets:
         if pid == "about":
-            path = os.path.join(SITE, "pages_mirror", "assets", "about.jpg")
+            path = os.path.join(APP, "assets", "about.jpg")
             about().save(path, quality=84, optimize=True, progressive=True)
             print("  about.jpg", flush=True)
             continue
