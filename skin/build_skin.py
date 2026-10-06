@@ -87,14 +87,21 @@ def fetch_css():
     return "\n".join(parts)
 
 
+BRAND_RGBA = re.compile(r"rgba\(\s*243\s*,\s*16\s*,\s*58\s*,\s*([\d.]+)\s*\)", re.I)
+
+
+def brand_color(text):
+    low = text.lower()
+    return any(color in low for color in COLOR_MAP) or bool(BRAND_RGBA.search(text))
+
+
 def recolor(css):
     pattern = re.compile(r"([^{}]+)\{([^{}]*)\}")
-    targets = tuple(COLOR_MAP)
     rules = []
     seen = set()
     for match in pattern.finditer(css):
         selector, body = match.group(1).strip(), match.group(2)
-        if not any(color in body.lower() for color in targets):
+        if not brand_color(body):
             continue
         if selector.startswith("@"):
             continue
@@ -104,11 +111,11 @@ def recolor(css):
             if ":" not in declaration:
                 continue
             prop, value = declaration.split(":", 1)
-            low = value.lower()
-            if not any(color in low for color in targets):
+            if not brand_color(value):
                 continue
             for old, new in COLOR_MAP.items():
                 value = re.sub(old, new, value, flags=re.I)
+            value = BRAND_RGBA.sub(lambda m: f"rgba(214, 164, 89, {m.group(1)})", value)
             kept.append(f"{prop.strip()}:{value.strip()}")
         if kept:
             selector = " ".join(selector.split())
@@ -1539,6 +1546,7 @@ body .alert.alert-warning, body .alert.alert-info, body .alert.alert-success {{
 }}
 body .alert.alert-danger {{ background: {CARD} !important; border: 1px solid rgba(232, 120, 104, .5) !important; color: #f0b3a8 !important; border-radius: 0 !important; }}
 body .button_wrap {{ background: transparent !important; }}
+body #bx-soa-order .bx-soa-pp-list-description {{ background: transparent !important; color: {GOLD} !important; font-weight: 600; padding-left: 0 !important; }}
 body .MAPS .contacts_map, body .MAPS .map_type_2 .items {{ background: {PANEL} !important; }}
 body .ymaps-b-balloon, body .ymaps-b-balloon::after, body .ymaps-b-balloon::before,
 body [class*="-balloon__layout"], body [class*="-balloon__content"], body [class*="-balloon__tail"] {{
