@@ -1,139 +1,85 @@
-# Skin for the live site
+# Skin
 
-A new look for mirsladostey164.ru without touching markup or logic. The site stays on 1C-Bitrix with the Aspro Max template; only the visual layer changes — colours, type, backgrounds, cards, layout inside existing blocks.
+A new look for mirsladostey164.ru without touching the template logic. The site stays on 1C-Bitrix with the Aspro Max template; the skin changes colours, type, backgrounds, cards and layout inside existing blocks. One stylesheet to install, one line to roll back.
 
-One file to install, one line to roll back.
-
-Live demo: https://vdolesov.github.io/ — the whole site with the skin: home, every catalog section and product, cart, contacts, company and help pages.
+Live demo: https://vdolesov.github.io/
 
 ## Direction
 
-Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Text for copy, square corners, no frames.
+Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Text for copy, square corners.
 
-| | Before | After |
+| | Template | Skin |
 | --- | --- | --- |
 | Scheme | light | dark: ground `#120b08`, text `#f3e8d8` |
 | Accent | `#f3103a` | `#d6a459`, hover `#e6b96f` |
 | Headings | Montserrat | Prata, digits in Golos Text via a `unicode-range` face |
 | Copy | Montserrat | Golos Text 16 px |
-| Buttons | red, rounded, white caption | gold, square, dark spaced small caps |
-| Product cards | white with border | frameless, photo on a dark scene, gold price |
-| Product photos | on white | series v9 — cutout on a dark scene matching the page |
+| Buttons | red, rounded | gold, square, spaced small caps |
+| Product cards | white with a border | frameless, photo on a light cream scene, gold price |
 | Labels | blue / green / purple | gold "hit", outlined "new", brown "recommended" |
-| Logo | dark red | gold |
+| Header | plain | sticky, with a section strip under the logo row |
+| Hero | stock photo | three full-bleed slides with copy on the dark left half |
 | Home sections | 90×90 carousel | one row of square tiles with captions |
-| Home hits | four narrow cards | four frameless cards, tabs in Prata |
-| About block | text + video block | gold-framed band with a production photo |
-| Header | plain | sticky, plus a section navigation strip (`nav.js`) |
-| Product page | 450 px photo, narrow specs column | full-column photo, specs under the buy block |
-| Hero | stock photo | three full-bleed slides (cakes, pies, cakes to order), copy on the dark left half |
-| Section and product names | all caps | sentence case via CSS |
-| Cart | Bitrix module | demo only: client-side cart and checkout (`cart.js`) |
+| Product page | 450 px photo | full-column photo, specs under the buy block |
+| Names | all caps | sentence case |
 
-## Install
+## Install on the live site
 
-1. Copy `skin.css` and the `fonts` folder next to it into the template, e.g. `/bitrix/templates/aspro_max/css/skin.css` and `/bitrix/templates/aspro_max/css/fonts/golos-text-latin.woff2` (the digits face, referenced relatively).
+1. Copy `skin.css` and the `fonts/` folder next to it into the template, e.g. `/bitrix/templates/aspro_max/css/skin.css` and `/bitrix/templates/aspro_max/css/fonts/`. Font paths in the stylesheet are relative.
 2. Include it **last**, after the template styles:
 
    ```php
    $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . '/css/skin.css');
    ```
 
-   or in `<head>`:
-
-   ```html
-   <link rel="stylesheet" href="/bitrix/templates/aspro_max/css/skin.css">
-   ```
-
 3. Clear the site cache: *Settings → Autocaching → Clear cache files*.
 
-Order matters: the skin must load after the template CSS.
+`motion.js` (reveal on scroll, hero parallax) is optional; include it after the template scripts. The other scripts exist only for the static demo: on the live site Bitrix handles the cart, search and forms.
 
-## How it is built
-
-`build_skin.py` fetches every Aspro CSS bundle the pages reference (template, page, default, component bundles; cached in `skin/cache/`) and makes two passes:
-
-1. every rule using the brand red is rewritten with the gold accent;
-2. every rule of the light scheme — dark text, white fills, light borders and shadows — is rewritten dark, keeping the original selectors so specificity matches and the later file wins.
-
-A manual layer follows: type, cards, header, grid, hero, home blocks, cart; the final block is the direction itself.
+## Build
 
 ```
-python skin/build_skin.py          # rebuild skin.css
-python skin/build_site.py          # crawl the live site and rebuild all pages
-python skin/build_site.py contacts/stores company/agreement   # rebuild only the given pages
-python skin/build_site.py --stamp  # restamp skin version, photo series, hero files and copy into built pages
-python skin/build_cart_data.py     # rebuild cart data (products, sections)
-python skin/add_pies.py            # Ossetian pies 801-803 (build/data.py EXTRA, v1 prices): pages cloned from 736, cards on top of /catalog/pirogi/
-python skin/hero_choc.py           # rebuild hero-bg.jpg
+python skin/build_skin.py                  # rebuild skin.css
+python skin/build_site.py                  # crawl the live site and rebuild every page
+python skin/build_site.py contacts/stores  # rebuild the given pages only
+python skin/build_site.py --stamp          # re-apply skin version and content rules to built pages
+python skin/build_cart_data.py             # rebuild cart-data.js from build/catalog.json
+python skin/add_pies.py                    # Ossetian pie pages 801–803
+python skin/hero_choc.py                   # rebuild the hero slides
 ```
 
-`build_site.py` crawls the live site by internal links (81 pages) and writes each page under its own URL. Links stay relative, template assets load from the original domain. Links the demo cannot serve are aliased (`ALIAS`: the account page to `/auth/`, the two policy pages under `/company/`), the Metrika counter is stripped so demo visits do not land in the live site's statistics. Photo series, hero files and slide copy are set in `build_demo.py` (`SERIES`, `BANNER`, `BANNER_COPY`, `IMAGES`); `--stamp` applies them to already built pages.
+`build_skin.py` collects every Aspro stylesheet the pages reference (cached in `skin/cache/`), rewrites each rule that uses the brand red with the gold accent and each rule of the light scheme dark, keeping the original selectors so the later file wins, then appends the manual layer: type, cards, header, hero, home blocks, product page, cart, drawer, forms.
+
+`build_site.py` crawls the live site by internal links and writes each page under its own URL. Fetching needs a Russian IP: the live site does not answer foreign addresses. For every page it:
+
+- inlines lazily loaded template blocks and swaps product photos for the series in `assets/products/`;
+- clones the hero into three slides and applies the copy rules (`SLIDES`, `BANNER_COPY` in `build_demo.py`) and the "Important details" block (`FAQ`);
+- serves template stylesheets from `vendor/css/` and self-hosted fonts from `skin/fonts/`, preloading the two above-the-fold faces; strips the Metrika counter, the session beacon and unused font links;
+- removes blocks the demo does not use (`strip.py`): warranty, licenses and brands pages and links, the footer help column, saved items, the home tizers and about block;
+- aligns legal and order copy (`legal.py`): order acceptance, payment methods, refusal and quality questions, requisites, seller line in the footer, consent checkbox under reviews;
+- links `skin.css` and the demo scripts with a content hash in the query string.
+
+`--stamp` runs the same rules over already built pages without fetching anything, so it is the command to use after changing the skin, the scripts or the copy.
 
 ## Photos
 
-Series v9: every catalog item is a neural cutout placed on the same dark scene — cocoa ground, warm light from above, a pool of light on the table, a contact shadow. Before placing, `natural()` in `build/photos_v9.py` calms the source shots (the originals are over-sharpened and over-saturated): halos softened, saturation pulled down with extra weight on oranges, highlights rolled off, blacks lifted a touch. `python build/photos_v9.py` rebuilds the whole series and dispatches plated items and AI renders itself. The three Ossetian pies (801–803), the strawberry cake (752, no photo on the live site) and the about-block photo are AI-generated (FLUX, raw renders in `build/sources/ai/`, composed by `build/pies_ai.py`) and graded onto the same scene. Since 2 Oct the whole series is rebuilt on the light cream scene of `v1/` by `python build/photos_light.py` (it reuses the v1 grade, scene and per-item layout and writes 2048/1024/640 over the v9 files; `photos_v9.py`/`photos_hd.py` still hold the dark variant). Files live in `../assets/products/` and are named by product id: `747-v9.webp` (1024) and `747-v9-640.webp`. `python build/photos_hd.py` renders the same scene at 2048 (`747-v9-2048.webp`) for the 33 items whose sources are 1000 px or more (site HD shots and AI renders, each passed through FSRCNN x3 before placing); the demo links the product-page lightbox to that file when it exists (`swap_photos`), cards keep 640/1024.
+Products use series v9: `{id}-v9.webp` (1024 px), `{id}-v9-640.webp` and `{id}-v9-2048.webp`. `python build/photos_light.py` renders them on the light cream scene of the July storefront: cutouts of the site originals (`build/photos/`), studio shots of the pies (`build/sources/studio/`), an archive shot where nothing else exists (`build/sources/legacy/`), plated salads and hot dishes (`build/plates.py`) and AI renders for the Ossetian pies and the strawberry cake (`build/sources/ai/`). Small sources are upscaled with FSRCNN x3 (`build/models/`). `python build/pies_ai.py` renders the contacts photo `assets/about.jpg`.
 
-Salads, ready meals and semi-finished products are re-plated: the food is masked out of its plastic tray and composed into a dark ceramic bowl or plate before it goes onto the scene (`build/plates.py` next to `photos_v9.py`).
-
-On the live site upload them into the product cards; the file name is the element id. The demo swaps them into the built pages at build time (`swap_photos` in `build_demo.py`), so no white originals flash before the dark ones.
+Upload the photos into the product cards on the live site; the file name is the element id.
 
 ## Hero
 
-Three slides, each one full-bleed photo (2400x1060) with the subject on the right and the left half darkened for the copy: `hero-bg.jpg` (cherry chocolate cake), `hero-2.jpg` (meat pie on slate, one wedge cut), `hero-3.jpg` (dark chocolate cake with berries and figs, one slice cut). `skin/hero_choc.py` builds them from `assets/hero-noir.webp` and the AI renders in `build/sources/ai/` (`SLIDES` at the top of the script; the last two values are the photo height as a fraction of the canvas and its vertical position, the rest is filled by extending the photo edges so wide renders keep the whole subject inside the cropped 1920px view; sources smaller than the canvas go through FSRCNN x3 before downscaling). The template's product image on the right is hidden by the skin (`td.img`).
+Three WebP slides, 2400×1060, subject on the right and the left half darkened for the copy: `hero-bg.webp`, `hero-2.webp`, `hero-3.webp`. `hero_choc.py` builds them from `assets/hero-noir.webp` and the AI renders in `build/sources/ai/` (`SLIDES` at the top of the script sets the source, grade, fit, vertical position and shift). The demo clones the template's single slide three times; on the live site these are three banner elements.
 
-The demo clones the template's single slide three times at build time (`SLIDES` in `build_demo.py` — file, label, title, text, button, link) and switches the theme's slider settings to fade / 8 s in `demo.js`; on phones the slideshow is off and slides swipe. On the live site these are three banner elements plus the theme's "big banner" settings.
+## Demo scripts
 
-## Home sections
+- `cart.js` — cart in localStorage: side drawer, `/basket/` page with the free delivery and minimum order bars, checkout form for pickup or delivery within Saratov, confirmation with an order number that can be sent by e-mail.
+- `cart-data.js` — products, sections and photo ids, generated by `build_cart_data.py`.
+- `nav.js` — the section strip under the logo row.
+- `search.js` — header search over names, sections and composition.
+- `demo.js` — template pop-up forms show a demo note with the phones, quick view opens the product page, one-time cookie notice.
+- `motion.js` — reveal on scroll and the hero parallax, honouring `prefers-reduced-motion`.
 
-The template renders sections as an Owl carousel with 90×90 images. The skin lays it out as one row of square tiles (nine on desktop, four on tablet, three on phone), captions under the photos, arrows hidden. The carousel script keeps running; only its layout is overridden.
+## Caching
 
-Section images on the site are 90×90 and will look soft on 140–215 px tiles — upload larger images (800 px+) or raise the preview size in the component settings. The demo uses one product photo per section:
-
-```
-torty                749   pirogi   801   vypechka        746
-pirozhnye_i_deserty  757   pechene  753   salaty          765
-vtorye_blyuda        770   polufabrikaty 760   napitki    763
-```
-
-## Product page
-
-- gallery fills its column and is squared; thumbnails are 84 px squares;
-- columns split 54 / 46 in favour of the photo;
-- price and buy block on top, specs below through a gold line;
-- specs are two columns with hairlines; on phones the label moves above the value;
-- bottom tabs are spaced small caps, the active one underlined in gold;
-- empty ratings, the duplicate side block and the empty "you may also like" block are hidden.
-
-## Demo cart
-
-The demo is static, so the cart lives in the browser: `cart.js` intercepts the template's "add to cart" buttons, keeps the cart in localStorage, renders `/basket/` (list, quantities, total, checkout form, confirmation with an order number) and offers to send the order by e-mail. Product data is `cart-data.js`, generated from `build/catalog.json`. `nav.js` adds the section navigation strip under the header from the same data.
-
-`motion.js` adds the reveal-on-scroll animation (IntersectionObserver, honours `prefers-reduced-motion`) and the hero parallax: on pointer devices from 768px up it moves each slide's photo into its own layer (`.ms-hero-par` from `data-bg`), shifts photo and copy in opposite directions after the mouse and adds a slow 18s zoom on the active slide; the hover and hero entrance animations are pure CSS in `skin.css`. Favourites (the heart on cards) live in localStorage next to the cart and show up as a «Отложенные» list on `/basket/#delayed`.
-
-`search.js` answers the header search (`/catalog/?q=` and `/search/?q=`) from the same product data: name, section and composition, with a crude Russian stem. `demo.js` catches the template's popup forms (call back, subscribe, question, account, quick view): quick view opens the product page, the rest show a note with the phones instead of a request the static demo cannot send.
-
-On the live site none of these scripts is needed — Bitrix handles the cart, favourites, orders, search and forms; `motion.js` is the one optional extra (drop it next to `skin.css` and include it after the template scripts). The `ms-*` styles in `skin.css` do not interfere.
-
-## Weight and caching
-
-Pages are served by GitHub Pages: gzip, `Cache-Control: max-age=600`; `skin.css` and the scripts carry a content hash in the query string, so a new build is picked up at once and an unchanged one stays cached. Product cards use the 640 px variant with a 1024 px `srcset` for retina, `loading="lazy"` and `decoding="async"`; the first hero image is preloaded. The demo sets no cookies of its own (cart and favourites are in localStorage); the Metrika counter and the Bitrix session beacon are stripped so demo visits do not reach the live site's statistics. Template CSS/JS still come from mirsladostey164.ru with that server's caching.
-
-## Out of scope
-
-The skin does not change markup, so it cannot change page content, block order or the product card composition. Layout inside existing elements is fair game: catalog grid, sticky header, buy button always visible.
-
-## Speed
-
-- Fonts are self-hosted in `skin/fonts/` (Prata, Golos Text: cyrillic, cyrillic-ext, latin, latin-ext) and the two above-the-fold files are preloaded at the top of `<head>` (`FONT_PRELOAD` in `build_site.py`). The unused Montserrat links of the template are stripped.
-- Hero slides are WebP (`hero_choc.py` writes both `.jpg` and `.webp`, the pages use `.webp`).
-- `vendor_css()` in `build_site.py` serves the template stylesheets from `vendor/css/` when a copy exists in `skin/cache/` (root-relative `url()` rewritten to the live site); IE-only and file-finder stylesheets are dropped.
-- Scripts are still loaded from the live site, so the demo waits for it. Once it answers again, copying those scripts into `vendor/` the same way removes that dependency.
-
-## Removed sections
-
-`skin/strip.py` runs on every built and restamped page: it drops every link block to `/help/warranty/` (the page itself is gone and the crawler skips it), the footer "Help" column (the remaining footer columns are widened to fill the row), the delayed list links and the card wish buttons. `skin.css` also hides any delayed UI the template script may add later, and `cart.js` no longer has a delayed list.
-
-## Legal copy
-
-`skin/legal.py` runs after `strip.py` on every page. It aligns the order, payment and return wording with how the demo cart actually works (order confirmed by the manager's call, real payment methods, food-appropriate refusal and quality answers), fixes the requisites (BIK, KPP, `#requisites` anchor, seller line in the footer copyright), replaces the old `mirsladostey64.ru` mailbox, template meta descriptions and the Drag'n'drop label, adds the "appearance may differ" note on product pages and a consent checkbox to the review form. The licenses and brands pages are removed. `cart.js` enforces the 800 ₽ minimum order, shows delivery as "up to 150 ₽" below 3000 ₽ and links the privacy policy under the order form; `demo.js` shows a one-time cookie notice.
+GitHub Pages serves everything with gzip and `max-age=600`; the skin and scripts carry a content hash, so a new build is picked up at once. Product cards use the 640 px photo with a 1024 px `srcset`, lazy loading and async decoding; the first hero slide is preloaded. Template scripts still load from mirsladostey164.ru.
