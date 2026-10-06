@@ -1531,6 +1531,14 @@ body .viewed_product_block .block-item, body .viewed_product_block .block-item__
 body .viewed_product_block .block-item {{ border: 1px solid {LINE} !important; }}
 body .viewed_product_block .block-items::before, body .viewed_product_block .block-items::after {{ background: transparent !important; }}
 body .viewed_product_block .price {{ color: {GOLD} !important; }}
+body .search-button-div .btn.btn-search.btn-default {{ background: {ACCENT} !important; border-color: {ACCENT} !important; color: {ON_ACCENT} !important; }}
+body .search-button-div .btn.btn-search.btn-default:hover {{ background: {ACCENT_HOVER} !important; border-color: {ACCENT_HOVER} !important; }}
+body .sticker_sovetuem {{ color: {INK} !important; }}
+body .alert.alert-warning, body .alert.alert-info, body .alert.alert-success {{
+  background: {CARD} !important; border: 1px solid {GOLD_LINE} !important; color: {INK} !important; border-radius: 0 !important; box-shadow: none !important;
+}}
+body .alert.alert-danger {{ background: {CARD} !important; border: 1px solid rgba(232, 120, 104, .5) !important; color: #f0b3a8 !important; border-radius: 0 !important; }}
+body .button_wrap {{ background: transparent !important; }}
 body .MAPS .contacts_map, body .MAPS .map_type_2 .items {{ background: {PANEL} !important; }}
 body .ymaps-b-balloon, body .ymaps-b-balloon::after, body .ymaps-b-balloon::before,
 body [class*="-balloon__layout"], body [class*="-balloon__content"], body [class*="-balloon__tail"] {{
