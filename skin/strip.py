@@ -57,8 +57,8 @@ def drop_column(html, marker, prefix='<div class="col-'):
         html = html[:start] + html[end:]
 
 
-def drop_class_blocks(html, cls):
-    pattern = re.compile(r'<div class="' + re.escape(cls) + r'"[^>]*>')
+def drop_class_blocks(html, cls, exact=True):
+    pattern = re.compile(r'<div class="' + re.escape(cls) + ('"' if exact else '[^"]*"') + r'[^>]*>')
     while True:
         m = pattern.search(html)
         if not m:
@@ -81,4 +81,5 @@ def strip_sections(html):
     html = widen_footer(drop_column(html, 'data-parent="#bottom_help"'))
     html = drop_link_blocks(html, "/basket/#delayed")
     html = drop_class_blocks(html, "wish_item_button")
+    html = drop_class_blocks(html, "drag-block container TIZERS", exact=False)
     return html

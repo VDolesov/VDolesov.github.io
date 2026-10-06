@@ -167,11 +167,12 @@ FAQ_BLOCK = (
     '  </div>\n'
     '</div>\n')
 _TIZERS = re.compile(r'<div class="drag-block container TIZERS[^"]*"')
-_FAQ_BLOCK = re.compile(r'<div class="drag-block container ms-faq-block".*?</div>\n(?=<div class="drag-block container TIZERS)', re.S)
+_FAQ_BLOCK = re.compile(r'<div class="drag-block container ms-faq-block".*?\n  </div>\n</div>\n', re.S)
 
 
 def add_faq(html):
-    html = _FAQ_BLOCK.sub("", html)
+    if _FAQ_BLOCK.search(html):
+        return _FAQ_BLOCK.sub(lambda m: FAQ_BLOCK, html, count=1)
     if not _TIZERS.search(html):
         return html
     return _TIZERS.sub(lambda m: FAQ_BLOCK + m.group(0), html, count=1)
