@@ -1366,18 +1366,16 @@ body .footer-inner .footer_top {{ border-top: 1px solid {LINE} !important; }}
 .stickers > div:not([class*="sticker_"]) {{
   background: transparent !important; padding: 0 !important; margin: 0 0 6px !important; box-shadow: none !important;
 }}
-body .cat_sections.cat_sections .item.compact .name a {{ display: block !important; text-transform: lowercase !important; }}
-body .cat_sections.cat_sections .item.compact .name a::first-letter {{ text-transform: uppercase !important; }}
+body .cat_sections.cat_sections .item.compact .name a {{ display: block !important; }}
 body .CATALOG_SECTIONS .sections_wrapper {{ padding-bottom: 0 !important; }}
 body .CATALOG_SECTIONS {{ padding-bottom: 24px !important; }}
-body .catalog_item .item-title a {{ display: block !important; text-transform: lowercase !important; }}
-body .catalog_item .item-title a::first-letter {{ text-transform: uppercase !important; }}
+body .catalog_item .item-title a {{ display: block !important; }}
 
 .page-top, .section-content-wrapper > .page-top {{ padding: 40px 16px 10px !important; }}
+.breadcrumbs__item {{ display: inline-block; position: relative; padding-right: 16px; margin-right: -16px; }}
+.breadcrumbs__separator {{ position: relative; bottom: -1px; display: inline-block; line-height: 18px; margin: 0 10px 0 9px; }}
 .catalog_page_detail .page-top, .catalog_page .page-top {{ padding-left: 30px !important; padding-right: 30px !important; }}
 .ms-basket-root {{ padding: 8px 16px 40px; }}
-.page-top .topic, h1#pagetitle, .detail .topic h1 {{ text-transform: lowercase !important; }}
-.page-top .topic::first-letter, h1#pagetitle::first-letter {{ text-transform: uppercase !important; }}
 .drag-block.SALE:not(:has(*)), .drag-block.REVIEWS:not(:has(*)) {{ display: none !important; }}
 
 body .ms-faq-block {{ padding: clamp(48px, 5vw, 76px) 0 clamp(8px, 1vw, 16px) !important; }}
@@ -1527,10 +1525,8 @@ body .left_block .menu_top_block .slide-block__head {{
 body .left_block .menu_top_block ul.menu > li > a {{
   background: transparent !important; border: 0 !important; padding: 9px 0 !important;
   font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 17px !important; font-weight: 400 !important;
-  text-transform: lowercase !important; letter-spacing: 0 !important; color: {INK} !important;
+  letter-spacing: 0 !important; color: {INK} !important;
 }}
-body .left_block .menu_top_block ul.menu > li > a .name {{ display: inline-block !important; }}
-body .left_block .menu_top_block ul.menu > li > a .name::first-letter {{ text-transform: uppercase !important; }}
 body .left_block .menu_top_block ul.menu > li.current > a, body .left_block .menu_top_block ul.menu > li > a:hover {{ color: {GOLD} !important; }}
 body .left_block .menu_top_block ul.menu > li > a .toggle_block {{ display: none !important; }}
 body .left_block .subscribe-block, body .left_block .side-block {{ background: transparent !important; border: 0 !important; padding: 28px 0 0 !important; }}
@@ -1620,8 +1616,6 @@ body .left_block .menu_top_block.menu-type1 {{ padding-top: 6px !important; }}
 
 .btn:not(.round-ignore), .btn.btn-default:not(.round-ignore) {{ border-radius: 0 !important; }}
 .content_wrapper_block:has(> .maxwidth-theme.wide:empty) {{ display: none !important; }}
-#mobilemenu ul.dropdown > li > a {{ text-transform: lowercase !important; }}
-#mobilemenu ul.dropdown > li > a span::first-letter, #mobilemenu ul.dropdown > li > a::first-letter {{ text-transform: uppercase !important; }}
 
 body .inline-search-block.fixed .search-input {{
   height: 84px !important; border: 0 !important; background: transparent !important;
@@ -1688,9 +1682,8 @@ body .catalog_section_list td.section_info ul {{ margin: 0 !important; padding: 
 body .catalog_section_list .name {{ text-align: left !important; }}
 body .catalog_section_list .name a.dark_link, body .catalog_section_list .name a.dark_link span.font_md {{
   display: block !important; font-family: "Golos Digits", Prata, Georgia, serif !important; font-weight: 400 !important;
-  font-size: 18px !important; line-height: 1.25 !important; color: {INK} !important; text-transform: lowercase !important;
+  font-size: 18px !important; line-height: 1.25 !important; color: {INK} !important;
 }}
-body .catalog_section_list .name a.dark_link span.font_md::first-letter {{ text-transform: uppercase !important; }}
 body .catalog_section_list .name a.dark_link:hover span.font_md {{ color: {ACCENT} !important; }}
 body .catalog_section_list .element-count2 {{ display: block !important; margin-top: 5px !important; font-size: 13px !important; color: {MUTED} !important; }}
 @media (max-width: 1199px) {{ body .catalog_section_list.type_sections_5, body .catalog_section_list.items {{ grid-template-columns: repeat(4, minmax(0, 1fr)); }} }}

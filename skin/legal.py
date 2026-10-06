@@ -122,6 +122,10 @@ COPY = [
     (r"(Цена действительна только для интернет-магазина и может отличаться от цен в розничных магазинах)(\s*</div>)",
      r"\1. Внешний вид изделия может отличаться от фотографии.\2"),
     (r"Перетащить с помощью Drag'n'drop", "или перетащите их сюда"),
+    (r'<div class="alert alert-warning">Список элементов пуст</div>',
+     '<div class="ms-empty"><div class="ms-empty__title">Сейчас акций нет</div>'
+     '<p class="ms-empty__text">Новые предложения появятся здесь. А пока загляните в каталог.</p>'
+     '<a class="btn btn-default btn-lg" href="/catalog/">Перейти в каталог</a></div>'),
 ]
 
 _COPY = [(re.compile(pattern), new) for pattern, new in COPY]

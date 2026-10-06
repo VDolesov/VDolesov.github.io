@@ -14,6 +14,7 @@ APP = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
 from legal import legal_copy
+from naming import name_pages
 from strip import strip_sections
 from build_demo import (BANNER, BANNER_COPY, IMAGES, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
                         SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
@@ -36,7 +37,7 @@ ALIAS = {
     "/include/licenses_pologenie.php": "/company/personal-data/",
 }
 SOURCE = {alias: path for path, alias in ALIAS.items() if path.endswith(".php")}
-DROP = ("/info/brands/rss/", "/help/warranty/", "/company/licenses/", "/info/brands/")
+DROP = ("/info/brands/rss/", "/help/warranty/", "/company/licenses/", "/info/brands/", "/services/", "/blog/")
 _COUNTER = re.compile(r"<!-- Yandex\.Metrika counter -->.*?<!-- /Yandex\.Metrika counter -->", re.S)
 _MONTSERRAT = re.compile(r'[ \t]*<link rel="(?:preload|stylesheet)" href="https://fonts\.googleapis\.com/css\?family=Montserrat[^"]*"[^>]*>\n?')
 _BEACON = re.compile(r"<script>new Image\(\)\.src='https?://[^']*spread\.php[^<]*</script>")
@@ -210,6 +211,7 @@ def build_page(path, html, ids, version):
     html = vendor_css(html)
     html = strip_sections(html)
     html = legal_copy(html)
+    html = name_pages(html, path)
     html = _BEACON.sub("", html)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
@@ -317,6 +319,7 @@ def refresh(html, path=""):
     html = vendor_css(html)
     html = strip_sections(html)
     html = legal_copy(html)
+    html = name_pages(html, path)
     html = _BEACON.sub("", html)
     html = absolutize_loads(html)
     html = swap_photos(html, page_id(path))

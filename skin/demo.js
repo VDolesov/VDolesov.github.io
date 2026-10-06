@@ -107,16 +107,6 @@
     });
   }
 
-  function authPage() {
-    if (!/^\/auth\/?$/.test(location.pathname)) return;
-    var container = document.querySelector(".wrapper_inner .container_inner .middle > .container");
-    if (!container) return;
-    container.innerHTML = '<div class="maxwidth-theme"><div class="ms-empty">' +
-      '<div class="ms-empty__title">Личный кабинет</div>' +
-      '<p class="ms-empty__text">' + esc(NOTES.auth[1]) + '</p>' +
-      '<a class="btn btn-default btn-lg" href="/catalog/">Перейти в каталог</a></div></div>';
-  }
-
   function ready(fn) {
     if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn);
   }
@@ -136,6 +126,5 @@
     });
   }
 
-  ready(authPage);
   ready(cookieNote);
 })();

@@ -74,13 +74,30 @@ def widen_footer(html):
     return html[:start] + footer + html[end:]
 
 
+AUTH_NOTE = (
+    '<div class="maxwidth-theme"><div class="ms-empty"><div class="ms-empty__title">Личный кабинет</div>'
+    '<p class="ms-empty__text">На рабочем сайте здесь вход и регистрация: история заказов, адреса, бонусы. '
+    'В демо-версии заказ оформляется без регистрации — через корзину.</p>'
+    '<a class="btn btn-default btn-lg" href="/catalog/">Перейти в каталог</a></div></div>'
+)
+
+
+def replace_auth_form(html):
+    if 'id="ajax_auth"' not in html:
+        return html
+    start = html.find('<div class="maxwidth-theme">', html.find('<div class="middle '))
+    return html[:start] + AUTH_NOTE + html[block_end(html, start, "div"):]
+
+
 def strip_sections(html):
     html = drop_link_blocks(html, "/help/warranty/")
     html = drop_link_blocks(html, "/company/licenses/")
     html = drop_link_blocks(html, "/info/brands/")
+    html = drop_link_blocks(html, "/services/")
+    html = drop_link_blocks(html, "/blog/")
     html = widen_footer(drop_column(html, 'data-parent="#bottom_help"'))
     html = drop_link_blocks(html, "/basket/#delayed")
     html = drop_class_blocks(html, "wish_item_button")
     html = drop_class_blocks(html, "drag-block container TIZERS", exact=False)
     html = drop_class_blocks(html, "drag-block container COMPANY_TEXT", exact=False)
-    return html
+    return replace_auth_form(html)
