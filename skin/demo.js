@@ -126,5 +126,31 @@
     });
   }
 
+  function tidyPage() {
+    [["button.inline-search-show", "Поиск"], ["button.inline-phone-show", "Позвонить"]].forEach(function (pair) {
+      document.querySelectorAll(pair[0]).forEach(function (el) {
+        if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", pair[1]);
+      });
+    });
+    document.querySelectorAll(".owl-dots").forEach(function (dots) {
+      dots.querySelectorAll("button.owl-dot").forEach(function (dot, i) {
+        if (!dot.getAttribute("aria-label")) dot.setAttribute("aria-label", "Слайд " + (i + 1));
+      });
+    });
+    document.querySelectorAll(".top_slider_wrapp li.clone h1").forEach(function (h) {
+      var div = document.createElement("div");
+      div.className = h.className;
+      div.innerHTML = h.innerHTML;
+      h.parentNode.replaceChild(div, h);
+    });
+  }
+  function watchPage() {
+    tidyPage();
+    var slider = document.querySelector(".top_slider_wrapp");
+    if (slider) new MutationObserver(tidyPage).observe(slider, { childList: true, subtree: true });
+    window.addEventListener("load", tidyPage);
+  }
+
   ready(cookieNote);
+  ready(watchPage);
 })();

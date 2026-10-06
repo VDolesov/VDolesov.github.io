@@ -113,7 +113,9 @@ def expand_slides(html):
             li = re.sub(r'data-slide_index="\d+"', f'data-slide_index="{i}"', li)
             li = re.sub(r'id="(bx_\d+_\d+)(?:_s\d+)?"', lambda a: f'id="{a.group(1)}' + (f'_s{i}' if i else "") + '"', li)
             li = re.sub(r'(<div class="section font_upper_md">)[^<]*(</div>)', lambda a: a.group(1) + slide["label"] + a.group(2), li)
-            li = re.sub(r'(<span class="head-title">\s*)[^<]*?(\s*</span>)', lambda a: a.group(1) + slide["title"] + a.group(2), li)
+            tag = "h1" if i == 0 else "span"
+            li = re.sub(r'<(?:span|h1) class="head-title">(\s*)[^<]*?(\s*)</(?:span|h1)>',
+                        lambda a: f'<{tag} class="head-title">{a.group(1)}{slide["title"]}{a.group(2)}</{tag}>', li)
             li = re.sub(r'(<div class="banner_text">)[^<]*(</div>)', lambda a: a.group(1) + slide["text"] + a.group(2), li)
             li = re.sub(r'(<a href=")[^"]*(" class="btn btn-default btn-lg"[^>]*>\s*)[^<]*?(\s*</a>)',
                         lambda a: a.group(1) + slide["href"] + a.group(2) + slide["button"] + a.group(3), li)

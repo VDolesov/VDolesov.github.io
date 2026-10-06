@@ -47,6 +47,7 @@ python skin/build_cart_data.py             # rebuild cart-data.js from build/cat
 python skin/add_pies.py                    # Ossetian pie pages 801–803
 python skin/hero_choc.py                   # rebuild the hero slides
 python skin/vendor.py                      # copy the template scripts, styles and images into vendor/
+python skin/vendor_local.py                # the same from the local Bitrix copy, then link the pages to vendor/
 ```
 
 `build_skin.py` collects every Aspro stylesheet the pages reference (cached in `skin/cache/`), rewrites each rule that uses the brand red with the gold accent and each rule of the light scheme dark, keeping the original selectors so the later file wins, then appends the manual layer: type, cards, header, hero, home blocks, product page, cart, drawer, forms.
@@ -87,3 +88,5 @@ Three WebP slides, 2400×1060, subject on the right and the left half darkened f
 GitHub Pages serves everything with gzip and `max-age=600`; the skin and scripts carry a content hash, so a new build is picked up at once. Product cards use the 640 px photo with a 1024 px `srcset`, lazy loading and async decoding; the first hero slide is preloaded.
 
 Template scripts, the remaining template styles and images load from mirsladostey164.ru until `vendor.py` has copied them: it downloads every live-site file the pages and the vendored stylesheets reference (and the files those stylesheets point to) into `vendor/`, keeping the original paths, and `build_site.py --stamp` then links the pages to the local copies. Run it from a Russian IP.
+
+The live site answers only Russian IPs, so the pages now use `vendor_local.py` instead: it takes the same files from the restored local copy (container `mirslad-local-web-1`, http://127.0.0.1:8087/). Bitrix bundles under `/bitrix/cache/js/` carry a hash of their file list, so each live bundle is filled with the local bundle of the same kind and position on the same page (product and section pages fall back to 752 and Торты); kernel bundles are cumulative and are copied after every page has been requested once. `setTheme.php` is saved from the local output as `settheme.js`, and the review editor smilies go to `/bitrix/images/main/smiles/2/` at the site root. The script then rewrites every live-site asset URL it has a copy of, in attributes, inline scripts and the vendored stylesheets. Run it after `build_site.py`; `--stamp` keeps the local links. Left on the live site: Open Graph tags and about 50 old uploads the backup does not have.

@@ -11,7 +11,7 @@ The live site runs on 1C-Bitrix with the Aspro Max template. The demo keeps its 
 | `index.html`, `catalog/`, `basket/`, `company/`, `contacts/`, `help/`, `info/`, … | site pages at their original URLs, built by `skin/build_site.py` |
 | `skin/` | the skin, demo scripts and build tools — see [skin/README.md](skin/README.md) |
 | `assets/` | product photos, hero slides, contacts photo |
-| `vendor/css/` | template stylesheets served from this site |
+| `vendor/` | template stylesheets, scripts, bundles and images served from this site, so the pages do not depend on mirsladostey164.ru |
 | `build/` | catalog snapshot, source photos and photo pipelines |
 | `v1/`, `v2/` | earlier versions: the July storefront and the September rebuild |
 | `404.html` | not found page |
