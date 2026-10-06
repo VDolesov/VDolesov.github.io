@@ -2,25 +2,15 @@ import json
 import os
 import re
 import sys
-import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(APP, "build"))
 from data import EXTRA
+
 SITE = "https://www.mirsladostey164.ru"
 PAGES_ORIGIN = "https://vdolesov.github.io"
-OUT = os.path.join(HERE, "demo")
 SERIES = "v9"
-
-PAGES = [
-    ("index.html", "/"),
-    ("catalog.html", "/catalog/torty/"),
-    ("pirogi.html", "/catalog/pirogi/"),
-    ("product.html", "/catalog/torty/747/"),
-    ("basket.html", "/basket/"),
-    ("contacts.html", "/contacts/"),
-]
 
 DEMO_FIX = """
 <style>
@@ -275,11 +265,6 @@ def inline_deferred(html):
     return html
 
 
-def fetch(path):
-    request = urllib.request.Request(SITE + path, headers={"User-Agent": "Mozilla/5.0"})
-    return urllib.request.urlopen(request, timeout=60).read().decode("utf-8", "ignore")
-
-
 def product_ids():
     data = json.load(open(os.path.join(APP, "build", "catalog.json"), encoding="utf-8"))
     return [item["id"] for item in data["items"]] + [item["id"] for item in EXTRA]
@@ -341,41 +326,3 @@ def swap_photos(html, page_id=None):
         return "" if re.search(r"[0-9a-f]{32}\.(?:jpe?g|png)", m.group(0), re.I) else m.group(0)
     html = _SRCSET.sub(srcset, html)
     return _IMG.sub(lambda m: re.sub(r'class="lazy\s*', 'class="', m.group(0)) if "/assets/products/" in m.group(0) else m.group(0), html)
-
-
-def build_page(filename, path, ids):
-    html = fetch(path)
-    html = inline_deferred(html)
-    html = unlazy(html)
-    html = swap_banner(html)
-
-    html = html.replace("<head>", f'<head>\n<base href="{SITE}/">', 1)
-
-    link = f'\n<link rel="stylesheet" href="{PAGES_ORIGIN}/skin/skin.css">\n</head>'
-    html = html.replace("</head>", link, 1)
-
-    match = re.search(r"/catalog/[a-z_]+/(\d+)/", path)
-    script = (PHOTO_SCRIPT.replace("%IDS%", json.dumps(ids))
-                          .replace("%ORIGIN%", PAGES_ORIGIN)
-                          .replace("%PAGE_ID%", match.group(1) if match else "")
-                          .replace("%SECTIONS%", json.dumps(SECTION_PHOTOS)))
-    html = html.replace("</body>", script + DEMO_FIX + chr(10) + "</body>", 1)
-
-    os.makedirs(OUT, exist_ok=True)
-    with open(os.path.join(OUT, filename), "w", encoding="utf-8", newline="\n") as f:
-        f.write(html)
-    print(f"  {filename} <- {path}")
-
-
-def main():
-    ids = product_ids()
-    print("pages:")
-    for filename, path in PAGES:
-        try:
-            build_page(filename, path, ids)
-        except Exception as exc:
-            print(f"  {filename}: error {exc}")
-
-
-if __name__ == "__main__":
-    main()
