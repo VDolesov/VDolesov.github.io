@@ -46,6 +46,7 @@ python skin/build_site.py --stamp          # re-apply skin version and content r
 python skin/build_cart_data.py             # rebuild cart-data.js from build/catalog.json
 python skin/add_pies.py                    # Ossetian pie pages 801–803
 python skin/hero_choc.py                   # rebuild the hero slides
+python skin/vendor.py                      # copy the template scripts, styles and images into vendor/
 ```
 
 `build_skin.py` collects every Aspro stylesheet the pages reference (cached in `skin/cache/`), rewrites each rule that uses the brand red with the gold accent and each rule of the light scheme dark, keeping the original selectors so the later file wins, then appends the manual layer: type, cards, header, hero, home blocks, product page, cart, drawer, forms.
@@ -83,4 +84,6 @@ Three WebP slides, 2400×1060, subject on the right and the left half darkened f
 
 ## Caching
 
-GitHub Pages serves everything with gzip and `max-age=600`; the skin and scripts carry a content hash, so a new build is picked up at once. Product cards use the 640 px photo with a 1024 px `srcset`, lazy loading and async decoding; the first hero slide is preloaded. Template scripts still load from mirsladostey164.ru.
+GitHub Pages serves everything with gzip and `max-age=600`; the skin and scripts carry a content hash, so a new build is picked up at once. Product cards use the 640 px photo with a 1024 px `srcset`, lazy loading and async decoding; the first hero slide is preloaded.
+
+Template scripts, the remaining template styles and images load from mirsladostey164.ru until `vendor.py` has copied them: it downloads every live-site file the pages and the vendored stylesheets reference (and the files those stylesheets point to) into `vendor/`, keeping the original paths, and `build_site.py --stamp` then links the pages to the local copies. Run it from a Russian IP.

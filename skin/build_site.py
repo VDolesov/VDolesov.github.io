@@ -15,6 +15,7 @@ sys.path.insert(0, HERE)
 
 from legal import legal_copy
 from naming import name_pages
+from vendor import vendor_assets
 from strip import strip_sections
 from build_demo import (BANNER, BANNER_COPY, IMAGES, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
                         SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
@@ -209,6 +210,7 @@ def build_page(path, html, ids, version):
     html = _COUNTER.sub("", html)
     html = _MONTSERRAT.sub("", html)
     html = vendor_css(html)
+    html = vendor_assets(html)
     html = strip_sections(html)
     html = legal_copy(html)
     html = name_pages(html, path)
@@ -317,6 +319,7 @@ def refresh(html, path=""):
     html = _COUNTER.sub("", html)
     html = _MONTSERRAT.sub("", html)
     html = vendor_css(html)
+    html = vendor_assets(html)
     html = strip_sections(html)
     html = legal_copy(html)
     html = name_pages(html, path)
