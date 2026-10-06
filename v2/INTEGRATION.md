@@ -1,68 +1,61 @@
-# Подключение витрины к бэкенду
+# Connecting the storefront to the backend
 
-Документ для разработчика, который будет связывать эту вёрстку с серверной
-частью сайта mirsladostey164.ru (1С-Битрикс, шаблон Aspro Максимум).
+Notes for the developer who wires this markup to the backend of mirsladostey164.ru (1C-Bitrix, Aspro Max template).
 
-Витрина сделана как набор статических страниц: HTML + один CSS-набор + один
-JS-файл. Ни сборщика, ни фреймворка нет — страницы можно открыть с диска.
-Это сделано намеренно: разметку проще перенести в шаблон Битрикса, чем
-разбирать сборку.
+The storefront is a set of static pages: HTML, one CSS set and one JS file. There is no bundler and no framework, so the pages open straight from disk. This is deliberate: plain markup is easier to move into a Bitrix template than a build pipeline.
 
-## Главное, что нужно знать
+## Key points
 
-1. **Адреса совпадают с текущим сайтом.** Раздел каталога — `/catalog/torty/`,
-   карточка товара — `/catalog/torty/747/`, где `747` это ID элемента
-   инфоблока. Ссылки, закладки и позиции в поиске не потеряются.
-2. **Данные лежат в одном файле** — `products.js`. Это единственное место,
-   откуда витрина берёт товары. Заменив его на данные с сервера, вы получите
-   рабочий магазин.
-3. **Ничего не отправляется на сервер.** Формы собирают текст заявки и
-   копируют его в буфер обмена. Все точки, где нужен сервер, перечислены ниже.
+1. **URLs match the live site.** A catalog section is `/catalog/torty/`, a product is `/catalog/torty/747/`, where `747` is the infoblock element ID. Links, bookmarks and search positions are kept.
+2. **Data lives in one file**, `products.js`. It is the only place the storefront reads products from; replace it with server data and the shop works.
+3. **Nothing is sent to a server.** Forms build the request text and copy it to the clipboard. Every point that needs a server is listed below.
 
-## Структура страниц
+## Pages
 
-| Адрес | Что показывает | Компонент Битрикса |
+| URL | Content | Bitrix component |
 | --- | --- | --- |
-| `/` | Главная: витрина, каталог, доставка, вопросы | `catalog.section` или свой |
-| `/catalog/` | Все разделы и полный список | `catalog.sections.list` |
-| `/catalog/<раздел>/` | Раздел: 9 штук, слаги как сейчас | `catalog.section` |
-| `/catalog/<раздел>/<id>/` | Карточка товара | `catalog.element` |
-| `/basket/` | Корзина отдельной страницей | `sale.basket.basket` |
-| `/order/` | Оформление заказа | `sale.order.ajax` |
-| `/search/` | Поиск, читает `?q=` | `search.page` |
-| `/favorites/` | Отложенные товары | `catalog.product.subscribe` или своё |
-| `/personal/` | Вход в кабинет (пока заглушка) | `main.register`, `system.auth.form` |
-| `/company/` + `reviews`, `vacancy`, `licenses`, `docs` | О компании | статические страницы |
-| `/help/` + `payment`, `delivery`, `warranty` | Как купить | статические страницы |
-| `/sale/`, `/services/`, `/info/`, `/contacts/` | Акции, услуги, справка, контакты | инфоблоки |
+| `/` | Home: showcase, catalog, delivery, FAQ | `catalog.section` or custom |
+| `/catalog/` | All sections and the full list | `catalog.sections.list` |
+| `/catalog/<section>/` | Section (9 of them, same slugs as now) | `catalog.section` |
+| `/catalog/<section>/<id>/` | Product card | `catalog.element` |
+| `/basket/` | Cart page | `sale.basket.basket` |
+| `/order/` | Checkout | `sale.order.ajax` |
+| `/search/` | Search, reads `?q=` | `search.page` |
+| `/favorites/` | Saved products | `catalog.product.subscribe` or custom |
+| `/personal/` | Account sign-in (placeholder) | `main.register`, `system.auth.form` |
+| `/company/` + `reviews`, `vacancy`, `licenses`, `docs` | Company | static pages |
+| `/help/` + `payment`, `delivery`, `warranty` | How to buy | static pages |
+| `/sale/`, `/services/`, `/info/`, `/contacts/` | Offers, services, info, contacts | infoblocks |
 
-Всего 73 страницы, из них 44 — карточки товаров.
+73 pages in total, 44 of them product cards.
 
-## Формат данных
+## Data format
 
-`products.js` объявляет один глобальный объект:
+`products.js` declares one global object:
 
 ```js
 window.MS_DATA = {
-  SECTIONS,        // разделы: slug, title, short, description
-  SECTION_MAP,     // тот же список, доступ по slug
-  PRODUCTS,        // товары
-  FEATURED_IDS,    // порядок сортировки «сначала популярные»
+  SECTIONS,
+  SECTION_MAP,
+  PRODUCTS,
+  FEATURED_IDS,
   MIN_ORDER: 800, FREE_DELIVERY: 3000, DELIVERY_FEE: 150
 };
 ```
 
-Товар выглядит так:
+`SECTIONS` holds slug, title, short title and description; `SECTION_MAP` is the same list keyed by slug; `FEATURED_IDS` is the "popular first" order.
+
+A product:
 
 ```js
 {
-  id: "747",                      // ID элемента инфоблока
-  section: "torty",               // символьный код раздела
+  id: "747",
+  section: "torty",
   name: "Торт «Прага»",
-  price: 1300,                    // число, без форматирования
-  unit: "шт",                     // единица измерения
-  article: "10007",               // артикул
-  badge: "Хит",                   // метка, может быть пустой
+  price: 1300,
+  unit: "шт",
+  article: "10007",
+  badge: "Хит",
   weight: "1200 г",
   composition: "Мука пшеничная в/с, сахар-песок, …",
   energy: "391,55 ккал / 1369 кДж",
@@ -72,72 +65,40 @@ window.MS_DATA = {
 }
 ```
 
-Поля `sectionTitle`, `availability`, `description` и `url` дописываются в
-конце `products.js` — если данные приходят с сервера, повторите эту логику
-или отдавайте поля сразу.
+`id` is the infoblock element ID, `section` the section code, `price` a plain number, `badge` may be empty.
 
-**Как заменить на серверные данные:** отдайте тот же объект из PHP-шаблона
-или подключите JSON-эндпоинт и присвойте `window.MS_DATA` до загрузки
-`app.js`. Больше в разметке ничего менять не нужно.
+`sectionTitle`, `availability`, `description` and `url` are filled in at the end of `products.js`; when data comes from the server, repeat that logic or send the fields ready.
 
-## Где нужен сервер
+**Switching to server data:** render the same object from the PHP template or fetch it from a JSON endpoint and assign `window.MS_DATA` before `app.js` loads. Nothing else in the markup changes.
 
-| Что | Где в коде | Сейчас | Нужно |
+## Where a server is needed
+
+| What | Where in code | Now | Needed |
 | --- | --- | --- | --- |
-| Оформление заказа | `app.js`, `[data-order-form]` | текст в буфер обмена | создание заказа, оплата |
-| Заявка на торт | `[data-custom-form]` | то же | письмо или CRM |
-| Обратный звонок | `[data-callback-form]` | только уведомление | заявка менеджеру |
-| Отзыв о товаре | `[data-review-form]` | только уведомление | модерация и вывод |
-| Вход в кабинет | `[data-login-form]` | заглушка | авторизация |
-| Корзина и отложенные | `localStorage`, ключи `mir-sladostey-cart-v3`, `-favorites-v3` | браузер | серверная корзина |
-| Поиск | фильтрация массива на клиенте | по названию и составу | серверный поиск |
-| Наличие и цены | статический `products.js` | снимок каталога | актуальные остатки |
+| Checkout | `app.js`, `[data-order-form]` | text to clipboard | order creation, payment |
+| Custom cake request | `[data-custom-form]` | same | e-mail or CRM |
+| Call back | `[data-callback-form]` | notice only | request to a manager |
+| Product review | `[data-review-form]` | notice only | moderation and output |
+| Account sign-in | `[data-login-form]` | placeholder | authorization |
+| Cart and favourites | `localStorage`, keys `mir-sladostey-cart-v3`, `-favorites-v3` | browser | server-side cart |
+| Search | client-side filter | by name and composition | server search |
+| Stock and prices | static `products.js` | catalog snapshot | live stock |
 
-Разметку менять не нужно: во всех местах есть `data-`атрибуты, за которые
-удобно цепляться.
+The markup does not need changes: every such point has a `data-` attribute to hook into.
 
-## Что важно сохранить при переносе
+## Keep when porting
 
-- **Единица измерения** рядом с ценой: часть позиций продаётся за килограмм,
-  часть — за штуку. В карточке и корзине это выводится явно.
-- **Минимальная сумма 800 ₽**: кнопка оформления блокируется, пока сумма
-  меньше, и показывает, сколько добавить.
-- **Расчёт доставки**: 150 ₽ по Саратову, бесплатно от 3 000 ₽ — значения
-  вынесены в `MS_DATA`, менять там.
-- **Предзаказ**: у тортов и пирогов выводится «Предзаказ от 24 часов».
+- **Unit next to the price**: some items are sold by the kilogram, some by the piece; the card and the cart show it.
+- **800 ₽ minimum order**: the checkout button stays disabled below it and shows how much to add.
+- **Delivery**: 150 ₽ within Saratov, free from 3 000 ₽; the values live in `MS_DATA`.
+- **Pre-order**: cakes and pies show "pre-order 24 hours ahead".
 
-## Сборка
+## Snapshot
 
-Скрипты в папке `build/` (Python 3, нужен Pillow и numpy):
+This version is a static snapshot exported from history by `skin/export_version.py`; the scripts that generated it are retired. Product photos come from the sources in `build/`: `build/photos/` (site originals, 1100 px), `build/sources/studio/` (studio shots of the pies) and `build/sources/legacy/` (archive shots, 350 px, used where nothing else exists).
 
-```
-python build/scrape.py        # снимок каталога с сайта → build/catalog.json
-python build/fetch_photos.py  # исходные фотографии → build/photos/
-python build/photos.py        # фотосерия каталога → assets/products/*-v7.webp
-python build/data.py          # products.js из catalog.json
-python build/build_all.py     # все страницы
-```
+The strawberry cake has no photo in any source and shows a placeholder. Both kinds of vareniki share one shot, as on the live site.
 
-Обычный порядок после изменения данных: `data.py`, затем `build_all.py`.
-Пересобирать фотографии нужно только при появлении новых снимков.
+## Not in this version
 
-## Фотографии
-
-Каталог собран в одном стиле: тёплый фон, единый габарит изделия, общая линия
-основания. Источники лежат в `build/`:
-
-- `build/photos/` — оригиналы с сайта (1100 px);
-- `build/sources/studio/` — студийные кадры пирогов (своих фотографий этих
-  позиций у предприятия нет);
-- `build/sources/legacy/` — архивные снимки 350 px, использованы там, где
-  других нет.
-
-У торта «Клубничный рай» фотографии нет ни в одном источнике — стоит
-аккуратная заглушка. Вареники с картошкой и с вишней используют один и тот же
-снимок: так на сайте сейчас, нужен отдельный кадр.
-
-## Чего в вёрстке пока нет
-
-Сознательно не делалось, чтобы не выдумывать за бизнес: сравнение товаров,
-купоны и скидки, подписка на рассылку, фильтр по цене и характеристикам,
-пагинация (вместо неё кнопка «Показать ещё»), онлайн-оплата.
+Left out on purpose, so as not to invent business rules: product comparison, coupons and discounts, newsletter, price and property filters, pagination (a "show more" button instead), online payment.
