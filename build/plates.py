@@ -7,7 +7,6 @@ from PIL import Image, ImageDraw, ImageEnhance, ImageFilter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from photos import SRC_HD, SRC_LEGACY
 from photos_v8 import neural_cutout, upscale
-from photos_v9 import finish, place, save, sheet
 
 POLY = {
     "765": [(215, 560), (225, 470), (290, 390), (370, 330), (480, 300), (600, 295), (720, 310), (830, 350), (890, 430), (915, 540), (900, 700), (220, 700)],
@@ -155,21 +154,3 @@ def plated(pid):
     canvas.alpha_composite(front)
     box = canvas.getbbox()
     return canvas.crop(box) if box else canvas
-
-
-def main():
-    ids = sys.argv[1:] or sorted(set(BOWL) | PLATE | PLATTER)
-    for pid in ids:
-        try:
-            im = place(plated(pid), .88 if pid in PLATTER else .80, sharpen=25)
-            save(finish(im), pid)
-            print(f"  {pid}: plated", flush=True)
-        except Exception as exc:
-            import traceback
-            traceback.print_exc()
-            print(f"  {pid}: ERROR {exc}", flush=True)
-    sheet()
-
-
-if __name__ == "__main__":
-    main()

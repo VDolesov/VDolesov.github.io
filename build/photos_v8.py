@@ -11,7 +11,6 @@ from photos import _dilate, _erode, _spread
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
-OUT = os.path.join(APP, "assets", "products")
 MODEL_SR = os.path.join(HERE, "models", "FSRCNN_x3.pb")
 
 STUDIO = {"736", "737", "738", "739", "741", "772", "773", "774"}

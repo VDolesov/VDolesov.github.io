@@ -7,8 +7,6 @@ SRC_HD = os.path.join(HERE, "photos")
 SRC_STUDIO = os.path.join(HERE, "sources", "studio")
 SRC_LEGACY = os.path.join(HERE, "sources", "legacy")
 
-SIZE = 1024
-
 
 def _dilate(m, n):
     for _ in range(n):
