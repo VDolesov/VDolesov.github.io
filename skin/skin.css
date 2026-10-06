@@ -2893,6 +2893,12 @@ body .alert.alert-warning, body .alert.alert-info, body .alert.alert-success {
 }
 body .alert.alert-danger { background: #1c1310 !important; border: 1px solid rgba(232, 120, 104, .5) !important; color: #f0b3a8 !important; border-radius: 0 !important; }
 body .button_wrap { background: transparent !important; }
+body .catalog_item .counter_wrapp { flex-wrap: wrap !important; height: auto !important; overflow: visible !important; }
+body .catalog_item .counter_wrapp .total_summ {
+  flex: 1 0 100% !important; width: 100% !important; box-sizing: border-box; float: none !important; margin: 10px 0 0 !important; padding: 0 10px !important;
+  text-align: left !important; font-size: 13px !important; line-height: 1.4 !important; color: rgba(243, 232, 216, .55) !important; white-space: nowrap;
+}
+body .catalog_item .counter_wrapp .total_summ span { color: #d6a459 !important; font-weight: 600 !important; }
 body #bx-soa-order .bx-soa-pp-list-description { background: transparent !important; color: #d6a459 !important; font-weight: 600; padding-left: 0 !important; }
 body .MAPS .contacts_map, body .MAPS .map_type_2 .items { background: #170e0b !important; }
 body .ymaps-b-balloon, body .ymaps-b-balloon::after, body .ymaps-b-balloon::before,

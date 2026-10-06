@@ -89,6 +89,20 @@ def replace_auth_form(html):
     return html[:start] + AUTH_NOTE + html[block_end(html, start, "div"):]
 
 
+def drop_subscribe(html):
+    while True:
+        pos = html.find('data-param-id="subscribe"')
+        if pos == -1:
+            return html
+        for start, end in enclosing(html, pos):
+            tag = html[start:html.find(">", start)]
+            if 'class="subscribe_button"' in tag or 'class="side-block ' in tag:
+                html = html[:start] + html[end:]
+                break
+        else:
+            return html
+
+
 def strip_sections(html):
     html = drop_link_blocks(html, "/help/warranty/")
     html = drop_link_blocks(html, "/company/licenses/")
@@ -100,4 +114,5 @@ def strip_sections(html):
     html = drop_class_blocks(html, "wish_item_button")
     html = drop_class_blocks(html, "drag-block container TIZERS", exact=False)
     html = drop_class_blocks(html, "drag-block container COMPANY_TEXT", exact=False)
+    html = drop_subscribe(html)
     return replace_auth_form(html)
