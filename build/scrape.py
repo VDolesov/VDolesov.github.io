@@ -109,4 +109,6 @@ def main():
         json.dump(catalog, f, ensure_ascii=False, indent=1)
     print("\nsaved:", OUT, "| products:", len(catalog["items"]))
 
-main()
+
+if __name__ == "__main__":
+    main()
