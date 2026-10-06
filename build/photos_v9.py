@@ -6,12 +6,10 @@ import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from photos_v8 import (OUT, SIZE, SRC_HD, SRC_LEGACY, SRC_STUDIO, STUDIO,
-                       neural_cutout, upscale)
-from osetin import PIES, balance, clean_mask
+from photos import SIZE, SRC_HD, SRC_LEGACY, SRC_STUDIO
+from photos_v8 import OUT, STUDIO, neural_cutout, upscale
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.dirname(os.path.dirname(HERE))
 PREVIEW = os.path.join(HERE, "preview-v9")
 SERIES = "v9"
 
@@ -126,10 +124,6 @@ def placeholder():
 
 
 def cutout(pid):
-    if pid in PIES:
-        name, box, tint, sat, span = PIES[pid]
-        src = Image.open(os.path.join(SITE, name)).convert("RGB").crop(box)
-        return balance(clean_mask(neural_cutout(src, restore_inside=False)), tint, sat), span, "production shot"
     if pid in STUDIO:
         src = Image.open(os.path.join(SRC_STUDIO, f"pies-{pid}-v2.webp"))
         return neural_cutout(src, restore_inside=False), SPAN, "studio series"

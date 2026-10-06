@@ -10,7 +10,8 @@ import photos_v8
 import photos_v9
 import pies_ai
 import plates
-from photos_v8 import OUT, SRC_HD, neural_cutout, upscale
+from photos import SRC_HD
+from photos_v8 import OUT, neural_cutout, upscale
 from photos_v9 import SERIES, SPAN, finish, place
 
 HERE = os.path.dirname(os.path.abspath(__file__))

@@ -7,7 +7,7 @@ from PIL import Image
 from rembg import new_session, remove
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from photos import SIZE, SRC_HD, SRC_LEGACY, SRC_STUDIO, _dilate, _erode, _spread
+from photos import _dilate, _erode, _spread
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)

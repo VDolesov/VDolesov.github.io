@@ -9,9 +9,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from photos_v9 import natural
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.dirname(HERE)
+APP = os.path.dirname(HERE)
 SRC = os.path.join(HERE, "sources", "ai", "v1-pies")
-OUT = os.path.join(SITE, "v1", "assets", "products")
+OUT = os.path.join(APP, "v1", "assets", "products")
 PREVIEW = os.path.join(HERE, "preview-v1-pies")
 VERSION = 9
 

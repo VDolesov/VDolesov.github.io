@@ -13,14 +13,13 @@ import plates
 import v1_photos
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.dirname(HERE)
-OUT = os.path.join(SITE, "assets", "products")
+APP = os.path.dirname(HERE)
+OUT = os.path.join(APP, "assets", "products")
 AI_PIES = os.path.join(HERE, "sources", "ai", "v1-pies")
 SERIES = pv.SERIES
 SIZE = 2048
 
 PIE_AI = {"801", "802", "803"}
-SPANS = {"pastry": (.60, .80), "pies": (.76, .89)}
 
 
 def product_ids():

@@ -5,7 +5,8 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from photos_v8 import SRC_HD, SRC_LEGACY, neural_cutout, upscale
+from photos import SRC_HD, SRC_LEGACY
+from photos_v8 import neural_cutout, upscale
 from photos_v9 import finish, place, save, sheet
 
 POLY = {

@@ -4,11 +4,11 @@ import sys
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.dirname(HERE)
-sys.path.insert(0, os.path.join(SITE, "skin"))
+APP = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(APP, "skin"))
 from hero_choc import enlarge
 
-ASSETS = os.path.join(SITE, "v1", "assets")
+ASSETS = os.path.join(APP, "v1", "assets")
 HERO_HEIGHT = 1440
 
 

@@ -10,8 +10,8 @@ from photos_hd import up_rgba
 from photos_v9 import cutout, natural
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.dirname(HERE)
-OUT = os.path.join(SITE, "v1", "assets", "products")
+APP = os.path.dirname(HERE)
+OUT = os.path.join(APP, "v1", "assets", "products")
 PREVIEW = os.path.join(HERE, "preview-v1")
 VERSION = 10
 SIZE = 2048
