@@ -34,7 +34,7 @@ Near-black cocoa, caramel gold as the only accent, Prata for headings, Golos Tex
 
 3. Clear the site cache: *Settings → Autocaching → Clear cache files*.
 
-`motion.js` (reveal on scroll, hero parallax) is optional; include it after the template scripts. The other scripts exist only for the static demo: on the live site Bitrix handles the cart, search and forms.
+`motion.js` (reveal on scroll, hero parallax) is optional; include it after the template scripts. `map.js` goes with the skin on the live site too: the skin darkens the store map and the script lifts the filter when the map is switched to satellite or hybrid. The other scripts exist only for the static demo: on the live site Bitrix handles the cart, search and forms.
 
 ## Build
 
@@ -82,6 +82,7 @@ Three WebP slides, 2400×1060, subject on the right and the left half darkened f
 - `search.js` — header search over names, sections and composition.
 - `demo.js` — template pop-up forms show a demo note with the phones, quick view opens the product page, one-time cookie notice.
 - `motion.js` — reveal on scroll and the hero parallax, honouring `prefers-reduced-motion`.
+- `map.js` — marks a Yandex map with `ms-map-photo` while a satellite or hybrid layer is on, so the dark filter applies only to the scheme.
 
 ## Caching
 

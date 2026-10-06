@@ -34,6 +34,19 @@ GOLD_LINE = "rgba(214, 164, 89, .38)"
 TILE = "#130c09"
 ACCENT_SOFT = "rgba(214, 164, 89, .12)"
 
+MAP_ICONS = {
+    "minus": "M11 15h10a1 1 0 0 1 0 2H11a1 1 0 0 1 0-2z",
+    "plus": "M15 15h-4a1 1 0 0 0 0 2h4v4a1 1 0 0 0 2 0v-4h4a1 1 0 0 0 0-2h-4v-4a1 1 0 0 0-2 0v4z",
+    "layers": "M23.107 15.993l1.51 1.048a.884.884 0 0 1 0 1.457l-7.366 5.13c-.715.498-1.785.498-2.5 0l-7.368-5.13a.884.884 0 0 1 0-1.456"
+              "l1.51-1.047-1.51-1.052a.884.884 0 0 1 0-1.455l7.368-5.113c.715-.496 1.784-.496 2.5 0l7.367 5.113a.884.884 0 0 1 0 1.456"
+              "l-1.51 1.053zm-6.89-6.163c-.096-.066-.338-.066-.433 0l-6.322 4.387 6.323 4.4c.095.064.336.064.43 0l6.317-4.4-6.316-4.387z",
+}
+
+
+def map_icon(name, color):
+    return ("url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E"
+            f"%3Cpath fill='{color.replace('#', '%23')}' fill-rule='evenodd' d='{MAP_ICONS[name]}'/%3E%3C/svg%3E\")")
+
 
 def bundle_urls():
     order = {"kernel": 0, "template": 1, "page": 2, "default": 3, "components": 4}
@@ -44,8 +57,10 @@ def bundle_urls():
             continue
         html = open(os.path.join(root, "index.html"), encoding="utf-8", errors="ignore").read()
         links = re.findall(r'<link[^>]+href="([^"]+\.css)[^"]*"', html)
-        links += [SITE + u for u in re.findall(r"'(/bitrix/templates/aspro_max/[^']+\.css)[^']*'", html)]
+        links += [SITE + u for u in re.findall(r"'(?:/vendor)?(/bitrix/templates/aspro_max/[^']+\.css)[^']*'", html)]
         for url in links:
+            if url.startswith("/vendor/bitrix/"):
+                url = SITE + url[len("/vendor"):]
             if "aspro_max" not in url:
                 continue
             kind = next((k for k in order if "/" + k in url or "/" + k + "_" in url), "components")
@@ -1491,7 +1506,31 @@ body .wrapper_inner > .left_block.product-side {{ display: none !important; }}
 body .ordered-block.goods:not(:has(.catalog_item)) {{ display: none !important; }}
 body .bottom-info .ordered-block.goods {{ margin-top: 40px !important; }}
 
-body .MAPS [class*="ground-pane"] {{ filter: grayscale(1) invert(.92) brightness(.72) contrast(.92) sepia(.35); }}
+body [class*="ground-pane"], body .ymaps-layers-pane {{ filter: grayscale(1) invert(.92) brightness(.72) contrast(.92) sepia(.35); }}
+body .ms-map-photo [class*="ground-pane"], body .ms-map-photo .ymaps-layers-pane {{ filter: none; }}
+body .wrapper1 .ymaps-b-zoom_hints-pos_right,
+body .wrapper1 .ymaps-controls-righttop .ymaps-b-select.ymaps-b-select_control_listbox {{
+  background: {CARD} !important; border: 1px solid {GOLD_LINE}; box-shadow: 0 8px 24px rgba(0, 0, 0, .45) !important;
+}}
+body .wrapper1 .ymaps-b-zoom:before {{ background-color: {GOLD_LINE} !important; }}
+body .wrapper1 .ymaps-b-zoom__button {{ opacity: 1 !important; cursor: pointer; }}
+body .wrapper1 .ymaps-b-zoom__button_type_minus .ymaps-b-zoom__sprite {{ background-image: {map_icon("minus", INK)} !important; }}
+body .wrapper1 .ymaps-b-zoom__button_type_plus .ymaps-b-zoom__sprite {{ background-image: {map_icon("plus", INK)} !important; }}
+body .wrapper1 .ymaps-b-zoom__button_type_minus:hover .ymaps-b-zoom__sprite {{ background-image: {map_icon("minus", GOLD)} !important; }}
+body .wrapper1 .ymaps-b-zoom__button_type_plus:hover .ymaps-b-zoom__sprite {{ background-image: {map_icon("plus", GOLD)} !important; }}
+body .wrapper1 .ymaps-controls-righttop .ymaps-b-select.ymaps-b-select_control_listbox:before {{ background-image: {map_icon("layers", INK)} !important; }}
+body .wrapper1 .ymaps-b-select_control_listbox, body .wrapper1 .ymaps-b-select_control_listbox * {{ color: {INK} !important; }}
+body .wrapper1 .ymaps-b-select_control_listbox:hover, body .wrapper1 .ymaps-b-select_control_listbox:hover * {{ color: {GOLD} !important; }}
+body .wrapper1 .ymaps-b-select_control_listbox [class*="arrow"] {{ filter: invert(1) brightness(.9); }}
+body .wrapper1 .ymaps-b-popupa__body {{ background: {CARD} !important; border: 1px solid {GOLD_LINE}; }}
+body .wrapper1 .ymaps-b-popupa__body, body .wrapper1 .ymaps-b-popupa__body * {{ color: {INK} !important; }}
+body .wrapper1 .ymaps-b-popupa__body [class*="item"]:hover {{ background: {ACCENT_SOFT} !important; }}
+body .wrapper1 .ymaps-b-popupa__tail {{ display: none !important; }}
+body .viewed_product_block {{ background: {GROUND} !important; }}
+body .viewed_product_block .block-item, body .viewed_product_block .block-item__wrapper {{ background: {CARD} !important; box-shadow: none !important; border-radius: 0 !important; }}
+body .viewed_product_block .block-item {{ border: 1px solid {LINE} !important; }}
+body .viewed_product_block .block-items::before, body .viewed_product_block .block-items::after {{ background: transparent !important; }}
+body .viewed_product_block .price {{ color: {GOLD} !important; }}
 body .MAPS .contacts_map, body .MAPS .map_type_2 .items {{ background: {PANEL} !important; }}
 body .ymaps-b-balloon, body .ymaps-b-balloon::after, body .ymaps-b-balloon::before,
 body [class*="-balloon__layout"], body [class*="-balloon__content"], body [class*="-balloon__tail"] {{
@@ -1536,7 +1575,6 @@ body .page-top .topic .count, body .topic .topic__count, body .page-top .count {
 }}
 body .filter-panel .filter_title span, body .filter-panel .dropdown-select__title {{ font-size: 13px !important; color: {MUTED} !important; }}
 
-body [class*="ground-pane"] {{ filter: grayscale(1) invert(.92) brightness(.72) contrast(.92) sepia(.35); }}
 body .contacts img, body .contacts_block img {{ filter: none; }}
 
 @media (max-width: 600px) {{
