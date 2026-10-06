@@ -1500,6 +1500,9 @@ input[type="search"], input[type="number"], textarea, select, .form-control, .in
 input:focus, textarea:focus, select:focus, .form-control:focus {{ border-color: {GOLD_LINE} !important; box-shadow: none !important; }}
 .ms-qty, .ms-item__remove, .ms-choice label {{ border-color: transparent !important; background: {FIELD}; }}
 .ms-choice label:has(input:checked) {{ border-color: {GOLD_LINE} !important; }}
+.ms-form input[type="text"], .ms-form input[type="tel"], .ms-form .ms-choice label {{ border: 1px solid {GOLD_LINE} !important; }}
+.ms-form input[type="text"]:focus, .ms-form input[type="tel"]:focus, .ms-form .ms-choice label:has(input:checked) {{ border-color: {ACCENT} !important; }}
+.ms-field[hidden] {{ display: none !important; }}
 .btn.wish_item, .btn.compare_item, .wish_item.btn, .compare_item.btn, .btn.btn-search, button.btn-search {{ background: #2a1d17 !important; }}
 
 .content_wrapper_block, .block_container.bordered, .contacts_map.bordered, .basket_sort,
