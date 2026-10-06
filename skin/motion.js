@@ -106,24 +106,33 @@
   function ready(fn) {
     if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn);
   }
-  ready(function () {
-    heroParallax();
-    prepare(document);
+  function watchPage() {
     var pending = null;
-    new MutationObserver(function () {
+    new MutationObserver(function onPageChange() {
       clearTimeout(pending);
       pending = setTimeout(function () { prepare(document); }, 80);
     }).observe(document.body, { childList: true, subtree: true });
-  });
-
-  var counters = document.querySelectorAll(".basket_fly .opener .count span.colored_theme_bg");
-  for (var i = 0; i < counters.length; i++) {
-    new MutationObserver((function (node) {
-      return function () {
-        node.classList.remove("ms-pop");
-        void node.offsetWidth;
-        node.classList.add("ms-pop");
-      };
-    })(counters[i])).observe(counters[i], { childList: true, subtree: true, characterData: true });
   }
+
+  function popCounter(node) {
+    new MutationObserver(function onCounterChange() {
+      node.classList.remove("ms-pop");
+      void node.offsetWidth;
+      node.classList.add("ms-pop");
+    }).observe(node, { childList: true, subtree: true, characterData: true });
+  }
+
+  function watchCounters() {
+    var counters = document.querySelectorAll(".basket_fly .opener .count span.colored_theme_bg");
+    for (var i = 0; i < counters.length; i++) popCounter(counters[i]);
+  }
+
+  function start() {
+    heroParallax();
+    prepare(document);
+    try { watchPage(); } catch (e) {}
+    try { watchCounters(); } catch (e) {}
+  }
+
+  ready(start);
 })();
