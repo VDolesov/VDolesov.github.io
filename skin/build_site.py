@@ -303,9 +303,7 @@ def page_id(path):
 def refresh(html, path=""):
     html = re.sub(r'(/assets/products/" \+ [^"]+ \+ ")-v\d+\.webp"',
                   lambda m: m.group(1) + "-" + SERIES + '.webp"', html)
-    backdrop, product = BANNER.values()
-    html = re.sub(r"/assets/hero-bg\.(?:jpg|webp)\?v=\d+", backdrop, html)
-    html = re.sub(r"/assets/hero-(?:mosaic|cake)\.(?:webp|png)\?v=\d+", product, html)
+    html = re.sub(r"/assets/hero-bg\.(?:jpg|webp)\?v=\d+", next(iter(BANNER.values())), html)
     for pattern, new in BANNER_COPY:
         html = re.sub(pattern, new, html)
     html = expand_slides(html)

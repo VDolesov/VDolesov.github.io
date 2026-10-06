@@ -8,15 +8,16 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 OUT = os.path.join(APP, "assets")
 AI = os.path.join(APP, "build", "sources", "ai")
+PREVIEW = os.path.join(APP, "build", "preview")
 
 BG_W, BG_H = 2400, 1060
 GROUND = (16, 10, 8)
 MODEL_SR = os.path.join(APP, "build", "models", "FSRCNN_x3.pb")
 
 SLIDES = [
-    {"name": "hero-bg.jpg", "source": os.path.join(OUT, "hero-noir.webp"), "grade": (1.04, .84)},
-    {"name": "hero-2.jpg", "source": os.path.join(AI, "hero-pie.png"), "grade": (1.02, .92), "fit": .9, "shift": 160},
-    {"name": "hero-3.jpg", "source": os.path.join(AI, "hero-cake.png"), "grade": (1.02, .92), "fit": .9, "vpos": 1.0},
+    {"name": "hero-bg.webp", "source": os.path.join(OUT, "hero-noir.webp"), "grade": (1.04, .84)},
+    {"name": "hero-2.webp", "source": os.path.join(AI, "hero-pie.png"), "grade": (1.02, .92), "fit": .9, "shift": 160},
+    {"name": "hero-3.webp", "source": os.path.join(AI, "hero-cake.png"), "grade": (1.02, .92), "fit": .9, "vpos": 1.0},
 ]
 
 
@@ -101,7 +102,8 @@ def preview(bg, name):
     w, h = 1425, 631
     frame = bg.resize((w, int(w * BG_H / BG_W)), Image.LANCZOS)
     frame = frame.crop((0, (frame.height - h) // 2, w, (frame.height - h) // 2 + h))
-    path = os.path.join(HERE, name.replace(".jpg", "-preview.jpg"))
+    os.makedirs(PREVIEW, exist_ok=True)
+    path = os.path.join(PREVIEW, name.replace(".webp", "-preview.jpg"))
     frame.save(path, quality=90)
     return path
 
@@ -115,10 +117,8 @@ def main():
             continue
         bg = backdrop(slide["source"], slide["grade"], slide.get("fit", 1.0), slide.get("vpos", .5), slide.get("shift", 0))
         bg_path = os.path.join(OUT, name)
-        bg.save(bg_path, quality=86, optimize=True, progressive=True)
-        webp_path = bg_path.replace(".jpg", ".webp")
-        bg.save(webp_path, "WEBP", quality=85, method=6)
-        for path in (bg_path, webp_path, preview(bg, name)):
+        bg.save(bg_path, "WEBP", quality=85, method=6)
+        for path in (bg_path, preview(bg, name)):
             print(f"  {os.path.basename(path)}  {os.path.getsize(path) // 1024} KB")
 
 
