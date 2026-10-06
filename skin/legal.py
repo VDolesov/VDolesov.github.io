@@ -137,7 +137,23 @@ def add_review_consent(html):
     return html.replace('<div class="reviews-reply-buttons">', REVIEW_CONSENT + '<div class="reviews-reply-buttons">', 1)
 
 
+TEST_REVIEWS = (22,)
+NO_REVIEWS = '<div class="text_before">У данного товара нет отзывов. Станьте первым, кто оставил отзыв об этом товаре!</div>'
+
+
+def drop_test_reviews(html):
+    fresh = html
+    for review in TEST_REVIEWS:
+        fresh = re.sub(r'<table class="reviews-post-table[^"]*"[^>]*id="message%d".*?</table>' % review, "", fresh, flags=re.S)
+    if fresh == html:
+        return html
+    if 'class="reviews-post-table' not in fresh:
+        fresh = re.sub(r"Отзывы\s*\(\d+\)", "Отзывы", fresh)
+        fresh = fresh.replace('<div class="reviews-block-inner">', '<div class="reviews-block-inner">' + NO_REVIEWS, 1)
+    return fresh
+
+
 def legal_copy(html):
     for pattern, new in _COPY:
         html = pattern.sub(new, html)
-    return add_review_consent(html)
+    return add_review_consent(drop_test_reviews(html))

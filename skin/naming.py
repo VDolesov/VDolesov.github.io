@@ -1,3 +1,4 @@
+import collections
 import html
 import json
 import os
@@ -14,6 +15,7 @@ CATALOG = json.load(open(os.path.join(APP, "build", "catalog.json"), encoding="u
 SECTIONS = {s["slug"]: s["title"] for s in CATALOG["sections"]}
 PRODUCTS = {i["id"]: dict(i, title=pretty(i["name"], i["section"])) for i in CATALOG["items"]}
 PRODUCTS.update({i["id"]: dict(i, title=i["name"]) for i in EXTRA})
+COUNTS = collections.Counter(i["section"] for i in CATALOG["items"] + EXTRA)
 
 SECTION_TEXT = {
     "torty": "Праздничные торты собственного производства в Саратове: бисквит, крем, свежие ягоды. Предзаказ от 24 часов.",
@@ -167,6 +169,22 @@ def complete_crumbs(html_text, path):
     return _HOME_ONLY.sub(lambda m: m.group(1) + m.group(2) + last + m.group(3), html_text, count=1)
 
 
+def items_label(n):
+    if n % 10 == 1 and n % 100 != 11:
+        return f"{n} товар"
+    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
+        return f"{n} товара"
+    return f"{n} товаров"
+
+
+_COUNT = re.compile(r'(<a href="/catalog/([a-z_]+)/" class="dark_link"><span class="font_md">[^<]*</span></a>\s*'
+                    r'<span class="element-count2 muted font_xs">)\d+ товар[а-я]*')
+
+
+def section_counts(html_text):
+    return _COUNT.sub(lambda m: m.group(1) + items_label(COUNTS[m.group(2)]) if m.group(2) in COUNTS else m.group(0), html_text)
+
+
 def name_pages(html_text, path):
     for old, new in PRODUCT_NAMES:
         html_text = html_text.replace(old, new)
@@ -188,5 +206,6 @@ def name_pages(html_text, path):
         html_text = html_text.replace("'TITLE':'Помощь'", "'TITLE':'Как купить'")
     html_text = name_stores(html_text, path)
     html_text = complete_crumbs(html_text, path)
+    html_text = section_counts(html_text)
     text = page_text(path)
     return set_meta(html_text, text) if text else html_text
