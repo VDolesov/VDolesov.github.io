@@ -57,6 +57,8 @@ def container_file(path):
 
 
 def save(path, data):
+    if path.endswith((".js", ".css", ".svg")):
+        data = data.replace(b"\r\n", b"\n")
     target = local_path(path)
     os.makedirs(os.path.dirname(target), exist_ok=True)
     with open(target, "wb") as f:
