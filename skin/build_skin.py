@@ -1849,7 +1849,9 @@ body .basket_fly .opener .basket_count.ms-has-items .count {{ display: block !im
 .ms-consent input {{ flex: none; width: 16px; height: 16px; margin: 2px 0 0; accent-color: {ACCENT}; }}
 .btn.is-disabled {{ opacity: .45; pointer-events: none; cursor: default; }}
 @media (max-width: 600px) {{
-  .ms-cookie {{ left: 12px; right: 12px; bottom: 12px; flex-direction: column; align-items: stretch; gap: 12px; }}
+  .ms-cookie {{ left: 8px; right: 8px; bottom: 8px; gap: 12px; padding: 12px 14px; }}
+  .ms-cookie__text {{ font-size: 12px; line-height: 1.45; }}
+  .ms-cookie .ms-cookie__ok.btn {{ height: 38px !important; line-height: 38px !important; padding: 0 14px !important; }}
 }}
 html.ms-lock, html.ms-lock body {{ overflow: hidden !important; }}
 .wish_item, .wish_item_button, body .basket_fly .opener .wish_count, .basket-link.delay, .wrap_icon.delay,
