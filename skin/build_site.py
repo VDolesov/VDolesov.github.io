@@ -290,8 +290,9 @@ def main(targets=None):
             previous = json.load(f)
         done = sorted(set(previous["pages"]) | set(done))
         failed = previous["failed"] + failed
-    with io.open(manifest, "w", encoding="utf-8") as f:
+    with io.open(manifest, "w", encoding="utf-8", newline="\n") as f:
         json.dump({"pages": done, "failed": failed, "skin": version}, f, ensure_ascii=False, indent=1)
+        f.write("\n")
     print(f"pages built: {len(done)}, failed: {len(failed)}, left in queue: {len(queue)}")
 
 

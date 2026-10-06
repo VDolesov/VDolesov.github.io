@@ -105,8 +105,9 @@ def main():
                 print("   ", pid, "error:", e)
             time.sleep(0.4)
 
-    with open(OUT, "w", encoding="utf-8") as f:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         json.dump(catalog, f, ensure_ascii=False, indent=1)
+        f.write("\n")
     print("\nsaved:", OUT, "| products:", len(catalog["items"]))
 
 
