@@ -2089,6 +2089,103 @@ body #basket-root .basket-btn-checkout {{ width: 100% !important; height: 56px !
 .ms-basket-line {{ display: flex; justify-content: space-between; gap: 16px; font-size: 14px; color: {INK}; }}
 .ms-basket-line + .ms-basket-line {{ margin-top: 14px; }}
 .ms-basket-note {{ margin-top: 22px; font-size: 13px; line-height: 1.55; color: {MUTED}; }}
+body #bx-soa-order .bx-soa-section {{
+  float: none !important; width: 100% !important; max-width: none !important; margin: 0 !important; padding: 34px 0 !important;
+  background: transparent !important; border: 0 !important; border-top: 1px solid {LINE} !important; border-radius: 0 !important; box-shadow: none !important;
+}}
+body #bx-soa-order .bx-soa > .bx-soa-section:first-child, body #bx-soa-order .bx-soa > div:first-child > .bx-soa-section {{ border-top: 0 !important; padding-top: 0 !important; }}
+body #bx-soa-order .pandd {{ display: block !important; margin: 0 !important; }}
+body #bx-soa-order .bx-soa-section-title-container {{ display: flex !important; align-items: baseline; justify-content: space-between; margin: 0 0 22px !important; padding: 0 !important; background: none !important; border: 0 !important; }}
+body #bx-soa-order .bx-soa-section-title-container::before, body #bx-soa-order .bx-soa-section-title::before {{ display: none !important; }}
+body #bx-soa-order .bx-soa-section-title {{
+  float: none !important; width: auto !important; margin: 0 !important; padding: 0 !important; background: none !important;
+  font-family: Prata, Georgia, serif !important; font-size: 28px !important; font-weight: 400 !important; line-height: 1.2 !important; color: {INK} !important; text-transform: none !important; letter-spacing: 0 !important;
+}}
+body #bx-soa-order .bx-soa-section-title .bx-soa-section-title-count, body #bx-soa-order .bx-soa-section-title i, body #bx-soa-order .bx-soa-section-title svg {{ display: none !important; }}
+body #bx-soa-order .bx-soa-section-title-container > [class*="col-"] {{ float: none !important; width: auto !important; padding: 0 !important; }}
+body #bx-soa-order .bx-soa-editstep {{ font-size: 12px !important; letter-spacing: .14em; text-transform: uppercase; color: {GOLD} !important; }}
+body #bx-soa-order .bx-soa-section-content {{ padding: 0 !important; }}
+body #bx-soa-order .bx-soa-section-content > .row, body #bx-soa-order .bx-soa-pp.row {{ margin: 0 !important; }}
+body #bx-soa-order .bx-soa-section-content [class*="col-"]:not(.bx-soa-pp-company) {{ padding-left: 0 !important; padding-right: 0 !important; }}
+body #bx-soa-order .bx-soa-pp-item-container {{ display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; float: none !important; width: 100% !important; }}
+body #bx-soa-order .bx-soa-pp-company {{
+  position: relative; float: none !important; width: auto !important; max-width: none !important; min-height: 0 !important; margin: 0 !important;
+  padding: 18px 20px 18px 54px !important; background: transparent !important; border: 1px solid {LINE} !important; border-radius: 0 !important; cursor: pointer;
+  transition: border-color .2s, background-color .2s;
+}}
+body #bx-soa-order .bx-soa-pp-company:hover {{ border-color: {GOLD_LINE} !important; }}
+body #bx-soa-order .bx-soa-pp-company.bx-selected {{ border-color: {GOLD} !important; background: {ACCENT_SOFT} !important; }}
+body #bx-soa-order .bx-soa-pp-company-graf-container {{ position: absolute !important; left: 20px !important; top: 19px !important; margin: 0 !important; }}
+body #bx-soa-order .bx-soa-pp-company .bx-soa-pp-company-graf-container::before {{ background: transparent !important; border: 1px solid {GOLD_LINE} !important; }}
+body #bx-soa-order .bx-soa-pp-company.bx-selected .bx-soa-pp-company-graf-container::before {{ background: {GOLD} !important; border-color: {GOLD} !important; }}
+body #bx-soa-order .bx-soa-pp-company.bx-selected .bx-soa-pp-company-graf-container::after {{ background: {ON_ACCENT} !important; }}
+body #bx-soa-order .bx-soa-pp-company-smalltitle {{ margin: 0 0 6px !important; font-size: 16px !important; font-weight: 600 !important; line-height: 1.3 !important; color: {INK} !important; }}
+body #bx-soa-order .bx-soa-pp-delivery-cost, body #bx-soa-order .bx-soa-pp-delivery-period {{ display: inline-block !important; width: auto !important; margin: 0 10px 0 0 !important; }}
+body #bx-soa-order .bx-soa-pp-company-description, body #bx-soa-order .bx-soa-pp-desc-container {{ font-size: 13px !important; line-height: 1.55 !important; color: {MUTED} !important; }}
+body #bx-soa-order .bx-soa-pp-company .bx-soa-pp-company-description {{ margin-top: 8px !important; width: auto !important; }}
+body #bx-soa-order .bx-soa-pp-company-inject {{ display: none !important; }}
+body #bx-soa-order #bx-soa-paysystem .bx-soa-pp > .bx-soa-pp-company-description {{ float: none !important; width: 100% !important; margin-top: 16px !important; }}
+body #bx-soa-order .bx-soa-customer {{ display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; float: none !important; width: 100% !important; }}
+body #bx-soa-order .bx-soa-customer-field {{ margin: 0 0 20px !important; padding: 0 !important; }}
+body #bx-soa-order .bx-soa-customer-field:has(textarea) {{ grid-column: 1 / -1; }}
+body #bx-soa-order .bx-soa-custom-label, body #bx-soa-order .bx-soa-customer-label {{
+  display: block; margin: 0 0 8px !important; font-size: 13px !important; font-weight: 500 !important; color: {INK} !important; text-transform: none !important; letter-spacing: 0 !important;
+}}
+body #bx-soa-order .bx-authform-starrequired {{ color: {GOLD} !important; }}
+body #bx-soa-order .form-control {{
+  height: 48px !important; padding: 0 16px !important; background: {FIELD} !important; border: 1px solid {GOLD_LINE} !important; border-radius: 0 !important;
+  box-shadow: none !important; color: {INK} !important; font-size: 15px !important;
+}}
+body #bx-soa-order textarea.form-control {{ height: auto !important; min-height: 96px; padding: 12px 16px !important; resize: vertical; }}
+body #bx-soa-order .form-control:focus {{ border-color: {GOLD} !important; }}
+body #bx-soa-order .bx-soa-coupon, body #bx-soa-order .bx-soa-coupon-block {{ display: none !important; }}
+body #bx-soa-order .bx-soa-item-table {{ border-top: 1px solid {LINE}; }}
+body #bx-soa-order .bx-soa-item-tr > .bx-soa-item-td:nth-child(2) {{ display: none !important; }}
+body #bx-soa-order .bx-soa-item-tr > .bx-soa-item-td {{ border-color: {LINE} !important; background: transparent !important; }}
+body #bx-soa-order .bx-soa-item-td-title {{ font-size: 12px !important; color: {MUTED} !important; text-transform: none !important; }}
+body #bx-soa-order .bx-soa-item-title, body #bx-soa-order .bx-soa-item-title a {{ font-family: Prata, Georgia, serif !important; font-size: 18px !important; font-weight: 400 !important; color: {INK} !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total {{ background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; padding: 0 !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .change_basket {{
+  display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 18px !important; padding: 0 0 18px !important; border-bottom: 1px solid {LINE} !important;
+  font-family: Prata, Georgia, serif !important; font-size: 26px !important; font-weight: 400 !important; color: {INK} !important; background: none !important;
+}}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .change_basket .change_link {{ position: static !important; font-family: "Golos Text", "Segoe UI", sans-serif !important; font-size: 12px !important; letter-spacing: .14em; text-transform: uppercase; color: {GOLD} !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total-line {{ display: flex !important; justify-content: space-between; margin: 0 0 14px !important; padding: 0 !important; border: 0 !important; background: none !important; font-size: 14px; color: {INK}; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total-line::before, body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total-line::after,
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-t::after, body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-t::before {{ display: none !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-t, body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-d {{ float: none !important; position: static !important; background: none !important; padding: 0 !important; color: {INK} !important; font-size: 14px !important; font-weight: 400 !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total-line-total {{ align-items: baseline; margin: 22px 0 0 !important; padding: 22px 0 0 !important; border-top: 1px solid {LINE} !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total-line-total .bx-soa-cart-t {{ font-family: Prata, Georgia, serif !important; font-size: 30px !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total-line-total .bx-soa-cart-d {{ font-family: "Golos Digits", Prata, Georgia, serif !important; font-size: 30px !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total-button-container {{ margin: 26px 0 0 !important; padding: 0 !important; }}
+body :is(#bx-soa-total, #bx-soa-total-mobile) .btn-order-save {{ display: flex !important; align-items: center; justify-content: center; width: 100% !important; height: 56px !important; margin: 0 !important; }}
+body #bx-soa-order .license_order_wrap {{ width: auto !important; margin: 0 !important; font-size: 13px !important; color: {MUTED} !important; }}
+body #bx-soa-order .bx-soa > .form {{ padding: 30px 0 0 !important; border-top: 1px solid {LINE}; text-align: left !important; }}
+body #bx-soa-order #bx-soa-orderSave {{ margin: 22px 0 0 !important; padding: 0 !important; text-align: left !important; }}
+body #bx-soa-order #bx-soa-orderSave .btn {{ float: none !important; min-width: 280px; height: 56px !important; display: inline-flex !important; align-items: center; justify-content: center; }}
+html body #basket-root *, html body #content #bx-soa-order-form * {{ font-family: "Golos Text", "Segoe UI", sans-serif !important; }}
+html body #content #bx-soa-order-form .bx-soa-section-title, html body #content #bx-soa-order-form .change_basket,
+html body #content #bx-soa-order-form .bx-soa-cart-total-line-total .bx-soa-cart-t,
+html body #content #bx-soa-order-form .bx-soa-item-title, html body #content #bx-soa-order-form .bx-soa-item-title a {{ font-family: Prata, Georgia, serif !important; }}
+html body #content #bx-soa-order-form .bx-soa-cart-total-line-total .bx-soa-cart-d {{ font-family: "Golos Digits", Prata, Georgia, serif !important; }}
+html body #content :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total .bx-soa-cart-total-line-total .bx-soa-cart-t,
+html body #content :is(#bx-soa-total, #bx-soa-total-mobile) .bx-soa-cart-total .bx-soa-cart-total-line-total .bx-soa-cart-d {{ font-size: 30px !important; line-height: 1.1 !important; }}
+html body #content #bx-soa-order-form .change_basket .change_link {{ font-family: "Golos Text", "Segoe UI", sans-serif !important; }}
+html body #basket-root .basket-item-info-name-link, html body #basket-root .basket-item-info-name-link span,
+html body #basket-root .basket-checkout-block-total-title {{ font-family: Prata, Georgia, serif !important; }}
+html body #basket-root .basket-item-price-current, html body #basket-root .basket-item-price-current-text,
+html body #basket-root .basket-item-amount-filed, html body #basket-root .basket-coupon-block-total-price-current {{ font-family: "Golos Digits", Prata, Georgia, serif !important; }}
+@media (min-width: 992px) {{
+  body #bx-soa-order .bx-soa {{ padding-right: 64px !important; }}
+  body #bx-soa-total {{ position: sticky !important; top: 164px; }}
+  body #bx-soa-total .bx-soa-cart-total {{ position: static !important; width: auto !important; }}
+}}
+body #bx-soa-total-mobile {{ margin: 0 0 30px !important; padding: 0 0 26px !important; border-bottom: 1px solid {LINE}; }}
+@media (max-width: 767px) {{
+  body #bx-soa-order .bx-soa-pp-item-container, body #bx-soa-order .bx-soa-customer {{ grid-template-columns: minmax(0, 1fr); }}
+  body #bx-soa-order .bx-soa-section-title {{ font-size: 24px !important; }}
+  body #bx-soa-order #bx-soa-orderSave .btn {{ width: 100%; }}
+}}
 @media (min-width: 992px) {{
   body #basket-root {{ display: grid; grid-template-columns: minmax(0, 1fr) 320px; column-gap: 64px; align-items: start; }}
   body #basket-root > .row {{ grid-column: 1; }}
