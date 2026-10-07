@@ -22,5 +22,13 @@
     host.parentNode.insertBefore(nav, host.nextSibling);
   }
 
+  function trackScroll() {
+    var root = document.documentElement;
+    var update = function () { root.classList.toggle("ms-scrolled", window.pageYOffset > 8); };
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
   if (document.readyState !== "loading") build(); else document.addEventListener("DOMContentLoaded", build);
+  trackScroll();
 })();

@@ -521,8 +521,8 @@ LAYOUT = f"""
 
 .header_wrap, .header-wrapper, header > .header-wrapper {{
   position: sticky !important; top: 0; z-index: 900;
-  background: rgba(18, 11, 8, .94) !important;
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  background: rgba(18, 11, 8, .72) !important;
+  backdrop-filter: saturate(1.6) blur(20px); -webkit-backdrop-filter: saturate(1.6) blur(20px);
   box-shadow: 0 1px 0 rgba(243, 232, 216, .07), 0 14px 34px rgba(0, 0, 0, .45) !important;
   border-bottom: 0 !important;
 }}
@@ -1459,6 +1459,13 @@ body .counter_wrapp .counter_block, body .counter_block.md, body .counter_block 
   background: {ACCENT} !important; color: {ON_ACCENT} !important;
 }}
 .header_wrap, .header-wrapper, header > .header-wrapper {{ box-shadow: none !important; }}
+.ms-scrolled .header_wrap, .ms-scrolled .header-wrapper {{ box-shadow: 0 1px 0 {LINE}, 0 18px 40px rgba(0, 0, 0, .38) !important; }}
+#mobileheader .mobileheader-v1 {{
+  background: rgba(18, 11, 8, .72) !important; transition: box-shadow .3s ease;
+  backdrop-filter: saturate(1.6) blur(20px); -webkit-backdrop-filter: saturate(1.6) blur(20px);
+}}
+.ms-scrolled #mobileheader .mobileheader-v1 {{ box-shadow: 0 1px 0 {LINE}, 0 14px 32px rgba(0, 0, 0, .38) !important; }}
+.header_wrap, .header-wrapper {{ transition: box-shadow .3s ease; }}
 input[type="text"], input[type="tel"], input[type="email"], input[type="password"],
 input[type="search"], input[type="number"], textarea, select, .form-control, .input-group .form-control {{
   border-color: transparent !important;
