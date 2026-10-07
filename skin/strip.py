@@ -1,4 +1,9 @@
+import os
 import re
+
+from PIL import Image
+
+from vendor import APP
 
 _TAG = {tag: re.compile(r"<(/?)%s\b[^>]*>" % tag) for tag in ("div", "li")}
 _ANCHOR = re.compile(r"<a\b")
@@ -103,6 +108,38 @@ def drop_subscribe(html):
             return html
 
 
+MIN_STORE_PHOTO = 800
+STORE_PHOTO_BLOCKS = (('<div class="gallery_wrap swipeignore">', "shop-detail"), ('<div class="image pull-left">', "left-block-contacts"))
+_LOCAL_PHOTO = re.compile(r'(?:src|data-bg)="(/vendor/upload/[^"]+\.(?:jpe?g|png|webp))"')
+
+
+def small_photo(path):
+    try:
+        with Image.open(os.path.join(APP, *path.strip("/").split("/"))) as img:
+            return img.width < MIN_STORE_PHOTO
+    except OSError:
+        return False
+
+
+def drop_small_store_photos(html):
+    for opening, context in STORE_PHOTO_BLOCKS:
+        if context not in html:
+            continue
+        pos = 0
+        while True:
+            start = html.find(opening, pos)
+            if start == -1:
+                break
+            end = block_end(html, start, "div")
+            photos = _LOCAL_PHOTO.findall(html, start, end)
+            if photos and all(small_photo(p) for p in photos):
+                html = html[:start] + html[end:]
+                pos = start
+            else:
+                pos = end
+    return html
+
+
 def strip_sections(html):
     html = drop_link_blocks(html, "/help/warranty/")
     html = drop_link_blocks(html, "/company/licenses/")
@@ -115,4 +152,5 @@ def strip_sections(html):
     html = drop_class_blocks(html, "drag-block container TIZERS", exact=False)
     html = drop_class_blocks(html, "drag-block container COMPANY_TEXT", exact=False)
     html = drop_subscribe(html)
+    html = drop_small_store_photos(html)
     return replace_auth_form(html)

@@ -16,6 +16,8 @@
   var CASH_TEXT = "Оплата производится наличными деньгами, в момент получения заказа. Подтверждением вашей оплаты является фискальный кассовый чек, вручаемый во время получения и оплаты заказа.";
   var REGION = "Саратов, Саратов, Саратовская область, Поволжье, Россия";
   var FINE = "Наличие, итоговую стоимость и время подтверждает менеджер.";
+  var COURIER_TEXT = "Доставка осуществляется в течение 1–2 дней в удобное для вас время.";
+  var COURIER_FREE_TEXT = "Бесплатная доставка от 3000 ₽ — в течение 1–2 дней в удобное для вас время.";
   var DONE_TITLE = "Заказ сформирован";
   var CASH_LOGO = "/vendor/upload/sale/paysystem/logotip/ae5/ae562c5ef5496bc1fcf9d687ebd6fc69.png";
   var PAY_LOGO = { "1": CASH_LOGO, "8": CASH_LOGO, "7": "/vendor/upload/sale/paysystem/logotip/277/277bac3584decb235d4c33e57d86e33d.png" };
@@ -312,7 +314,7 @@
               '</i><b>Минимальная сумма заказа ' + money(MIN_ORDER) + '</b><br>Пожалуйста, добавьте еще товаров в корзину</div></div>'
             : '<button type="button" class="btn btn-lg btn-default basket-btn-checkout" data-bact="checkout">Оформить заказ</button>') + '</div>' +
         '</div>' +
-        '<div class="ms-basket-note">Самовывоз из магазина — бесплатно, в день заказа.<br>Доставка — только по Саратову, на следующий день.</div>' +
+        '<div class="ms-basket-note">Самовывоз из магазина — бесплатно, в день заказа.<br>Доставка — только по Саратову, от 1 до 2 дней.</div>' +
       '</div></div></div></div>' +
       '<div class="row"><div class="col-xs-12"><div class="alert alert-warning" style="display:none"></div></div></div>' +
       '<div class="row"><div class="col-xs-12"><div class="basket-items-list-wrapper basket-items-list-wrapper-height-fixed basket-items-list-wrapper-light">' +
@@ -345,7 +347,7 @@
     var free = sum >= FREE_DELIVERY;
     return [
       { key: "courier", id: free ? "5" : "1", title: "Доставка курьером", cost: free ? "бесплатно" : money(DELIVERY_FEE), fee: free ? 0 : DELIVERY_FEE,
-        period: "от 1 до 2 дней", text: "Доставка осуществляется на следующий день в удобное для вас время." },
+        period: "от 1 до 2 дней", text: free ? COURIER_FREE_TEXT : COURIER_TEXT },
       { key: "pickup", id: "2", title: "Самовывоз", cost: "бесплатно", fee: 0, text: "Вы можете самостоятельно забрать заказ из нашего магазина." }
     ];
   }

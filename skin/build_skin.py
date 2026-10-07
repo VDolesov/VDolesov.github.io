@@ -1969,6 +1969,12 @@ body .sale_order_full_table:first-of-type:before {{ background: url("{SUCCESS_IC
 body .sale_order_full_table:last-of-type, body .sale_order_full_table .ps_logo .image {{ border-color: {GOLD_LINE} !important; }}
 .ms-demo-note {{ max-width: 690px; margin: 30px auto 0 !important; text-align: center; font-size: 13px; line-height: 1.6; color: {MUTED}; }}
 .ms-demo-note a {{ color: {GOLD} !important; }}
+.filter.licence_block input[type=checkbox], .filter.offer_block input[type=checkbox] {{
+  visibility: visible !important; position: absolute !important; width: 1px !important; height: 1px !important;
+  margin: 0 !important; padding: 0 !important; opacity: 0; pointer-events: none;
+}}
+.filter.licence_block input[type=checkbox]:focus-visible + label:before,
+.filter.offer_block input[type=checkbox]:focus-visible + label:before {{ outline: 2px solid {GOLD}; outline-offset: 3px; }}
 html body #basket-root *, html body #content #bx-soa-order-form * {{ font-family: "Golos Text", "Segoe UI", sans-serif !important; }}
 html body #content #bx-soa-order-form .bx-soa-section-title, html body #content #bx-soa-order-form .change_basket,
 html body #content #bx-soa-order-form .bx-soa-cart-total-line-total .bx-soa-cart-t,
