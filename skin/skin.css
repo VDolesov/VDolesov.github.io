@@ -3320,6 +3320,15 @@ body .sale_order_full_table:last-of-type, body .sale_order_full_table .ps_logo .
 }
 .filter.licence_block input[type=checkbox]:focus-visible + label:before,
 .filter.offer_block input[type=checkbox]:focus-visible + label:before { outline: 2px solid #d6a459; outline-offset: 3px; }
+.top_slider_wrapp .flexslider { min-height: 640px; }
+.top_slider_wrapp .flexslider > .slides > li:first-child { display: block; }
+@media (max-width: 767px) {
+  .top_slider_wrapp .flexslider { min-height: 560px; }
+}
+.contacts_map:before { background-image: none !important; }
+footer .pays i.mir { background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMzU3IDI5OCAzNiAyMCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zNjYuMDEgMzEzVjMwNy42NTVIMzY1Ljc2NkwzNjQuMDI2IDMxM0gzNjEuOTZIMzYxLjk1NEwzNjAuMjE4IDMwNy42NTVIMzU5Ljk3NlYzMTNIMzU3VjMwNEgzNTkuOTc2QzM2MC4zNDMgMzAzLjk5NSAzNjAuNzAyIDMwNC4xMDggMzYxIDMwNC4zMjFDMzYxLjI5OSAzMDQuNTM0IDM2MS41MjIgMzA0LjgzNyAzNjEuNjM2IDMwNS4xODZWMzA1LjE4NkwzNjIuODU5IDMwOS4zNDZIMzYzLjExNkwzNjQuMzQxIDMwNS4xODZDMzY0LjQ1NiAzMDQuODM2IDM2NC42OCAzMDQuNTMyIDM2NC45ODEgMzA0LjMxOUMzNjUuMjgxIDMwNC4xMDUgMzY1LjY0MiAzMDMuOTk0IDM2Ni4wMSAzMDRIMzY4Ljk4NlYzMTNIMzY2LjAxWiIgZmlsbD0id2hpdGUiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTM3Ni45NzggMzEzVjMwNy42NTVIMzc2Ljc1MUwzNzQuODcgMzEyLjE0QzM3NC43NTQgMzEyLjM5NiAzNzQuNTY3IDMxMi42MTQgMzc0LjMzMSAzMTIuNzY3QzM3NC4wOTUgMzEyLjkxOSAzNzMuODE5IDMxMyAzNzMuNTM4IDMxM0gzNzEuMDEzVjMwNEgzNzQuMDEzVjMwOS4zNDVIMzc0LjI1MUwzNzYuMTU2IDMwNC44NTVMMzc2LjE3MSAzMDQuODIxQzM3Ni4yOTEgMzA0LjU3NiAzNzYuNDc4IDMwNC4zNjkgMzc2LjcxIDMwNC4yMjVDMzc2Ljk0MiAzMDQuMDggMzc3LjIxIDMwNC4wMDQgMzc3LjQ4MyAzMDQuMDA0SDM4MC4wMDhWMzEzLjAwNEgzNzYuOThMMzc2Ljk3OCAzMTNaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMzg4LjU0NyAzMTAuMDE0SDM4NS4wMTlWMzEzSDM4Mi4wMTlWMzA3Ljk5M0gzOTEuOTcyQzM5MS42NjMgMzA4LjYyOSAzOTEuMTczIDMwOS4xNiAzOTAuNTY0IDMwOS41MTlDMzg5Ljk1NSAzMDkuODc5IDM4OS4yNTMgMzEwLjA1MSAzODguNTQ3IDMxMC4wMTRWMzEwLjAxNFoiIGZpbGw9IndoaXRlIi8+PHBhdGggb3BhY2l0eT0iMC43IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTM5MS45MTkgMzA3LjAwNkgzODYuNTA3QzM4NC4wMzUgMzA3LjAwNiAzODEuOTc5IDMwNS43MDYgMzgxLjU0NiAzMDRIMzg4LjU2OUMzOTAuNDU5IDMwNCAzOTEuOTkxIDMwNS4xMTcgMzkxLjk5MSAzMDYuNDk0QzM5MS45OTEgMzA2LjY2NyAzOTEuOTY3IDMwNi44MzkgMzkxLjkxOSAzMDcuMDA2VjMwNy4wMDZaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==") 0 0 / 36px 20px no-repeat !important; }
+body .bx-yandex-map { font-family: "Golos Text", "Segoe UI", sans-serif !important; }
+body .flexbox--row > .text.darken h5 { font-family: Prata, Georgia, serif !important; }
 html body #basket-root *, html body #content #bx-soa-order-form * { font-family: "Golos Text", "Segoe UI", sans-serif !important; }
 html body #content #bx-soa-order-form .bx-soa-section-title, html body #content #bx-soa-order-form .change_basket,
 html body #content #bx-soa-order-form .bx-soa-cart-total-line-total .bx-soa-cart-t,

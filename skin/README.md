@@ -58,10 +58,11 @@ python skin/order_page.py                  # /order/ from the basket page with t
 - inlines lazily loaded template blocks and swaps product photos for the series in `assets/products/`;
 - clones the hero into three slides and applies the copy rules (`SLIDES`, `BANNER_COPY` in `build_demo.py`) and the "Important details" block (`FAQ`);
 - serves template stylesheets from `vendor/css/` and self-hosted fonts from `skin/fonts/`, preloading the two above-the-fold faces; strips the Metrika counter, the session beacon and unused font links;
-- removes blocks the demo does not use (`strip.py`): warranty, licenses, brands, services and blog pages and links, the footer help column, saved items, the home tizers and about block, store photos narrower than 800 px (as on the site, larger ones stay); the account page shows a demo note instead of the login form;
+- removes blocks the demo does not use (`strip.py`): warranty, licenses, brands, services and blog pages and links, the footer help column, saved items, the home tizers and about block, store photos narrower than 800 px (as on the site, larger ones stay); the visual review editor is replaced with a plain text field (the demo does not send reviews, and the editor weighed about 1 MB); the account page shows a demo note instead of the login form;
 - aligns legal and order copy (`legal.py`): order acceptance, payment methods, refusal and quality questions, requisites, seller line in the footer, consent checkbox under reviews;
 - names pages (`naming.py`): product and section names in sentence case with «» quotes, titles as «Name — Мир Сладостей», a description for every page, a heading and breadcrumbs on the store pages;
-- links `skin.css` and the demo scripts with a content hash in the query string.
+- links `skin.css` and the demo scripts with a content hash in the query string;
+- moves every script except those marked `data-skip-moving` to the end of the page, as Bitrix does with the option `move_js_to_body` on the site, and leaves the Yandex Maps API to `map.js`.
 
 `--stamp` runs the same rules over already built pages without fetching anything, so it is the command to use after changing the skin, the scripts or the copy.
 
@@ -83,7 +84,7 @@ Three WebP slides, 2400×1060, subject on the right and the left half darkened f
 - `search.js` — header search over names, sections and composition.
 - `demo.js` — template pop-up forms show a demo note with the phones, quick view opens the product page, one-time cookie notice.
 - `motion.js` — reveal on scroll and the hero parallax, honouring `prefers-reduced-motion`.
-- `map.js` — marks a Yandex map with `ms-map-photo` while a satellite or hybrid layer is on, so the dark filter applies only to the scheme.
+- `map.js` — loads the Yandex Maps API only when a map comes within 600 px of the screen (`MS_YMAPS_URL`), and marks a map with `ms-map-photo` while a satellite or hybrid layer is on, so the dark filter applies only to the scheme.
 
 ## Caching
 

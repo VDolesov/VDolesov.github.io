@@ -1,3 +1,4 @@
+import base64
 import hashlib
 import os
 import re
@@ -35,6 +36,8 @@ TILE = "#130c09"
 ACCENT_SOFT = "rgba(214, 164, 89, .12)"
 SUCCESS_ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 70' fill='none' stroke='%23d6a459' stroke-width='2'%3E"
                 "%3Ccircle cx='35' cy='35' r='34'/%3E%3Cpath d='M24 36l10 10 22-22' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+with open(os.path.join(HERE, "mir.svg"), "rb") as _mir:
+    MIR_ICON = "data:image/svg+xml;base64," + base64.b64encode(_mir.read()).decode("ascii")
 
 MAP_ICONS = {
     "minus": "M11 15h10a1 1 0 0 1 0 2H11a1 1 0 0 1 0-2z",
@@ -1975,6 +1978,15 @@ body .sale_order_full_table:last-of-type, body .sale_order_full_table .ps_logo .
 }}
 .filter.licence_block input[type=checkbox]:focus-visible + label:before,
 .filter.offer_block input[type=checkbox]:focus-visible + label:before {{ outline: 2px solid {GOLD}; outline-offset: 3px; }}
+.top_slider_wrapp .flexslider {{ min-height: 640px; }}
+.top_slider_wrapp .flexslider > .slides > li:first-child {{ display: block; }}
+@media (max-width: 767px) {{
+  .top_slider_wrapp .flexslider {{ min-height: 560px; }}
+}}
+.contacts_map:before {{ background-image: none !important; }}
+footer .pays i.mir {{ background: url("{MIR_ICON}") 0 0 / 36px 20px no-repeat !important; }}
+body .bx-yandex-map {{ font-family: "Golos Text", "Segoe UI", sans-serif !important; }}
+body .flexbox--row > .text.darken h5 {{ font-family: Prata, Georgia, serif !important; }}
 html body #basket-root *, html body #content #bx-soa-order-form * {{ font-family: "Golos Text", "Segoe UI", sans-serif !important; }}
 html body #content #bx-soa-order-form .bx-soa-section-title, html body #content #bx-soa-order-form .change_basket,
 html body #content #bx-soa-order-form .bx-soa-cart-total-line-total .bx-soa-cart-t,

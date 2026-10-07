@@ -140,6 +140,24 @@ def drop_small_store_photos(html):
     return html
 
 
+EDITOR_ASSETS = ("/js/fileman/html_editor/", "/kernel_htmleditor/", "/js/ui/selector/", "/core_finder.", "/core_db_indexeddb.")
+_EDITOR_ASSET = re.compile(r'<(?:script|link)\b[^>]*(?:src|href)="[^"]*(?:' + "|".join(map(re.escape, EDITOR_ASSETS)) + r')[^"]*"[^>]*>(?:\s*</script>)?\s*')
+REVIEW_FIELD = '<div class="reviews-reply-field reviews-reply-field-text">'
+REVIEW_TEXT = (REVIEW_FIELD + '<textarea name="REVIEW_TEXT" class="form-control" rows="6" aria-label="Текст отзыва"></textarea></div>\n')
+
+
+def plain_review_form(html):
+    start = html.find(REVIEW_FIELD)
+    if start == -1:
+        return html
+    end = html.find('<div class="reviews-reply-field reviews-reply-field-settings', start)
+    if end == -1:
+        end = html.find('<div class="reviews-reply-buttons"', start)
+    if end == -1:
+        return html
+    return _EDITOR_ASSET.sub("", html[:start] + REVIEW_TEXT + html[end:])
+
+
 def strip_sections(html):
     html = drop_link_blocks(html, "/help/warranty/")
     html = drop_link_blocks(html, "/company/licenses/")
@@ -153,4 +171,5 @@ def strip_sections(html):
     html = drop_class_blocks(html, "drag-block container COMPANY_TEXT", exact=False)
     html = drop_subscribe(html)
     html = drop_small_store_photos(html)
+    html = plain_review_form(html)
     return replace_auth_form(html)

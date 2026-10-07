@@ -42,6 +42,29 @@ DROP = ("/info/brands/rss/", "/help/warranty/", "/company/licenses/", "/info/bra
 _COUNTER = re.compile(r"<!-- Yandex\.Metrika counter -->.*?<!-- /Yandex\.Metrika counter -->", re.S)
 _MONTSERRAT = re.compile(r'[ \t]*<link rel="(?:preload|stylesheet)" href="https://fonts\.googleapis\.com/css\?family=Montserrat[^"]*"[^>]*>\n?')
 _BEACON = re.compile(r"<script>new Image\(\)\.src='https?://[^']*spread\.php[^<]*</script>")
+_YMAPS_LOADER = re.compile(r"<script>\s*var script = document\.createElement\('script'\);\s*script\.src = '(https://api-maps\.yandex\.ru/[^']+)';"
+                           r"\s*\(document\.head \|\| document\.documentElement\)\.appendChild\(script\);\s*script\.onload = function \(\) \{"
+                           r"\s*this\.parentNode\.removeChild\(script\);\s*\};\s*</script>")
+_SCRIPT = re.compile(r"<script\b[^>]*>.*?</script>[ \t]*\n?", re.S | re.I)
+
+
+def lazy_map(html):
+    return _YMAPS_LOADER.sub(lambda m: "<script>window.MS_YMAPS_URL = '" + m.group(1) + "';</script>", html)
+
+
+def move_scripts(html):
+    end = html.rfind("</body>")
+    if end == -1:
+        return html
+    moved = []
+
+    def take(m):
+        if "data-skip-moving" in m.group(0)[:m.group(0).find(">")]:
+            return m.group(0)
+        moved.append(m.group(0).strip())
+        return ""
+    rest = _SCRIPT.sub(take, html[:end])
+    return rest + "\n".join(moved) + "\n" + html[end:]
 PRELOAD = '<link rel="preload" as="image" href="%s">\n'
 FONT_FILES = ("golos-text-cyrillic.woff2", "prata-cyrillic.woff2")
 FONT_PRELOAD = "".join(f'<link rel="preload" as="font" type="font/woff2" href="/skin/fonts/{name}" crossorigin>\n'
@@ -331,7 +354,7 @@ def refresh(html, path=""):
                   lambda m: photo_script(path, product_ids()).strip(), html, count=1, flags=re.S)
     html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
     html = add_faq(html)
-    return html
+    return move_scripts(lazy_map(html))
 
 
 def restamp():

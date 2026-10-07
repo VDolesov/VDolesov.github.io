@@ -20,76 +20,11 @@
 <link href="/vendor/bitrix/js/main/loader/dist/loader.bundle.min.css?16113113962029"  rel="stylesheet" />
 <link href="/vendor/bitrix/js/main/core/css/core_viewer.min.css?161131139657920"  rel="stylesheet" />
 <link href="/vendor/bitrix/js/ui/buttons/src/css/ui.buttons.css?161131141420215"  rel="stylesheet" />
-<link href="/vendor/bitrix/js/fileman/html_editor/html-editor.min.css?161131140252251"  rel="stylesheet" />
 <link href="/vendor/css/page_97661cf502e38338cb3b4d3ce9e38e17_v1.css"  rel="stylesheet" />
 <link href="/vendor/css/default_130d4dc57e730a0ac64f1b4ca8139962_v1.css"  rel="stylesheet" />
 <link href="/vendor/bitrix/panel/main/popup.min.css?161131139820704"  rel="stylesheet" />
 <link href="/vendor/css/template_c250a1347f17da63beb7047181af5114_v1.css"  data-template-style="true" rel="stylesheet" />
-<script>if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess==='object'){for(let i in mess) {BX.message[i]=mess[i];} return true;}};</script>
-<script>(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'- Нет данных -','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть в окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_WINDOW_CONTINUE':'Продолжить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный размер'});</script>
-<script src="/vendor/bitrix/js/main/core/core.min.js?1611311608252123"></script>
-<script>BX.setJSList(['/bitrix/js/main/core/core_ajax.js','/bitrix/js/main/core/core_promise.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/loadext/loadext.js','/bitrix/js/main/loadext/extension.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/includes/js/includes.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/ui/polyfill/closest/js/closest.js','/bitrix/js/main/polyfill/fill/main.polyfill.fill.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/core/core.js','/bitrix/js/main/polyfill/intersectionobserver/js/intersectionobserver.js','/bitrix/js/main/lazyload/dist/lazyload.bundle.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/parambag/dist/parambag.bundle.js']);
-BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dist/lazyload.bundle.css','/bitrix/js/main/parambag/dist/parambag.bundle.css']);</script>
-<script>(window.BX||top.BX).message({'DISK_MYOFFICE':false});(window.BX||top.BX).message({'JS_CORE_VIEWER_DOWNLOAD':'Скачать','JS_CORE_VIEWER_EDIT':'Редактировать','JS_CORE_VIEWER_DESCR_AUTHOR':'Автор','JS_CORE_VIEWER_DESCR_LAST_MODIFY':'Последние изменения','JS_CORE_VIEWER_TOO_BIG_FOR_VIEW':'Файл слишком большой для просмотра','JS_CORE_VIEWER_OPEN_WITH_GVIEWER':'Открыть файл в Google Viewer','JS_CORE_VIEWER_IFRAME_DESCR_ERROR':'К сожалению, не удалось открыть документ.','JS_CORE_VIEWER_IFRAME_PROCESS_SAVE_DOC':'Сохранение документа','JS_CORE_VIEWER_IFRAME_UPLOAD_DOC_TO_GOOGLE':'Загрузка документа','JS_CORE_VIEWER_IFRAME_CONVERT_ACCEPT':'Конвертировать','JS_CORE_VIEWER_IFRAME_CONVERT_DECLINE':'Отменить','JS_CORE_VIEWER_IFRAME_CONVERT_TO_NEW_FORMAT':'Документ будет сконвертирован в docx, xls, pptx, так как имеет старый формат.','JS_CORE_VIEWER_IFRAME_DESCR_SAVE_DOC':'Сохранить документ?','JS_CORE_VIEWER_IFRAME_SAVE_DOC':'Сохранить','JS_CORE_VIEWER_IFRAME_DISCARD_DOC':'Отменить изменения','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT':'Редактировать с помощью','JS_CORE_VIEWER_IFRAME_SET_DEFAULT_SERVICE_EDIT':'Использовать для всех файлов','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT_ACCEPT':'Применить','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT_DECLINE':'Отменить','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT':'Загрузил новую версию файла','JS_CORE_VIEWER_SERVICE_GOOGLE_DRIVE':'Google Docs','JS_CORE_VIEWER_SERVICE_SKYDRIVE':'MS Office Online','JS_CORE_VIEWER_IFRAME_CANCEL':'Отмена','JS_CORE_VIEWER_IFRAME_DESCR_SAVE_DOC_F':'В одном из окон вы редактируете данный документ. Если вы завершили работу над документом, нажмите \"#SAVE_DOC#\", чтобы загрузить измененный файл на портал.','JS_CORE_VIEWER_SAVE':'Сохранить','JS_CORE_VIEWER_EDIT_IN_SERVICE':'Редактировать в #SERVICE#','JS_CORE_VIEWER_NOW_EDITING_IN_SERVICE':'Редактирование в #SERVICE#','JS_CORE_VIEWER_SAVE_TO_OWN_FILES':'Сохранить на Битрикс24.Диск','JS_CORE_VIEWER_DOWNLOAD_TO_PC':'Скачать на локальный компьютер','JS_CORE_VIEWER_GO_TO_FILE':'Перейти к файлу','JS_CORE_VIEWER_DESCR_SAVE_FILE_TO_OWN_FILES':'Файл #NAME# успешно сохранен<br>в папку \"Файлы\\Сохраненные\"','JS_CORE_VIEWER_DESCR_PROCESS_SAVE_FILE_TO_OWN_FILES':'Файл #NAME# сохраняется<br>на ваш \"Битрикс24.Диск\"','JS_CORE_VIEWER_HISTORY_ELEMENT':'История','JS_CORE_VIEWER_VIEW_ELEMENT':'Просмотреть','JS_CORE_VIEWER_THROUGH_VERSION':'Версия #NUMBER#','JS_CORE_VIEWER_THROUGH_LAST_VERSION':'Последняя версия','JS_CORE_VIEWER_DISABLE_EDIT_BY_PERM':'Автор не разрешил вам редактировать этот документ','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT_F':'Загрузила новую версию файла','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT_M':'Загрузил новую версию файла','JS_CORE_VIEWER_IFRAME_CONVERT_TO_NEW_FORMAT_EX':'Документ будет сконвертирован в формат #NEW_FORMAT#, так как текущий формат #OLD_FORMAT# является устаревшим.','JS_CORE_VIEWER_CONVERT_TITLE':'Конвертировать в #NEW_FORMAT#?','JS_CORE_VIEWER_CREATE_IN_SERVICE':'Создать с помощью #SERVICE#','JS_CORE_VIEWER_NOW_CREATING_IN_SERVICE':'Создание документа в #SERVICE#','JS_CORE_VIEWER_SAVE_AS':'Сохранить как','JS_CORE_VIEWER_CREATE_DESCR_SAVE_DOC_F':'В одном из окон вы создаете новый документ. Если вы завершили работу над документом, нажмите \"#SAVE_AS_DOC#\", чтобы перейти к добавлению документа на портал.','JS_CORE_VIEWER_NOW_DOWNLOAD_FROM_SERVICE':'Загрузка документа из #SERVICE#','JS_CORE_VIEWER_EDIT_IN_LOCAL_SERVICE':'Редактировать на моём компьютере','JS_CORE_VIEWER_EDIT_IN_LOCAL_SERVICE_SHORT':'Редактировать на #SERVICE#','JS_CORE_VIEWER_SERVICE_LOCAL':'моём компьютере','JS_CORE_VIEWER_DOWNLOAD_B24_DESKTOP':'Скачать','JS_CORE_VIEWER_SERVICE_LOCAL_INSTALL_DESKTOP':'Для эффективного редактирования документов на компьютере, установите десктоп приложение и подключите Битрикс24.Диск','JS_CORE_VIEWER_SERVICE_B24_DISK':'Битрикс24.Диск','JS_CORE_VIEWER_SHOW_FILE_DIALOG_OAUTH_NOTICE':'Для просмотра файла, пожалуйста, авторизуйтесь в своем аккаунте <a id=\"bx-js-disk-run-oauth-modal\" href=\"#\">#SERVICE#<\/a>.','JS_CORE_VIEWER_SERVICE_OFFICE365':'Office365','JS_CORE_VIEWER_DOCUMENT_IS_LOCKED_BY':'Документ заблокирован на редактирование','JS_CORE_VIEWER_SERVICE_MYOFFICE':'МойОфис','JS_CORE_VIEWER_OPEN_PDF_PREVIEW':'Просмотреть pdf-версию файла','JS_CORE_VIEWER_AJAX_ACCESS_DENIED':'Не хватает прав для просмотра файла. Попробуйте обновить страницу.','JS_CORE_VIEWER_AJAX_CONNECTION_FAILED':'При попытке открыть файл возникла ошибка. Пожалуйста, попробуйте позже.','JS_CORE_VIEWER_AJAX_OPEN_NEW_TAB':'Открыть в новом окне','JS_CORE_VIEWER_AJAX_PRINT':'Распечатать','JS_CORE_VIEWER_TRANSFORMATION_IN_PROCESS':'Документ сохранён. Мы готовим его к показу.','JS_CORE_VIEWER_IFRAME_ERROR_TITLE':'Не удалось открыть документ','JS_CORE_VIEWER_DOWNLOAD_B24_DESKTOP_FULL':'Скачать приложение','JS_CORE_VIEWER_DOWNLOAD_DOCUMENT':'Скачать документ','JS_CORE_VIEWER_IFRAME_ERROR_COULD_NOT_VIEW':'К сожалению, не удалось просмотреть документ.','JS_CORE_VIEWER_ACTIONPANEL_MORE':'Ещё'});</script>
-<script>(window.BX||top.BX).message({'UI_BUTTONS_SAVE_BTN_TEXT':'Сохранить','UI_BUTTONS_CREATE_BTN_TEXT':'Создать','UI_BUTTONS_ADD_BTN_TEXT':'Добавить','UI_BUTTONS_SEND_BTN_TEXT':'Отправить','UI_BUTTONS_CANCEL_BTN_TEXT':'Отменить','UI_BUTTONS_CLOSE_BTN_TEXT':'Закрыть','UI_BUTTONS_APPLY_BTN_TEXT':'Применить'});</script>
-<script>(window.BX||top.BX).message({'MAIN_UI_SELECTOR_SELECT_TEXT':'Все элементы группы с подгруппами','MAIN_UI_SELECTOR_SELECT_FLAT_TEXT':'Все элементы группы','MAIN_UI_SELECTOR_PLEASE_WAIT':'Загрузка, пожалуйста подождите...','MAIN_UI_SELECTOR_WAITER_TEXT':'Идет поиск дополнительных результатов...','MAIN_UI_SELECTOR_SEARCH_TAB_TITLE':'Поиск','MAIN_UI_SELECTOR_HIDDEN_TITLE':'Скрыто','MAIN_UI_SELECTOR_STUB_PLEASE_WAIT':'Пожалуйста подождите, идет поиск...','MAIN_UI_SELECTOR_STUB_EMPTY_LIST':'Нет элементов для отображения'});</script>
-<script>(window.BX||top.BX).message({'AMPM_MODE':false});(window.BX||top.BX).message({'MONTH_1':'Январь','MONTH_2':'Февраль','MONTH_3':'Март','MONTH_4':'Апрель','MONTH_5':'Май','MONTH_6':'Июнь','MONTH_7':'Июль','MONTH_8':'Август','MONTH_9':'Сентябрь','MONTH_10':'Октябрь','MONTH_11':'Ноябрь','MONTH_12':'Декабрь','MONTH_1_S':'января','MONTH_2_S':'февраля','MONTH_3_S':'марта','MONTH_4_S':'апреля','MONTH_5_S':'мая','MONTH_6_S':'июня','MONTH_7_S':'июля','MONTH_8_S':'августа','MONTH_9_S':'сентября','MONTH_10_S':'октября','MONTH_11_S':'ноября','MONTH_12_S':'декабря','MON_1':'янв','MON_2':'фев','MON_3':'мар','MON_4':'апр','MON_5':'май','MON_6':'июн','MON_7':'июл','MON_8':'авг','MON_9':'сен','MON_10':'окт','MON_11':'ноя','MON_12':'дек','DAY_OF_WEEK_0':'Воскресенье','DAY_OF_WEEK_1':'Понедельник','DAY_OF_WEEK_2':'Вторник','DAY_OF_WEEK_3':'Среда','DAY_OF_WEEK_4':'Четверг','DAY_OF_WEEK_5':'Пятница','DAY_OF_WEEK_6':'Суббота','DOW_0':'Вс','DOW_1':'Пн','DOW_2':'Вт','DOW_3':'Ср','DOW_4':'Чт','DOW_5':'Пт','DOW_6':'Сб','FD_SECOND_AGO_0':'#VALUE# секунд назад','FD_SECOND_AGO_1':'#VALUE# секунду назад','FD_SECOND_AGO_10_20':'#VALUE# секунд назад','FD_SECOND_AGO_MOD_1':'#VALUE# секунду назад','FD_SECOND_AGO_MOD_2_4':'#VALUE# секунды назад','FD_SECOND_AGO_MOD_OTHER':'#VALUE# секунд назад','FD_SECOND_DIFF_0':'#VALUE# секунд','FD_SECOND_DIFF_1':'#VALUE# секунда','FD_SECOND_DIFF_10_20':'#VALUE# секунд','FD_SECOND_DIFF_MOD_1':'#VALUE# секунда','FD_SECOND_DIFF_MOD_2_4':'#VALUE# секунды','FD_SECOND_DIFF_MOD_OTHER':'#VALUE# секунд','FD_SECOND_SHORT':'#VALUE#с','FD_MINUTE_AGO_0':'#VALUE# минут назад','FD_MINUTE_AGO_1':'#VALUE# минуту назад','FD_MINUTE_AGO_10_20':'#VALUE# минут назад','FD_MINUTE_AGO_MOD_1':'#VALUE# минуту назад','FD_MINUTE_AGO_MOD_2_4':'#VALUE# минуты назад','FD_MINUTE_AGO_MOD_OTHER':'#VALUE# минут назад','FD_MINUTE_DIFF_0':'#VALUE# минут','FD_MINUTE_DIFF_1':'#VALUE# минута','FD_MINUTE_DIFF_10_20':'#VALUE# минут','FD_MINUTE_DIFF_MOD_1':'#VALUE# минута','FD_MINUTE_DIFF_MOD_2_4':'#VALUE# минуты','FD_MINUTE_DIFF_MOD_OTHER':'#VALUE# минут','FD_MINUTE_0':'#VALUE# минут','FD_MINUTE_1':'#VALUE# минуту','FD_MINUTE_10_20':'#VALUE# минут','FD_MINUTE_MOD_1':'#VALUE# минуту','FD_MINUTE_MOD_2_4':'#VALUE# минуты','FD_MINUTE_MOD_OTHER':'#VALUE# минут','FD_MINUTE_SHORT':'#VALUE#мин','FD_HOUR_AGO_0':'#VALUE# часов назад','FD_HOUR_AGO_1':'#VALUE# час назад','FD_HOUR_AGO_10_20':'#VALUE# часов назад','FD_HOUR_AGO_MOD_1':'#VALUE# час назад','FD_HOUR_AGO_MOD_2_4':'#VALUE# часа назад','FD_HOUR_AGO_MOD_OTHER':'#VALUE# часов назад','FD_HOUR_DIFF_0':'#VALUE# часов','FD_HOUR_DIFF_1':'#VALUE# час','FD_HOUR_DIFF_10_20':'#VALUE# часов','FD_HOUR_DIFF_MOD_1':'#VALUE# час','FD_HOUR_DIFF_MOD_2_4':'#VALUE# часа','FD_HOUR_DIFF_MOD_OTHER':'#VALUE# часов','FD_HOUR_SHORT':'#VALUE#ч','FD_YESTERDAY':'вчера','FD_TODAY':'сегодня','FD_TOMORROW':'завтра','FD_DAY_AGO_0':'#VALUE# дней назад','FD_DAY_AGO_1':'#VALUE# день назад','FD_DAY_AGO_10_20':'#VALUE# дней назад','FD_DAY_AGO_MOD_1':'#VALUE# день назад','FD_DAY_AGO_MOD_2_4':'#VALUE# дня назад','FD_DAY_AGO_MOD_OTHER':'#VALUE# дней назад','FD_DAY_DIFF_0':'#VALUE# дней','FD_DAY_DIFF_1':'#VALUE# день','FD_DAY_DIFF_10_20':'#VALUE# дней','FD_DAY_DIFF_MOD_1':'#VALUE# день','FD_DAY_DIFF_MOD_2_4':'#VALUE# дня','FD_DAY_DIFF_MOD_OTHER':'#VALUE# дней','FD_DAY_AT_TIME':'#DAY# в #TIME#','FD_DAY_SHORT':'#VALUE#д','FD_MONTH_AGO_0':'#VALUE# месяцев назад','FD_MONTH_AGO_1':'#VALUE# месяц назад','FD_MONTH_AGO_10_20':'#VALUE# месяцев назад','FD_MONTH_AGO_MOD_1':'#VALUE# месяц назад','FD_MONTH_AGO_MOD_2_4':'#VALUE# месяца назад','FD_MONTH_AGO_MOD_OTHER':'#VALUE# месяцев назад','FD_MONTH_DIFF_0':'#VALUE# месяцев','FD_MONTH_DIFF_1':'#VALUE# месяц','FD_MONTH_DIFF_10_20':'#VALUE# месяцев','FD_MONTH_DIFF_MOD_1':'#VALUE# месяц','FD_MONTH_DIFF_MOD_2_4':'#VALUE# месяца','FD_MONTH_DIFF_MOD_OTHER':'#VALUE# месяцев','FD_MONTH_SHORT':'#VALUE#мес','FD_YEARS_AGO_0':'#VALUE# лет назад','FD_YEARS_AGO_1':'#VALUE# год назад','FD_YEARS_AGO_10_20':'#VALUE# лет назад','FD_YEARS_AGO_MOD_1':'#VALUE# год назад','FD_YEARS_AGO_MOD_2_4':'#VALUE# года назад','FD_YEARS_AGO_MOD_OTHER':'#VALUE# лет назад','FD_YEARS_DIFF_0':'#VALUE# лет','FD_YEARS_DIFF_1':'#VALUE# год','FD_YEARS_DIFF_10_20':'#VALUE# лет','FD_YEARS_DIFF_MOD_1':'#VALUE# год','FD_YEARS_DIFF_MOD_2_4':'#VALUE# года','FD_YEARS_DIFF_MOD_OTHER':'#VALUE# лет','FD_YEARS_SHORT_0':'#VALUE#л','FD_YEARS_SHORT_1':'#VALUE#г','FD_YEARS_SHORT_10_20':'#VALUE#л','FD_YEARS_SHORT_MOD_1':'#VALUE#г','FD_YEARS_SHORT_MOD_2_4':'#VALUE#г','FD_YEARS_SHORT_MOD_OTHER':'#VALUE#л','CAL_BUTTON':'Выбрать','CAL_TIME_SET':'Установить время','CAL_TIME':'Время','FD_LAST_SEEN_TOMORROW':'завтра в #TIME#','FD_LAST_SEEN_NOW':'только что','FD_LAST_SEEN_TODAY':'сегодня в #TIME#','FD_LAST_SEEN_YESTERDAY':'вчера в #TIME#','FD_LAST_SEEN_MORE_YEAR':'более года назад'});</script>
-<script>(window.BX||top.BX).message({'WEEK_START':'1'});</script>
-<script>(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'10800','SITE_ID':'s1','SITE_DIR':'/','USER_ID':'','SERVER_TIME':'1789419181','USER_TZ_OFFSET':'3600','USER_TZ_AUTO':'Y','bitrix_sessid':'36e6cea28ce03522d8d8ed8d2399fda8'});</script>
 
-<script  src="/vendor/bitrix/cache/js/s1/aspro_max/kernel_main/kernel_main_v1.js?1782284679179526"></script>
-<script  src="/vendor/bitrix/cache/js/s1/aspro_max/kernel_main_polyfill_customevent/kernel_main_polyfill_customevent_v1.js?17822093351051"></script>
-<script src="/vendor/bitrix/js/ui/dexie/dist/dexie.bitrix.bundle.min.js?161131141460291"></script>
-<script src="/vendor/bitrix/js/main/core/core_ls.min.js?16113113967365"></script>
-<script src="/vendor/bitrix/js/main/core/core_frame_cache.min.js?161131139610532"></script>
-<script src="/vendor/bitrix/js/main/ajax.js?161131139835509"></script>
-<script src="/vendor/bitrix/js/main/popup/dist/main.popup.bundle.min.js?161131139658529"></script>
-<script src="/vendor/bitrix/js/main/loader/dist/loader.bundle.min.js?16113113963969"></script>
-<script src="/vendor/bitrix/js/main/core/core_viewer.min.js?161131139699309"></script>
-<script src="/vendor/bitrix/js/ui/buttons/dist/ui.buttons.bundle.min.js?161131141440271"></script>
-<script src="/vendor/bitrix/js/main/core/core_db_indexeddb.min.js?161131139611249"></script>
-<script src="/vendor/bitrix/js/main/core/core_finder.min.js?161131139614622"></script>
-<script src="/vendor/bitrix/js/ui/selector/manager.min.js?16113114145316"></script>
-<script src="/vendor/bitrix/js/ui/selector/selector.min.js?161131141441705"></script>
-<script src="/vendor/bitrix/js/ui/selector/callback.min.js?16113114144635"></script>
-<script src="/vendor/bitrix/js/ui/selector/search.min.js?161131141420272"></script>
-<script src="/vendor/bitrix/js/ui/selector/navigation.min.js?16113114148303"></script>
-<script src="/vendor/bitrix/js/ui/selector/render.min.js?16113114144705"></script>
-<script  src="/vendor/bitrix/cache/js/s1/aspro_max/kernel_htmleditor/kernel_htmleditor_v1.js?1782284679488630"></script>
-<script src="/vendor/bitrix/js/currency/core_currency.min.js?16113114021854"></script>
-<script>BX.setJSList(['/bitrix/js/main/core/core_fx.js','/bitrix/js/main/session.js','/bitrix/js/main/pageobject/pageobject.js','/bitrix/js/main/core/core_window.js','/bitrix/js/main/date/main.date.js','/bitrix/js/main/core/core_date.js','/bitrix/js/main/utils.js','/bitrix/js/main/core/core_timer.js','/bitrix/js/main/dd.js','/bitrix/js/main/polyfill/customevent/main.polyfill.customevent.js','/bitrix/js/fileman/html_editor/range.js','/bitrix/js/fileman/html_editor/html-actions.js','/bitrix/js/fileman/html_editor/html-views.js','/bitrix/js/fileman/html_editor/html-parser.js','/bitrix/js/fileman/html_editor/html-base-controls.js','/bitrix/js/fileman/html_editor/html-controls.js','/bitrix/js/fileman/html_editor/html-components.js','/bitrix/js/fileman/html_editor/html-snippets.js','/bitrix/js/fileman/html_editor/html-editor.js','/bitrix/templates/aspro_max/components/bitrix/catalog/main/script.js','/bitrix/templates/aspro_max/components/bitrix/catalog.element/main_custom/script.js','/bitrix/templates/aspro_max/components/bitrix/sale.prediction.product.detail/main/script.js','/bitrix/templates/aspro_max/components/bitrix/sale.gift.product/main/script.js','/bitrix/templates/aspro_max/components/bitrix/sale.gift.main.products/main/script.js','/bitrix/templates/aspro_max/components/bitrix/catalog.bigdata.products/main/script.js','/bitrix/templates/aspro_max/js/jquery.history.js','/bitrix/templates/aspro_max/js/observer.js','/bitrix/templates/aspro_max/js/lazysizes.min.js','/bitrix/templates/aspro_max/js/ls.unveilhooks.min.js','/bitrix/templates/aspro_max/js/jquery.actual.min.js','/bitrix/templates/aspro_max/js/jqModal.js','/bitrix/templates/aspro_max/vendor/js/bootstrap.js','/bitrix/templates/aspro_max/vendor/js/jquery.appear.js','/bitrix/templates/aspro_max/vendor/js/ripple.js','/bitrix/templates/aspro_max/vendor/js/velocity/velocity.js','/bitrix/templates/aspro_max/vendor/js/velocity/velocity.ui.js','/bitrix/templates/aspro_max/js/browser.js','/bitrix/templates/aspro_max/js/jquery.fancybox.js','/bitrix/templates/aspro_max/js/jquery.flexslider.js','/bitrix/templates/aspro_max/js/jquery.uniform.min.js','/bitrix/templates/aspro_max/vendor/js/carousel/owl/owl.carousel.js','/bitrix/templates/aspro_max/vendor/js/moment.min.js','/bitrix/templates/aspro_max/vendor/js/sticky-sidebar.js','/bitrix/templates/aspro_max/js/jquery.validate.min.js','/bitrix/templates/aspro_max/js/aspro_animate_open_fancy.js','/bitrix/templates/aspro_max/js/jquery.inputmask.bundle.min.js','/bitrix/templates/aspro_max/js/jquery.easing.1.3.js','/bitrix/templates/aspro_max/js/equalize.min.js','/bitrix/templates/aspro_max/js/jquery.alphanumeric.js','/bitrix/templates/aspro_max/js/jquery.cookie.js','/bitrix/templates/aspro_max/js/jquery.plugin.min.js','/bitrix/templates/aspro_max/js/jquery.countdown.min.js','/bitrix/templates/aspro_max/js/jquery.countdown-ru.js','/bitrix/templates/aspro_max/js/jquery.ikSelect.js','/bitrix/templates/aspro_max/js/jquery.mobile.custom.touch.min.js','/bitrix/templates/aspro_max/js/jquery.dotdotdot.js','/bitrix/templates/aspro_max/js/rating_likes.js','/bitrix/templates/aspro_max/js/mobile.js','/bitrix/templates/aspro_max/js/jquery.mousewheel.min.js','/bitrix/templates/aspro_max/js/jquery.mCustomScrollbar.js','/bitrix/templates/aspro_max/js/scrollTabs.js','/bitrix/templates/aspro_max/js/main.js','/bitrix/templates/aspro_max/js/blocks/blocks.js','/bitrix/components/bitrix/search.title/script.js','/bitrix/templates/aspro_max/components/bitrix/search.title/mega_menu/script.js','/bitrix/templates/aspro_max/components/bitrix/menu/menu_in_burger/script.js','/bitrix/components/aspro/marketing.popup.max/templates/.default/script.js','/bitrix/templates/aspro_max/components/bitrix/search.title/fixed/script.js','/bitrix/templates/aspro_max/js/custom.js','/bitrix/templates/aspro_max/components/bitrix/forum.topic.reviews/main/script.js','/bitrix/components/bitrix/main.post.form/templates/.default/script.js']);</script>
-<script>BX.setCSSList(['/bitrix/js/main/core/css/core_date.css','/bitrix/templates/aspro_max/components/bitrix/catalog/main/style.css','/bitrix/templates/aspro_max/components/bitrix/catalog.element/main_custom/style.css','/bitrix/templates/aspro_max/components/bitrix/iblock.vote/element_rating/style.css','/bitrix/templates/aspro_max/components/bitrix/sale.gift.main.products/main/style.css','/bitrix/templates/aspro_max/vendor/css/bootstrap.css','/bitrix/templates/aspro_max/css/jquery.fancybox.css','/bitrix/templates/aspro_max/vendor/css/carousel/owl/owl.carousel.css','/bitrix/templates/aspro_max/vendor/css/carousel/owl/owl.theme.default.css','/bitrix/templates/aspro_max/css/styles.css','/bitrix/templates/aspro_max/css/blocks/blocks.css','/bitrix/templates/aspro_max/css/blocks/common.blocks/counter-state/counter-state.css','/bitrix/templates/aspro_max/css/banners.css','/bitrix/templates/aspro_max/css/menu.css','/bitrix/templates/aspro_max/css/catalog.css','/bitrix/templates/aspro_max/css/animation/animation_ext.css','/bitrix/templates/aspro_max/css/jquery.mCustomScrollbar.min.css','/bitrix/templates/aspro_max/vendor/css/ripple.css','/bitrix/templates/aspro_max/css/left_block_main_page.css','/bitrix/templates/aspro_max/css/stores.css','/bitrix/templates/aspro_max/css/yandex_map.css','/bitrix/templates/aspro_max/ajax/ajax.css','/bitrix/templates/aspro_max/components/bitrix/breadcrumb/main/style.css','/bitrix/templates/aspro_max/css/footer.css','/bitrix/components/aspro/marketing.popup.max/templates/.default/style.css','/bitrix/templates/aspro_max/styles.css','/bitrix/templates/aspro_max/template_styles.css','/bitrix/templates/aspro_max/css/header.css','/bitrix/templates/aspro_max/css/media.css','/bitrix/templates/aspro_max/vendor/fonts/font-awesome/css/font-awesome.min.css','/bitrix/templates/aspro_max/css/print.css','/bitrix/templates/aspro_max/css/h1-medium.css','/bitrix/templates/aspro_max/css/round-elements.css','/bitrix/templates/aspro_max/themes/custom_s1/theme.css','/bitrix/templates/aspro_max/bg_color/light/bgcolors.css','/bitrix/templates/aspro_max/css/widths/width-2.css','/bitrix/templates/aspro_max/css/fonts/font-10.css','/bitrix/templates/aspro_max/css/custom.css','/bitrix/components/bitrix/main.post.form/templates/.default/style.css']);</script>
-<script>
-					(function () {
-						"use strict";
-						var counter = function ()
-						{
-							var cookie = (function (name) {
-								var parts = ("; " + document.cookie).split("; " + name + "=");
-								if (parts.length == 2) {
-									try {return JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));}
-									catch (e) {}
-								}
-							})("BITRIX_CONVERSION_CONTEXT_s1");
-							if (cookie && cookie.EXPIRE >= BX.message("SERVER_TIME"))
-								return;
-							var request = new XMLHttpRequest();
-							request.open("POST", "/bitrix/tools/conversion/ajax_counter.php", true);
-							request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-							request.send(
-								"SITE_ID="+encodeURIComponent("s1")+
-								"&sessid="+encodeURIComponent(BX.bitrix_sessid())+
-								"&HTTP_REFERER="+encodeURIComponent(document.referrer)
-							);
-						};
-						if (window.frameRequestStart === true)
-							BX.addCustomEvent("onFrameDataReceived", counter);
-						else
-							BX.ready(counter);
-					})();
-				</script>
-<script>BX.message({'PHONE':'Телефон','FAST_VIEW':'Быстрый просмотр','TABLES_SIZE_TITLE':'Подбор размера','SOCIAL':'Социальные сети','DESCRIPTION':'Описание магазина','ITEMS':'Товары','LOGO':'Логотип','REGISTER_INCLUDE_AREA':'Текст о регистрации','AUTH_INCLUDE_AREA':'Текст об авторизации','FRONT_IMG':'Изображение компании','EMPTY_CART':'пуста','CATALOG_VIEW_MORE':'... Показать все','CATALOG_VIEW_LESS':'... Свернуть','JS_REQUIRED':'Заполните это поле','JS_FORMAT':'Неверный формат','JS_FILE_EXT':'Недопустимое расширение файла','JS_PASSWORD_COPY':'Пароли не совпадают','JS_PASSWORD_LENGTH':'Минимум 6 символов','JS_ERROR':'Неверно заполнено поле','JS_FILE_SIZE':'Максимальный размер 5мб','JS_FILE_BUTTON_NAME':'Выберите файл','JS_FILE_DEFAULT':'Прикрепите файл','JS_DATE':'Некорректная дата','JS_DATETIME':'Некорректная дата/время','JS_REQUIRED_LICENSES':'Согласитесь с условиями','JS_REQUIRED_OFFER':'Согласитесь с условиями','LICENSE_PROP':'Согласие на обработку персональных данных','LOGIN_LEN':'Введите минимум {0} символа','FANCY_CLOSE':'Закрыть','FANCY_NEXT':'Следующий','FANCY_PREV':'Предыдущий','TOP_AUTH_REGISTER':'Регистрация','CALLBACK':'Заказать звонок','ASK':'Задать вопрос','REVIEW':'Оставить отзыв','S_CALLBACK':'Заказать звонок','UNTIL_AKC':'До конца акции','TITLE_QUANTITY_BLOCK':'Остаток','TITLE_QUANTITY':'шт','TOTAL_SUMM_ITEM':'Общая стоимость ','SUBSCRIBE_SUCCESS':'Вы успешно подписались','RECAPTCHA_TEXT':'Подтвердите, что вы не робот','JS_RECAPTCHA_ERROR':'Пройдите проверку','COUNTDOWN_SEC':'сек','COUNTDOWN_MIN':'мин','COUNTDOWN_HOUR':'час','COUNTDOWN_DAY0':'дн','COUNTDOWN_DAY1':'дн','COUNTDOWN_DAY2':'дн','COUNTDOWN_WEAK0':'Недель','COUNTDOWN_WEAK1':'Неделя','COUNTDOWN_WEAK2':'Недели','COUNTDOWN_MONTH0':'Месяцев','COUNTDOWN_MONTH1':'Месяц','COUNTDOWN_MONTH2':'Месяца','COUNTDOWN_YEAR0':'Лет','COUNTDOWN_YEAR1':'Год','COUNTDOWN_YEAR2':'Года','COUNTDOWN_COMPACT_SEC':'с','COUNTDOWN_COMPACT_MIN':'м','COUNTDOWN_COMPACT_HOUR':'ч','COUNTDOWN_COMPACT_DAY':'д','COUNTDOWN_COMPACT_WEAK':'н','COUNTDOWN_COMPACT_MONTH':'м','COUNTDOWN_COMPACT_YEAR0':'л','COUNTDOWN_COMPACT_YEAR1':'г','CATALOG_PARTIAL_BASKET_PROPERTIES_ERROR':'Заполнены не все свойства у добавляемого товара','CATALOG_EMPTY_BASKET_PROPERTIES_ERROR':'Выберите свойства товара, добавляемые в корзину в параметрах компонента','CATALOG_ELEMENT_NOT_FOUND':'Элемент не найден','ERROR_ADD2BASKET':'Ошибка добавления товара в корзину','CATALOG_SUCCESSFUL_ADD_TO_BASKET':'Успешное добавление товара в корзину','ERROR_BASKET_TITLE':'Ошибка корзины','ERROR_BASKET_PROP_TITLE':'Выберите свойства, добавляемые в корзину','ERROR_BASKET_BUTTON':'Выбрать','BASKET_TOP':'Корзина в шапке','ERROR_ADD_DELAY_ITEM':'Ошибка отложенной корзины','VIEWED_TITLE':'Ранее вы смотрели','VIEWED_BEFORE':'Ранее вы смотрели','BEST_TITLE':'Лучшие предложения','CT_BST_SEARCH_BUTTON':'Поиск','CT_BST_SEARCH2_BUTTON':'Найти','BASKET_PRINT_BUTTON':'Распечатать','BASKET_CLEAR_ALL_BUTTON':'Очистить','BASKET_QUICK_ORDER_BUTTON':'Быстрый заказ','BASKET_CONTINUE_BUTTON':'Продолжить покупки','BASKET_ORDER_BUTTON':'Оформить заказ','SHARE_BUTTON':'Поделиться','BASKET_CHANGE_TITLE':'Ваш заказ','BASKET_CHANGE_LINK':'Изменить','MORE_INFO_SKU':'Купить','FROM':'от','BEFORE':'до','TITLE_BLOCK_VIEWED_NAME':'Ранее вы смотрели','T_BASKET':'Корзина','FILTER_EXPAND_VALUES':'Показать все','FILTER_HIDE_VALUES':'Свернуть','FULL_ORDER':'Полный заказ','CUSTOM_COLOR_CHOOSE':'Выбрать','CUSTOM_COLOR_CANCEL':'Отмена','S_MOBILE_MENU':'Меню','MAX_T_MENU_BACK':'Назад','MAX_T_MENU_CALLBACK':'Обратная связь','MAX_T_MENU_CONTACTS_TITLE':'Будьте на связи','SEARCH_TITLE':'Поиск','SOCIAL_TITLE':'Оставайтесь на связи','HEADER_SCHEDULE':'Время работы','SEO_TEXT':'SEO описание','COMPANY_IMG':'Картинка компании','COMPANY_TEXT':'Описание компании','CONFIG_SAVE_SUCCESS':'Настройки сохранены','CONFIG_SAVE_FAIL':'Ошибка сохранения настроек','ITEM_ECONOMY':'Экономия','ITEM_ARTICLE':'Артикул: ','JS_FORMAT_ORDER':'имеет неверный формат','JS_BASKET_COUNT_TITLE':'В корзине товаров на SUMM','POPUP_VIDEO':'Видео','POPUP_GIFT_TEXT':'Нашли что-то особенное? Намекните другу о подарке!','ORDER_FIO_LABEL':'Ф.И.О.','ORDER_PHONE_LABEL':'Телефон','ORDER_REGISTER_BUTTON':'Регистрация','PRICES_TYPE':'Варианты цен','FILTER_HELPER_VALUES':' знач.','SHOW_MORE_SCU_MAIN':'Еще #COUNT#','SHOW_MORE_SCU_1':'предложение','SHOW_MORE_SCU_2':'предложения','SHOW_MORE_SCU_3':'предложений'})</script>
-<script>window.lazySizesConfig = window.lazySizesConfig || {};lazySizesConfig.loadMode = 2;lazySizesConfig.expand = 100;lazySizesConfig.expFactor = 1;lazySizesConfig.hFac = 0.1;window.lazySizesConfig.lazyClass = "lazy";</script>
 					<script data-skip-moving="true" src="/vendor/bitrix/js/aspro.max/jquery-2.1.3.min.js"></script>
 					<script data-skip-moving="true" src="/vendor/bitrix/templates/aspro_max/js/speed.min.js?=1611313338"></script>
 <link rel="shortcut icon" href="https://www.mirsladostey164.ru/favicon.png" type="image/png" />
@@ -101,14 +36,10 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.mirsladostey164.ru/catalog/vypechka/742/" />
 
-<script  src="/vendor/bitrix/cache/js/s1/aspro_max/template_06cd0198cb10009eae4cf545a63e4da3/template_06cd0198cb10009eae4cf545a63e4da3_v1.js?1782209341795426"></script>
-<script  src="/vendor/bitrix/cache/js/s1/aspro_max/page_c5373189514e1483598a9576c543e755/page_c5373189514e1483598a9576c543e755_v1.js?1782284679183438"></script>
-<script  src="/vendor/bitrix/cache/js/s1/aspro_max/default_4c6d5da04e30ff4921b45219d8253a76/default_4c6d5da04e30ff4921b45219d8253a76_v1.js?178228467977858"></script>
-<script>var _ba = _ba || []; _ba.push(["aid", "ad3db4bedb44825186b8a1a5fda1b2ec"]); _ba.push(["host", "www.mirsladostey164.ru"]); _ba.push(["ad[ct][item]", "eyJwcm9kdWN0X2lkIjo3NDIsImlibG9ja19pZCI6MjYsInByb2R1Y3RfdGl0bGUiOiJcdTA0MjFcdTA0MWJcdTA0MWVcdTA0MTlcdTA0MWFcdTA0MTAgXHUwNDIxIFx1MDQxMlx1MDQxNVx1MDQyMlx1MDQyN1x1MDQxOFx1MDQxZFx1MDQxZVx1MDQxOSBcdTA0MTggXHUwNDIxXHUwNDJiXHUwNDIwXHUwNDFlXHUwNDFjIiwiY2F0ZWdvcnlfaWQiOiIxNTciLCJjYXRlZ29yeSI6eyIxNTciOiJcdTA0MTJcdTA0MmJcdTA0MWZcdTA0MTVcdTA0MjdcdTA0MWFcdTA0MTAifSwicHJpY2UiOjc1LCJjdXJyZW5jeSI6IlJVQiJ9"]);_ba.push(["ad[ct][user_id]", function(){return BX.message("USER_ID") ? BX.message("USER_ID") : 0;}]);_ba.push(["ad[ct][recommendation]", function() {var rcmId = "";var cookieValue = BX.getCookie("BITRIX_SM_RCM_PRODUCT_LOG");var productId = 742;var cItems = [];var cItem;if (cookieValue){cItems = cookieValue.split(".");}var i = cItems.length;while (i--){cItem = cItems[i].split("-");if (cItem[0] == productId){rcmId = cItem[1];break;}}return rcmId;}]);_ba.push(["ad[ct][v]", "2"]);(function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
 
 
 			
-<link rel="stylesheet" href="/skin/skin.css?v=2c843941">
+<link rel="stylesheet" href="/skin/skin.css?v=e35f3668">
 </head>
 <body class=" site_s1  fill_bg_n catalog-delayed-btn-" id="main" data-site="/">
 		
@@ -120,19 +51,7 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 			var solutionName = 'arMaxOptions';
 		</script>
 		<script src="/vendor/bitrix/templates/aspro_max/js/settheme.js" data-skip-moving="true"></script>
-		<script>
-		window.onload=function(){
-			window.basketJSParams = window.basketJSParams || [];
-							window.dataLayer = window.dataLayer || [];
-					}
-		BX.message({'MIN_ORDER_PRICE_TEXT':'<b>Минимальная сумма заказа #PRICE#<\/b><br/>Пожалуйста, добавьте еще товаров в корзину','LICENSES_TEXT':'Я согласен на <a href=\"/include/licenses_detail.php\" target=\"_blank\">обработку персональных данных<\/a>'});
-		arAsproOptions.PAGES.FRONT_PAGE = window[solutionName].PAGES.FRONT_PAGE = "";
-		arAsproOptions.PAGES.BASKET_PAGE = window[solutionName].PAGES.BASKET_PAGE = "";
-		arAsproOptions.PAGES.ORDER_PAGE = window[solutionName].PAGES.ORDER_PAGE = "";
-		arAsproOptions.PAGES.PERSONAL_PAGE = window[solutionName].PAGES.PERSONAL_PAGE = "";
-		arAsproOptions.PAGES.CATALOG_PAGE = window[solutionName].PAGES.CATALOG_PAGE = "1";
-		</script>
-		<div class="wrapper1  header_bgcolored subsmall catalog_page basket_fly fly2 basket_fill_COLOR side_LEFT block_side_NORMAL catalog_icons_N banner_auto with_fast_view mheader-v1 header-v12 header-font-lower_Y regions_N title_position_LEFT fill_ footer-v1 front-vindex1 mfixed_Y mfixed_view_always title-v3 lazy_Y with_phones normal-catalog-img landing-slider big-banners-mobile-slider bottom-icons-panel-N compact-breadcrumbs-N catalog-delayed-btn-Y  ">
+				<div class="wrapper1  header_bgcolored subsmall catalog_page basket_fly fly2 basket_fill_COLOR side_LEFT block_side_NORMAL catalog_icons_N banner_auto with_fast_view mheader-v1 header-v12 header-font-lower_Y regions_N title_position_LEFT fill_ footer-v1 front-vindex1 mfixed_Y mfixed_view_always title-v3 lazy_Y with_phones normal-catalog-img landing-slider big-banners-mobile-slider bottom-icons-panel-N compact-breadcrumbs-N catalog-delayed-btn-Y  ">
 
 <div class="mega_fixed_menu">
 	<div class="maxwidth-theme">
@@ -165,16 +84,7 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 					</form>
 				</div>
 			</div>
-	<script>
-	var jsControl = new JCTitleSearch3({
-		//'WAIT_IMAGE': '/bitrix/themes/.default/images/wait.gif',
-		'AJAX_PAGE' : '/catalog/vypechka/742/',
-		'CONTAINER_ID': 'title-search_mega_menu',
-		'INPUT_ID': 'title-search-input_mega_menu',
-		'INPUT_ID_TMP': 'title-search-input_mega_menu',
-		'MIN_QUERY_LEN': 2
-	});
-</script>							</div>
+	</div>
 						</div>
 					</div>
 										<!-- noindex -->
@@ -741,8 +651,7 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 			<div class="topic__inner">
 																			<div class="share hover-block top">
 					<div class="shares-block hover-block__item text-center colored_theme_hover_bg-block">
-						<i class="svg  svg-inline-down colored_theme_hover_bg-el-svg" aria-hidden="true" ><svg class="svg svg-share"  xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><path  data-name="Ellipse 223 copy 8" class="cls-1" d="M1613,203a2.967,2.967,0,0,1-1.86-.661l-3.22,2.01a2.689,2.689,0,0,1,0,1.3l3.22,2.01A2.961,2.961,0,0,1,1613,207a3,3,0,1,1-3,3,3.47,3.47,0,0,1,.07-0.651l-3.21-2.01a3,3,0,1,1,0-4.678l3.21-2.01A3.472,3.472,0,0,1,1610,200,3,3,0,1,1,1613,203Zm0,8a1,1,0,1,0-1-1A1,1,0,0,0,1613,211Zm-8-7a1,1,0,1,0,1,1A1,1,0,0,0,1605,204Zm8-5a1,1,0,1,0,1,1A1,1,0,0,0,1613,199Z" transform="translate(-1602 -197)"/></svg></i>						<script src="//yastatic.net/share2/share.js" async="async" charset="utf-8"></script>
-<div class="ya-share2 yashare-auto-init hover-block__item-wrapper" data-services="vkontakte,facebook,odnoklassniki,moimir,twitter,viber,whatsapp,skype,telegram"></div>					</div>
+						<i class="svg  svg-inline-down colored_theme_hover_bg-el-svg" aria-hidden="true" ><svg class="svg svg-share"  xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><path  data-name="Ellipse 223 copy 8" class="cls-1" d="M1613,203a2.967,2.967,0,0,1-1.86-.661l-3.22,2.01a2.689,2.689,0,0,1,0,1.3l3.22,2.01A2.961,2.961,0,0,1,1613,207a3,3,0,1,1-3,3,3.47,3.47,0,0,1,.07-0.651l-3.21-2.01a3,3,0,1,1,0-4.678l3.21-2.01A3.472,3.472,0,0,1,1610,200,3,3,0,1,1,1613,203Zm0,8a1,1,0,1,0-1-1A1,1,0,0,0,1613,211Zm-8-7a1,1,0,1,0,1,1A1,1,0,0,0,1605,204Zm8-5a1,1,0,1,0,1,1A1,1,0,0,0,1613,199Z" transform="translate(-1602 -197)"/></svg></i>						<div class="ya-share2 yashare-auto-init hover-block__item-wrapper" data-services="vkontakte,facebook,odnoklassniki,moimir,twitter,viber,whatsapp,skype,telegram"></div>					</div>
 				</div>
 												<div class="topic__heading">
 					<h1 id="pagetitle">Слойка с ветчиной и сыром</h1>				</div>
@@ -771,8 +680,7 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 
 <div class="product-info-wrapper">
 	<div class="product-info noffer product-info--type2" id="bx_117848907_742">
-		<script>setViewedProduct(742, {'PRODUCT_ID':'742','IBLOCK_ID':'26','NAME':'Слойка с ветчиной и сыром','DETAIL_PAGE_URL':'/catalog/vypechka/742/','PICTURE_ID':'2514','CATALOG_MEASURE_NAME':'шт','MIN_PRICE':{'PRICE_ID':'1','ID':'481','CAN_ACCESS':'Y','CAN_BUY':'Y','MIN_PRICE':'Y','CURRENCY':'RUB','VALUE_VAT':'75','VALUE_NOVAT':'75','DISCOUNT_VALUE_VAT':'75','DISCOUNT_VALUE_NOVAT':'75','ROUND_VALUE_VAT':'75','ROUND_VALUE_NOVAT':'75','VALUE':'75','UNROUND_DISCOUNT_VALUE':'75','DISCOUNT_VALUE':'75','DISCOUNT_DIFF':'0','DISCOUNT_DIFF_PERCENT':'0','VATRATE_VALUE':'0','DISCOUNT_VATRATE_VALUE':'0','ROUND_VATRATE_VALUE':'0','PRINT_VALUE_NOVAT':'75 &#8381;','PRINT_VALUE_VAT':'75 &#8381;','PRINT_VATRATE_VALUE':'0 &#8381;','PRINT_DISCOUNT_VALUE_NOVAT':'75 &#8381;','PRINT_DISCOUNT_VALUE_VAT':'75 &#8381;','PRINT_DISCOUNT_VATRATE_VALUE':'0 &#8381;','PRINT_VALUE':'75 &#8381;','PRINT_DISCOUNT_VALUE':'75 &#8381;','PRINT_DISCOUNT_DIFF':'0 &#8381;'},'CAN_BUY':'Y','IS_OFFER':'N','WITH_OFFERS':'N'});</script>
-				<meta itemprop="name" content=Слойка с ветчиной и сыром />
+						<meta itemprop="name" content=Слойка с ветчиной и сыром />
 		<link itemprop="url" href="/catalog/vypechka/742/" />
 		<meta itemprop="category" content="Выпечка" />
 		<meta itemprop="description" content=Слойка с ветчиной и сыром />
@@ -811,76 +719,6 @@ BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dis
 																									<div class="product-info-headnote__rating">
 										<!--'start_frame_cache_dv_742'-->											<div class="rating">
 																										<div class="votes_block nstar" id="vote_742" data-summ="0">
-<script>
-if(!window.voteScript) window.voteScript =
-{
-	trace_vote: function(div, flag)
-	{
-		var my_div;
-		var r = div.id.match(/^vote_(\d+)_(\d+)$/);
-		for(var i = r[2]; i >= 0; i--)
-		{
-			my_div = document.getElementById('vote_'+r[1]+'_'+i);
-			if(my_div)
-			{
-				if(flag)
-				{
-					if(!my_div.saved_class)
-						my_div.saved_className = my_div.className;
-					if(my_div.className!='item-rating filed')
-						my_div.className = 'item-rating filed';
-				}
-				else
-				{
-					if(my_div.saved_className && my_div.className != my_div.saved_className)
-						my_div.className = my_div.saved_className;
-				}
-			}
-		}
-		i = r[2]+1;
-		while(my_div = document.getElementById('vote_'+r[1]+'_'+i))
-		{
-			if(my_div.saved_className && my_div.className != my_div.saved_className)
-				my_div.className = my_div.saved_className;
-			i++;
-		}
-	},
-	do_vote: function(div, parent_id, arParams)
-	{
-		var r = div.id.match(/^vote_(\d+)_(\d+)$/);
-		var vote_id = r[1];
-		var vote_value = r[2];
-		function __handler(data)
-		{
-			var obContainer = document.getElementById(parent_id),
-				count = ++vote_value,
-				total_count_div = $('#vote_'+vote_id),
-				new_count = 0;
-			/*if (obContainer)
-			{
-				var obResult = document.createElement("DIV");
-				obResult.innerHTML = data;
-				obContainer.parentNode.replaceChild(obResult, obContainer);
-			}*/
-			new_count = Math.round((total_count_div.data('summ') + count)/(parseInt(total_count_div.find('meta[itemprop="reviewCount"]').attr('content'))+1));
-			total_count_div.find('.inner_rating > div').removeClass('filed');
-			for(var jj = 0; jj < new_count; jj++)
-			{
-				total_count_div.find('.inner_rating > div:eq('+jj+')').addClass('filed');
-			}
-			total_count_div.find('.inner_rating > div').removeAttr('onmouseover onmouseout onclick');
-		}
-		arParams['vote'] = 'Y';
-		arParams['vote_id'] = vote_id;
-		arParams['rating'] = vote_value;
-		BX.ajax.post(
-			'/bitrix/components/bitrix/iblock.vote/component.php',
-			arParams,
-			__handler
-		);
-	}
-}
-</script>
 	<div class="ratings">
 		<div class="inner_rating">
 																		<div id="vote_742_0" class="item-rating" title="1" onmouseover="voteScript.trace_vote(this, true);" onmouseout="voteScript.trace_vote(this, false)" onclick="voteScript.do_vote(this, 'vote_742', {'SESSION_PARAMS':'85f956a77bb9dc603c9559ef7458f2e5','PAGE_PARAMS':{'ELEMENT_ID':'742'},'sessid':'a1b8a568931826e217b444792a0c77d2','AJAX_CALL':'Y'})"><i class="svg inline  svg-inline-star" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="15" height="13" viewBox="0 0 15 13"><rect class="sscls-1" width="15" height="13"/><path  data-name="Shape 921 copy 15" class="sscls-2" d="M1333.37,457.5l-4.21,2.408,0.11,0.346,2.07,4.745h-0.72l-4.12-3-4.09,3h-0.75l2.04-4.707,0.12-.395-4.19-2.4V457h5.12l1.53-5h0.38l1.57,5h5.14v0.5Z" transform="translate(-1319 -452)"/></svg></i></div>
@@ -922,8 +760,7 @@ if(!window.voteScript) window.voteScript =
 										</div>
 																														
 																				<div class="buy_block">
-																							<script>$(document).ready(function(){$('.catalog_detail input[data-sid="PRODUCT_NAME"]').attr('value', $('h1').text());});</script>
-												<div class="counter_wrapp big list clearfix">
+																																			<div class="counter_wrapp big list clearfix">
 																																																	<div class="counter_block_inner">
 												<div class="counter_block md" data-item="742">
 							<span class="minus dark-color" id="bx_117848907_742_quant_down"><i class="svg inline  svg-inline-wish ncolor colored1" aria-hidden="true" ><svg width="11" height="1" viewBox="0 0 11 1"><rect width="11" height="1" rx="0.5" ry="0.5"/></svg></i></span>
@@ -1014,7 +851,551 @@ if(!window.voteScript) window.voteScript =
 					<link itemprop="availability" href="http://schema.org/InStock" />
 										<link itemprop="url" href="/catalog/vypechka/742/" />
 				</span>
-		<script>
+			</div>
+</div>
+
+
+	
+	
+
+<!--'start_frame_cache_OhECjo'-->	<span id="sale_gift_product_404525578" class="sale_prediction_product_detail_container"></span>
+		<!--'end_frame_cache_OhECjo'-->		
+	
+	<div class="maxwidth-theme bottom-info-wrapper">
+		<div class="bottom-info product-view--side-left">
+																																																																															<div class="ordered-block js-store-scroll tabs-block">
+															<div class="tabs arrow_scroll">
+									<ul class="nav nav-tabs font_upper_md">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									<li class="bordered rounded3 active">
+														<a href="#reviews" data-toggle="tab">Отзывы</a></li>
+																																																																																																																																																		<li class="bordered rounded3 "><a href="#buy" data-toggle="tab">Как купить</a></li>
+																																																																																																																																																																																																																																																																																						<li class="bordered rounded3 "><a href="#payment" data-toggle="tab">Оплата</a></li>
+																																																																																																																																																																																																																																																																																						<li class="bordered rounded3 "><a href="#delivery" data-toggle="tab">Доставка</a></li>
+																																																																																																																																																																																																																																																																																																																																																																									</ul>
+								</div>
+														<div class="tab-content">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											<div class="tab-pane reviews STANDART active" id="reviews">
+																								<div id="reviews_content" class="bordered rounded3">
+																											<!--'start_frame_cache_area'-->																	<div class="empty-message clearfix">
+			<div class="reviews-collapse reviews-minimized no-mess" style='position:relative; float:right;'>
+				<span class="reviews-collapse-link btn btn-default" id="swREPLIERZZtH"><i></i><span>Оставить отзыв</span></span>
+			</div>
+			<div class="text_before">У данного товара нет отзывов. Станьте первым, кто оставил отзыв об этом товаре!</div>
+		</div>
+<a data-name="review_anchor"></a>
+<div class="reviews-reply-form" style="display:none;">
+<form name="REPLIERZZtH" id="REPLIERZZtH" action="/catalog/" method="POST" enctype="multipart/form-data" class="reviews-form">
+	<input type="hidden" name="index" value="ZZtH" />
+	<input type="hidden" name="back_page" value="/catalog/vypechka/742/" />
+	<input type="hidden" name="ELEMENT_ID" value="742" />
+	<input type="hidden" name="SECTION_ID" value="157" />
+	<input type="hidden" name="save_product_review" value="Y" />
+	<input type="hidden" name="preview_comment" value="N" />
+	<input type="hidden" name="AJAX_POST" value="Y" />
+	<input type="hidden" name="sessid" id="sessid_1" value="36e6cea28ce03522d8d8ed8d2399fda8" />		<div style="position:relative; display: block; width:100%;">
+					<div class="reviews-reply-fields">
+				<div class="reviews-reply-field-user">
+					<div class="reviews-reply-field reviews-reply-field-author"><label for="REVIEW_AUTHORZZtH">Ваше имя<span class="reviews-required-field">*</span></label>
+						<span><input class="form-control" name="REVIEW_AUTHOR" id="REVIEW_AUTHORZZtH" size="30" type="text" value="Guest" tabindex="1" /></span></div>
+										<div class="reviews-clear-float"></div>
+				</div>
+			</div>
+				<div class="reviews-reply-header"><span>Текст сообщения</span><span class="reviews-required-field">*</span></div>
+		<div class="reviews-reply-field reviews-reply-field-text"><textarea name="REVIEW_TEXT" class="form-control" rows="6" aria-label="Текст отзыва"></textarea></div>
+<div class="reviews-reply-field reviews-reply-field-settings filter">
+							<div class="reviews-reply-field-setting">
+					<input type="checkbox" name="REVIEW_USE_SMILES" id="REVIEW_USE_SMILESZZtH" value="Y" checked="checked" tabindex="2" /><label for="REVIEW_USE_SMILESZZtH"><span class="bx_filter_input_checkbox">Разрешить смайлики в этом сообщении</span></label></div>
+					</div>
+				<div class="ms-consent"><label><input type="checkbox" name="ms_consent" required> Согласен на публикацию моего имени и текста отзыва на сайте и на их обработку в соответствии с <a href="/company/agreement/" target="_blank">политикой обработки персональных данных</a></label></div>
+<div class="reviews-reply-buttons">
+			<button name="send_button" type="submit" class="btn btn-default" tabindex="3" onclick="this.form.preview_comment.value = 'N';" >Отправить</button>
+			<button name="view_button" type="submit" class="btn btn-default white" tabindex="4" onclick="this.form.preview_comment.value = 'VIEW';" >Просмотреть</button>
+		</div>
+	</div>
+</form>
+</div>
+<!--'end_frame_cache_area'-->																									</div>
+											</div>
+																																																																																																						<div class="tab-pane buy " id="buy"><p>Добавьте изделия в корзину и нажмите «Перейти к оформлению». Укажите имя, телефон, способ получения — самовывоз из магазина или доставку по Саратову — и удобное время.</p><p>Менеджер перезвонит, проверит наличие, согласует время и итоговую стоимость. Заказ считается принятым после этого звонка. Изделия, которые продаются на вес, взвешиваются при сборке заказа, поэтому итоговая сумма может немного отличаться.</p></div>
+																																																																																																																																																																																																																																				<div class="tab-pane payment " id="payment"><p>Оплатить заказ можно:</p><ul><li>наличными — при самовывозе или курьеру при доставке;</li><li>банковской картой МИР;</li><li>безналичным переводом — для организаций.</li></ul><p>Подробнее — на странице «<a href="/help/payment/">Условия оплаты</a>».</p></div>
+																																																																																																																																																																																																																																				<div class="tab-pane delivery " id="delivery">
+																										<p><b>Доставляем только по Саратову.</b><br>
+	 Доставка осуществляется в течение 1–2 дней после оформления заказа, с 8:00 до 15:00.
+<p>Приём заявок:
+<ul>
+<li>ежедневно — с 9:00 до 20:00 ч.</li>
+<li>по субботам — с 9:00 до 12:00 ч.</li>
+</ul>
+<p>Минимальная сумма заказа — 800 рублей.
+<p>Заказ считается принятым после звонка менеджера: он проверит наличие, согласует время и итоговую стоимость.
+<p>Способы оплаты — на странице «<a href="/help/payment/">Условия оплаты</a>».
+<p>В течение 2 часов после оформления заказа оператор согласует точное время доставки. Если этого не произошло, просим Вас связаться с нами по телефонам 8 (8452) 47-35-69, 21-28-45.
+<p>В радиусе 3 километров от центра города заказ доставляется бесплатно.<br> 
+Далее в пределах города Саратова доставка оценивается в 150 рублей.<br>
+ При сумме заказа от 3000 рублей доставка бесплатная.
+<p>Всегда можно забрать свой заказ самостоятельно в наших фирменных магазинах, находящихся по указанным адресам:
+<ul>
+<li>ул. Чернышевского, д.144, магазин-кулинария</li>
+<li>ул. Советская, д. 30, магазин-кулинария</li>
+<li>ул. Б. Казачья, д.17/39 (угол ул. М. Горького), магазин-кулинария</li>
+<li>ул. Бахметьевская, д.49, ТЦ «Арига»</li>
+<li>ул. Тархова, д. 29А/1 ТЦ «Солнечный»</li>
+<li>ул. Одесская, д. 20А, магазин-кулинария</li>
+<li>проспект Строителей, д. 6Б, магазин-кулинария</li>
+</ul>
+
+												</div>
+																																																																																																																																																																																																																																																																																																							</div>
+						</div>
+																																																																																				<div class="gifts">
+<!--'start_frame_cache_6zLbbW'-->
+	<div id="sale_gift_product_1511141339" class="sale_gift_product_container"></div>
+		<!--'end_frame_cache_6zLbbW'--><!--'start_frame_cache_KSBlai'--><div class="ordered-block gifts 22">
+	<div class="bx_item_list_you_looked_horizontal detail">
+		<div id="sale_gift_main_products_459637531" class="bx_sale_gift_main_products common_product wrapper_block">
+					</div>
+	</div>
+</div>
+<!--'end_frame_cache_KSBlai'--></div>
+																																				<div class="ordered-block goods">
+							
+													</div>
+																	</div>
+		<div class="left_block sticky-sidebar-custom product-side">
+														<div class="bigdata-wrapper"><!--'start_frame_cache_es4Hjc'-->
+	<div id="bigdata_recommended_products_Zz2YMH"></div>
+		<!--'end_frame_cache_es4Hjc'--></div>
+										<div class="side-block side-block--feedback rounded2 bordered box-shadow colored_theme_hover_bg-block">
+					<div class="side-block__top text-center">
+						<i class="svg  svg-inline-icon colored" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="58" height="56" viewBox="0 0 58 56"><path  data-name="Rounded Rectangle 704 copy 6" class="cls-1" d="M1592,2335v32h-53.23c-3.39-.04-4.76-1.41-4.77-4.75V2335l1-2,9.56-6.8,1.56,1.25-9.59,6.89,26.47,18.72,26.47-18.72-9.59-6.89,1.56-1.25,9.56,6.8Zm-2,1.41c-0.81.58-1.84,1.33-3,2.16h0c-6.09,4.39-16.19,11.62-20.96,14.89a7.139,7.139,0,0,0-.64.5,3.413,3.413,0,0,1-2.4,1.04,3.259,3.259,0,0,1-2.38-1.03,5.842,5.842,0,0,0-.58-0.44c-4.71-3.27-14.9-10.57-21.04-14.97-1.16-.83-2.2-1.58-3-2.15V2362a3.075,3.075,0,0,0,.21,1.1c0.8-.68,1.79-1.53,2.9-2.48,3.2-2.75,7.47-6.4,11.45-9.82l1.76,1.24-11.61,9.93-3.11,2.67a3,3,0,0,0,1.4.36h48a3,3,0,0,0,1.4-.36l-3.11-2.67-11.61-9.93,1.76-1.24c3.98,3.42,8.25,7.07,11.45,9.82h0c1.11,0.95,2.1,1.8,2.89,2.48a2.879,2.879,0,0,0,.22-1.1v-25.59Zm-2.77,30.59H1592v-4.77C1591.99,2365.58,1590.63,2366.96,1587.23,2367ZM1565,2340a2,2,0,1,1-2-2A2.006,2.006,0,0,1,1565,2340Zm3.28-14.31c-3.51,3.51-4.19,3.1-4.28,7.31a1,1,0,0,1-2,0c0.01-4.41,1.2-5.46,4.76-8.68,1.54-1.46,3.23-3.28,3.25-5.45,0.03-4.16-3.42-5.9-6.64-5.92-4.07-.03-6.28,1.85-7.07,5.15a6.009,6.009,0,0,0-.3,1.9h0a1,1,0,0,1-1.99.03h-0.02a7.332,7.332,0,0,1,.61-3.04c1.24-3.67,4.34-5.98,8.89-5.98,4.65,0,8.5,2.89,8.5,7.73C1571.99,2321.88,1570.42,2323.68,1568.28,2325.69Z" transform="translate(-1534 -2311)"/><path class="op-cls" d="M1539,2338l23.94,16,24.06-16v24h-48v-24Z" transform="translate(-1534 -2311)"/></svg></i>						<div class="side-block__text side-block__text--small">
+							<p class="introtext">Нужна консультация?</p>
+Наши специалисты ответят на любой интересующий вопрос						</div>
+					</div>
+					<div class="side-block__bottom side-block__bottom--last">
+						<span class="btn btn-lg btn-transparent round-ignore btn-wide font_upper animate-load colored_theme_hover_bg-el has-ripple" data-event="jqm" data-param-form_id="ASK" data-name="ask">Задать вопрос</span>
+					</div>
+				</div>
+					</div>
+	</div>
+			<!--'start_frame_cache_des'--><!--'end_frame_cache_des'--></div>		</div>
+		
+									</div>
+		</div>																																			</div> 																				</div> 																</div> 																</div> 									</div> 							</div> 					</div>
+		<footer id="footer">
+							<!--'start_frame_cache_viewed-block'-->	<!--'end_frame_cache_viewed-block'--><div class="footer-v1">
+	<div class="footer-inner">
+		<div class="footer_top">
+			<div class="maxwidth-theme">
+				<div class="row">
+					<div class="col-md-3 col-sm-3">
+						<div class="fourth_bottom_menu">
+									<div class="bottom-menu second">
+		<div class="items">
+														<div class="item active">
+					<div class="title">
+													<a href="/catalog/">Каталог</a>
+											</div>
+				</div>
+																					<div class="item">
+					<div class="title">
+													<a href="/sale/">Акции</a>
+											</div>
+				</div>
+																					
+																					<div class="item">
+					<div class="title">
+													<a href="/contacts/">Контакты</a>
+											</div>
+				</div>
+															</div>
+	</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-3">
+						<div class="first_bottom_menu">
+									<div class="bottom-menu">
+		<div class="items">
+																									 				<div class="item 0 childs   accordion-close " data-parent="#bottom_company" data-target="#bottom_company" >
+					<div class="title">
+													<a href="/company/">Компания</a>
+											</div>
+											<div class="compact_arrow">
+	                    	<i class="svg  svg-inline-down colored_theme_hover_bg-el" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5"><path  data-name="Rounded Rectangle 890 copy 2" class="cls-1" d="M517.778,610.8a0.721,0.721,0,0,1-1.016,0L514,607.769l-2.79,3.028a0.715,0.715,0,1,1-1.01-1.011l3.273-3.552c0.009-.009.012-0.021,0.021-0.03a0.723,0.723,0,0,1,1.017,0,0.022,0.022,0,0,1,0,0l3.265,3.577A0.712,0.712,0,0,1,517.778,610.8Z" transform="translate(-510 -606)"/></svg></i>						</div>
+									</div>
+									<div id="bottom_company" class="wrap panel-collapse wrap_compact_mobile">
+																											<div class="item">
+								<div class="title">
+																			<a href="/company/">О компании</a>
+																	</div>
+							</div>
+																											<div class="item">
+								<div class="title">
+																			<a href="/company/reviews/">Отзывы</a>
+																	</div>
+							</div>
+																											<div class="item">
+								<div class="title">
+																			<a href="/contacts/">Контакты</a>
+																	</div>
+							</div>
+																											<div class="item">
+								<div class="title">
+																			<a href="/company/vacancy/">Вакансии</a>
+																	</div>
+							</div>
+																											
+																											<div class="item">
+								<div class="title">
+																			<a href="/company/docs/">Документы</a>
+																	</div>
+							</div>
+											</div>
+													</div>
+	</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-3">
+						<div class="second_bottom_menu">
+									<div class="bottom-menu">
+		<div class="items">
+																									 				<div class="item 0 childs   accordion-close " data-parent="#bottom_info" data-target="#bottom_info" >
+					<div class="title">
+													<a href="/info/">Информация</a>
+											</div>
+											<div class="compact_arrow">
+	                    	<i class="svg  svg-inline-down colored_theme_hover_bg-el" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5"><path  data-name="Rounded Rectangle 890 copy 2" class="cls-1" d="M517.778,610.8a0.721,0.721,0,0,1-1.016,0L514,607.769l-2.79,3.028a0.715,0.715,0,1,1-1.01-1.011l3.273-3.552c0.009-.009.012-0.021,0.021-0.03a0.723,0.723,0,0,1,1.017,0,0.022,0.022,0,0,1,0,0l3.265,3.577A0.712,0.712,0,0,1,517.778,610.8Z" transform="translate(-510 -606)"/></svg></i>						</div>
+									</div>
+									<div id="bottom_info" class="wrap panel-collapse wrap_compact_mobile">
+																											<div class="item">
+								<div class="title">
+																			<a href="/help/payment/">Условия оплаты</a>
+																	</div>
+							</div>
+																											<div class="item">
+								<div class="title">
+																			<a href="/help/delivery/">Условия доставки</a>
+																	</div>
+							</div>
+																											
+																											<div class="item">
+								<div class="title">
+																			<a href="/help/payment/#requisites">Реквизиты</a>
+																	</div>
+							</div>
+																											<div class="item">
+								<div class="title">
+																			<a href="/company/agreement/">Политика</a>
+																	</div>
+							</div>
+											</div>
+													</div>
+	</div>
+						</div>
+					</div>
+					
+					<div class="col-md-3 col-sm-12 contact-block">
+						<div class="info">
+							<div class="row">
+																	<div class="col-md-12 col-sm-12">
+										
+									</div>
+																<div class="col-md-12 col-sm-12">
+									<div class="phone blocks">
+										<div class="inline-block">
+																			<!-- noindex -->
+			<div class="phone with_dropdown white sm">
+									<div class="wrap">
+						<div>
+									<i class="svg inline  svg-inline-phone" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="5" height="11" viewBox="0 0 5 11"><path  data-name="Shape 51 copy 13" class="cls-1" d="M402.738,141a18.086,18.086,0,0,0,1.136,1.727,0.474,0.474,0,0,1-.144.735l-0.3.257a1,1,0,0,1-.805.279,4.641,4.641,0,0,1-1.491-.232,4.228,4.228,0,0,1-1.9-3.1,9.614,9.614,0,0,1,.025-4.3,4.335,4.335,0,0,1,1.934-3.118,4.707,4.707,0,0,1,1.493-.244,0.974,0.974,0,0,1,.8.272l0.3,0.255a0.481,0.481,0,0,1,.113.739c-0.454.677-.788,1.159-1.132,1.731a0.43,0.43,0,0,1-.557.181l-0.468-.061a0.553,0.553,0,0,0-.7.309,6.205,6.205,0,0,0-.395,2.079,6.128,6.128,0,0,0,.372,2.076,0.541,0.541,0,0,0,.7.3l0.468-.063a0.432,0.432,0,0,1,.555.175h0Z" transform="translate(-399 -133)"/></svg></i><a rel="nofollow" href="javascript:;">+7 (8452) 47-35-69</a>
+										</div>
+					</div>
+								<div class="dropdown ">
+					<div class="wrap srollbar-custom scroll-deferred">
+																				<div class="more_phone"><a rel="nofollow" class="no-decript" href="tel:+78452473569">+7 (8452) 47-35-69</a></div>
+																				<div class="more_phone"><a rel="nofollow" class="no-decript" href="tel:+78452212845">+7 (8452) 21-28-45</a></div>
+											</div>
+				</div>
+				<i class="svg inline  svg-inline-down" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="5" height="3" viewBox="0 0 5 3"><path class="cls-1" d="M250,80h5l-2.5,3Z" transform="translate(-250 -80)"/></svg></i>			</div>
+			<!-- /noindex -->
+														</div>
+																					<div class="inline-block callback_wrap">
+												<span class="callback-block animate-load colored" data-event="jqm" data-param-form_id="CALLBACK" data-name="callback">Заказать звонок</span>
+											</div>
+																			</div>
+								</div>
+								<div class="col-md-12 col-sm-12">
+		
+							<div class="email blocks">
+					<i class="svg inline  svg-inline-email" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9"><path  data-name="Rectangle 583 copy 16" class="cls-1" d="M367,142h-7a2,2,0,0,1-2-2v-5a2,2,0,0,1,2-2h7a2,2,0,0,1,2,2v5A2,2,0,0,1,367,142Zm0-2v-3.039L364,139h-1l-3-2.036V140h7Zm-6.634-5,3.145,2.079L366.634,135h-6.268Z" transform="translate(-358 -133)"/></svg></i>					<a href="mailto:mirslad49@mail.ru">mirslad49@mail.ru</a>				</div>
+		
+									</div>
+								<div class="col-md-12 col-sm-12">
+		
+							<div class="address blocks">
+					<i class="svg inline  svg-inline-addr" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="9" height="12" viewBox="0 0 9 12"><path class="cls-1" d="M959.135,82.315l0.015,0.028L955.5,87l-3.679-4.717,0.008-.013a4.658,4.658,0,0,1-.83-2.655,4.5,4.5,0,1,1,9,0A4.658,4.658,0,0,1,959.135,82.315ZM955.5,77a2.5,2.5,0,0,0-2.5,2.5,2.467,2.467,0,0,0,.326,1.212l-0.014.022,2.181,3.336,2.034-3.117c0.033-.046.063-0.094,0.093-0.142l0.066-.1-0.007-.009a2.468,2.468,0,0,0,.32-1.2A2.5,2.5,0,0,0,955.5,77Z" transform="translate(-951 -75)"/></svg></i>					г. Саратов, ул. Бахметьевская 49				</div>
+		
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer_middle">
+			<div class="maxwidth-theme">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div class="social-block">
+							<div class="social-icons">
+		<!-- noindex -->
+	<ul>
+																																	</ul>
+	<!-- /noindex -->
+</div>						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer_bottom">
+			<div class="maxwidth-theme">
+				<div class="row">
+					<div class="link_block col-md-6 col-sm-6 pull-right">
+						<div class="pull-right">
+							<div class="pays">
+								<i title="Mir" class="mir"></i>
+<a href="https://jrabbit.ru" target="blank" class="font_xs">Разработка сайта JRabbit</a>							</div>
+						</div>
+						<div class="pull-right">
+													</div>
+					</div>
+					<div class="copy-block col-md-6 col-sm-6 pull-left">
+						<div class="copy font_xs pull-left">
+							2026 &copy; ООО «Мир Сладостей», ИНН 6454104523, ОГРН 1156451019867, г. Саратов, ул. Бахметьевская, 49						</div>
+						<div id="bx-composite-banner" class="pull-left"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- marketnig popups -->
+<!--'start_frame_cache_8gJilP'-->	<!--'end_frame_cache_8gJilP'--><!-- /marketnig popups -->		</footer>
+<div class="bx_areas">
+	</div>
+	<div class="inline-search-block fixed with-close big">
+		<div class="maxwidth-theme">
+			<div class="col-md-12">
+				<div class="search-wrapper">
+					<div id="title-search">
+						<form action="/catalog/" class="search">
+							<div class="search-input-div">
+								<input class="search-input" id="title-search-input" type="text" name="q" value="" placeholder="Поиск" size="20" maxlength="50" autocomplete="off" />
+							</div>
+							<div class="search-button-div">
+								<button class="btn btn-search btn-default btn-lg " type="submit" name="s" value="Найти">Найти</button>
+								<span class="close-block inline-search-hide"><span class="svg svg-close close-icons"></span></span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--'start_frame_cache_basketitems-block'-->
+														<!--'end_frame_cache_basketitems-block'-->							<div class="basket_wrapp  fly2 basket_fill_COLOR">
+				<div class="header-cart fly" id="basket_line">
+							<div class="basket_fly">
+		<div class="wrap_cont">
+			<div class="opener">
+				<div title="Корзина пуста" data-type="AnDelCanBuy" class="colored_theme_hover_text basket_count small clicked empty">
+					<a href="/basket/"></a>
+					<div class="wraps_icon_block basket">
+						<i class="svg  svg-inline-down" aria-hidden="true" ><svg class="" width="19" height="16" viewBox="0 0 19 16"><path data-name="Ellipse 2 copy 9" class="cls-1" d="M956.047,952.005l-0.939,1.009-11.394-.008-0.952-1-0.953-6h-2.857a0.862,0.862,0,0,1-.952-1,1.025,1.025,0,0,1,1.164-1h2.327c0.3,0,.6.006,0.6,0.006a1.208,1.208,0,0,1,1.336.918L943.817,947h12.23L957,948v1Zm-11.916-3,0.349,2h10.007l0.593-2Zm1.863,5a3,3,0,1,1-3,3A3,3,0,0,1,945.994,954.005ZM946,958a1,1,0,1,0-1-1A1,1,0,0,0,946,958Zm7.011-4a3,3,0,1,1-3,3A3,3,0,0,1,953.011,954.005ZM953,958a1,1,0,1,0-1-1A1,1,0,0,0,953,958Z" transform="translate(-938 -944)"></path></svg></i>						<div class="count empty_items">
+							<span class="colored_theme_bg">
+								<span class="items">
+									<span>0</span>
+								</span>
+							</span>
+						</div>
+					</div>
+				</div>
+				
+												</div>
+			<div class="basket_sort">
+				<span class="basket_title">Корзина</span>
+			</div>
+		</div>
+	</div>
+	<!--'start_frame_cache_header-cart'-->										<!--'end_frame_cache_header-cart'-->				</div>
+			</div>
+				<!--'start_frame_cache_bottom-panel-block'-->				<!--'end_frame_cache_bottom-panel-block'-->	<div id="popup_iframe_wrapper"></div>
+	
+
+<style>
+li[data-code="NEW"], li[data-code="RECOMMEND"],
+.NEW_slides, .RECOMMEND_slides { display: none !important; }
+.basket_hover_block.loading_block,
+.loading_block_content { background-image: none !important; }
+.wrap_basket .basket_hover_block { display: none !important; }
+.filter-panel.sort_header, .filter-panel-wrapper, #mobilefilter { display: none !important; }
+.CATALOG_TAB .tabs_wrapper { display: none !important; }
+</style>
+
+<script>if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess==='object'){for(let i in mess) {BX.message[i]=mess[i];} return true;}};</script>
+<script>(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'- Нет данных -','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть в окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_WINDOW_CONTINUE':'Продолжить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный размер'});</script>
+<script src="/vendor/bitrix/js/main/core/core.min.js?1611311608252123"></script>
+<script>BX.setJSList(['/bitrix/js/main/core/core_ajax.js','/bitrix/js/main/core/core_promise.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/loadext/loadext.js','/bitrix/js/main/loadext/extension.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/includes/js/includes.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/ui/polyfill/closest/js/closest.js','/bitrix/js/main/polyfill/fill/main.polyfill.fill.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/core/core.js','/bitrix/js/main/polyfill/intersectionobserver/js/intersectionobserver.js','/bitrix/js/main/lazyload/dist/lazyload.bundle.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/parambag/dist/parambag.bundle.js']);
+BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/lazyload/dist/lazyload.bundle.css','/bitrix/js/main/parambag/dist/parambag.bundle.css']);</script>
+<script>(window.BX||top.BX).message({'DISK_MYOFFICE':false});(window.BX||top.BX).message({'JS_CORE_VIEWER_DOWNLOAD':'Скачать','JS_CORE_VIEWER_EDIT':'Редактировать','JS_CORE_VIEWER_DESCR_AUTHOR':'Автор','JS_CORE_VIEWER_DESCR_LAST_MODIFY':'Последние изменения','JS_CORE_VIEWER_TOO_BIG_FOR_VIEW':'Файл слишком большой для просмотра','JS_CORE_VIEWER_OPEN_WITH_GVIEWER':'Открыть файл в Google Viewer','JS_CORE_VIEWER_IFRAME_DESCR_ERROR':'К сожалению, не удалось открыть документ.','JS_CORE_VIEWER_IFRAME_PROCESS_SAVE_DOC':'Сохранение документа','JS_CORE_VIEWER_IFRAME_UPLOAD_DOC_TO_GOOGLE':'Загрузка документа','JS_CORE_VIEWER_IFRAME_CONVERT_ACCEPT':'Конвертировать','JS_CORE_VIEWER_IFRAME_CONVERT_DECLINE':'Отменить','JS_CORE_VIEWER_IFRAME_CONVERT_TO_NEW_FORMAT':'Документ будет сконвертирован в docx, xls, pptx, так как имеет старый формат.','JS_CORE_VIEWER_IFRAME_DESCR_SAVE_DOC':'Сохранить документ?','JS_CORE_VIEWER_IFRAME_SAVE_DOC':'Сохранить','JS_CORE_VIEWER_IFRAME_DISCARD_DOC':'Отменить изменения','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT':'Редактировать с помощью','JS_CORE_VIEWER_IFRAME_SET_DEFAULT_SERVICE_EDIT':'Использовать для всех файлов','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT_ACCEPT':'Применить','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT_DECLINE':'Отменить','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT':'Загрузил новую версию файла','JS_CORE_VIEWER_SERVICE_GOOGLE_DRIVE':'Google Docs','JS_CORE_VIEWER_SERVICE_SKYDRIVE':'MS Office Online','JS_CORE_VIEWER_IFRAME_CANCEL':'Отмена','JS_CORE_VIEWER_IFRAME_DESCR_SAVE_DOC_F':'В одном из окон вы редактируете данный документ. Если вы завершили работу над документом, нажмите \"#SAVE_DOC#\", чтобы загрузить измененный файл на портал.','JS_CORE_VIEWER_SAVE':'Сохранить','JS_CORE_VIEWER_EDIT_IN_SERVICE':'Редактировать в #SERVICE#','JS_CORE_VIEWER_NOW_EDITING_IN_SERVICE':'Редактирование в #SERVICE#','JS_CORE_VIEWER_SAVE_TO_OWN_FILES':'Сохранить на Битрикс24.Диск','JS_CORE_VIEWER_DOWNLOAD_TO_PC':'Скачать на локальный компьютер','JS_CORE_VIEWER_GO_TO_FILE':'Перейти к файлу','JS_CORE_VIEWER_DESCR_SAVE_FILE_TO_OWN_FILES':'Файл #NAME# успешно сохранен<br>в папку \"Файлы\\Сохраненные\"','JS_CORE_VIEWER_DESCR_PROCESS_SAVE_FILE_TO_OWN_FILES':'Файл #NAME# сохраняется<br>на ваш \"Битрикс24.Диск\"','JS_CORE_VIEWER_HISTORY_ELEMENT':'История','JS_CORE_VIEWER_VIEW_ELEMENT':'Просмотреть','JS_CORE_VIEWER_THROUGH_VERSION':'Версия #NUMBER#','JS_CORE_VIEWER_THROUGH_LAST_VERSION':'Последняя версия','JS_CORE_VIEWER_DISABLE_EDIT_BY_PERM':'Автор не разрешил вам редактировать этот документ','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT_F':'Загрузила новую версию файла','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT_M':'Загрузил новую версию файла','JS_CORE_VIEWER_IFRAME_CONVERT_TO_NEW_FORMAT_EX':'Документ будет сконвертирован в формат #NEW_FORMAT#, так как текущий формат #OLD_FORMAT# является устаревшим.','JS_CORE_VIEWER_CONVERT_TITLE':'Конвертировать в #NEW_FORMAT#?','JS_CORE_VIEWER_CREATE_IN_SERVICE':'Создать с помощью #SERVICE#','JS_CORE_VIEWER_NOW_CREATING_IN_SERVICE':'Создание документа в #SERVICE#','JS_CORE_VIEWER_SAVE_AS':'Сохранить как','JS_CORE_VIEWER_CREATE_DESCR_SAVE_DOC_F':'В одном из окон вы создаете новый документ. Если вы завершили работу над документом, нажмите \"#SAVE_AS_DOC#\", чтобы перейти к добавлению документа на портал.','JS_CORE_VIEWER_NOW_DOWNLOAD_FROM_SERVICE':'Загрузка документа из #SERVICE#','JS_CORE_VIEWER_EDIT_IN_LOCAL_SERVICE':'Редактировать на моём компьютере','JS_CORE_VIEWER_EDIT_IN_LOCAL_SERVICE_SHORT':'Редактировать на #SERVICE#','JS_CORE_VIEWER_SERVICE_LOCAL':'моём компьютере','JS_CORE_VIEWER_DOWNLOAD_B24_DESKTOP':'Скачать','JS_CORE_VIEWER_SERVICE_LOCAL_INSTALL_DESKTOP':'Для эффективного редактирования документов на компьютере, установите десктоп приложение и подключите Битрикс24.Диск','JS_CORE_VIEWER_SERVICE_B24_DISK':'Битрикс24.Диск','JS_CORE_VIEWER_SHOW_FILE_DIALOG_OAUTH_NOTICE':'Для просмотра файла, пожалуйста, авторизуйтесь в своем аккаунте <a id=\"bx-js-disk-run-oauth-modal\" href=\"#\">#SERVICE#<\/a>.','JS_CORE_VIEWER_SERVICE_OFFICE365':'Office365','JS_CORE_VIEWER_DOCUMENT_IS_LOCKED_BY':'Документ заблокирован на редактирование','JS_CORE_VIEWER_SERVICE_MYOFFICE':'МойОфис','JS_CORE_VIEWER_OPEN_PDF_PREVIEW':'Просмотреть pdf-версию файла','JS_CORE_VIEWER_AJAX_ACCESS_DENIED':'Не хватает прав для просмотра файла. Попробуйте обновить страницу.','JS_CORE_VIEWER_AJAX_CONNECTION_FAILED':'При попытке открыть файл возникла ошибка. Пожалуйста, попробуйте позже.','JS_CORE_VIEWER_AJAX_OPEN_NEW_TAB':'Открыть в новом окне','JS_CORE_VIEWER_AJAX_PRINT':'Распечатать','JS_CORE_VIEWER_TRANSFORMATION_IN_PROCESS':'Документ сохранён. Мы готовим его к показу.','JS_CORE_VIEWER_IFRAME_ERROR_TITLE':'Не удалось открыть документ','JS_CORE_VIEWER_DOWNLOAD_B24_DESKTOP_FULL':'Скачать приложение','JS_CORE_VIEWER_DOWNLOAD_DOCUMENT':'Скачать документ','JS_CORE_VIEWER_IFRAME_ERROR_COULD_NOT_VIEW':'К сожалению, не удалось просмотреть документ.','JS_CORE_VIEWER_ACTIONPANEL_MORE':'Ещё'});</script>
+<script>(window.BX||top.BX).message({'UI_BUTTONS_SAVE_BTN_TEXT':'Сохранить','UI_BUTTONS_CREATE_BTN_TEXT':'Создать','UI_BUTTONS_ADD_BTN_TEXT':'Добавить','UI_BUTTONS_SEND_BTN_TEXT':'Отправить','UI_BUTTONS_CANCEL_BTN_TEXT':'Отменить','UI_BUTTONS_CLOSE_BTN_TEXT':'Закрыть','UI_BUTTONS_APPLY_BTN_TEXT':'Применить'});</script>
+<script>(window.BX||top.BX).message({'MAIN_UI_SELECTOR_SELECT_TEXT':'Все элементы группы с подгруппами','MAIN_UI_SELECTOR_SELECT_FLAT_TEXT':'Все элементы группы','MAIN_UI_SELECTOR_PLEASE_WAIT':'Загрузка, пожалуйста подождите...','MAIN_UI_SELECTOR_WAITER_TEXT':'Идет поиск дополнительных результатов...','MAIN_UI_SELECTOR_SEARCH_TAB_TITLE':'Поиск','MAIN_UI_SELECTOR_HIDDEN_TITLE':'Скрыто','MAIN_UI_SELECTOR_STUB_PLEASE_WAIT':'Пожалуйста подождите, идет поиск...','MAIN_UI_SELECTOR_STUB_EMPTY_LIST':'Нет элементов для отображения'});</script>
+<script>(window.BX||top.BX).message({'AMPM_MODE':false});(window.BX||top.BX).message({'MONTH_1':'Январь','MONTH_2':'Февраль','MONTH_3':'Март','MONTH_4':'Апрель','MONTH_5':'Май','MONTH_6':'Июнь','MONTH_7':'Июль','MONTH_8':'Август','MONTH_9':'Сентябрь','MONTH_10':'Октябрь','MONTH_11':'Ноябрь','MONTH_12':'Декабрь','MONTH_1_S':'января','MONTH_2_S':'февраля','MONTH_3_S':'марта','MONTH_4_S':'апреля','MONTH_5_S':'мая','MONTH_6_S':'июня','MONTH_7_S':'июля','MONTH_8_S':'августа','MONTH_9_S':'сентября','MONTH_10_S':'октября','MONTH_11_S':'ноября','MONTH_12_S':'декабря','MON_1':'янв','MON_2':'фев','MON_3':'мар','MON_4':'апр','MON_5':'май','MON_6':'июн','MON_7':'июл','MON_8':'авг','MON_9':'сен','MON_10':'окт','MON_11':'ноя','MON_12':'дек','DAY_OF_WEEK_0':'Воскресенье','DAY_OF_WEEK_1':'Понедельник','DAY_OF_WEEK_2':'Вторник','DAY_OF_WEEK_3':'Среда','DAY_OF_WEEK_4':'Четверг','DAY_OF_WEEK_5':'Пятница','DAY_OF_WEEK_6':'Суббота','DOW_0':'Вс','DOW_1':'Пн','DOW_2':'Вт','DOW_3':'Ср','DOW_4':'Чт','DOW_5':'Пт','DOW_6':'Сб','FD_SECOND_AGO_0':'#VALUE# секунд назад','FD_SECOND_AGO_1':'#VALUE# секунду назад','FD_SECOND_AGO_10_20':'#VALUE# секунд назад','FD_SECOND_AGO_MOD_1':'#VALUE# секунду назад','FD_SECOND_AGO_MOD_2_4':'#VALUE# секунды назад','FD_SECOND_AGO_MOD_OTHER':'#VALUE# секунд назад','FD_SECOND_DIFF_0':'#VALUE# секунд','FD_SECOND_DIFF_1':'#VALUE# секунда','FD_SECOND_DIFF_10_20':'#VALUE# секунд','FD_SECOND_DIFF_MOD_1':'#VALUE# секунда','FD_SECOND_DIFF_MOD_2_4':'#VALUE# секунды','FD_SECOND_DIFF_MOD_OTHER':'#VALUE# секунд','FD_SECOND_SHORT':'#VALUE#с','FD_MINUTE_AGO_0':'#VALUE# минут назад','FD_MINUTE_AGO_1':'#VALUE# минуту назад','FD_MINUTE_AGO_10_20':'#VALUE# минут назад','FD_MINUTE_AGO_MOD_1':'#VALUE# минуту назад','FD_MINUTE_AGO_MOD_2_4':'#VALUE# минуты назад','FD_MINUTE_AGO_MOD_OTHER':'#VALUE# минут назад','FD_MINUTE_DIFF_0':'#VALUE# минут','FD_MINUTE_DIFF_1':'#VALUE# минута','FD_MINUTE_DIFF_10_20':'#VALUE# минут','FD_MINUTE_DIFF_MOD_1':'#VALUE# минута','FD_MINUTE_DIFF_MOD_2_4':'#VALUE# минуты','FD_MINUTE_DIFF_MOD_OTHER':'#VALUE# минут','FD_MINUTE_0':'#VALUE# минут','FD_MINUTE_1':'#VALUE# минуту','FD_MINUTE_10_20':'#VALUE# минут','FD_MINUTE_MOD_1':'#VALUE# минуту','FD_MINUTE_MOD_2_4':'#VALUE# минуты','FD_MINUTE_MOD_OTHER':'#VALUE# минут','FD_MINUTE_SHORT':'#VALUE#мин','FD_HOUR_AGO_0':'#VALUE# часов назад','FD_HOUR_AGO_1':'#VALUE# час назад','FD_HOUR_AGO_10_20':'#VALUE# часов назад','FD_HOUR_AGO_MOD_1':'#VALUE# час назад','FD_HOUR_AGO_MOD_2_4':'#VALUE# часа назад','FD_HOUR_AGO_MOD_OTHER':'#VALUE# часов назад','FD_HOUR_DIFF_0':'#VALUE# часов','FD_HOUR_DIFF_1':'#VALUE# час','FD_HOUR_DIFF_10_20':'#VALUE# часов','FD_HOUR_DIFF_MOD_1':'#VALUE# час','FD_HOUR_DIFF_MOD_2_4':'#VALUE# часа','FD_HOUR_DIFF_MOD_OTHER':'#VALUE# часов','FD_HOUR_SHORT':'#VALUE#ч','FD_YESTERDAY':'вчера','FD_TODAY':'сегодня','FD_TOMORROW':'завтра','FD_DAY_AGO_0':'#VALUE# дней назад','FD_DAY_AGO_1':'#VALUE# день назад','FD_DAY_AGO_10_20':'#VALUE# дней назад','FD_DAY_AGO_MOD_1':'#VALUE# день назад','FD_DAY_AGO_MOD_2_4':'#VALUE# дня назад','FD_DAY_AGO_MOD_OTHER':'#VALUE# дней назад','FD_DAY_DIFF_0':'#VALUE# дней','FD_DAY_DIFF_1':'#VALUE# день','FD_DAY_DIFF_10_20':'#VALUE# дней','FD_DAY_DIFF_MOD_1':'#VALUE# день','FD_DAY_DIFF_MOD_2_4':'#VALUE# дня','FD_DAY_DIFF_MOD_OTHER':'#VALUE# дней','FD_DAY_AT_TIME':'#DAY# в #TIME#','FD_DAY_SHORT':'#VALUE#д','FD_MONTH_AGO_0':'#VALUE# месяцев назад','FD_MONTH_AGO_1':'#VALUE# месяц назад','FD_MONTH_AGO_10_20':'#VALUE# месяцев назад','FD_MONTH_AGO_MOD_1':'#VALUE# месяц назад','FD_MONTH_AGO_MOD_2_4':'#VALUE# месяца назад','FD_MONTH_AGO_MOD_OTHER':'#VALUE# месяцев назад','FD_MONTH_DIFF_0':'#VALUE# месяцев','FD_MONTH_DIFF_1':'#VALUE# месяц','FD_MONTH_DIFF_10_20':'#VALUE# месяцев','FD_MONTH_DIFF_MOD_1':'#VALUE# месяц','FD_MONTH_DIFF_MOD_2_4':'#VALUE# месяца','FD_MONTH_DIFF_MOD_OTHER':'#VALUE# месяцев','FD_MONTH_SHORT':'#VALUE#мес','FD_YEARS_AGO_0':'#VALUE# лет назад','FD_YEARS_AGO_1':'#VALUE# год назад','FD_YEARS_AGO_10_20':'#VALUE# лет назад','FD_YEARS_AGO_MOD_1':'#VALUE# год назад','FD_YEARS_AGO_MOD_2_4':'#VALUE# года назад','FD_YEARS_AGO_MOD_OTHER':'#VALUE# лет назад','FD_YEARS_DIFF_0':'#VALUE# лет','FD_YEARS_DIFF_1':'#VALUE# год','FD_YEARS_DIFF_10_20':'#VALUE# лет','FD_YEARS_DIFF_MOD_1':'#VALUE# год','FD_YEARS_DIFF_MOD_2_4':'#VALUE# года','FD_YEARS_DIFF_MOD_OTHER':'#VALUE# лет','FD_YEARS_SHORT_0':'#VALUE#л','FD_YEARS_SHORT_1':'#VALUE#г','FD_YEARS_SHORT_10_20':'#VALUE#л','FD_YEARS_SHORT_MOD_1':'#VALUE#г','FD_YEARS_SHORT_MOD_2_4':'#VALUE#г','FD_YEARS_SHORT_MOD_OTHER':'#VALUE#л','CAL_BUTTON':'Выбрать','CAL_TIME_SET':'Установить время','CAL_TIME':'Время','FD_LAST_SEEN_TOMORROW':'завтра в #TIME#','FD_LAST_SEEN_NOW':'только что','FD_LAST_SEEN_TODAY':'сегодня в #TIME#','FD_LAST_SEEN_YESTERDAY':'вчера в #TIME#','FD_LAST_SEEN_MORE_YEAR':'более года назад'});</script>
+<script>(window.BX||top.BX).message({'WEEK_START':'1'});</script>
+<script>(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'10800','SITE_ID':'s1','SITE_DIR':'/','USER_ID':'','SERVER_TIME':'1789419181','USER_TZ_OFFSET':'3600','USER_TZ_AUTO':'Y','bitrix_sessid':'36e6cea28ce03522d8d8ed8d2399fda8'});</script>
+<script  src="/vendor/bitrix/cache/js/s1/aspro_max/kernel_main/kernel_main_v1.js?1782284679179526"></script>
+<script  src="/vendor/bitrix/cache/js/s1/aspro_max/kernel_main_polyfill_customevent/kernel_main_polyfill_customevent_v1.js?17822093351051"></script>
+<script src="/vendor/bitrix/js/ui/dexie/dist/dexie.bitrix.bundle.min.js?161131141460291"></script>
+<script src="/vendor/bitrix/js/main/core/core_ls.min.js?16113113967365"></script>
+<script src="/vendor/bitrix/js/main/core/core_frame_cache.min.js?161131139610532"></script>
+<script src="/vendor/bitrix/js/main/ajax.js?161131139835509"></script>
+<script src="/vendor/bitrix/js/main/popup/dist/main.popup.bundle.min.js?161131139658529"></script>
+<script src="/vendor/bitrix/js/main/loader/dist/loader.bundle.min.js?16113113963969"></script>
+<script src="/vendor/bitrix/js/main/core/core_viewer.min.js?161131139699309"></script>
+<script src="/vendor/bitrix/js/ui/buttons/dist/ui.buttons.bundle.min.js?161131141440271"></script>
+<script src="/vendor/bitrix/js/currency/core_currency.min.js?16113114021854"></script>
+<script>BX.setJSList(['/bitrix/js/main/core/core_fx.js','/bitrix/js/main/session.js','/bitrix/js/main/pageobject/pageobject.js','/bitrix/js/main/core/core_window.js','/bitrix/js/main/date/main.date.js','/bitrix/js/main/core/core_date.js','/bitrix/js/main/utils.js','/bitrix/js/main/core/core_timer.js','/bitrix/js/main/dd.js','/bitrix/js/main/polyfill/customevent/main.polyfill.customevent.js','/bitrix/js/fileman/html_editor/range.js','/bitrix/js/fileman/html_editor/html-actions.js','/bitrix/js/fileman/html_editor/html-views.js','/bitrix/js/fileman/html_editor/html-parser.js','/bitrix/js/fileman/html_editor/html-base-controls.js','/bitrix/js/fileman/html_editor/html-controls.js','/bitrix/js/fileman/html_editor/html-components.js','/bitrix/js/fileman/html_editor/html-snippets.js','/bitrix/js/fileman/html_editor/html-editor.js','/bitrix/templates/aspro_max/components/bitrix/catalog/main/script.js','/bitrix/templates/aspro_max/components/bitrix/catalog.element/main_custom/script.js','/bitrix/templates/aspro_max/components/bitrix/sale.prediction.product.detail/main/script.js','/bitrix/templates/aspro_max/components/bitrix/sale.gift.product/main/script.js','/bitrix/templates/aspro_max/components/bitrix/sale.gift.main.products/main/script.js','/bitrix/templates/aspro_max/components/bitrix/catalog.bigdata.products/main/script.js','/bitrix/templates/aspro_max/js/jquery.history.js','/bitrix/templates/aspro_max/js/observer.js','/bitrix/templates/aspro_max/js/lazysizes.min.js','/bitrix/templates/aspro_max/js/ls.unveilhooks.min.js','/bitrix/templates/aspro_max/js/jquery.actual.min.js','/bitrix/templates/aspro_max/js/jqModal.js','/bitrix/templates/aspro_max/vendor/js/bootstrap.js','/bitrix/templates/aspro_max/vendor/js/jquery.appear.js','/bitrix/templates/aspro_max/vendor/js/ripple.js','/bitrix/templates/aspro_max/vendor/js/velocity/velocity.js','/bitrix/templates/aspro_max/vendor/js/velocity/velocity.ui.js','/bitrix/templates/aspro_max/js/browser.js','/bitrix/templates/aspro_max/js/jquery.fancybox.js','/bitrix/templates/aspro_max/js/jquery.flexslider.js','/bitrix/templates/aspro_max/js/jquery.uniform.min.js','/bitrix/templates/aspro_max/vendor/js/carousel/owl/owl.carousel.js','/bitrix/templates/aspro_max/vendor/js/moment.min.js','/bitrix/templates/aspro_max/vendor/js/sticky-sidebar.js','/bitrix/templates/aspro_max/js/jquery.validate.min.js','/bitrix/templates/aspro_max/js/aspro_animate_open_fancy.js','/bitrix/templates/aspro_max/js/jquery.inputmask.bundle.min.js','/bitrix/templates/aspro_max/js/jquery.easing.1.3.js','/bitrix/templates/aspro_max/js/equalize.min.js','/bitrix/templates/aspro_max/js/jquery.alphanumeric.js','/bitrix/templates/aspro_max/js/jquery.cookie.js','/bitrix/templates/aspro_max/js/jquery.plugin.min.js','/bitrix/templates/aspro_max/js/jquery.countdown.min.js','/bitrix/templates/aspro_max/js/jquery.countdown-ru.js','/bitrix/templates/aspro_max/js/jquery.ikSelect.js','/bitrix/templates/aspro_max/js/jquery.mobile.custom.touch.min.js','/bitrix/templates/aspro_max/js/jquery.dotdotdot.js','/bitrix/templates/aspro_max/js/rating_likes.js','/bitrix/templates/aspro_max/js/mobile.js','/bitrix/templates/aspro_max/js/jquery.mousewheel.min.js','/bitrix/templates/aspro_max/js/jquery.mCustomScrollbar.js','/bitrix/templates/aspro_max/js/scrollTabs.js','/bitrix/templates/aspro_max/js/main.js','/bitrix/templates/aspro_max/js/blocks/blocks.js','/bitrix/components/bitrix/search.title/script.js','/bitrix/templates/aspro_max/components/bitrix/search.title/mega_menu/script.js','/bitrix/templates/aspro_max/components/bitrix/menu/menu_in_burger/script.js','/bitrix/components/aspro/marketing.popup.max/templates/.default/script.js','/bitrix/templates/aspro_max/components/bitrix/search.title/fixed/script.js','/bitrix/templates/aspro_max/js/custom.js','/bitrix/templates/aspro_max/components/bitrix/forum.topic.reviews/main/script.js','/bitrix/components/bitrix/main.post.form/templates/.default/script.js']);</script>
+<script>BX.setCSSList(['/bitrix/js/main/core/css/core_date.css','/bitrix/templates/aspro_max/components/bitrix/catalog/main/style.css','/bitrix/templates/aspro_max/components/bitrix/catalog.element/main_custom/style.css','/bitrix/templates/aspro_max/components/bitrix/iblock.vote/element_rating/style.css','/bitrix/templates/aspro_max/components/bitrix/sale.gift.main.products/main/style.css','/bitrix/templates/aspro_max/vendor/css/bootstrap.css','/bitrix/templates/aspro_max/css/jquery.fancybox.css','/bitrix/templates/aspro_max/vendor/css/carousel/owl/owl.carousel.css','/bitrix/templates/aspro_max/vendor/css/carousel/owl/owl.theme.default.css','/bitrix/templates/aspro_max/css/styles.css','/bitrix/templates/aspro_max/css/blocks/blocks.css','/bitrix/templates/aspro_max/css/blocks/common.blocks/counter-state/counter-state.css','/bitrix/templates/aspro_max/css/banners.css','/bitrix/templates/aspro_max/css/menu.css','/bitrix/templates/aspro_max/css/catalog.css','/bitrix/templates/aspro_max/css/animation/animation_ext.css','/bitrix/templates/aspro_max/css/jquery.mCustomScrollbar.min.css','/bitrix/templates/aspro_max/vendor/css/ripple.css','/bitrix/templates/aspro_max/css/left_block_main_page.css','/bitrix/templates/aspro_max/css/stores.css','/bitrix/templates/aspro_max/css/yandex_map.css','/bitrix/templates/aspro_max/ajax/ajax.css','/bitrix/templates/aspro_max/components/bitrix/breadcrumb/main/style.css','/bitrix/templates/aspro_max/css/footer.css','/bitrix/components/aspro/marketing.popup.max/templates/.default/style.css','/bitrix/templates/aspro_max/styles.css','/bitrix/templates/aspro_max/template_styles.css','/bitrix/templates/aspro_max/css/header.css','/bitrix/templates/aspro_max/css/media.css','/bitrix/templates/aspro_max/vendor/fonts/font-awesome/css/font-awesome.min.css','/bitrix/templates/aspro_max/css/print.css','/bitrix/templates/aspro_max/css/h1-medium.css','/bitrix/templates/aspro_max/css/round-elements.css','/bitrix/templates/aspro_max/themes/custom_s1/theme.css','/bitrix/templates/aspro_max/bg_color/light/bgcolors.css','/bitrix/templates/aspro_max/css/widths/width-2.css','/bitrix/templates/aspro_max/css/fonts/font-10.css','/bitrix/templates/aspro_max/css/custom.css','/bitrix/components/bitrix/main.post.form/templates/.default/style.css']);</script>
+<script>
+					(function () {
+						"use strict";
+						var counter = function ()
+						{
+							var cookie = (function (name) {
+								var parts = ("; " + document.cookie).split("; " + name + "=");
+								if (parts.length == 2) {
+									try {return JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));}
+									catch (e) {}
+								}
+							})("BITRIX_CONVERSION_CONTEXT_s1");
+							if (cookie && cookie.EXPIRE >= BX.message("SERVER_TIME"))
+								return;
+							var request = new XMLHttpRequest();
+							request.open("POST", "/bitrix/tools/conversion/ajax_counter.php", true);
+							request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+							request.send(
+								"SITE_ID="+encodeURIComponent("s1")+
+								"&sessid="+encodeURIComponent(BX.bitrix_sessid())+
+								"&HTTP_REFERER="+encodeURIComponent(document.referrer)
+							);
+						};
+						if (window.frameRequestStart === true)
+							BX.addCustomEvent("onFrameDataReceived", counter);
+						else
+							BX.ready(counter);
+					})();
+				</script>
+<script>BX.message({'PHONE':'Телефон','FAST_VIEW':'Быстрый просмотр','TABLES_SIZE_TITLE':'Подбор размера','SOCIAL':'Социальные сети','DESCRIPTION':'Описание магазина','ITEMS':'Товары','LOGO':'Логотип','REGISTER_INCLUDE_AREA':'Текст о регистрации','AUTH_INCLUDE_AREA':'Текст об авторизации','FRONT_IMG':'Изображение компании','EMPTY_CART':'пуста','CATALOG_VIEW_MORE':'... Показать все','CATALOG_VIEW_LESS':'... Свернуть','JS_REQUIRED':'Заполните это поле','JS_FORMAT':'Неверный формат','JS_FILE_EXT':'Недопустимое расширение файла','JS_PASSWORD_COPY':'Пароли не совпадают','JS_PASSWORD_LENGTH':'Минимум 6 символов','JS_ERROR':'Неверно заполнено поле','JS_FILE_SIZE':'Максимальный размер 5мб','JS_FILE_BUTTON_NAME':'Выберите файл','JS_FILE_DEFAULT':'Прикрепите файл','JS_DATE':'Некорректная дата','JS_DATETIME':'Некорректная дата/время','JS_REQUIRED_LICENSES':'Согласитесь с условиями','JS_REQUIRED_OFFER':'Согласитесь с условиями','LICENSE_PROP':'Согласие на обработку персональных данных','LOGIN_LEN':'Введите минимум {0} символа','FANCY_CLOSE':'Закрыть','FANCY_NEXT':'Следующий','FANCY_PREV':'Предыдущий','TOP_AUTH_REGISTER':'Регистрация','CALLBACK':'Заказать звонок','ASK':'Задать вопрос','REVIEW':'Оставить отзыв','S_CALLBACK':'Заказать звонок','UNTIL_AKC':'До конца акции','TITLE_QUANTITY_BLOCK':'Остаток','TITLE_QUANTITY':'шт','TOTAL_SUMM_ITEM':'Общая стоимость ','SUBSCRIBE_SUCCESS':'Вы успешно подписались','RECAPTCHA_TEXT':'Подтвердите, что вы не робот','JS_RECAPTCHA_ERROR':'Пройдите проверку','COUNTDOWN_SEC':'сек','COUNTDOWN_MIN':'мин','COUNTDOWN_HOUR':'час','COUNTDOWN_DAY0':'дн','COUNTDOWN_DAY1':'дн','COUNTDOWN_DAY2':'дн','COUNTDOWN_WEAK0':'Недель','COUNTDOWN_WEAK1':'Неделя','COUNTDOWN_WEAK2':'Недели','COUNTDOWN_MONTH0':'Месяцев','COUNTDOWN_MONTH1':'Месяц','COUNTDOWN_MONTH2':'Месяца','COUNTDOWN_YEAR0':'Лет','COUNTDOWN_YEAR1':'Год','COUNTDOWN_YEAR2':'Года','COUNTDOWN_COMPACT_SEC':'с','COUNTDOWN_COMPACT_MIN':'м','COUNTDOWN_COMPACT_HOUR':'ч','COUNTDOWN_COMPACT_DAY':'д','COUNTDOWN_COMPACT_WEAK':'н','COUNTDOWN_COMPACT_MONTH':'м','COUNTDOWN_COMPACT_YEAR0':'л','COUNTDOWN_COMPACT_YEAR1':'г','CATALOG_PARTIAL_BASKET_PROPERTIES_ERROR':'Заполнены не все свойства у добавляемого товара','CATALOG_EMPTY_BASKET_PROPERTIES_ERROR':'Выберите свойства товара, добавляемые в корзину в параметрах компонента','CATALOG_ELEMENT_NOT_FOUND':'Элемент не найден','ERROR_ADD2BASKET':'Ошибка добавления товара в корзину','CATALOG_SUCCESSFUL_ADD_TO_BASKET':'Успешное добавление товара в корзину','ERROR_BASKET_TITLE':'Ошибка корзины','ERROR_BASKET_PROP_TITLE':'Выберите свойства, добавляемые в корзину','ERROR_BASKET_BUTTON':'Выбрать','BASKET_TOP':'Корзина в шапке','ERROR_ADD_DELAY_ITEM':'Ошибка отложенной корзины','VIEWED_TITLE':'Ранее вы смотрели','VIEWED_BEFORE':'Ранее вы смотрели','BEST_TITLE':'Лучшие предложения','CT_BST_SEARCH_BUTTON':'Поиск','CT_BST_SEARCH2_BUTTON':'Найти','BASKET_PRINT_BUTTON':'Распечатать','BASKET_CLEAR_ALL_BUTTON':'Очистить','BASKET_QUICK_ORDER_BUTTON':'Быстрый заказ','BASKET_CONTINUE_BUTTON':'Продолжить покупки','BASKET_ORDER_BUTTON':'Оформить заказ','SHARE_BUTTON':'Поделиться','BASKET_CHANGE_TITLE':'Ваш заказ','BASKET_CHANGE_LINK':'Изменить','MORE_INFO_SKU':'Купить','FROM':'от','BEFORE':'до','TITLE_BLOCK_VIEWED_NAME':'Ранее вы смотрели','T_BASKET':'Корзина','FILTER_EXPAND_VALUES':'Показать все','FILTER_HIDE_VALUES':'Свернуть','FULL_ORDER':'Полный заказ','CUSTOM_COLOR_CHOOSE':'Выбрать','CUSTOM_COLOR_CANCEL':'Отмена','S_MOBILE_MENU':'Меню','MAX_T_MENU_BACK':'Назад','MAX_T_MENU_CALLBACK':'Обратная связь','MAX_T_MENU_CONTACTS_TITLE':'Будьте на связи','SEARCH_TITLE':'Поиск','SOCIAL_TITLE':'Оставайтесь на связи','HEADER_SCHEDULE':'Время работы','SEO_TEXT':'SEO описание','COMPANY_IMG':'Картинка компании','COMPANY_TEXT':'Описание компании','CONFIG_SAVE_SUCCESS':'Настройки сохранены','CONFIG_SAVE_FAIL':'Ошибка сохранения настроек','ITEM_ECONOMY':'Экономия','ITEM_ARTICLE':'Артикул: ','JS_FORMAT_ORDER':'имеет неверный формат','JS_BASKET_COUNT_TITLE':'В корзине товаров на SUMM','POPUP_VIDEO':'Видео','POPUP_GIFT_TEXT':'Нашли что-то особенное? Намекните другу о подарке!','ORDER_FIO_LABEL':'Ф.И.О.','ORDER_PHONE_LABEL':'Телефон','ORDER_REGISTER_BUTTON':'Регистрация','PRICES_TYPE':'Варианты цен','FILTER_HELPER_VALUES':' знач.','SHOW_MORE_SCU_MAIN':'Еще #COUNT#','SHOW_MORE_SCU_1':'предложение','SHOW_MORE_SCU_2':'предложения','SHOW_MORE_SCU_3':'предложений'})</script>
+<script>window.lazySizesConfig = window.lazySizesConfig || {};lazySizesConfig.loadMode = 2;lazySizesConfig.expand = 100;lazySizesConfig.expFactor = 1;lazySizesConfig.hFac = 0.1;window.lazySizesConfig.lazyClass = "lazy";</script>
+<script  src="/vendor/bitrix/cache/js/s1/aspro_max/template_06cd0198cb10009eae4cf545a63e4da3/template_06cd0198cb10009eae4cf545a63e4da3_v1.js?1782209341795426"></script>
+<script  src="/vendor/bitrix/cache/js/s1/aspro_max/page_c5373189514e1483598a9576c543e755/page_c5373189514e1483598a9576c543e755_v1.js?1782284679183438"></script>
+<script  src="/vendor/bitrix/cache/js/s1/aspro_max/default_4c6d5da04e30ff4921b45219d8253a76/default_4c6d5da04e30ff4921b45219d8253a76_v1.js?178228467977858"></script>
+<script>var _ba = _ba || []; _ba.push(["aid", "ad3db4bedb44825186b8a1a5fda1b2ec"]); _ba.push(["host", "www.mirsladostey164.ru"]); _ba.push(["ad[ct][item]", "eyJwcm9kdWN0X2lkIjo3NDIsImlibG9ja19pZCI6MjYsInByb2R1Y3RfdGl0bGUiOiJcdTA0MjFcdTA0MWJcdTA0MWVcdTA0MTlcdTA0MWFcdTA0MTAgXHUwNDIxIFx1MDQxMlx1MDQxNVx1MDQyMlx1MDQyN1x1MDQxOFx1MDQxZFx1MDQxZVx1MDQxOSBcdTA0MTggXHUwNDIxXHUwNDJiXHUwNDIwXHUwNDFlXHUwNDFjIiwiY2F0ZWdvcnlfaWQiOiIxNTciLCJjYXRlZ29yeSI6eyIxNTciOiJcdTA0MTJcdTA0MmJcdTA0MWZcdTA0MTVcdTA0MjdcdTA0MWFcdTA0MTAifSwicHJpY2UiOjc1LCJjdXJyZW5jeSI6IlJVQiJ9"]);_ba.push(["ad[ct][user_id]", function(){return BX.message("USER_ID") ? BX.message("USER_ID") : 0;}]);_ba.push(["ad[ct][recommendation]", function() {var rcmId = "";var cookieValue = BX.getCookie("BITRIX_SM_RCM_PRODUCT_LOG");var productId = 742;var cItems = [];var cItem;if (cookieValue){cItems = cookieValue.split(".");}var i = cItems.length;while (i--){cItem = cItems[i].split("-");if (cItem[0] == productId){rcmId = cItem[1];break;}}return rcmId;}]);_ba.push(["ad[ct][v]", "2"]);(function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
+<script>
+		window.onload=function(){
+			window.basketJSParams = window.basketJSParams || [];
+							window.dataLayer = window.dataLayer || [];
+					}
+		BX.message({'MIN_ORDER_PRICE_TEXT':'<b>Минимальная сумма заказа #PRICE#<\/b><br/>Пожалуйста, добавьте еще товаров в корзину','LICENSES_TEXT':'Я согласен на <a href=\"/include/licenses_detail.php\" target=\"_blank\">обработку персональных данных<\/a>'});
+		arAsproOptions.PAGES.FRONT_PAGE = window[solutionName].PAGES.FRONT_PAGE = "";
+		arAsproOptions.PAGES.BASKET_PAGE = window[solutionName].PAGES.BASKET_PAGE = "";
+		arAsproOptions.PAGES.ORDER_PAGE = window[solutionName].PAGES.ORDER_PAGE = "";
+		arAsproOptions.PAGES.PERSONAL_PAGE = window[solutionName].PAGES.PERSONAL_PAGE = "";
+		arAsproOptions.PAGES.CATALOG_PAGE = window[solutionName].PAGES.CATALOG_PAGE = "1";
+		</script>
+<script>
+	var jsControl = new JCTitleSearch3({
+		//'WAIT_IMAGE': '/bitrix/themes/.default/images/wait.gif',
+		'AJAX_PAGE' : '/catalog/vypechka/742/',
+		'CONTAINER_ID': 'title-search_mega_menu',
+		'INPUT_ID': 'title-search-input_mega_menu',
+		'INPUT_ID_TMP': 'title-search-input_mega_menu',
+		'MIN_QUERY_LEN': 2
+	});
+</script>
+<script src="//yastatic.net/share2/share.js" async="async" charset="utf-8"></script>
+<script>setViewedProduct(742, {'PRODUCT_ID':'742','IBLOCK_ID':'26','NAME':'Слойка с ветчиной и сыром','DETAIL_PAGE_URL':'/catalog/vypechka/742/','PICTURE_ID':'2514','CATALOG_MEASURE_NAME':'шт','MIN_PRICE':{'PRICE_ID':'1','ID':'481','CAN_ACCESS':'Y','CAN_BUY':'Y','MIN_PRICE':'Y','CURRENCY':'RUB','VALUE_VAT':'75','VALUE_NOVAT':'75','DISCOUNT_VALUE_VAT':'75','DISCOUNT_VALUE_NOVAT':'75','ROUND_VALUE_VAT':'75','ROUND_VALUE_NOVAT':'75','VALUE':'75','UNROUND_DISCOUNT_VALUE':'75','DISCOUNT_VALUE':'75','DISCOUNT_DIFF':'0','DISCOUNT_DIFF_PERCENT':'0','VATRATE_VALUE':'0','DISCOUNT_VATRATE_VALUE':'0','ROUND_VATRATE_VALUE':'0','PRINT_VALUE_NOVAT':'75 &#8381;','PRINT_VALUE_VAT':'75 &#8381;','PRINT_VATRATE_VALUE':'0 &#8381;','PRINT_DISCOUNT_VALUE_NOVAT':'75 &#8381;','PRINT_DISCOUNT_VALUE_VAT':'75 &#8381;','PRINT_DISCOUNT_VATRATE_VALUE':'0 &#8381;','PRINT_VALUE':'75 &#8381;','PRINT_DISCOUNT_VALUE':'75 &#8381;','PRINT_DISCOUNT_DIFF':'0 &#8381;'},'CAN_BUY':'Y','IS_OFFER':'N','WITH_OFFERS':'N'});</script>
+<script>
+if(!window.voteScript) window.voteScript =
+{
+	trace_vote: function(div, flag)
+	{
+		var my_div;
+		var r = div.id.match(/^vote_(\d+)_(\d+)$/);
+		for(var i = r[2]; i >= 0; i--)
+		{
+			my_div = document.getElementById('vote_'+r[1]+'_'+i);
+			if(my_div)
+			{
+				if(flag)
+				{
+					if(!my_div.saved_class)
+						my_div.saved_className = my_div.className;
+					if(my_div.className!='item-rating filed')
+						my_div.className = 'item-rating filed';
+				}
+				else
+				{
+					if(my_div.saved_className && my_div.className != my_div.saved_className)
+						my_div.className = my_div.saved_className;
+				}
+			}
+		}
+		i = r[2]+1;
+		while(my_div = document.getElementById('vote_'+r[1]+'_'+i))
+		{
+			if(my_div.saved_className && my_div.className != my_div.saved_className)
+				my_div.className = my_div.saved_className;
+			i++;
+		}
+	},
+	do_vote: function(div, parent_id, arParams)
+	{
+		var r = div.id.match(/^vote_(\d+)_(\d+)$/);
+		var vote_id = r[1];
+		var vote_value = r[2];
+		function __handler(data)
+		{
+			var obContainer = document.getElementById(parent_id),
+				count = ++vote_value,
+				total_count_div = $('#vote_'+vote_id),
+				new_count = 0;
+			/*if (obContainer)
+			{
+				var obResult = document.createElement("DIV");
+				obResult.innerHTML = data;
+				obContainer.parentNode.replaceChild(obResult, obContainer);
+			}*/
+			new_count = Math.round((total_count_div.data('summ') + count)/(parseInt(total_count_div.find('meta[itemprop="reviewCount"]').attr('content'))+1));
+			total_count_div.find('.inner_rating > div').removeClass('filed');
+			for(var jj = 0; jj < new_count; jj++)
+			{
+				total_count_div.find('.inner_rating > div:eq('+jj+')').addClass('filed');
+			}
+			total_count_div.find('.inner_rating > div').removeAttr('onmouseover onmouseout onclick');
+		}
+		arParams['vote'] = 'Y';
+		arParams['vote_id'] = vote_id;
+		arParams['rating'] = vote_value;
+		BX.ajax.post(
+			'/bitrix/components/bitrix/iblock.vote/component.php',
+			arParams,
+			__handler
+		);
+	}
+}
+</script>
+<script>$(document).ready(function(){$('.catalog_detail input[data-sid="PRODUCT_NAME"]').attr('value', $('h1').text());});</script>
+<script>
 			BX.message({
 				QUANTITY_AVAILIABLE: 'Есть в наличии',
 				QUANTITY_NOT_AVAILIABLE: 'Нет в наличии',
@@ -1027,15 +1408,7 @@ if(!window.voteScript) window.voteScript =
 				SITE_ID: 's1'
 			})
 		</script>
-	</div>
-</div>
-
-
-	
-	
-
-<!--'start_frame_cache_OhECjo'-->	<span id="sale_gift_product_404525578" class="sale_prediction_product_detail_container"></span>
-	<script>
+<script>
 	if(typeof obMaxPredictions === 'undefined'){
 		var CMaxPredictions = function(){
 			this.arData = {};
@@ -1380,24 +1753,7 @@ if(!window.voteScript) window.voteScript =
 		obMaxPredictions.update(injectId);
 	});
 	</script>
-	<!--'end_frame_cache_OhECjo'-->		
-	
-	<div class="maxwidth-theme bottom-info-wrapper">
-		<div class="bottom-info product-view--side-left">
-																																																																															<div class="ordered-block js-store-scroll tabs-block">
-															<div class="tabs arrow_scroll">
-									<ul class="nav nav-tabs font_upper_md">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									<li class="bordered rounded3 active">
-														<a href="#reviews" data-toggle="tab">Отзывы</a></li>
-																																																																																																																																																		<li class="bordered rounded3 "><a href="#buy" data-toggle="tab">Как купить</a></li>
-																																																																																																																																																																																																																																																																																						<li class="bordered rounded3 "><a href="#payment" data-toggle="tab">Оплата</a></li>
-																																																																																																																																																																																																																																																																																						<li class="bordered rounded3 "><a href="#delivery" data-toggle="tab">Доставка</a></li>
-																																																																																																																																																																																																																																																																																																																																																																									</ul>
-								</div>
-														<div class="tab-content">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											<div class="tab-pane reviews STANDART active" id="reviews">
-																								<div id="reviews_content" class="bordered rounded3">
-																											<!--'start_frame_cache_area'-->															<script>
+<script>
 var smallEngLettersReg = new Array(/e'/g, /ch/g, /sh/g, /yo/g, /jo/g, /zh/g, /yu/g, /ju/g, /ya/g, /ja/g, /a/g, /b/g, /v/g, /g/g, /d/g, /e/g, /z/g, /i/g, /j/g, /k/g, /l/g, /m/g, /n/g, /o/g, /p/g, /r/g, /s/g, /t/g, /u/g, /f/g, /h/g, /c/g, /w/g, /~/g, /y/g, /'/g);
 var smallRusLetters = new Array("э", "ч", "ш", "ё", "ё", "ж", "ю", "ю", "я", "я", "а", "б", "в", "г", "д", "е", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "щ", "ъ", "ы", "ь");
 var capitEngLettersReg = new Array(
@@ -1423,15 +1779,6 @@ var capitEngLetters = new Array(
 	"Yu", "Ya",
 	"E", "CH", "SH", "YO", "JO", "ZH", "YU", "JU", "YA", "JA", "A", "B", "V", "G", "D", "E", "Z", "I", "J", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "F", "H", "C", "W", "~", "Y", "'");
 </script>
-		<div class="empty-message clearfix">
-			<div class="reviews-collapse reviews-minimized no-mess" style='position:relative; float:right;'>
-				<span class="reviews-collapse-link btn btn-default" id="swREPLIERZZtH"><i></i><span>Оставить отзыв</span></span>
-			</div>
-			<div class="text_before">У данного товара нет отзывов. Станьте первым, кто оставил отзыв об этом товаре!</div>
-		</div>
-<a data-name="review_anchor"></a>
-<div class="reviews-reply-form" style="display:none;">
-<form name="REPLIERZZtH" id="REPLIERZZtH" action="/catalog/" method="POST" enctype="multipart/form-data" class="reviews-form">
 <script>
 	BX.ready(function(){
 		BX.Forum.Init({
@@ -1460,263 +1807,6 @@ var capitEngLetters = new Array(
 		});
 			});
 </script>
-	<input type="hidden" name="index" value="ZZtH" />
-	<input type="hidden" name="back_page" value="/catalog/vypechka/742/" />
-	<input type="hidden" name="ELEMENT_ID" value="742" />
-	<input type="hidden" name="SECTION_ID" value="157" />
-	<input type="hidden" name="save_product_review" value="Y" />
-	<input type="hidden" name="preview_comment" value="N" />
-	<input type="hidden" name="AJAX_POST" value="Y" />
-	<input type="hidden" name="sessid" id="sessid_1" value="36e6cea28ce03522d8d8ed8d2399fda8" />		<div style="position:relative; display: block; width:100%;">
-					<div class="reviews-reply-fields">
-				<div class="reviews-reply-field-user">
-					<div class="reviews-reply-field reviews-reply-field-author"><label for="REVIEW_AUTHORZZtH">Ваше имя<span class="reviews-required-field">*</span></label>
-						<span><input class="form-control" name="REVIEW_AUTHOR" id="REVIEW_AUTHORZZtH" size="30" type="text" value="Guest" tabindex="1" /></span></div>
-										<div class="reviews-clear-float"></div>
-				</div>
-			</div>
-				<div class="reviews-reply-header"><span>Текст сообщения</span><span class="reviews-required-field">*</span></div>
-		<div class="reviews-reply-field reviews-reply-field-text">
-			<script>
-	BX.message({
-		BX_FPD_LINK_1:'Добавить сотрудников, группы или отделы',
-		BX_FPD_LINK_2:'Добавить еще',
-		TAG_ADD: 'Добавить',
-		MPF_IMAGE: 'Вставить изображение в сообщение',
-		MPF_FILE: 'Кликните, чтобы вставить файл',
-		MPF_FILE_INSERT_IN_TEXT: 'Вставить в текст',
-		MPF_FILE_IN_TEXT: 'В тексте',
-		MPF_SMILE_SET : 'наборы',
-		MPF_TEMPLATE_FOLDER: '/bitrix/components/bitrix/main.post.form/templates/.default',
-		MPF_NAME_TEMPLATE : '#NAME# #LAST_NAME#',
-		spoilerText: 'Вставить спойлер',
-		MPF_PIN_EDITOR_PANNEL: 'Закрепить панель с кнопками'
-	});
-</script><div class="feed-add-post" id="divREVIEW_TEXT" ><div class="feed-add-post-dnd">
-		<div class="feed-add-post-dnd-inner">
-			<span class="feed-add-post-dnd-icon"></span>
-			<span class="feed-add-post-dnd-text">Загрузить файл или картинку<span>или перетащите их сюда</span></span>
-		</div>
-	</div><div class="feed-add-post-dnd-notice">
-		<div class="feed-add-post-dnd-inner">
-			<span class="feed-add-post-dnd-icon"></span>
-			<span class="feed-add-post-dnd-text">Перетащите файлы</span>
-		</div>
-	</div><div class="feed-add-post-form feed-add-post-edit-form">
-				<div class="feed-add-post-text">
-			<script>
-								BX.ready(function()
-				{
-					if (!LHEPostForm.getHandler('REVIEW_TEXT'))
-					{
-						window['PlEditorREPLIERZZtH'] = new LHEPostForm(
-							'REPLIERZZtH',
-							{'LHEJsObjId':'REVIEW_TEXT','LHEJsObjName':'','arSize':'','CID':[],'parsers':['Bold','Italic','Underline','Strike','Spoiler','ForeColor','FontList','FontSizeList','Quote','Code','CreateLink','DeleteLink','Image','InputVideo','Table','Justify','InsertOrderedList','InsertUnorderedList','SmileList','MentionUser','UploadFile','RemoveFormat','Source','Translit'],'showPanelEditor':true,'pinEditorPanel':false,'formID':'REPLIERZZtH','lazyLoad':false,'ctrlEnterHandler':'','urlPreviewId':''}						);
-					}
-					else
-					{
-						BX.debug('LHEPostForm REVIEW_TEXT has already existed.');
-					}
-				});
-			</script>
-			<script>BX.message({'UrlTitle':'Ссылка','SrcTitle':'Рисунок','DialogSave':'Сохранить','DialogClose':'Закрыть','Width':'Ширина','Height':'Высота','On':'включено','Off':'выключено','SpecialChar':'Вставить спецсимвол','InsertHr':'Вставить горизонтальный разделитель','Heading':'Заголовок','Preformatted':'Преформатирован','DragFloatingToolbar':'Панель инструментов','Quote':'Оформление текста в виде цитаты','InsertCode':'Оформление текста в виде кода','InsertCut':'Оформление текста предпросмотра','Translit':'Перекодировка транслит/латиница','CutTitle':'Ограничение текста предпросмотра','ListItems':'Элементы списка','AddLI':'Добавить пункт','AddLITitle':'Добавить пункт в список (Enter)','DelListItem':'Удалить пункт из списка','ComponentsTitle':'Компоненты','RefreshTaskbar':'Обновить','ButtonSearch':'Поиск/Замена','ButtonViewMode':'Режим просмотра','StyleSelectorName':'Стиль','StyleSelectorTitle':'Стиль и форматирование','FontSelectorTitle':'Шрифт','NoFontTitle':'не указывать','FontSizeTitle':'Размер шрифта','TemplateSelectorTitle':'Шаблон сайта','Bold':'Полужирный','Italic':'Курсив','Underline':'Подчеркнутый','Strike':'Зачеркнутый','BXEdForeColor':'Цвет текста','BXEdBackColor':'Цвет фона текста','BXEdDefaultColor':'По умолчанию','BXEdColorOther':'Другой...','RemoveFormat':'Удалить форматирование','ViewWysiwyg':'Визуальный режим','ViewCode':'Режим редактирования исходного кода','ViewSplitHor':'Совмещенный режим (по горизонтали)','ViewSplitVer':'Совмещенный режим (по вертикали)','DialogCancel':'Отменить','ComponentPropsTitle':'Параметры компонента \"#COMPONENT_NAME#\"','ComponentPropsWait':'Подождите, идет подгрузка параметров','NodeSelectBody':'Выделить все','NodeRemoveBodyContent':'Очистить содержимое','NodeSelect':'Выделить','NodeRemove':'Удалить','NodeProps':'Свойства','StyleNormal':'Обычный текст','StyleParagraph':'Абзац (тег P)','StyleDiv':'Блок (тег DIV)','StyleH1':'Заголовок 1','StyleH2':'Заголовок 2','StyleH3':'Заголовок 3','StyleH4':'Заголовок 4','StyleH5':'Заголовок 5','StyleH6':'Заголовок 6','HeadingMore':'Еще заголовки','Outdent':'Уменьшить отступ','Indent':'Увеличить отступ','OrderedList':'Нумерованный список','UnorderedList':'Список с маркерами','BXEdTable':'Таблица','BXEdInsertTable':'Вставить таблицу...','BXEdInsertTableTitle':'Расширенный диалог вставки таблицы','InsertLink':'Ссылка','EditLink':'Редактировать ссылку','BXEdAnchor':'Якорь','BXEdAnchorName':'Имя якоря','BXEdEditAnchor':'Редактировать якорь','BXEdAnchorInsertTitle':'Нажмите Enter, чтобы вставить','RemoveLink':'Удалить ссылку','InsertImage':'Изображение','Undo':'Отменить действие','Redo':'Повторить действие','BXEdSettings':'Настройки','BXEdFullscreen':'Развернуть на весь экран','BXEdFullscreenBack':'Развернуть на весь экран (Esc для возврата)','BXEdDefaultPropDialog':'Свойства: #NODES_LIST#','BXEdMore':'Еще...','BXEdTextAlign':'Выровнять...','AlignLeft':'Выровнять по левому краю','AlignCenter':'Выровнять по центру','AlignRight':'Выровнять по правому краю','AlignJustify':'Выровнять по ширине','ContMenuDefProps':'Свойства','ContMenuLinkEdit':'Редактировать ссылку','ContMenuLinkDel':'Убрать ссылку','ContMenuImgEdit':'Редактировать изображение','ContMenuImgDel':'Удалить изображение','ContMenuCleanDiv':'Убрать блок','ContMenuCleanDiv_Title':'Элемент будет заменен своим содержимым (дочерними элементами)','BXEdContMenuPhpCode':'Изменить код PHP','BXEdContMenuJavascript':'Изменить код Javascript','BXEdContMenuHtmlComment':'Изменить HTML-комментарий','BXEdContMenuIframe':'Изменить фрейм \"IFRAME\"','BXEdContMenuStyle':'Изменить стили \"STYLE\"','BXEdContMenuComponent':'Параметры компонента','BXEdContMenuComponentRemove':'Удалить компонент','BXEdPhpCode':'Код PHP','BXEdPhpCodeProtected':'Код PHP (Скрытый правами доступа)','BXEdHtmlComment':'HTML-комментарий','BXEdIframe':'Фрейм \"IFRAME\"','BXEdStyle':'Блок стилей \"STYLE\"','BXEdLinkType':'Вид ссылки','BXEdLinkTypeInner':'на документ на сервере','BXEdLinkTypeOuter':'на другой сайт','BXEdLinkTypeAnchor':'внутри данного документа','BXEdLinkTypeEmail':'Электронный адрес (e-mail)','BXEdLinkText':'Текст','BXEdLinkInnerHtml':'Содержимое ссылки','BXEdLinkTextPh':'Текст ссылки','BXEdLinkHref':'Адрес','BXEdLinkHrefPh':'Адрес ссылки','BXEdLinkHrefExtPh':'Адрес сайта','BXEdLinkHrefAnch':'Закладка (якорь)','BXEdLinkHrefEmail':'e-mail','BXEdLinkAdditionalTitle':'Дополнительные параметры','BXEdLinkStat':'Фиксировать переход в статистике','BXEdLinkTarget':'Открыть ссылку в','BXEdLinkTargetDef':'- не указывать - ','BXEdLinkTargetBlank':'новом окне (_blank)','BXEdLinkTargetParent':'родительском окне (_parent)','BXEdLinkTargetSelf':'этом окне (_self)','BXEdLinkTargetTop':'самом наружном (_top)','BXEdLinkTitle':'Всплывающая подсказка','BXEdLinkId':'Идентификатор (id)','BXEdLinkRel':'Атрибут Rel','BXEdLinkNoindex':'Не учитывать ссылку поисковиками (nofollow, noindex)','BXEdCssClass':'CSS класс','BXEdLinkStatEv1':'Событие \"Event1\"','BXEdLinkStatEv2':'Событие \"Event2\"','BXEdLinkStatEv3':'Событие \"Event3\"','BXEdLinkSelectAnchor':'Выберите якорь','BXEdImgSrc':'Источник изображения','BXEdImgAlign':'Выравнивание','BXEdImgSize':'Размер','BXEdImgTitle':'Заголовок','BXEdImgAlt':'Атрибут Alt','BXEdImgWidth':'Ширина','BXEdImgHeight':'Высота','BXEdImgLinkOnImage':'Ссылка на изображении','BXEdImgAlignNone':'не указывать','BXEdImgAlignTop':'по верхней границе','BXEdImgAlignRight':'справа','BXEdImgAlignBottom':'по нижней границе','BXEdImgAlignLeft':'слева','BXEdImgAlignMiddle':'по центру','BXEdImgNoSize':'Не указывать размер','BXEdLoremIpsum':'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices mi sit amet vestibulum mollis. Nunc nibh enim, convallis vel tortor eget, interdum dapibus dui. Pellentesque rhoncus tortor vel leo dictum tincidunt. Curabitur nec sollicitudin lacus, nec hendrerit urna. Morbi adipiscing, risus id congue eleifend, nibh velit fringilla ligula, a rutrum ante ligula vel erat. Mauris justo odio, porttitor in facilisis sit amet, rhoncus in mauris. In ante velit, posuere at dui ut, ultricies aliquet dui. Integer est odio, fermentum at erat in, tristique luctus turpis. Proin a urna pulvinar, consequat quam sed, facilisis ligula. Mauris sed justo mauris. Cras tincidunt tincidunt laoreet. Curabitur eget ante tortor. Cras malesuada accumsan metus eget pretium. Aliquam nec interdum nibh. Sed at tristique massa, quis luctus erat. Nulla imperdiet hendrerit lectus nec blandit.','BXEdInsert':'Вставить','BXEdTableRows':'Строки','BXEdTableCols':'Столбцы','BXEdTableHeads':'Заголовки','BXEdThNone':'без заголовков','BXEdThTop':'Верхняя строка','BXEdThLeft':'Левая колонка','BXEdThTopLeft':'Вверху и слева','BXEdThTopLeftTitle':'Верхняя строка и левая колонка','BXEdTableWidth':'Ширина','BXEdTableHeight':'Высота','BXEdTableBorder':'Граница','BXEdTableCellSpacing':'Внешний отступ ячеек','BXEdTableCellPadding':'Внутренний отступ ячеек','BXEdTableAlign':'Выравнивание','BXEdTableAlignLeft':'по левому краю','BXEdTableAlignCenter':'по центру','BXEdTableAlignRight':'по правому краю','BXEdTableCaption':'Название таблицы','BXEdTableId':'Идентификатор (id)','BXEdTableInsCell':'Ячейка','BXEdTableInsRow':'Строка','BXEdTableInsColumn':'Столбец','BXEdTableInsCellBefore':'Вставить ячейку слева','BXEdTableInsCellAfter':'Вставить ячейку справа','BXEdTableInsRowUpper':'Вставить строку выше','BXEdTableInsRowLower':'Вставить строку ниже','BXEdTableInsColLeft':'Вставить столбец слева','BXEdTableInsColRight':'Вставить столбец справа','BXEdTableTableCellProps':'Свойства ячейки','BXEdTableTableProps':'Свойства таблицы','BXEdTableInsertMenu':'Вставить','BXEdTableRemoveMenu':'Удалить','BXEdTableMergeMenu':'Объединить','BXEdTableSplitMenu':'Разделить ячейку','BXEdTableSplitCellHor':'Разделить по горизонтали','BXEdTableSplitCellVer':'Разделить по вертикали','BXEdTableDellCell':'Удалить ячейку','BXEdTableDellSelectedCells':'Удалить выделенные ячейки','BXEdTableDelRow':'Удалить строку','BXEdTableDelCol':'Удалить столбец','BXEdTableDeleteTable':'Удалить таблицу','BXEdTableMergeSelectedCells':'Объединить выделенные ячейки','BXEdTableMergeRight':'Объединить с правой','BXEdTableMergeBottom':'Объединить с нижней','BXEdTableMergeColCells':'Объединить все ячейки столбца','BXEdTableMergeRowCells':'Объединить все ячейки строки','BXEdTableMergeError':'Объединение ячеек не может быть выполнено','BXEdTableModel':'Макет','BXEdCSSStyle':'CSS стиль','BXEdSpecialchar':'Спецсимвол','BXEdSpecialcharMore':'Другой спецсимвол...','BXEdSpecialcharMoreTitle':'Вставить другой спецсимвол','BXEdImgSrcRequired':'Путь к картинке, обязательное поле','BXEdExitConfirm':'Внимание! Все несохраненные данные будут потеряны. Вы действительно хотите покинуть страницу?','BXEdPrintBreak':'Вставить разрыв страницы для печати','BXEdPageBreak':'Вставить разделитель страниц <BREAK />','BXEdPageBreakSur':'<BREAK />','BXEdPageBreakSurTitle':'Разделитель страниц <BREAK />','BXEdInsertHr':'Вставить горизонтальный разделитель','BXEdPrintBreakTitle':'Разрыв страницы для печати','BXEdPrintBreakName':'Разрыв для печати','BXEdComplexComp':'Комплексный компонент','BXEdSnipName':'Название','BXEdSnipCode':'Код сниппета','BXEdSnipNamePlaceHolder':'Название сниппета, обязательное поле','BXEdSnipCodePlaceHolder':'HTML-код сниппета, обязательное поле','BXEdSnipSiteTemplate':'Шаблон сайта','BXEdSnipFileName':'Имя файла','BXEdSnipCategory':'Категория','BXEdSnippetsTitle':'Сниппеты','BXEdAddSnippet':'Добавить сниппет','BXEdEditSnippetDialogTitle':'Параметры сниппета','BXEdManageCategories':'Настроить категории','BXEdManageCategoriesTitle':'Категории сниппетов','BXEdSnipBaseSettings':'Основные параметры','BXEdSnipAddSettings':'Дополнительно','BXEdSnipDescription':'Дополнительная информация','BXEdSnipDescriptionPlaceholder':'Всплывающая подсказка, отображается при наведении мышки на сниппет','BXEdSnipCatEdit':'Переименовать категорию','BXEdSnipCatDelete':'Удалить категорию со всем содержимым','BXEdSnipCatAdd':'Добавить категорию','BXEdSnipCatAddName':'Название','BXEdSnipParCategory':'Родительская категория','BXEdSnipCatAddBut':'Создать','BXEdDropCatConfirm':'Категория со всем содержимым будет удалена безвозвратно. Вы действительно хотите удалить категорию?','BXEdSnipEdit':'Изменить сниппет','BXEdSnipRemove':'Удалить сниппет','BXEdSnipRemoveConfirm':'Вы действительно хотите удалить сниппет?','BXEdCompSearchPlaceHolder':'Поиск компонентов...','BXEdSnipSearchPlaceHolder':'Поиск сниппетов...','BXEdSnipNoSnippets':'Нет сниппетов','BXEdInsertVideo':'Вставить видео','BXEdVideoSource':'Источник видео','BXEdVideoSourcePlaceholder':'Ссылка на видеоролик YouTube, Rutube, Vimeo','BXEdVideoTitle':'Видеоролик','BXEdVideoTitleProvider':'Видеоролик c #PROVIDER_NAME#','BXEdVideoSize':'Размер видео','BXEdVideoSizeAuto':'Авто','BXEdVideoSizeCustom':'Другой размер','BXEdVideoPreview':'Предпросмотр','BXEdVideoInfoTitle':'Название видео','BXEdVideoProps':'Свойства видео','BXEdVideoDel':'Удалить видео','BXEdObjectEmbed':'Медиа контент','BXEdContMenuObject':'Изменить медиа контент','BXEdSpellcheck':'Проверка орфографии','BXEdSpellcheckSkip':'Пропустить','BXEdSpellcheckSkipAll':'Пропустить все','BXEdSpellcheckReplace':'Заменить','BXEdSpellcheckReplaceAll':'Заменить все','BXEdSpellcheckAddCustom':'Добавить в словарь','BXEdSpellErrorLabel':'Слово не найдено','BXEdSpellSuggestion':'Варианты замены','BXEdSpellWait':'Идет проверка, подождите...','BXEdSpellNoErrors':'Не найдено ошибок','BXEdInvalidBrowser':'Вы используете устаревший браузер. Некоторые функции интерфейса могут работать  некорректно.','BXEdNoPspellWarning':'Расширение Pspell не установлено, обратитесь за помощью к администратору','BXEdCode':'Оформление текста в виде кода','BXEdQuote':'Оформление текста в виде цитаты','BXEdSmile':'Смайлы','BXEdSub':'Нижний индекс','BXEdSup':'Верхний индекс','BXEdAddListItem':'Добавить пункт','BXEdSettingsCleanSpans':'Очищать теги &lt;span&gt; без атрибутов','BXEdBbCode':'Режим BB-Code','BXEdHtmlCode':'HTML-режим','BXEdDelFromText':'Удалить из текста','BXEdColorpickerDialog':'Цвет фона и текста','BXEdBgColor':'Цвет фона','BXEdMetaClass_quote':'Цитата','BXEdMetaClass_text':'Выделенный текст','BXEdMetaClass_block':'Текстовый блок','BXEdMetaClass_block_icon':'Текстовый блок с иконкой','BXEdMetaClass_list':'Список','BXEdViewSettings':'Внешний вид','BXEdShowSnippets':'Отображать панель сниппетов','BXEdRefreshNotice':'Изменения вступят в силу после обновления страницы','BXEdPasteSettings':'Очистка содержимого при вставке','BXEdPasteSetColors':'Очищать стили цвета текста и фона','BXEdPasteSetBgBorders':'Очищать стили границ и фона элементов','BXEdPasteSetDecor':'Очищать стили текста (полужирный, курсив, подчеркнутый)','BXEdPasteSetTableDimen':'Очищать ширину и высоту у таблиц и их ячеек','BXEdPasteDefault':'По умолчанию','BXEdPasteText':'Очищенный текст','BXEdPasteFormattedText':'Форматированный текст','BXEdDefaultPropDialogTextNode':'Текст'});</script>		<script>
-			(function(window) {
-				if (!window.BXHtmlEditor)
-				{
-					var BXHtmlEditor = {
-						editors: {},
-						configs: {},
-						dialogs: {},
-						Controls: {},
-						SaveConfig: function(config)
-						{
-							BX.ready(function()
-								{
-									if (config && config.id)
-									{
-										BXHtmlEditor.configs[config.id] = config;
-									}
-								}
-							);
-						},
-						Show: function(config, id)
-						{
-							BX.ready(function()
-								{
-									if ((!config || typeof config != 'object') && id && BXHtmlEditor.configs[id])
-									{
-										config = BXHtmlEditor.configs[id];
-									}
-									if (config && typeof config == 'object')
-									{
-										if (!BXHtmlEditor.editors[config.id] || !BXHtmlEditor.editors[config.id].Check())
-										{
-											BXHtmlEditor.editors[config.id] = new window.BXEditor(config);
-										}
-										else
-										{
-											BXHtmlEditor.editors[config.id].CheckAndReInit();
-										}
-									}
-								}
-							);
-						},
-						Hide: function(id)
-						{
-							if (BXHtmlEditor.editors[id])
-							{
-								BXHtmlEditor.editors[config.id].Hide();
-							}
-						},
-						Get: function(id)
-						{
-							return BXHtmlEditor.editors[id] || false;
-						},
-						OnBeforeUnload: function()
-						{
-							for (var id in BXHtmlEditor.editors)
-							{
-								if (BXHtmlEditor.editors.hasOwnProperty(id) &&
-									BXHtmlEditor.editors[id].config.askBeforeUnloadPage === true &&
-									BXHtmlEditor.editors[id].IsShown() &&
-									BXHtmlEditor.editors[id].IsContentChanged() &&
-									!BXHtmlEditor.editors[id].IsSubmited() &&
-									BXHtmlEditor.editors[id].beforeUnloadHandlerAllowed !== false)
-								{
-									if(typeof(BX.desktopUtils) != 'undefined' && typeof(BX.desktopUtils.isChangedLocationToBx) == 'function' && BX.desktopUtils.isChangedLocationToBx())
-									{
-										return;
-									}
-									return BXHtmlEditor.editors[id].config.beforeUnloadMessage || BX.message('BXEdExitConfirm');
-								}
-							}
-						},
-						ReplaceNewLines : function(content)
-						{
-							content = content.replace(/<[^<>]*br>\n/ig, '#BX_BR#');
-							var contentTmp;
-							while (true)
-							{
-								contentTmp = content.replace(/([\s|\S]+)\n([\s|\S]+)/gi, function (s, s1, s2)
-									{
-										if (s1.match(/>\s*$/) || s2.match(/^\s*</))
-											return s;
-										return s1 + '#BX_BR#' + s2;
-									}
-								);
-								if (contentTmp == content)
-								{
-									break;
-								}
-								else
-								{
-									content = contentTmp;
-								}
-							}
-							content = content.replace(/#BX_BR#/ig, "<br>\n");
-							return content;
-						},
-						ReplaceNewLinesBack: function(content)
-						{
-							content = content.replace(/<[^<>]*br>\n/ig, '#BX_BR#');
-							var contentTmp;
-							while (true)
-							{
-								contentTmp = content.replace(/([\s|\S]+)#BX_BR#([\s|\S]+)/gi, function (s, s1, s2)
-									{
-										if (s1.match(/>\s*$/) || s2.match(/^\s*</))
-											return s;
-										return s1 + '\n' + s2;
-									}
-								);
-								if (contentTmp == content)
-								{
-									break;
-								}
-								else
-								{
-									content = contentTmp;
-								}
-							}
-							content = content.replace(/#BX_BR#/ig, "<br>\n");
-							return content;
-						}
-					};
-					window.BXHtmlEditor = BXHtmlEditor;
-					window.onbeforeunload = BXHtmlEditor.OnBeforeUnload;
-				}
-				BX.onCustomEvent(window, "OnBXHtmlEditorInit");
-				top.BXHtmlEditorAjaxResponse = {};
-			})(window);
-		</script>		<div class="bx-html-editor" id="bx-html-editor-REVIEW_TEXT" style="width:100%; height:200px; ">
-			<div class="bxhtmled-toolbar-cnt" id="bx-html-editor-tlbr-cnt-REVIEW_TEXT">
-				<div class="bxhtmled-toolbar" id="bx-html-editor-tlbr-REVIEW_TEXT"></div>
-			</div>
-			<div class="bxhtmled-search-cnt" id="bx-html-editor-search-cnt-REVIEW_TEXT" style="display: none;"></div>
-			<div class="bxhtmled-area-cnt" id="bx-html-editor-area-cnt-REVIEW_TEXT">
-				<div class="bxhtmled-iframe-cnt" id="bx-html-editor-iframe-cnt-REVIEW_TEXT"></div>
-				<div class="bxhtmled-textarea-cnt" id="bx-html-editor-ta-cnt-REVIEW_TEXT"></div>
-				<div class="bxhtmled-resizer-overlay" id="bx-html-editor-res-over-REVIEW_TEXT"></div>
-				<div id="bx-html-editor-split-resizer-REVIEW_TEXT"></div>
-			</div>
-			<div class="bxhtmled-nav-cnt" id="bx-html-editor-nav-cnt-REVIEW_TEXT" style="display: none;"></div>
-			<div class="bxhtmled-taskbar-cnt bxhtmled-taskbar-hidden" id="bx-html-editor-tskbr-cnt-REVIEW_TEXT">
-				<div class="bxhtmled-taskbar-top-cnt" id="bx-html-editor-tskbr-top-REVIEW_TEXT"></div>
-				<div class="bxhtmled-taskbar-resizer" id="bx-html-editor-tskbr-res-REVIEW_TEXT">
-					<div class="bxhtmled-right-side-split-border">
-						<div data-bx-tsk-split-but="Y" class="bxhtmled-right-side-split-btn"></div>
-					</div>
-				</div>
-				<div class="bxhtmled-taskbar-search-nothing" id="bxhed-tskbr-search-nothing-REVIEW_TEXT">Ничего не найдено</div>
-				<div class="bxhtmled-taskbar-search-cont" id="bxhed-tskbr-search-cnt-REVIEW_TEXT" data-bx-type="taskbar_search">
-					<div class="bxhtmled-search-alignment" id="bxhed-tskbr-search-ali-REVIEW_TEXT">
-						<input type="text" class="bxhtmled-search-inp" id="bxhed-tskbr-search-inp-REVIEW_TEXT" placeholder="Поиск..."/>
-					</div>
-					<div class="bxhtmled-search-cancel" data-bx-type="taskbar_search_cancel" title="Отменить фильтрацию"></div>
-				</div>
-			</div>
-			<div id="bx-html-editor-file-dialogs-REVIEW_TEXT" style="display: none;"></div>
-		</div>
-		<script>
-			var config = {"id":"REVIEW_TEXT","inputName":"REVIEW_TEXT","width":"100%","height":200,"allowPhp":false,"limitPhpAccess":false,"templateId":"aspro_max","componentFilter":null,"placeholder":"Text here...","actionUrl":"\/bitrix\/tools\/html_editor_action.php","cssIframePath":"\/bitrix\/js\/fileman\/html_editor\/iframe-style.css?1611311402","bodyClass":"","bodyId":"","spellcheck_path":"\/bitrix\/js\/fileman\/html_editor\/html-spell.js?v=1611311402","usePspell":"N","useCustomSpell":"Y","bbCode":true,"askBeforeUnloadPage":true,"settingsKey":"user_settings_1_BbCode","showComponents":true,"showSnippets":true,"view":"wysiwyg","splitVertical":false,"splitRatio":1,"taskbarShown":false,"taskbarWidth":250,"lastSpecialchars":false,"cleanEmptySpans":true,"pasteSetColors":true,"pasteSetBorders":true,"pasteSetDecor":true,"pasteClearTableDimen":true,"linkDialogType":"internal","lazyLoad":false,"siteId":"s1","uploadImagesFromClipboard":false,"showTaskbars":false,"showNodeNavi":false,"controlsMap":[{"group":"bui","id":"Bold","compact":true,"sort":80},{"group":"bui","id":"Italic","compact":true,"sort":90},{"group":"bui","id":"Underline","compact":true,"sort":100},{"group":"bui","id":"Strikeout","compact":true,"sort":110},{"group":"bui","id":"Color","compact":true,"sort":130},{"group":"bui","id":"FontSelector","compact":false,"sort":135},{"group":"bui","id":"FontSize","compact":false,"sort":140},{"group":"bui","id":"RemoveFormat","compact":true,"sort":120},{"separator":true,"compact":false,"sort":150},{"group":"insert","id":"Quote","compact":true,"sort":270,"wrap":"bx-b-quote-REPLIERZZtH"},{"group":"insert","id":"Code","compact":true,"sort":260},{"group":"insert","id":"InsertLink","compact":true,"sort":210,"wrap":"bx-b-link-REPLIERZZtH"},{"group":"insert","id":"InsertImage","compact":false,"sort":220},{"group":"insert","id":"InsertVideo","compact":true,"sort":230,"wrap":"bx-b-video-REPLIERZZtH"},{"group":"insert","id":"InsertTable","compact":false,"sort":250},{"group":"insert","id":"Smile","compact":false,"sort":280},{"separator":true,"compact":false,"sort":290},{"group":"format","id":"AlignList","compact":false,"sort":190},{"group":"format","id":"OrderedList","compact":true,"sort":150},{"group":"format","id":"UnorderedList","compact":true,"sort":160},{"separator":true,"compact":false,"sort":200},{"id":"Fullscreen","compact":false,"sort":310},{"id":"BbCode","compact":true,"sort":340},{"id":"More","compact":true,"sort":400}],"smiles":[{"set_id":2,"code":":)","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_smile.png","name":"\u0421 \u0443\u043b\u044b\u0431\u043a\u043e\u0439","width":20,"height":20},{"set_id":2,"code":";)","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_wink.png","name":"\u0428\u0443\u0442\u043b\u0438\u0432\u043e","width":20,"height":20},{"set_id":2,"code":":D","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_biggrin.png","name":"\u0428\u0438\u0440\u043e\u043a\u0430\u044f \u0443\u043b\u044b\u0431\u043a\u0430","width":20,"height":20},{"set_id":2,"code":"8-)","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_cool.png","name":"\u0417\u0434\u043e\u0440\u043e\u0432\u043e","width":20,"height":20},{"set_id":2,"code":":facepalm:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_facepalm.png","name":"\u0420\u0430\u0437\u043e\u0447\u0430\u0440\u043e\u0432\u0430\u043d\u0438\u0435","width":20,"height":20},{"set_id":2,"code":":{}","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_kiss.png","name":"\u041f\u043e\u0446\u0435\u043b\u0443\u0439","width":20,"height":20},{"set_id":2,"code":":(","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_sad.png","name":"\u041f\u0435\u0447\u0430\u043b\u044c\u043d\u043e","width":20,"height":20},{"set_id":2,"code":":|","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_neutral.png","name":"\u0421\u043a\u0435\u043f\u0442\u0438\u0447\u0435\u0441\u043a\u0438","width":20,"height":20},{"set_id":2,"code":":oops:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_redface.png","name":"\u0421\u043c\u0443\u0449\u0435\u043d\u043d\u044b\u0439","width":20,"height":20},{"set_id":2,"code":":cry:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_cry.png","name":"\u041e\u0447\u0435\u043d\u044c \u0433\u0440\u0443\u0441\u0442\u043d\u043e","width":20,"height":20},{"set_id":2,"code":":evil:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_evil.png","name":"\u0421\u043e \u0437\u043b\u043e\u0441\u0442\u044c\u044e","width":20,"height":20},{"set_id":2,"code":":o","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_eek.png","name":"\u0423\u0434\u0438\u0432\u043b\u0435\u043d\u043d\u043e","width":20,"height":20},{"set_id":2,"code":":\/","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_confuse.png","name":"\u0421\u043c\u0443\u0449\u0435\u043d\u043d\u043e","width":20,"height":20},{"set_id":2,"code":":idea:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_idea.png","name":"\u0418\u0434\u0435\u044f","width":20,"height":20},{"set_id":2,"code":":?:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_question.png","name":"\u0412\u043e\u043f\u0440\u043e\u0441","width":20,"height":20},{"set_id":2,"code":":!:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_exclaim.png","name":"\u0412\u043e\u0441\u043a\u043b\u0438\u0446\u0430\u043d\u0438\u0435","width":20,"height":20},{"set_id":2,"code":":like:","path":"\/bitrix\/images\/main\/smiles\/2\/bx_smile_like.png","name":"\u041d\u0440\u0430\u0432\u0438\u0442\u0441\u044f","width":20,"height":20}],"smileSets":[{"ID":2,"PARENT_ID":1,"NAME":"\u041e\u0441\u043d\u043e\u0432\u043d\u043e\u0439 \u043d\u0430\u0431\u043e\u0440","TYPE":"G"}],"iframeCss":"body{font-family: \u0022Helvetica Neue\u0022,Helvetica,Arial,sans-serif; font-size: 13px;}.bx-spoiler {border:1px solid #C0C0C0;background-color:#fff4ca;padding: 4px 4px 4px 24px;color:#373737;border-radius:2px;min-height:1em;margin: 0;}","setFocusAfterShow":false,"autoResize":true,"autoResizeOffset":40,"minBodyWidth":350,"normalBodyWidth":555};
-			config.content = '';
-			config.templates = [];
-			config.templateParams = [];
-			config.snippets = [];
-			config.components = null;
-						window.BXHtmlEditor.Show(config);
-					</script>			<div style="display:none;"><input type="text" tabindex="10" onFocus="LHEPostForm.getEditor('REVIEW_TEXT').Focus()" name="hidden_focus" /></div>
-		</div>
-		<div class="feed-add-post-form-but-wrap" id="post-buttons-bottom"></div>
-	</div>
-		<div class="feed-add-post-buttons" id="lhe_buttons_REPLIERZZtH">
-		<button class="ui-btn ui-btn-sm ui-btn-primary" id="lhe_button_submit_REPLIERZZtH">Отправить</button>
-		<button class="ui-btn ui-btn-sm ui-btn-link" id="lhe_button_cancel_REPLIERZZtH">Отменить</button>
-	</div>
-</div>		</div>
-					<div class="reviews-reply-field reviews-reply-field-upload">
-									<div class="reviews-upload-info" style="display:none;" id="upload_files_info_ZZtH">
-												<span>Размер файла не должен превышать 5 МБ.</span>
-					</div>
-						<div class="reviews-upload-file" style="display:none;" id="upload_files_0_ZZtH">
-							<input name="FILE_NEW_0" type="file" size="30" />
-						</div>
-										<a class="forum-upload-file-attach" href="javascript:void(0);" onclick="AttachFile('0', '1', 'ZZtH', this); return false;">
-						<span>Загрузить изображение</span>
-					</a>
-							</div>
-				<div class="reviews-reply-field reviews-reply-field-settings filter">
-							<div class="reviews-reply-field-setting">
-					<input type="checkbox" name="REVIEW_USE_SMILES" id="REVIEW_USE_SMILESZZtH" value="Y" checked="checked" tabindex="2" /><label for="REVIEW_USE_SMILESZZtH"><span class="bx_filter_input_checkbox">Разрешить смайлики в этом сообщении</span></label></div>
-					</div>
-				<div class="ms-consent"><label><input type="checkbox" name="ms_consent" required> Согласен на публикацию моего имени и текста отзыва на сайте и на их обработку в соответствии с <a href="/company/agreement/" target="_blank">политикой обработки персональных данных</a></label></div>
-<div class="reviews-reply-buttons">
-			<button name="send_button" type="submit" class="btn btn-default" tabindex="3" onclick="this.form.preview_comment.value = 'N';" >Отправить</button>
-			<button name="view_button" type="submit" class="btn btn-default white" tabindex="4" onclick="this.form.preview_comment.value = 'VIEW';" >Просмотреть</button>
-		</div>
-	</div>
-</form>
-</div>
 <script>
 	BX.ready(function(){
 		BX.message({
@@ -1740,43 +1830,8 @@ var capitEngLetters = new Array(
 			e.preventDefault();
 		})
 			});
-</script>														<!--'end_frame_cache_area'-->																									</div>
-											</div>
-																																																																																																						<div class="tab-pane buy " id="buy"><p>Добавьте изделия в корзину и нажмите «Перейти к оформлению». Укажите имя, телефон, способ получения — самовывоз из магазина или доставку по Саратову — и удобное время.</p><p>Менеджер перезвонит, проверит наличие, согласует время и итоговую стоимость. Заказ считается принятым после этого звонка. Изделия, которые продаются на вес, взвешиваются при сборке заказа, поэтому итоговая сумма может немного отличаться.</p></div>
-																																																																																																																																																																																																																																				<div class="tab-pane payment " id="payment"><p>Оплатить заказ можно:</p><ul><li>наличными — при самовывозе или курьеру при доставке;</li><li>банковской картой МИР;</li><li>безналичным переводом — для организаций.</li></ul><p>Подробнее — на странице «<a href="/help/payment/">Условия оплаты</a>».</p></div>
-																																																																																																																																																																																																																																				<div class="tab-pane delivery " id="delivery">
-																										<p><b>Доставляем только по Саратову.</b><br>
-	 Доставка осуществляется в течение 1–2 дней после оформления заказа, с 8:00 до 15:00.
-<p>Приём заявок:
-<ul>
-<li>ежедневно — с 9:00 до 20:00 ч.</li>
-<li>по субботам — с 9:00 до 12:00 ч.</li>
-</ul>
-<p>Минимальная сумма заказа — 800 рублей.
-<p>Заказ считается принятым после звонка менеджера: он проверит наличие, согласует время и итоговую стоимость.
-<p>Способы оплаты — на странице «<a href="/help/payment/">Условия оплаты</a>».
-<p>В течение 2 часов после оформления заказа оператор согласует точное время доставки. Если этого не произошло, просим Вас связаться с нами по телефонам 8 (8452) 47-35-69, 21-28-45.
-<p>В радиусе 3 километров от центра города заказ доставляется бесплатно.<br> 
-Далее в пределах города Саратова доставка оценивается в 150 рублей.<br>
- При сумме заказа от 3000 рублей доставка бесплатная.
-<p>Всегда можно забрать свой заказ самостоятельно в наших фирменных магазинах, находящихся по указанным адресам:
-<ul>
-<li>ул. Чернышевского, д.144, магазин-кулинария</li>
-<li>ул. Советская, д. 30, магазин-кулинария</li>
-<li>ул. Б. Казачья, д.17/39 (угол ул. М. Горького), магазин-кулинария</li>
-<li>ул. Бахметьевская, д.49, ТЦ «Арига»</li>
-<li>ул. Тархова, д. 29А/1 ТЦ «Солнечный»</li>
-<li>ул. Одесская, д. 20А, магазин-кулинария</li>
-<li>проспект Строителей, д. 6Б, магазин-кулинария</li>
-</ul>
-
-												</div>
-																																																																																																																																																																																																																																																																																																							</div>
-						</div>
-																																																																																				<div class="gifts">
-<!--'start_frame_cache_6zLbbW'-->
-	<div id="sale_gift_product_1511141339" class="sale_gift_product_container"></div>
-	<script>
+</script>
+<script>
 		BX.ready(function(){
 			var currentProductId = 742;
 			var giftAjaxData = {
@@ -1802,12 +1857,6 @@ var capitEngLetters = new Array(
 			});
 		});
 	</script>
-	<!--'end_frame_cache_6zLbbW'--><!--'start_frame_cache_KSBlai'--><div class="ordered-block gifts 22">
-	<div class="bx_item_list_you_looked_horizontal detail">
-		<div id="sale_gift_main_products_459637531" class="bx_sale_gift_main_products common_product wrapper_block">
-					</div>
-	</div>
-</div>
 <script>
 BX(function () {
 	BX.Sale['GiftMainProductsClass_dHPVd2'] = new BX.Sale.GiftMainProductsClass({
@@ -1827,15 +1876,7 @@ BX(function () {
 });
 BX.message({});
 </script>
-<!--'end_frame_cache_KSBlai'--></div>
-																																				<div class="ordered-block goods">
-							
-													</div>
-																	</div>
-		<div class="left_block sticky-sidebar-custom product-side">
-														<div class="bigdata-wrapper"><!--'start_frame_cache_es4Hjc'-->
-	<div id="bigdata_recommended_products_Zz2YMH"></div>
-	<script>
+<script>
 		BX.ready(function(){
 			bx_rcm_get_from_cloud(
 				'bigdata_recommended_products_Zz2YMH',
@@ -1849,26 +1890,13 @@ BX.message({});
 			);
 		});
 	</script>
-	<!--'end_frame_cache_es4Hjc'--><script>
+<script>
 	touchItemBlock('.catalog_item a');
 		</script>
-</div>
-										<div class="side-block side-block--feedback rounded2 bordered box-shadow colored_theme_hover_bg-block">
-					<div class="side-block__top text-center">
-						<i class="svg  svg-inline-icon colored" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="58" height="56" viewBox="0 0 58 56"><path  data-name="Rounded Rectangle 704 copy 6" class="cls-1" d="M1592,2335v32h-53.23c-3.39-.04-4.76-1.41-4.77-4.75V2335l1-2,9.56-6.8,1.56,1.25-9.59,6.89,26.47,18.72,26.47-18.72-9.59-6.89,1.56-1.25,9.56,6.8Zm-2,1.41c-0.81.58-1.84,1.33-3,2.16h0c-6.09,4.39-16.19,11.62-20.96,14.89a7.139,7.139,0,0,0-.64.5,3.413,3.413,0,0,1-2.4,1.04,3.259,3.259,0,0,1-2.38-1.03,5.842,5.842,0,0,0-.58-0.44c-4.71-3.27-14.9-10.57-21.04-14.97-1.16-.83-2.2-1.58-3-2.15V2362a3.075,3.075,0,0,0,.21,1.1c0.8-.68,1.79-1.53,2.9-2.48,3.2-2.75,7.47-6.4,11.45-9.82l1.76,1.24-11.61,9.93-3.11,2.67a3,3,0,0,0,1.4.36h48a3,3,0,0,0,1.4-.36l-3.11-2.67-11.61-9.93,1.76-1.24c3.98,3.42,8.25,7.07,11.45,9.82h0c1.11,0.95,2.1,1.8,2.89,2.48a2.879,2.879,0,0,0,.22-1.1v-25.59Zm-2.77,30.59H1592v-4.77C1591.99,2365.58,1590.63,2366.96,1587.23,2367ZM1565,2340a2,2,0,1,1-2-2A2.006,2.006,0,0,1,1565,2340Zm3.28-14.31c-3.51,3.51-4.19,3.1-4.28,7.31a1,1,0,0,1-2,0c0.01-4.41,1.2-5.46,4.76-8.68,1.54-1.46,3.23-3.28,3.25-5.45,0.03-4.16-3.42-5.9-6.64-5.92-4.07-.03-6.28,1.85-7.07,5.15a6.009,6.009,0,0,0-.3,1.9h0a1,1,0,0,1-1.99.03h-0.02a7.332,7.332,0,0,1,.61-3.04c1.24-3.67,4.34-5.98,8.89-5.98,4.65,0,8.5,2.89,8.5,7.73C1571.99,2321.88,1570.42,2323.68,1568.28,2325.69Z" transform="translate(-1534 -2311)"/><path class="op-cls" d="M1539,2338l23.94,16,24.06-16v24h-48v-24Z" transform="translate(-1534 -2311)"/></svg></i>						<div class="side-block__text side-block__text--small">
-							<p class="introtext">Нужна консультация?</p>
-Наши специалисты ответят на любой интересующий вопрос						</div>
-					</div>
-					<div class="side-block__bottom side-block__bottom--last">
-						<span class="btn btn-lg btn-transparent round-ignore btn-wide font_upper animate-load colored_theme_hover_bg-el has-ripple" data-event="jqm" data-param-form_id="ASK" data-name="ask">Задать вопрос</span>
-					</div>
-				</div>
-					</div>
-	</div>
-		<script>
+<script>
 			BX.Currency.setCurrencies([{'CURRENCY':'RUB','FORMAT':{'FORMAT_STRING':'# &#8381;','DEC_POINT':'.','THOUSANDS_SEP':'&nbsp;','DECIMALS':2,'THOUSANDS_VARIANT':'B','HIDE_ZERO':'Y'}}]);
 		</script>
-	<script>
+<script>
 	viewItemCounter('742','BASE');
 	var viewedCounter = {
 		path: '/bitrix/components/bitrix/catalog.element/ajax.php',
@@ -1889,7 +1917,7 @@ BX.message({});
 		})
 	);
 </script>
-<!--'start_frame_cache_des'--><script>
+<script>
 	insertElementStoreBlock = function(html){
 		if(
 			typeof map === 'object' &&
@@ -1997,9 +2025,7 @@ BX.message({});
 		})
 	);
 </script>
-<!--'end_frame_cache_des'--></div>		</div>
-		
-				<script>
+<script>
 			if(!$('.js_seo_title').length)
 				$('<span class="js_seo_title" style="display:none;"></span>').appendTo($('body'));
 			BX.addCustomEvent(window, "onAjaxSuccess", function(e){
@@ -2029,228 +2055,6 @@ BX.message({});
 				$('.catalog_detail input[data-sid="PRODUCT_NAME"]').attr('value', $('h1').html());
 			});
 		</script>
-					</div>
-		</div>																																			</div> 																				</div> 																</div> 																</div> 									</div> 							</div> 					</div>
-		<footer id="footer">
-							<!--'start_frame_cache_viewed-block'-->	<!--'end_frame_cache_viewed-block'--><div class="footer-v1">
-	<div class="footer-inner">
-		<div class="footer_top">
-			<div class="maxwidth-theme">
-				<div class="row">
-					<div class="col-md-3 col-sm-3">
-						<div class="fourth_bottom_menu">
-									<div class="bottom-menu second">
-		<div class="items">
-														<div class="item active">
-					<div class="title">
-													<a href="/catalog/">Каталог</a>
-											</div>
-				</div>
-																					<div class="item">
-					<div class="title">
-													<a href="/sale/">Акции</a>
-											</div>
-				</div>
-																					
-																					<div class="item">
-					<div class="title">
-													<a href="/contacts/">Контакты</a>
-											</div>
-				</div>
-															</div>
-	</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-3">
-						<div class="first_bottom_menu">
-									<div class="bottom-menu">
-		<div class="items">
-																									 				<div class="item 0 childs   accordion-close " data-parent="#bottom_company" data-target="#bottom_company" >
-					<div class="title">
-													<a href="/company/">Компания</a>
-											</div>
-											<div class="compact_arrow">
-	                    	<i class="svg  svg-inline-down colored_theme_hover_bg-el" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5"><path  data-name="Rounded Rectangle 890 copy 2" class="cls-1" d="M517.778,610.8a0.721,0.721,0,0,1-1.016,0L514,607.769l-2.79,3.028a0.715,0.715,0,1,1-1.01-1.011l3.273-3.552c0.009-.009.012-0.021,0.021-0.03a0.723,0.723,0,0,1,1.017,0,0.022,0.022,0,0,1,0,0l3.265,3.577A0.712,0.712,0,0,1,517.778,610.8Z" transform="translate(-510 -606)"/></svg></i>						</div>
-									</div>
-									<div id="bottom_company" class="wrap panel-collapse wrap_compact_mobile">
-																											<div class="item">
-								<div class="title">
-																			<a href="/company/">О компании</a>
-																	</div>
-							</div>
-																											<div class="item">
-								<div class="title">
-																			<a href="/company/reviews/">Отзывы</a>
-																	</div>
-							</div>
-																											<div class="item">
-								<div class="title">
-																			<a href="/contacts/">Контакты</a>
-																	</div>
-							</div>
-																											<div class="item">
-								<div class="title">
-																			<a href="/company/vacancy/">Вакансии</a>
-																	</div>
-							</div>
-																											
-																											<div class="item">
-								<div class="title">
-																			<a href="/company/docs/">Документы</a>
-																	</div>
-							</div>
-											</div>
-													</div>
-	</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-3">
-						<div class="second_bottom_menu">
-									<div class="bottom-menu">
-		<div class="items">
-																									 				<div class="item 0 childs   accordion-close " data-parent="#bottom_info" data-target="#bottom_info" >
-					<div class="title">
-													<a href="/info/">Информация</a>
-											</div>
-											<div class="compact_arrow">
-	                    	<i class="svg  svg-inline-down colored_theme_hover_bg-el" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="8" height="5" viewBox="0 0 8 5"><path  data-name="Rounded Rectangle 890 copy 2" class="cls-1" d="M517.778,610.8a0.721,0.721,0,0,1-1.016,0L514,607.769l-2.79,3.028a0.715,0.715,0,1,1-1.01-1.011l3.273-3.552c0.009-.009.012-0.021,0.021-0.03a0.723,0.723,0,0,1,1.017,0,0.022,0.022,0,0,1,0,0l3.265,3.577A0.712,0.712,0,0,1,517.778,610.8Z" transform="translate(-510 -606)"/></svg></i>						</div>
-									</div>
-									<div id="bottom_info" class="wrap panel-collapse wrap_compact_mobile">
-																											<div class="item">
-								<div class="title">
-																			<a href="/help/payment/">Условия оплаты</a>
-																	</div>
-							</div>
-																											<div class="item">
-								<div class="title">
-																			<a href="/help/delivery/">Условия доставки</a>
-																	</div>
-							</div>
-																											
-																											<div class="item">
-								<div class="title">
-																			<a href="/help/payment/#requisites">Реквизиты</a>
-																	</div>
-							</div>
-																											<div class="item">
-								<div class="title">
-																			<a href="/company/agreement/">Политика</a>
-																	</div>
-							</div>
-											</div>
-													</div>
-	</div>
-						</div>
-					</div>
-					
-					<div class="col-md-3 col-sm-12 contact-block">
-						<div class="info">
-							<div class="row">
-																	<div class="col-md-12 col-sm-12">
-										
-									</div>
-																<div class="col-md-12 col-sm-12">
-									<div class="phone blocks">
-										<div class="inline-block">
-																			<!-- noindex -->
-			<div class="phone with_dropdown white sm">
-									<div class="wrap">
-						<div>
-									<i class="svg inline  svg-inline-phone" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="5" height="11" viewBox="0 0 5 11"><path  data-name="Shape 51 copy 13" class="cls-1" d="M402.738,141a18.086,18.086,0,0,0,1.136,1.727,0.474,0.474,0,0,1-.144.735l-0.3.257a1,1,0,0,1-.805.279,4.641,4.641,0,0,1-1.491-.232,4.228,4.228,0,0,1-1.9-3.1,9.614,9.614,0,0,1,.025-4.3,4.335,4.335,0,0,1,1.934-3.118,4.707,4.707,0,0,1,1.493-.244,0.974,0.974,0,0,1,.8.272l0.3,0.255a0.481,0.481,0,0,1,.113.739c-0.454.677-.788,1.159-1.132,1.731a0.43,0.43,0,0,1-.557.181l-0.468-.061a0.553,0.553,0,0,0-.7.309,6.205,6.205,0,0,0-.395,2.079,6.128,6.128,0,0,0,.372,2.076,0.541,0.541,0,0,0,.7.3l0.468-.063a0.432,0.432,0,0,1,.555.175h0Z" transform="translate(-399 -133)"/></svg></i><a rel="nofollow" href="javascript:;">+7 (8452) 47-35-69</a>
-										</div>
-					</div>
-								<div class="dropdown ">
-					<div class="wrap srollbar-custom scroll-deferred">
-																				<div class="more_phone"><a rel="nofollow" class="no-decript" href="tel:+78452473569">+7 (8452) 47-35-69</a></div>
-																				<div class="more_phone"><a rel="nofollow" class="no-decript" href="tel:+78452212845">+7 (8452) 21-28-45</a></div>
-											</div>
-				</div>
-				<i class="svg inline  svg-inline-down" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="5" height="3" viewBox="0 0 5 3"><path class="cls-1" d="M250,80h5l-2.5,3Z" transform="translate(-250 -80)"/></svg></i>			</div>
-			<!-- /noindex -->
-														</div>
-																					<div class="inline-block callback_wrap">
-												<span class="callback-block animate-load colored" data-event="jqm" data-param-form_id="CALLBACK" data-name="callback">Заказать звонок</span>
-											</div>
-																			</div>
-								</div>
-								<div class="col-md-12 col-sm-12">
-		
-							<div class="email blocks">
-					<i class="svg inline  svg-inline-email" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9"><path  data-name="Rectangle 583 copy 16" class="cls-1" d="M367,142h-7a2,2,0,0,1-2-2v-5a2,2,0,0,1,2-2h7a2,2,0,0,1,2,2v5A2,2,0,0,1,367,142Zm0-2v-3.039L364,139h-1l-3-2.036V140h7Zm-6.634-5,3.145,2.079L366.634,135h-6.268Z" transform="translate(-358 -133)"/></svg></i>					<a href="mailto:mirslad49@mail.ru">mirslad49@mail.ru</a>				</div>
-		
-									</div>
-								<div class="col-md-12 col-sm-12">
-		
-							<div class="address blocks">
-					<i class="svg inline  svg-inline-addr" aria-hidden="true" ><svg xmlns="http://www.w3.org/2000/svg" width="9" height="12" viewBox="0 0 9 12"><path class="cls-1" d="M959.135,82.315l0.015,0.028L955.5,87l-3.679-4.717,0.008-.013a4.658,4.658,0,0,1-.83-2.655,4.5,4.5,0,1,1,9,0A4.658,4.658,0,0,1,959.135,82.315ZM955.5,77a2.5,2.5,0,0,0-2.5,2.5,2.467,2.467,0,0,0,.326,1.212l-0.014.022,2.181,3.336,2.034-3.117c0.033-.046.063-0.094,0.093-0.142l0.066-.1-0.007-.009a2.468,2.468,0,0,0,.32-1.2A2.5,2.5,0,0,0,955.5,77Z" transform="translate(-951 -75)"/></svg></i>					г. Саратов, ул. Бахметьевская 49				</div>
-		
-									</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer_middle">
-			<div class="maxwidth-theme">
-				<div class="row">
-					<div class="col-md-12 col-sm-12">
-						<div class="social-block">
-							<div class="social-icons">
-		<!-- noindex -->
-	<ul>
-																																	</ul>
-	<!-- /noindex -->
-</div>						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer_bottom">
-			<div class="maxwidth-theme">
-				<div class="row">
-					<div class="link_block col-md-6 col-sm-6 pull-right">
-						<div class="pull-right">
-							<div class="pays">
-								<i title="Mir" class="mir"></i>
-<a href="https://jrabbit.ru" target="blank" class="font_xs">Разработка сайта JRabbit</a>							</div>
-						</div>
-						<div class="pull-right">
-													</div>
-					</div>
-					<div class="copy-block col-md-6 col-sm-6 pull-left">
-						<div class="copy font_xs pull-left">
-							2026 &copy; ООО «Мир Сладостей», ИНН 6454104523, ОГРН 1156451019867, г. Саратов, ул. Бахметьевская, 49						</div>
-						<div id="bx-composite-banner" class="pull-left"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- marketnig popups -->
-<!--'start_frame_cache_8gJilP'-->	<!--'end_frame_cache_8gJilP'--><!-- /marketnig popups -->		</footer>
-<div class="bx_areas">
-	</div>
-	<div class="inline-search-block fixed with-close big">
-		<div class="maxwidth-theme">
-			<div class="col-md-12">
-				<div class="search-wrapper">
-					<div id="title-search">
-						<form action="/catalog/" class="search">
-							<div class="search-input-div">
-								<input class="search-input" id="title-search-input" type="text" name="q" value="" placeholder="Поиск" size="20" maxlength="50" autocomplete="off" />
-							</div>
-							<div class="search-button-div">
-								<button class="btn btn-search btn-default btn-lg " type="submit" name="s" value="Найти">Найти</button>
-								<span class="close-block inline-search-hide"><span class="svg svg-close close-icons"></span></span>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 <script>
 	var jsControl = new JCTitleSearch2({
 		//'WAIT_IMAGE': '/bitrix/themes/.default/images/wait.gif',
@@ -2260,51 +2064,23 @@ BX.message({});
 		'INPUT_ID_TMP': 'title-search-input',
 		'MIN_QUERY_LEN': 2
 	});
-</script><!--'start_frame_cache_basketitems-block'-->
-								<script>
+</script>
+<script>
 									function jsPriceFormat(_number){
 						BX.Currency.setCurrencyFormat('RUB', {'CURRENCY':'RUB','LID':'ru','FORMAT_STRING':'# &#8381;','FULL_NAME':'Российский рубль','DEC_POINT':'.','THOUSANDS_SEP':'&nbsp;','DECIMALS':'2','THOUSANDS_VARIANT':'B','HIDE_ZERO':'Y','CREATED_BY':'','DATE_CREATE':'2021-01-22 13:30:02','MODIFIED_BY':'1','TIMESTAMP_X':'2021-01-22 14:04:12'});
 						return BX.Currency.currencyFormat(_number, 'RUB', true);
 					}
 							</script>
-				<script>
+<script>
 			var arBasketAspro = {'BASKET':[],'DELAY':[],'SUBSCRIBE':[],'NOT_AVAILABLE':[],'COMPARE':[]};
 			$(document).ready(function(){
 				setBasketStatusBtn();
 			});
 		</script>
-		<!--'end_frame_cache_basketitems-block'-->							<div class="basket_wrapp  fly2 basket_fill_COLOR">
-				<div class="header-cart fly" id="basket_line">
-							<div class="basket_fly">
-		<div class="wrap_cont">
-			<div class="opener">
-				<div title="Корзина пуста" data-type="AnDelCanBuy" class="colored_theme_hover_text basket_count small clicked empty">
-					<a href="/basket/"></a>
-					<div class="wraps_icon_block basket">
-						<i class="svg  svg-inline-down" aria-hidden="true" ><svg class="" width="19" height="16" viewBox="0 0 19 16"><path data-name="Ellipse 2 copy 9" class="cls-1" d="M956.047,952.005l-0.939,1.009-11.394-.008-0.952-1-0.953-6h-2.857a0.862,0.862,0,0,1-.952-1,1.025,1.025,0,0,1,1.164-1h2.327c0.3,0,.6.006,0.6,0.006a1.208,1.208,0,0,1,1.336.918L943.817,947h12.23L957,948v1Zm-11.916-3,0.349,2h10.007l0.593-2Zm1.863,5a3,3,0,1,1-3,3A3,3,0,0,1,945.994,954.005ZM946,958a1,1,0,1,0-1-1A1,1,0,0,0,946,958Zm7.011-4a3,3,0,1,1-3,3A3,3,0,0,1,953.011,954.005ZM953,958a1,1,0,1,0-1-1A1,1,0,0,0,953,958Z" transform="translate(-938 -944)"></path></svg></i>						<div class="count empty_items">
-							<span class="colored_theme_bg">
-								<span class="items">
-									<span>0</span>
-								</span>
-							</span>
-						</div>
-					</div>
-				</div>
-				
-												</div>
-			<div class="basket_sort">
-				<span class="basket_title">Корзина</span>
-			</div>
-		</div>
-	</div>
-	<!--'start_frame_cache_header-cart'-->							<script>
+<script>
 				arBasketAsproCounters = {'READY':{'COUNT':'0','TITLE':'','HREF':{'TITLE':'Страница корзины','TYPE':'text','DEFAULT':'#SITE_DIR#basket/','THEME':'N','VALUE':'/basket/','TYPE_BLOCK':'URL_PAGES'}},'DELAY':{'COUNT':'0','TITLE':'','HREF':{'TITLE':'Страница корзины','TYPE':'text','DEFAULT':'#SITE_DIR#basket/','THEME':'N','VALUE':'/basket/','TYPE_BLOCK':'URL_PAGES'}},'COMPARE':{'COUNT':'0','TITLE':'Сравнение товаров','HREF':{'TITLE':'Страница сравнения товаров','TYPE':'text','DEFAULT':'#SITE_DIR#catalog/compare.php','THEME':'N','VALUE':'/catalog/compare.php','TYPE_BLOCK':'URL_PAGES'}},'DEFAULT':true};
 				SetActualBasketFlyCounters();
 			</script>
-			<!--'end_frame_cache_header-cart'-->				</div>
-			</div>
-				<!--'start_frame_cache_bottom-panel-block'-->				<!--'end_frame_cache_bottom-panel-block'-->	<div id="popup_iframe_wrapper"></div>
-	
 <script>
 (function () {
   var ids = ["747", "748", "749", "751", "752", "777", "736", "737", "738", "739", "741", "772", "773", "774", "775", "776", "742", "743", "744", "745", "746", "780", "756", "757", "758", "778", "753", "764", "765", "766", "768", "769", "770", "771", "783", "760", "761", "781", "782", "762", "763", "801", "802", "803"];
@@ -2345,23 +2121,12 @@ BX.message({});
     });
 })();
 </script>
-
-<style>
-li[data-code="NEW"], li[data-code="RECOMMEND"],
-.NEW_slides, .RECOMMEND_slides { display: none !important; }
-.basket_hover_block.loading_block,
-.loading_block_content { background-image: none !important; }
-.wrap_basket .basket_hover_block { display: none !important; }
-.filter-panel.sort_header, .filter-panel-wrapper, #mobilefilter { display: none !important; }
-.CATALOG_TAB .tabs_wrapper { display: none !important; }
-</style>
-
-<script src="/skin/cart-data.js?v=2c843941"></script>
-<script src="/skin/cart.js?v=2c843941"></script>
-<script src="/skin/nav.js?v=2c843941"></script>
-<script src="/skin/search.js?v=2c843941"></script>
-<script src="/skin/demo.js?v=2c843941"></script>
-<script src="/skin/motion.js?v=2c843941"></script>
-<script src="/skin/map.js?v=2c843941"></script>
+<script src="/skin/cart-data.js?v=e35f3668"></script>
+<script src="/skin/cart.js?v=e35f3668"></script>
+<script src="/skin/nav.js?v=e35f3668"></script>
+<script src="/skin/search.js?v=e35f3668"></script>
+<script src="/skin/demo.js?v=e35f3668"></script>
+<script src="/skin/motion.js?v=e35f3668"></script>
+<script src="/skin/map.js?v=e35f3668"></script>
 </body>
 </html>

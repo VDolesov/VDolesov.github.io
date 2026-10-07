@@ -32,5 +32,36 @@
     }, 500);
   }
 
-  if (document.readyState !== "loading") start(); else document.addEventListener("DOMContentLoaded", start);
+  function lazyApi() {
+    var url = window.MS_YMAPS_URL;
+    var nodes = document.querySelectorAll(".bx-yandex-map");
+    if (!url || window.ymaps || !nodes.length) return;
+    var loaded = false;
+    var load = function () {
+      if (loaded) return;
+      loaded = true;
+      var script = document.createElement("script");
+      script.src = url;
+      document.head.appendChild(script);
+      start();
+    };
+    if (!("IntersectionObserver" in window)) return load();
+    var observer = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          observer.disconnect();
+          load();
+          return;
+        }
+      }
+    }, { rootMargin: "600px 0px" });
+    Array.prototype.forEach.call(nodes, function (node) { observer.observe(node); });
+  }
+
+  function init() {
+    lazyApi();
+    start();
+  }
+
+  if (document.readyState !== "loading") init(); else document.addEventListener("DOMContentLoaded", init);
 })();
