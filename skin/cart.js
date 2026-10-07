@@ -2,6 +2,7 @@
   "use strict";
 
   var KEY = "ms_cart";
+  var SEQ_KEY = "ms_cart_seq";
   var ORDER_KEY = "ms_orders";
   var PRODUCTS = window.MS_PRODUCTS || {};
   var PHOTOS = window.MS_PHOTOS || [];
@@ -11,6 +12,13 @@
   var FREE_DELIVERY = 3000;
   var DELIVERY_FEE = 150;
   var MIN_ORDER = 800;
+  var ICON = {"close": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><path data-name=\"Rounded Rectangle 114 copy 3\" class=\"cccls-1\" d=\"M334.411,138l6.3,6.3a1,1,0,0,1,0,1.414,0.992,0.992,0,0,1-1.408,0l-6.3-6.306-6.3,6.306a1,1,0,0,1-1.409-1.414l6.3-6.3-6.293-6.3a1,1,0,0,1,1.409-1.414l6.3,6.3,6.3-6.3A1,1,0,0,1,340.7,131.7Z\" transform=\"translate(-325 -130)\"></path></svg>", "remove": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "closes": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "price": "<svg id=\"Group_278_copy\" data-name=\"Group 278 copy\" xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"38\" viewBox=\"0 0 38 38\"><path id=\"Ellipse_305_copy_2\" data-name=\"Ellipse 305 copy 2\" class=\"clswm-1\" d=\"M1851,561a19,19,0,1,1,19-19A19,19,0,0,1,1851,561Zm0-36a17,17,0,1,0,17,17A17,17,0,0,0,1851,525Zm3.97,10.375-0.03.266c-0.01.062-.02,0.127-0.03,0.188l-0.94,7.515h0a2.988,2.988,0,0,1-5.94,0H1848l-0.91-7.525c-0.01-.041-0.01-0.086-0.02-0.128l-0.04-.316h0.01c-0.01-.125-0.04-0.246-0.04-0.375a4,4,0,0,1,8,0c0,0.129-.03.25-0.04,0.375h0.01ZM1851,533a2,2,0,0,0-2,2,1.723,1.723,0,0,0,.06.456L1850,543a1,1,0,0,0,2,0l0.94-7.544A1.723,1.723,0,0,0,1853,535,2,2,0,0,0,1851,533Zm0,14a3,3,0,1,1-3,3A3,3,0,0,1,1851,547Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,1851,551Z\" transform=\"translate(-1832 -523)\"></path> <path class=\"clswm-2 op-cls\" d=\"M1853,543l-1,1h-2l-1-1-1-8,1-2,1-1h2l1,1,1,2Zm-1,5,1,1v2l-1,1h-2l-1-1v-2l1-1h2Z\" transform=\"translate(-1832 -523)\"></path></svg>"};
+  var CASH_TEXT = "Оплата производится наличными деньгами, в момент получения заказа. Подтверждением вашей оплаты является фискальный кассовый чек, вручаемый во время получения и оплаты заказа.";
+  var REGION = "Саратов, Саратов, Саратовская область, Поволжье, Россия";
+  var FINE = "Наличие, итоговую стоимость и время подтверждает менеджер.";
+  var DONE_TITLE = "Заказ сформирован";
+  var CASH_LOGO = "/vendor/upload/sale/paysystem/logotip/ae5/ae562c5ef5496bc1fcf9d687ebd6fc69.png";
+  var PAY_LOGO = { "1": CASH_LOGO, "8": CASH_LOGO, "7": "/vendor/upload/sale/paysystem/logotip/277/277bac3584decb235d4c33e57d86e33d.png" };
 
   function load() {
     var raw = {};
@@ -24,8 +32,19 @@
     return cart;
   }
   function save(cart) {
-    try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch (e) {}
+    try {
+      localStorage.setItem(KEY, JSON.stringify(cart));
+      localStorage.setItem(SEQ_KEY, JSON.stringify(sequence().filter(function (id) { return cart[id]; })));
+    } catch (e) {}
     badge();
+  }
+  function sequence() {
+    try { return JSON.parse(localStorage.getItem(SEQ_KEY) || "[]") || []; } catch (e) { return []; }
+  }
+  function ordered(cart) {
+    var seq = sequence().filter(function (id) { return cart[id]; });
+    Object.keys(cart).forEach(function (id) { if (seq.indexOf(id) === -1) seq.push(id); });
+    return seq;
   }
   function count(cart) {
     var n = 0; for (var id in cart) n += cart[id];
@@ -37,7 +56,7 @@
     return s;
   }
   function money(n) {
-    return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
+    return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
   }
   function plural(n, one, few, many) {
     var m = n % 100;
@@ -52,13 +71,17 @@
       ? ORIGIN + "/assets/products/" + id + "-" + (window.MS_SERIES || "v9") + "-640.webp"
       : (PRODUCTS[id] && PRODUCTS[id].image) || "";
   }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
 
   function badge() {
     var n = count(load());
     var nodes = document.querySelectorAll(".basket_count, .wrap_basket .count, .header-cart .count, .fixed-basket .count");
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
-
       var target = el.querySelector(".items span, .items, .count span:last-child, .count") || el;
       while (target.children.length === 1) target = target.children[0];
       if (target.children.length === 0) target.textContent = String(n);
@@ -77,7 +100,7 @@
   function productIdFrom(el) {
     var holder = el.closest("[data-item]");
     if (holder && holder.getAttribute("data-item")) return holder.getAttribute("data-item");
-    var card = el.closest(".catalog_item, .item_block, .product-container, .detail, .basket_fly, .fixed-basket");
+    var card = el.closest(".catalog_item, .item_block, .product-container, .detail, .fixed-basket");
     var link = card && card.querySelector('a[href*="/catalog/"]');
     var m = link && link.getAttribute("href").match(/\/catalog\/[a-z_]+\/(\d+)\//);
     return m ? m[1] : null;
@@ -97,29 +120,6 @@
       else { btn.classList.add("ms-added"); var s = btn.querySelector("span"); if (s) s.textContent = "В корзине"; }
     }
   }
-  function toast(id, qty) {
-    var p = PRODUCTS[id] || { name: "Товар" };
-    var old = document.querySelector(".ms-toast");
-    if (old) old.parentNode.removeChild(old);
-    var box = document.createElement("div");
-    box.className = "ms-toast";
-    box.innerHTML = '<div class="ms-toast__text"><b>' + esc(p.name) + '</b> — в корзине' +
-      (qty > 1 ? ", " + qty + " шт." : "") + '</div>' +
-      '<a class="ms-toast__link" href="/basket/">Перейти в корзину</a>';
-    document.body.appendChild(box);
-    setTimeout(function () { box.classList.add("is-on"); }, 20);
-    setTimeout(function () { box.classList.remove("is-on"); }, 4200);
-    setTimeout(function () { if (box.parentNode) box.parentNode.removeChild(box); }, 4800);
-  }
-  function add(id, qty) {
-    if (!PRODUCTS[id]) return false;
-    var cart = load();
-    cart[id] = (cart[id] || 0) + qty;
-    save(cart);
-    markInCart(id);
-    return true;
-  }
-
   function unmarkInCart(id) {
     var buttons = document.querySelectorAll('.to-cart[data-item="' + id + '"]');
     for (var i = 0; i < buttons.length; i++) {
@@ -129,440 +129,529 @@
       else { btn.classList.remove("ms-added"); var s = btn.querySelector("span"); if (s) s.textContent = "В корзину"; }
     }
   }
-
-  function onBasketPage() {
-    return /^\/basket\/?$/.test(location.pathname);
-  }
-  function sectionName(slug) {
-    var list = window.MS_SECTIONS || [];
-    for (var i = 0; i < list.length; i++) if (list[i].slug === slug) return list[i].name;
-    return "";
-  }
-
-  var drawer = null, lastFocus = null, closing = null;
-
-  function drawerRow(id, qty) {
-    var p = PRODUCTS[id], img = photo(id);
-    var meta = [sectionName(p.section), money(p.price) + " / " + esc(p.unit || "шт")].filter(Boolean).join(" · ");
-    return '<div class="ms-drawer__item" data-id="' + id + '">' +
-      '<a class="ms-drawer__pic" href="' + esc(p.url) + '">' + (img ? '<img src="' + esc(img) + '" alt="" loading="lazy">' : "") + '</a>' +
-      '<div class="ms-drawer__body">' +
-        '<a class="ms-drawer__name" href="' + esc(p.url) + '">' + esc(p.name) + '</a>' +
-        '<div class="ms-drawer__meta">' + meta + '</div>' +
-      '</div>' +
-      '<button type="button" class="ms-drawer__remove" data-dact="remove" aria-label="Убрать">&times;</button>' +
-      '<div class="ms-drawer__row">' +
-        '<div class="ms-drawer__qty">' +
-          '<button type="button" data-dact="minus" aria-label="Меньше">&minus;</button>' +
-          '<span>' + qty + '</span>' +
-          '<button type="button" data-dact="plus" aria-label="Больше">+</button>' +
-        '</div>' +
-        '<div class="ms-drawer__sum">' + money(p.price * qty) + '</div>' +
-      '</div>' +
-    '</div>';
-  }
-
-  function renderDrawer() {
-    var content = drawer.querySelector(".ms-drawer__content");
-    var cart = load(), ids = Object.keys(cart);
-    if (!ids.length) {
-      content.innerHTML = '<div class="ms-drawer__empty">' +
-        '<p>В корзине пока пусто. Загляните в каталог — торты, пироги и выпечка ждут.</p>' +
-        '<a class="btn btn-default btn-lg ms-drawer__go" href="/catalog/">Перейти в каталог</a></div>';
-      return;
+  function add(id, qty) {
+    if (!PRODUCTS[id]) return false;
+    var cart = load();
+    if (!cart[id]) {
+      var seq = sequence().filter(function (x) { return x !== id; });
+      seq.push(id);
+      try { localStorage.setItem(SEQ_KEY, JSON.stringify(seq)); } catch (e) {}
     }
-    var sum = total(cart);
-    var scroll = content.querySelector(".ms-drawer__list");
-    var top = scroll ? scroll.scrollTop : 0;
-    content.innerHTML = shipBlock(sum) +
-      '<div class="ms-drawer__list">' + ids.map(function (id) { return drawerRow(id, cart[id]); }).join("") + '</div>' +
-      '<div class="ms-drawer__foot">' +
-        '<div class="ms-drawer__total"><span>Товары</span><b>' + money(sum) + '</b></div>' +
-        '<div class="ms-drawer__note">' + (sum >= FREE_DELIVERY
-          ? "Доставка по Саратову: бесплатно · самовывоз бесплатно"
-          : "Доставка по Саратову: до " + money(DELIVERY_FEE) + ", в радиусе 3 км от центра — бесплатно · самовывоз бесплатно") + '</div>' +
-        checkoutButton(sum, "ms-drawer__go", "/basket/#order", "Перейти к оформлению") +
-        '<div class="ms-drawer__fine">Наличие, итоговую стоимость и время подтверждает менеджер.</div>' +
-      '</div>';
-    var list = content.querySelector(".ms-drawer__list");
-    if (list) list.scrollTop = top;
+    cart[id] = (cart[id] || 0) + qty;
+    save(cart);
+    markInCart(id);
+    return true;
   }
-
-  function buildDrawer() {
-    drawer = document.createElement("div");
-    drawer.className = "ms-drawer";
-    drawer.hidden = true;
-    drawer.innerHTML = '<div class="ms-drawer__shade" data-dclose></div>' +
-      '<aside class="ms-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="ms-drawer-title" tabindex="-1">' +
-        '<div class="ms-drawer__head">' +
-          '<div><div class="ms-drawer__eyebrow">Ваш заказ</div><div class="ms-drawer__title" id="ms-drawer-title">Корзина</div></div>' +
-          '<button type="button" class="ms-drawer__close" data-dclose aria-label="Закрыть корзину">&times;</button>' +
-        '</div>' +
-        '<div class="ms-drawer__content"></div>' +
-      '</aside>';
-    document.body.appendChild(drawer);
-    drawer.addEventListener("click", function (e) {
-      if (e.target.closest("[data-dclose]")) { closeDrawer(); return; }
-      var b = e.target.closest("[data-dact]");
-      if (!b) return;
-      var id = b.closest(".ms-drawer__item").getAttribute("data-id");
-      var c = load(), act = b.getAttribute("data-dact");
-      if (act === "plus") c[id] += 1;
-      if (act === "minus") c[id] = Math.max(1, c[id] - 1);
-      if (act === "remove") { delete c[id]; unmarkInCart(id); }
-      save(c);
-      renderDrawer();
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && drawer && !drawer.hidden) closeDrawer();
-    });
+  function change(id, act, value) {
+    var c = load();
+    if (!c[id]) return;
+    if (act === "plus") c[id] += 1;
+    if (act === "minus") c[id] = Math.max(1, c[id] - 1);
+    if (act === "qty") { var v = parseInt(value, 10); c[id] = v > 0 ? v : 1; }
+    if (act === "remove") { delete c[id]; unmarkInCart(id); }
+    save(c);
   }
-
-  function openDrawer() {
-    if (!drawer) buildDrawer();
-    clearTimeout(closing);
-    renderDrawer();
-    lastFocus = document.activeElement;
-    drawer.hidden = false;
-    document.documentElement.classList.add("ms-lock");
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { drawer.classList.add("is-open"); });
-    });
-    var close = drawer.querySelector(".ms-drawer__close");
-    if (close) close.focus({ preventScroll: true });
-  }
-
-  function closeDrawer() {
-    if (!drawer || drawer.hidden) return;
-    drawer.classList.remove("is-open");
-    document.documentElement.classList.remove("ms-lock");
-    closing = setTimeout(function () { drawer.hidden = true; }, 380);
-    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
-  }
-
-  function goCart() {
-    if (onBasketPage()) {
-      var root = document.querySelector(".ms-basket-root");
-      if (root) window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" });
-      return;
-    }
-    openDrawer();
-  }
-
-  function isCartLink(a) {
-    if (!a || !a.getAttribute) return false;
-    var href = a.getAttribute("href") || "";
-    return /^(https?:\/\/[^/]+)?\/basket\/?$/.test(href);
-  }
-
-  document.addEventListener("click", function (e) {
-    var side = e.target.closest ? e.target.closest(".basket_wrapp") : null;
-    if (side) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      goCart();
-      return;
-    }
-    var link = e.target.closest ? e.target.closest("a") : null;
-    if (isCartLink(link) && !e.target.closest(".ms-drawer")) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      goCart();
-      return;
-    }
-    var t = e.target.closest ? e.target.closest(".to-cart, .in-cart, .one_click, .basket_fly .basket-link, .basket-link") : null;
-    if (!t) return;
-
-    if (t.classList.contains("to-cart")) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      var id = productIdFrom(t);
-      if (!id) return;
-      var qty = quantityFor(t, id);
-      if (add(id, qty)) toast(id, qty);
-      return;
-    }
-    if (t.classList.contains("one_click")) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      var oid = productIdFrom(t);
-      if (oid) { add(oid, quantityFor(t, oid)); location.href = "/basket/#order"; }
-      return;
-    }
-    if (t.classList.contains("in-cart") || t.classList.contains("basket-link")) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      goCart();
-    }
-  }, true);
-
-  function esc(s) {
-    return String(s).replace(/[&<>"]/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-    });
-  }
-
-  function itemRow(id, qty) {
-    var p = PRODUCTS[id];
-    var img = photo(id);
-    return '<div class="ms-item" data-id="' + id + '">' +
-      '<a class="ms-item__pic" href="' + esc(p.url) + '">' + (img ? '<img src="' + esc(img) + '" alt="">' : "") + '</a>' +
-      '<div class="ms-item__body">' +
-        '<a class="ms-item__name" href="' + esc(p.url) + '">' + esc(p.name) + '</a>' +
-        '<div class="ms-item__meta">' + (p.weight ? esc(p.weight) + ' · ' : '') + money(p.price) + ' / ' + esc(p.unit || "шт") + '</div>' +
-      '</div>' +
-      '<div class="ms-qty">' +
-        '<button type="button" class="ms-qty__btn" data-act="minus" aria-label="Меньше">&minus;</button>' +
-        '<input class="ms-qty__input" type="text" inputmode="numeric" value="' + qty + '">' +
-        '<button type="button" class="ms-qty__btn" data-act="plus" aria-label="Больше">+</button>' +
-      '</div>' +
-      '<div class="ms-item__sum">' + money(p.price * qty) + '</div>' +
-      '<button type="button" class="ms-item__remove" data-act="remove" aria-label="Убрать">&times;</button>' +
-    '</div>';
-  }
-
-  function shippingText(sum, mode) {
-    if (mode !== "delivery") return "самовывоз, бесплатно";
-    return sum >= FREE_DELIVERY ? "бесплатно" : "до " + money(DELIVERY_FEE);
-  }
-  function totalLabel(sum, mode) {
-    return mode === "delivery" && sum < FREE_DELIVERY ? "Итого без доставки" : "Итого";
-  }
-  function belowMinimum(sum) {
-    return sum < MIN_ORDER;
-  }
-  function checkoutButton(sum, cls, href, label) {
-    if (belowMinimum(sum)) {
-      return '<span class="btn btn-default btn-lg ' + cls + ' is-disabled" aria-disabled="true">Минимальный заказ — ' + money(MIN_ORDER) + '</span>';
-    }
-    return '<a class="btn btn-default btn-lg ' + cls + '" href="' + href + '">' + label + '</a>';
+  function clearCart() {
+    Object.keys(load()).forEach(unmarkInCart);
+    save({});
   }
 
   function shipBlock(sum) {
-    if (belowMinimum(sum)) {
-      return '<div class="ms-ship">' +
-        '<div class="ms-ship__head"><span>До минимальной суммы заказа</span><b>' + money(MIN_ORDER - sum) + '</b></div>' +
+    if (sum < MIN_ORDER) {
+      return '<div class="ms-ship"><div class="ms-ship__head"><span>До минимальной суммы заказа</span><b>' + money(MIN_ORDER - sum) + '</b></div>' +
         '<div class="ms-ship__bar"><i style="width:' + Math.min(100, sum / MIN_ORDER * 100).toFixed(1) + '%"></i></div>' +
-        '<div class="ms-ship__hint">Минимальная сумма заказа — ' + money(MIN_ORDER) + '.</div>' +
-      '</div>';
+        '<div class="ms-ship__hint">Минимальная сумма заказа — ' + money(MIN_ORDER) + '.</div></div>';
     }
     var left = Math.max(0, FREE_DELIVERY - sum);
-    var pct = Math.min(100, sum / FREE_DELIVERY * 100);
-    return '<div class="ms-ship' + (left ? "" : " is-free") + '">' +
-      '<div class="ms-ship__head"><span>' + (left ? "До бесплатной доставки" : "Доставка по Саратову — бесплатно") + '</span>' +
-        (left ? '<b>' + money(left) + '</b>' : "") + '</div>' +
-      '<div class="ms-ship__bar"><i style="width:' + pct.toFixed(1) + '%"></i></div>' +
+    return '<div class="ms-ship' + (left ? "" : " is-free") + '"><div class="ms-ship__head"><span>' +
+      (left ? "До бесплатной доставки" : "Доставка по Саратову — бесплатно") + '</span>' + (left ? '<b>' + money(left) + '</b>' : "") + '</div>' +
+      '<div class="ms-ship__bar"><i style="width:' + Math.min(100, sum / FREE_DELIVERY * 100).toFixed(1) + '%"></i></div>' +
       '<div class="ms-ship__hint">' + (left
-        ? "Доставляем только по Саратову: в радиусе 3 км от центра и при заказе от " + money(FREE_DELIVERY) +
-          " — бесплатно, дальше по городу — " + money(DELIVERY_FEE) + "."
-        : "Доставляем только по Саратову.") + '</div>' +
+        ? "Доставляем только по Саратову: в радиусе 3 км от центра и при заказе от " + money(FREE_DELIVERY) + " — бесплатно, дальше по городу — " + money(DELIVERY_FEE) + "."
+        : "Доставляем только по Саратову.") + '</div></div>';
+  }
+  function noteText(sum) {
+    return sum >= FREE_DELIVERY
+      ? "Доставка по Саратову: бесплатно · самовывоз бесплатно"
+      : "Доставка по Саратову: до " + money(DELIVERY_FEE) + ", в радиусе 3 км от центра — бесплатно · самовывоз бесплатно";
+  }
+
+  function flyEl() {
+    return document.querySelector("#basket_line .basket_fly");
+  }
+  function flyAvailable() {
+    var line = document.getElementById("basket_line");
+    return !!line && getComputedStyle(line).display !== "none" && !!flyEl();
+  }
+  function flyItem(id, qty) {
+    var p = PRODUCTS[id], img = photo(id);
+    return '<div class="item" data-id="' + id + '" product-id="' + id + '"><div class="wrap clearfix">' +
+      '<div class="image"><a href="' + esc(p.url) + '" class="thumb">' +
+        (img ? '<img src="' + esc(img) + '" alt="' + esc(p.name) + '" title="' + esc(p.name) + '">' : "") + '</a></div>' +
+      '<div class="body-info">' +
+        '<div class="description"><div class="name"><a href="' + esc(p.url) + '">' + esc(p.name) + '</a></div></div>' +
+        '<div class="bottom">' +
+          '<div class="prices notes"><div class="cost prices clearfix"><div class="price price_new">' + money(p.price) + '</div><div class="price_name">Розничная цена</div></div></div> ' +
+          '<div class="buy_block"><div class="counter_block basket"> ' +
+            '<span class="minus" data-fly="minus"></span> <input type="text" class="text" value="' + qty + '" data-fly="qty"> <span class="plus" data-fly="plus"></span> ' +
+          '</div> </div> ' +
+          '<div class="summ"><div class="cost prices"><div class="price">' + money(p.price * qty) + '</div></div></div> ' +
+        '</div>' +
+        '<div class="remove-cell"><a class="remove" href="#" data-fly="remove" title="Удалить"><i class="svg svg-inline-remove colored_theme_hover_text" aria-hidden="true">' + ICON.remove + '</i></a></div>' +
+      '</div></div></div>';
+  }
+  function flyHead() {
+    return '<div class="basket_sort"><div class="basket_title"><div class="ms-fly__eyebrow">Ваш заказ</div>' +
+      '<a href="/basket/" class="dark-color basket-link option-font-bold">Корзина</a></div>' +
+      '<i class="svg svg-inline-close colored_theme_hover_text" aria-hidden="true" data-fly="close">' + ICON.close + '</i></div>';
+  }
+  function flyButtons(sum) {
+    if (sum < MIN_ORDER) {
+      return '<div class="error_block"> <span class="icon_error_block"> <i class="svg svg-inline-price colored_theme_svg" aria-hidden="true">' + ICON.price +
+          '</i> <b>Минимальная сумма заказа ' + money(MIN_ORDER) + '</b><br>Пожалуйста, добавьте еще товаров в корзину </span> </div> ' +
+        '<div class="buttons clearfix"><div class="basket_back pull-right"><div class="wrap_button">' +
+        '<a href="/order/" class="btn btn-transparent-border-color btn-lg is-disabled"><span>Минимальный заказ — ' + money(MIN_ORDER) + '</span></a>' +
+        '<div class="ms-fly__fine">' + FINE + '</div></div><div class="description">Полноценное оформление<br> заказа</div></div></div>';
+    }
+    return '<div class="buttons clearfix"><div class="wrap_button pull-right">' +
+      '<a href="/order/" class="btn btn-transparent-border-color btn-lg"><span>Перейти к оформлению</span></a>' +
+      '<div class="description">Полноценное оформление<br> заказа</div><div class="ms-fly__fine">' + FINE + '</div></div></div>';
+  }
+  function renderFly() {
+    var fly = flyEl();
+    var cont = fly && fly.querySelector(".wrap_cont");
+    if (!cont) return;
+    var cart = load(), ids = ordered(cart).reverse(), sum = total(cart);
+    var oldList = cont.querySelector(".items_wrap");
+    var top = oldList ? oldList.scrollTop : 0;
+    var body;
+    if (!ids.length) {
+      body = flyHead() + '<form class="basket_wrapp" id="basket_form" data-ms="1"><ul class="tabs_content basket"><li class="cur">' +
+        '<div class="cart-empty"><div class="cart-empty__picture"><div class="img"></div></div><div class="cart-empty__info">' +
+        '<div class="title">Ваша корзина пуста</div><p>Исправить это просто: выберите в каталоге интересующий <br>товар и нажмите кнопку «В корзину». </p>' +
+        '<a class="btn btn-default round-ignore btn-lg" href="/catalog/"><span>Перейти в каталог</span></a></div></div></li></ul></form>';
+    } else {
+      body = flyHead() + shipBlock(sum) +
+        '<form class="basket_wrapp" id="basket_form" data-ms="1"><ul class="tabs_content basket"><li class="cur"><div class="basket_wrap">' +
+          '<div class="items_wrap"><div class="items">' + ids.map(function (id) { return flyItem(id, cart[id]); }).join("") + '</div></div>' +
+          '<div class="foot clearfix"><div class="pull-left"><span class="wrap_remove_button basket_action">' +
+            '<span class="colored_theme_hover_text remove_all_basket cur" data-fly="clear"><i class="svg svg-inline-closes" aria-hidden="true">' + ICON.closes + '</i> Очистить </span>' +
+          '</span></div><div class="total pull-right"><div class="item_title">Итого</div><div class="wrap_prices"><div data-type="price_normal"><div class="price">' +
+            money(sum) + '</div></div></div></div></div>' +
+          '<div class="ms-fly__note">' + noteText(sum) + '</div>' + flyButtons(sum) +
+        '</div></li></ul></form>';
+    }
+    Array.prototype.slice.call(cont.children).forEach(function (child) {
+      if (!child.classList.contains("opener")) cont.removeChild(child);
+    });
+    cont.insertAdjacentHTML("beforeend", body);
+    var list = cont.querySelector(".items_wrap");
+    if (list) list.scrollTop = top;
+    badge();
+  }
+  function flyIsOpen() {
+    var fly = flyEl();
+    return !!fly && fly.classList.contains("ms-open");
+  }
+  function openFly() {
+    var fly = flyEl();
+    if (!fly) return;
+    renderFly();
+    fly.classList.add("ms-open");
+    fly.style.right = "0px";
+  }
+  function closeFly() {
+    var fly = flyEl();
+    if (!fly) return;
+    fly.classList.remove("ms-open");
+    fly.style.right = "";
+  }
+
+  function emptyBasket() {
+    return '<div class="bx-sbb-empty-cart-container"><div class="bx-sbb-empty-cart-image">' +
+      '<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div>' +
+      '<div class="bx-sbb-empty-cart-text">Ваша корзина пуста</div>' +
+      '<div class="bx-sbb-empty-cart-desc"><a href="/catalog/">Нажмите здесь</a>, чтобы продолжить покупки </div></div>';
+  }
+  function basketRow(id, qty) {
+    var p = PRODUCTS[id], img = photo(id), unit = esc(p.unit || "шт");
+    return '<tr class="basket-items-list-item-container" data-id="' + id + '">' +
+      '<td class="basket-items-list-item-descriptions"><div class="basket-items-list-item-descriptions-inner">' +
+        '<div class="basket-item-block-image"><a href="' + esc(p.url) + '" class="basket-item-image-link">' +
+          (img ? '<img class="basket-item-image" alt="' + esc(p.name) + '" src="' + esc(img) + '">' : "") + '</a></div>' +
+        '<div class="basket-item-block-info"><span class="basket-item-actions-remove visible-xs" data-bact="remove"></span>' +
+          '<h2 class="basket-item-info-name"><a href="' + esc(p.url) + '" class="basket-item-info-name-link"><span>' + esc(p.name) + '</span></a></h2>' +
+          '<div class="basket-item-block-properties"></div><div class="ms-basket-unit">' + money(p.price) + ' / ' + unit + '</div></div>' +
+      '</div></td>' +
+      '<td class="basket-items-list-item-price basket-items-list-item-price-for-one hidden-xs"><div class="basket-item-block-price">' +
+        '<div class="basket-item-price-current"><span class="basket-item-price-current-text">' + money(p.price) + '</span></div>' +
+        '<div class="basket-item-price-title">цена за 1 ' + unit + '</div></div></td>' +
+      '<td class="basket-items-list-item-amount"><div class="basket-item-block-amount">' +
+        '<span class="basket-item-amount-btn-minus" data-bact="minus"></span>' +
+        '<div class="basket-item-amount-filed-block"><input type="text" class="basket-item-amount-filed" value="' + qty + '" data-bact="qty"></div>' +
+        '<span class="basket-item-amount-btn-plus" data-bact="plus"></span><div class="basket-item-amount-field-description">' + unit + '</div></div></td>' +
+      '<td class="basket-items-list-item-price"><div class="basket-item-block-price"><div class="basket-item-price-current">' +
+        '<span class="basket-item-price-current-text">' + money(p.price * qty) + '</span></div></div></td>' +
+      '<td class="basket-items-list-item-remove hidden-xs"><div class="basket-item-block-actions"><span class="basket-item-actions-remove" data-bact="remove"></span></div></td>' +
+    '</tr>';
+  }
+  function renderBasket(root) {
+    var cart = load(), ids = ordered(cart), sum = total(cart);
+    if (!ids.length) { root.innerHTML = emptyBasket(); return; }
+    root.innerHTML = '<div id="basket-root" class="bx-basket bx-blue bx-step-opacity">' +
+      '<div class="row"><div class="col-xs-12"><div class="basket-checkout-container visible"><div class="basket-checkout-section">' +
+        '<div class="ms-basket-sum">' + shipBlock(sum) +
+          '<div class="ms-basket-line"><span>' + ids.length + " " + plural(ids.length, "товар", "товара", "товаров") + '</span><span>' + money(sum) + '</span></div>' +
+          '<div class="ms-basket-line"><span>Доставка</span><span>самовывоз, бесплатно</span></div></div>' +
+        '<div class="basket-checkout-section-inner">' +
+          '<div class="basket-checkout-block basket-checkout-block-total"><div class="basket-checkout-block-total-inner"><div class="basket-checkout-block-total-title">Итого</div></div></div>' +
+          '<div class="basket-checkout-block basket-checkout-block-total-price"><div class="basket-checkout-block-total-price-inner">' +
+            '<div class="basket-coupon-block-total-price-current">' + money(sum) + '</div></div></div>' +
+          '<div class="basket-checkout-block basket-checkout-block-btn">' + (sum < MIN_ORDER
+            ? '<div class="icon_error_wrapper"><div class="icon_error_block"><i class="svg svg-inline-price colored_theme_svg" aria-hidden="true">' + ICON.price +
+              '</i><b>Минимальная сумма заказа ' + money(MIN_ORDER) + '</b><br>Пожалуйста, добавьте еще товаров в корзину</div></div>'
+            : '<button type="button" class="btn btn-lg btn-default basket-btn-checkout" data-bact="checkout">Оформить заказ</button>') + '</div>' +
+        '</div>' +
+        '<div class="ms-basket-note">Самовывоз из магазина — бесплатно, в день заказа.<br>Доставка — только по Саратову, на следующий день.</div>' +
+      '</div></div></div></div>' +
+      '<div class="row"><div class="col-xs-12"><div class="alert alert-warning" style="display:none"></div></div></div>' +
+      '<div class="row"><div class="col-xs-12"><div class="basket-items-list-wrapper basket-items-list-wrapper-height-fixed basket-items-list-wrapper-light">' +
+        '<div class="basket-items-list-container"><div class="basket-items-list"><table class="basket-items-list-table"><tbody>' +
+          ids.map(function (id) { return basketRow(id, cart[id]); }).join("") +
+        '</tbody></table></div></div></div></div></div>' +
     '</div>';
   }
-
-  function summaryRows(cart, mode) {
-    var n = count(cart), sum = total(cart);
-    return '<div class="ms-summary__row"><span>' + n + ' ' + plural(n, "товар", "товара", "товаров") + '</span><span>' + money(sum) + '</span></div>' +
-      '<div class="ms-summary__row"><span>Доставка</span><span>' + shippingText(sum, mode) + '</span></div>' +
-      '<div class="ms-summary__row ms-summary__row--total"><span>' + totalLabel(sum, mode) + '</span><span>' + money(sum) + '</span></div>';
-  }
-
-  function orderText(order) {
-    var lines = ["Заказ " + order.number + " — Мир Сладостей", ""];
-    order.items.forEach(function (it) {
-      lines.push(it.name + " × " + it.qty + " — " + money(it.price * it.qty).replace(/ /g, " "));
-    });
-    if (order.delivery === "delivery") lines.push("", "Доставка: " + order.shipping.replace(/ /g, " "));
-    lines.push("", totalLabel(order.total, order.delivery) + ": " + money(order.total).replace(/ /g, " "));
-    lines.push("", "Имя: " + order.name, "Телефон: " + order.phone,
-      "Получение: " + (order.delivery === "delivery" ? "доставка, " + order.address : "самовывоз"));
-    if (order.date) lines.push("Когда: " + order.date);
-    if (order.comment) lines.push("Комментарий: " + order.comment);
-    return lines.join("\n");
-  }
-
-  function renderCart(root) {
-    var cart = load();
-    var ids = Object.keys(cart);
-    var picked = root.querySelector('input[name="delivery"]:checked');
-    var mode = picked ? picked.value : "pickup";
-    var kept = {};
-    root.querySelectorAll(".ms-form input[type=text], .ms-form input[type=tel]").forEach(function (el) { kept[el.name] = el.value; });
-
-    if (!ids.length) {
-      root.innerHTML = '<div class="ms-empty">' +
-        '<div class="ms-empty__title">В корзине пока пусто</div>' +
-        '<p class="ms-empty__text">Загляните в каталог — торты, пироги и выпечка ждут.</p>' +
-        '<a class="btn btn-default btn-lg" href="/catalog/">Перейти в каталог</a></div>';
-      return;
-    }
-
-    var html = '<div class="ms-cart">' +
-      '<div class="ms-cart__list">' + ids.map(function (id) { return itemRow(id, cart[id]); }).join("") + '</div>' +
-      '<aside class="ms-summary">' +
-        shipBlock(total(cart)) +
-        '<div class="ms-summary__rows">' + summaryRows(cart, mode) + '</div>' +
-        checkoutButton(total(cart), "ms-summary__btn", "#order", "Оформить заказ") +
-        '<div class="ms-summary__note">Самовывоз из магазина — бесплатно, в день заказа.<br>Доставка — только по Саратову, на следующий день.</div>' +
-      '</aside>' +
-    '</div>' +
-    '<section class="ms-order" id="order">' +
-      '<div class="ms-order__label">Оформление</div>' +
-      '<h2 class="ms-order__title">Куда и когда привезти</h2>' +
-      '<form class="ms-form" novalidate>' +
-        '<label class="ms-field"><span>Ваше имя</span><input name="name" type="text" required autocomplete="name"></label>' +
-        '<label class="ms-field"><span>Телефон</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+7 (___) ___-__-__"></label>' +
-        '<div class="ms-field ms-field--wide"><span>Получение</span>' +
-          '<div class="ms-choice">' +
-            '<label><input type="radio" name="delivery" value="pickup"' + (mode === "pickup" ? " checked" : "") + '><b>Самовывоз</b><small>ул. Бахметьевская, 49 · сегодня</small></label>' +
-            '<label><input type="radio" name="delivery" value="delivery"' + (mode === "delivery" ? " checked" : "") + '><b>Доставка</b><small>только по Саратову · завтра</small></label>' +
-          '</div></div>' +
-        '<label class="ms-field ms-field--wide ms-field--address"' + (mode === "delivery" ? "" : " hidden") + '><span>Адрес доставки в Саратове</span><input name="address" type="text" autocomplete="street-address" placeholder="улица, дом, квартира"></label>' +
-        '<label class="ms-field"><span>Желаемая дата и время</span><input name="date" type="text" placeholder="например, суббота к 12:00"></label>' +
-        '<label class="ms-field"><span>Комментарий</span><input name="comment" type="text" placeholder="надпись на торте, свечи, аллергии"></label>' +
-        '<div class="ms-form__foot">' +
-          '<button type="submit" class="btn btn-default btn-lg">Подтвердить заказ</button>' +
-          '<div class="ms-form__hint">Менеджер перезвонит, чтобы подтвердить состав, время и стоимость доставки.</div>' +
-        '</div>' +
-        '<div class="ms-form__legal">Нажимая «Подтвердить заказ», вы соглашаетесь с ' +
-          '<a href="/company/agreement/" target="_blank">политикой обработки персональных данных</a>. ' +
-          'Имя, телефон и адрес нужны только для выполнения заказа.</div>' +
-        '<div class="ms-form__error" hidden></div>' +
-      '</form>' +
-    '</section>';
-    root.innerHTML = html;
-    Object.keys(kept).forEach(function (name) {
-      var el = root.querySelector('.ms-form [name="' + name + '"]');
-      if (el) el.value = kept[name];
-    });
-
-    if (location.hash === "#order") {
-      setTimeout(function () {
-        var o = document.getElementById("order");
-        if (o) window.scrollTo({ top: o.getBoundingClientRect().top + window.scrollY - 110, behavior: "smooth" });
-      }, 120);
-    }
-  }
-
-  function bindCart(root) {
+  function bindBasket(root) {
     root.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-act]");
-      if (!b) return;
-      var row = b.closest(".ms-item"), id = row.getAttribute("data-id");
-      var c = load();
-      if (b.getAttribute("data-act") === "plus") c[id] += 1;
-      if (b.getAttribute("data-act") === "minus") c[id] = Math.max(1, c[id] - 1);
-      if (b.getAttribute("data-act") === "remove") delete c[id];
-      save(c); renderCart(root);
+      var b = e.target.closest("[data-bact]");
+      if (!b || b.getAttribute("data-bact") === "qty") return;
+      e.preventDefault();
+      if (b.getAttribute("data-bact") === "checkout") { location.href = "/order/"; return; }
+      var row = b.closest("[data-id]");
+      if (!row) return;
+      change(row.getAttribute("data-id"), b.getAttribute("data-bact"));
+      renderBasket(root);
     });
     root.addEventListener("change", function (e) {
-      if (e.target.classList.contains("ms-qty__input")) {
-        var row = e.target.closest(".ms-item"), id = row.getAttribute("data-id");
-        var c = load(), v = parseInt(e.target.value, 10);
-        c[id] = v > 0 ? v : 1; save(c); renderCart(root);
-      }
-      if (e.target.name === "delivery") {
-        root.querySelector(".ms-field--address").hidden = e.target.value !== "delivery";
-        var rows = root.querySelector(".ms-summary__rows");
-        if (rows) rows.innerHTML = summaryRows(load(), e.target.value);
-      }
+      if (e.target.getAttribute("data-bact") !== "qty") return;
+      change(e.target.closest("[data-id]").getAttribute("data-id"), "qty", e.target.value);
+      renderBasket(root);
     });
-    root.addEventListener("submit", function (e) {
-      var form = e.target;
-      if (!form.classList.contains("ms-form")) return;
-      e.preventDefault();
-      var f = form.elements, err = form.querySelector(".ms-form__error");
-      var phone = f.phone.value.replace(/\D/g, "");
-      var problems = [];
-      if (!f.name.value.trim()) problems.push("имя");
-      if (phone.length < 10) problems.push("телефон");
-      if (f.delivery.value === "delivery" && !f.address.value.trim()) problems.push("адрес доставки");
-      var c = load(), sum = total(c);
-      if (belowMinimum(sum)) {
-        err.hidden = false;
-        err.textContent = "Минимальная сумма заказа — " + money(MIN_ORDER) + ": добавьте ещё " + money(MIN_ORDER - sum) + ".";
-        return;
-      }
-      if (problems.length) {
-        err.hidden = false; err.textContent = "Заполните: " + problems.join(", ") + ".";
-        return;
-      }
-      var order = {
-        number: nextNumber(),
-        date: f.date.value.trim(), comment: f.comment.value.trim(),
-        name: f.name.value.trim(), phone: f.phone.value.trim(),
-        delivery: f.delivery.value, address: f.address.value.trim(),
-        items: Object.keys(c).map(function (id) {
-          return { id: id, name: PRODUCTS[id].name, price: PRODUCTS[id].price, qty: c[id] };
-        }),
-        shipping: shippingText(sum, f.delivery.value), total: sum, created: new Date().toISOString()
+  }
+
+  var order = { delivery: "courier", pay: "1" };
+
+  function deliveries(sum) {
+    var free = sum >= FREE_DELIVERY;
+    return [
+      { key: "courier", id: free ? "5" : "1", title: "Доставка курьером", cost: free ? "бесплатно" : money(DELIVERY_FEE), fee: free ? 0 : DELIVERY_FEE,
+        period: "от 1 до 2 дней", text: "Доставка осуществляется на следующий день в удобное для вас время." },
+      { key: "pickup", id: "2", title: "Самовывоз", cost: "бесплатно", fee: 0, text: "Вы можете самостоятельно забрать заказ из нашего магазина." }
+    ];
+  }
+  function payments(key) {
+    return key === "pickup"
+      ? [{ id: "8", title: "Наличный расчет", text: "" }, { id: "7", title: "Оплата картой онлайн", text: "" }]
+      : [{ id: "1", title: "Наличные курьеру", text: CASH_TEXT }, { id: "7", title: "Оплата картой онлайн", text: "" }];
+  }
+  function card(kind, item, selected) {
+    var cls = "bx-soa-pp-company bx-soa-pp-company-item" +
+      (kind === "delivery" ? " bx-soa-pp-company--hasprice" + (item.period ? " bx-soa-pp-company--hasperiod" : "") : "") +
+      " col-lg-4 col-sm-4 col-xs-6" + (selected ? " bx-selected" : "");
+    var html = '<div class="' + cls + '" data-pick="' + kind + '" data-value="' + (kind === "delivery" ? item.key : item.id) + '">' +
+      '<div class="bx-soa-pp-company-graf-container"><input type="checkbox" class="bx-soa-pp-company-checkbox" value="' + item.id + '"' + (selected ? " checked" : "") + '></div>' +
+      '<div class="bx-soa-pp-company-smalltitle">' + item.title + '</div>';
+    if (kind === "delivery") {
+      html += '<div class="bx-soa-pp-delivery-cost"><div class="bx-soa-pp-list-termin">Стоимость:</div><div class="bx-soa-pp-list-description">' + item.cost + '</div></div>' +
+        (item.period ? '<div class="bx-soa-pp-delivery-period"><div class="bx-soa-pp-list-termin">Срок доставки:</div><div class="bx-soa-pp-list-description"> ' + item.period + ' </div></div>' : "") +
+        '<div class="bx-soa-pp-company-description">' + item.text + '</div>';
+    }
+    return html + '</div>';
+  }
+  function section(id, title, content, extraClass, aside) {
+    return '<div id="' + id + '" class="bx-soa-section bx-active' + (extraClass || "") + '"><div class="bx-soa-section-title-container">' +
+      '<h2 class="bx-soa-section-title col-sm-9"><span class="bx-soa-section-title-count"></span>' + title + ' </h2>' + (aside || "") + '</div>' +
+      '<div class="bx-soa-section-content container-fluid">' + content + '</div></div>';
+  }
+  function field(row, name, label, kind, required) {
+    var id = "soa-property-" + row;
+    var control = kind === "textarea"
+      ? '<textarea cols="30" rows="3" name="' + name + '" id="' + id + '" class="form-control bx-ios-fix"></textarea>'
+      : '<input type="' + kind + '" name="' + name + '" id="' + id + '" class="form-control bx-soa-customer-input bx-ios-fix">';
+    return '<div class="form-group bx-soa-customer-field" data-property-id-row="' + row + '"><label for="' + id + '" class="bx-soa-custom-label"> ' + label +
+      (required ? '<span class="bx-authform-starrequired"> *</span>' : "") + '</label><div class="soa-property-container">' + control + '</div></div>';
+  }
+  function totals(sum, fee) {
+    return '<div class="bx-soa-cart-total"><div class="change_basket">Ваш заказ<a href="/basket/" class="change_link">Изменить</a></div>' +
+      '<div class="bx-soa-cart-total-line"><span class="bx-soa-cart-t">Товаров на:</span><span class="bx-soa-cart-d">' + money(sum) + '</span></div>' +
+      '<div class="bx-soa-cart-total-line"><span class="bx-soa-cart-t">Доставка:</span><span class="bx-soa-cart-d">' + (fee ? money(fee) : "бесплатно") + '</span></div>' +
+      '<div class="bx-soa-cart-total-line bx-soa-cart-total-line-total"><span class="bx-soa-cart-t">Итого:</span><span class="bx-soa-cart-d">' + money(sum + fee) + '</span></div>' +
+      '<div class="bx-soa-cart-total-button-container lic_condition"><a href="#" class="btn btn-default btn-lg btn-order-save" data-oact="save">Оформить заказ</a></div></div>';
+  }
+  function orderItems(cart) {
+    var head = '<div class="bx-soa-item-tr hidden-sm hidden-xs">' + ["Наименование", "Скидка", "Цена", "Количество", "Сумма"].map(function (t, i) {
+      return '<div class="bx-soa-item-td' + (i ? " bx-soa-item-properties bx-text-right" : "") + '" style="padding-bottom: 5px;"><div class="bx-soa-item-td-title">' + t + '</div></div>';
+    }).join("") + '</div>';
+    var rows = ordered(cart).map(function (id, i) {
+      var p = PRODUCTS[id], qty = cart[id], img = photo(id), unit = esc(p.unit || "шт");
+      var cell = function (title, value) {
+        return '<div class="bx-soa-item-td bx-soa-item-properties bx-text-right"><div class="bx-soa-item-td-title visible-xs visible-sm">' + title + '</div>' +
+          '<div class="bx-soa-item-td-text">' + value + '</div></div>';
       };
-      try {
-        var orders = JSON.parse(localStorage.getItem(ORDER_KEY) || "[]");
-        orders.push(order); localStorage.setItem(ORDER_KEY, JSON.stringify(orders));
-      } catch (x) {}
-      save({});
-      renderDone(root, order);
-      window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" });
+      return '<div class="bx-soa-item-tr bx-soa-basket-info' + (i ? "" : " bx-soa-item-tr-first") + '"><div class="bx-soa-item-td" style="min-width: 300px;"><div class="bx-soa-item-block">' +
+          '<div class="bx-soa-item-img-block"><a href="' + esc(p.url) + '"><div class="bx-soa-item-imgcontainer"' + (img ? ' style="background-image: url(\'' + esc(img) + '\')"' : "") + '></div></a></div>' +
+          '<div class="bx-soa-item-content"><div class="bx-soa-item-title"><a href="' + esc(p.url) + '">' + esc(p.name) + '</a></div></div>' +
+        '</div></div>' +
+        cell("Скидка", "<span>0%</span>") + cell("Цена", '<strong class="bx-price">' + money(p.price) + '</strong>') +
+        cell("Количество", "<span>" + qty + " " + unit + "</span>") + cell("Сумма", '<strong class="bx-price all">' + money(p.price * qty) + '</strong>') +
+      '</div>';
+    }).join("");
+    return '<div class="bx-soa-table-fade"><div style="overflow: auto hidden;"><div class="bx-soa-item-table">' + head + rows + '</div></div></div>';
+  }
+  function renderOrder(root) {
+    var kept = {};
+    root.querySelectorAll("input[name], textarea[name]").forEach(function (el) { kept[el.name] = el.value; });
+    var cart = load(), sum = total(cart);
+    if (sum < MIN_ORDER) { location.replace("/basket/"); return; }
+    var list = deliveries(sum);
+    var picked = list.filter(function (d) { return d.key === order.delivery; })[0] || list[0];
+    var pays = payments(picked.key);
+    if (!pays.some(function (p) { return p.id === order.pay; })) order.pay = pays[0].id;
+    var pay = pays.filter(function (p) { return p.id === order.pay; })[0];
+    var region = '<div class="alert alert-danger" style="display:none"></div><div class="bx_soa_location row"><div class="col-xs-12">' +
+      '<div class="form-group bx-soa-location-input-container" data-property-id-row="6"><label class="bx-soa-custom-label"> Местоположение<span class="bx-authform-starrequired"> *</span></label>' +
+      '<div class="bx-sls"><div class="bx-ui-sls-quick-locations quick-locations"><a href="javascript:void(0)" class="quick-location-tag">Саратов</a></div>' +
+      '<div class="dropdown-block bx-ui-sls-input-block form-control"><span class="dropdown-icon"></span>' +
+        '<div class="bx-ui-sls-container" style="margin: 0px; padding: 0px; border: none; position: relative;">' +
+        '<input type="text" disabled="disabled" autocomplete="off" class="bx-ui-sls-route" style="padding: 0px; margin: 0px;" value="' + REGION + '">' +
+        '<input type="text" readonly autocomplete="off" class="bx-ui-sls-fake" value="Саратов" title="' + REGION + '" aria-label="Местоположение"></div>' +
+        '<div class="bx-ui-sls-clear" title="Отменить выбор"></div></div></div></div>' +
+      '<div class="bx-soa-reference">Выберите свой город в списке. Если вы не нашли свой город, выберите "другое местоположение", а город впишите в поле "Город"</div></div></div>';
+    var delivery = '<div class="alert alert-danger" style="display:none"></div><div class="bx-soa-pp row"><div class="col-sm-12 bx-soa-pp-item-container">' +
+      list.map(function (d) { return card("delivery", d, d.key === picked.key); }).join("") + '</div></div>';
+    var payment = '<div class="alert alert-danger" style="display:none"></div><div class="bx-soa-pp row"><div class="col-sm-12 bx-soa-pp-item-container">' +
+      pays.map(function (p) { return card("pay", p, p.id === pay.id); }).join("") + '</div>' +
+      (pay.text ? '<div class="col-sm-12 bx-soa-pp-company-description">' + pay.text + '</div>' : "") + '</div>';
+    var props = '<div class="alert alert-danger" style="display:none"></div><div class="row"><div class="col-sm-12 bx-soa-customer">' +
+      field(1, "name", "Ф.И.О.", "text", true) + field(2, "email", "E-Mail", "text", true) + field(3, "phone", "Телефон", "tel", true) +
+      (picked.key === "courier" ? field(7, "address", "Адрес доставки", "textarea", true) : "") +
+      '</div><div class="col-sm-12"><div class="form-group bx-soa-customer-field"><label for="orderDescription" class="bx-soa-customer-label">Комментарии к заказу:</label>' +
+      '<textarea id="orderDescription" cols="4" class="form-control bx-soa-customer-textarea bx-ios-fix" name="comment"></textarea></div></div></div>';
+    var consent = '<div class="form"><div class="license_order_wrap"><div class="licence_block filter label_block onoff">' +
+      '<label data-for="licenses_order" class="hidden error">Согласитесь с условиями</label>' +
+      '<input type="checkbox" name="licenses_order" id="ms-licenses" value="Y" checked>' +
+      '<label class="license" for="ms-licenses">Я согласен на <a href="/company/agreement/" target="_blank">обработку персональных данных</a></label></div></div></div>' +
+      '<div id="bx-soa-orderSave" class="lic_condition"><a href="#" style="margin: 10px 0" class="pull-right btn btn-default btn-lg hidden-xs" data-oact="save"> Оформить заказ </a></div>';
+    root.innerHTML = '<form name="ORDER_FORM" id="bx-soa-order-form" novalidate><div id="bx-soa-order" class="row orderform--v1 bx-blue">' +
+      '<div class="col-sm-9 bx-soa"><div id="bx-soa-main-notifications"><div class="alert alert-danger" style="display:none"></div></div>' +
+        '<div id="bx-soa-total-mobile" class="visible-xs">' + totals(sum, picked.fee) + '</div>' +
+        section("bx-soa-region", "Тип покупателя и регион доставки", region, " bx-selected") +
+        '<div class="pandd">' + section("bx-soa-delivery", "Способ доставки", delivery) + section("bx-soa-paysystem", "Способ оплаты", payment) + '</div>' +
+        section("bx-soa-properties", "Покупатель", props) +
+        section("bx-soa-basket", "Товары в заказе", orderItems(cart), "", '<div class="col-xs-12 col-sm-3 text-right"><a href="/basket/" class="bx-soa-editstep">Подробнее</a></div>') +
+        consent +
+      '</div><div id="bx-soa-total" class="col-sm-3 bx-soa-sidebar">' + totals(sum, picked.fee) + '</div>' +
+    '</div></form>';
+    Object.keys(kept).forEach(function (name) {
+      var el = root.querySelector('[name="' + name + '"]');
+      if (el && el.type !== "checkbox") el.value = kept[name];
+    });
+  }
+  function required(label) {
+    return 'Поле "' + label + '" обязательно для заполнения';
+  }
+  function fieldError(input) {
+    var value = input.value.trim();
+    if (input.name === "name") return value ? "" : required("Ф.И.О.");
+    if (input.name === "email") return !value ? required("E-Mail") : /^\S+@\S+\.\S+$/.test(value) ? "" : "Введен неверный e-mail";
+    if (input.name === "phone") {
+      var digits = value.replace(/\D/g, "");
+      return !digits ? required("Телефон") : digits.length < 10 ? 'Поле "Телефон" имеет неверный формат' : "";
+    }
+    if (input.name === "address") return value ? "" : required("Адрес доставки");
+    return "";
+  }
+  function markField(input, text) {
+    var group = input.closest(".form-group"), tip = group.querySelector(".bx-soa-tooltip");
+    group.classList.toggle("has-error", !!text);
+    if (!text) { if (tip) tip.remove(); return; }
+    if (!tip) {
+      tip = document.createElement("div");
+      tip.className = "bx-soa-tooltip bx-soa-tooltip-static bx-soa-tooltip-danger tooltip top";
+      tip.innerHTML = '<div class="tooltip-arrow"></div><div class="tooltip-inner"></div>';
+      group.insertBefore(tip, group.querySelector(".soa-property-container"));
+    }
+    tip.setAttribute("data-state", "opened");
+    tip.style.cssText = "opacity: 1; display: block;";
+    tip.lastChild.textContent = text;
+  }
+  function checkFields(root) {
+    var errors = [];
+    root.querySelectorAll("#bx-soa-properties [data-property-id-row] .form-control").forEach(function (input) {
+      var text = fieldError(input);
+      markField(input, text);
+      if (text) errors.push(esc(text));
+    });
+    var box = root.querySelector("#bx-soa-properties .alert-danger");
+    box.innerHTML = errors.length ? "<div>" + errors.join("<br>") + "</div>" : "";
+    box.style.display = errors.length ? "" : "none";
+    return !errors.length;
+  }
+  function stamp(d) {
+    var two = function (n) { return ("0" + n).slice(-2); };
+    return two(d.getDate()) + "." + two(d.getMonth() + 1) + "." + d.getFullYear() + " " + two(d.getHours()) + ":" + two(d.getMinutes());
+  }
+  function savedOrders() {
+    try { return JSON.parse(localStorage.getItem(ORDER_KEY) || "[]"); } catch (e) { return []; }
+  }
+  function submitOrder(root) {
+    var form = root.querySelector("#bx-soa-order-form");
+    var f = form.elements, cart = load(), sum = total(cart);
+    if (sum < MIN_ORDER) { location.href = "/basket/"; return; }
+    var picked = deliveries(sum).filter(function (d) { return d.key === order.delivery; })[0];
+    var valid = checkFields(root);
+    root.querySelector(".license_order_wrap label.error").classList.toggle("hidden", f.licenses_order.checked);
+    if (!valid) {
+      var props = root.querySelector("#bx-soa-properties");
+      window.scrollTo({ top: props.getBoundingClientRect().top + window.scrollY - 50, behavior: "smooth" });
+      return;
+    }
+    if (!f.licenses_order.checked) return;
+    var pay = payments(picked.key).filter(function (p) { return p.id === order.pay; })[0];
+    var orders = savedOrders();
+    var done = {
+      number: String(orders.length + 1), stamp: stamp(new Date()), name: f.name.value.trim(), email: f.email.value.trim(), phone: f.phone.value.trim(),
+      delivery: picked.key === "courier" ? "delivery" : "pickup", address: f.address ? f.address.value.trim() : "",
+      comment: f.comment.value.trim(), pay: pay.title, payId: pay.id,
+      items: ordered(cart).map(function (id) { return { id: id, name: PRODUCTS[id].name, price: PRODUCTS[id].price, qty: cart[id] }; }),
+      shipping: picked.fee ? money(picked.fee) : "бесплатно", fee: picked.fee, total: sum + picked.fee, created: new Date().toISOString()
+    };
+    orders.push(done);
+    try { localStorage.setItem(ORDER_KEY, JSON.stringify(orders)); } catch (x) {}
+    clearCart();
+    try { history.replaceState(null, "", location.pathname + "?ORDER_ID=" + done.number); } catch (x) {}
+    renderDone(root, done);
+    window.scrollTo(0, 0);
+  }
+  function bindOrder(root) {
+    root.addEventListener("click", function (e) {
+      var pick = e.target.closest("[data-pick]");
+      if (pick) {
+        e.preventDefault();
+        if (pick.getAttribute("data-pick") === "delivery") order.delivery = pick.getAttribute("data-value");
+        else order.pay = pick.getAttribute("data-value");
+        renderOrder(root);
+        return;
+      }
+      var act = e.target.closest("[data-oact]");
+      if (act) { e.preventDefault(); submitOrder(root); }
+    });
+    root.addEventListener("focusout", function (e) {
+      if (e.target.matches("#bx-soa-properties [data-property-id-row] .form-control")) markField(e.target, fieldError(e.target));
+    });
+    root.addEventListener("change", function (e) {
+      if (e.target.name === "licenses_order" && e.target.checked) root.querySelector(".license_order_wrap label.error").classList.add("hidden");
     });
   }
 
-  function nextNumber() {
-    var d = new Date(), seq = 1;
-    try {
-      seq = (JSON.parse(localStorage.getItem(ORDER_KEY) || "[]").length || 0) + 1;
-    } catch (e) {}
-    return "MS-" + String(d.getFullYear()).slice(2) + ("0" + (d.getMonth() + 1)).slice(-2) +
-      ("0" + d.getDate()).slice(-2) + "-" + ("00" + seq).slice(-3);
+  function orderText(o) {
+    var lines = ["Заказ №" + o.number + " от " + o.stamp + " — Мир Сладостей", ""];
+    o.items.forEach(function (it) { lines.push(it.name + " × " + it.qty + " — " + money(it.price * it.qty)); });
+    lines.push("", "Доставка: " + o.shipping, "Итого: " + money(o.total), "",
+      "Ф.И.О.: " + o.name, "Телефон: " + o.phone, "E-Mail: " + o.email,
+      "Получение: " + (o.delivery === "delivery" ? "доставка, " + o.address : "самовывоз"), "Оплата: " + o.pay);
+    if (o.comment) lines.push("Комментарий: " + o.comment);
+    return lines.join("\n");
+  }
+  function renderDone(root, o) {
+    var title = document.getElementById("pagetitle");
+    if (title) title.textContent = DONE_TITLE;
+    document.title = DONE_TITLE + " — Мир Сладостей";
+    var mail = "mailto:" + SHOP_MAIL + "?subject=" + encodeURIComponent("Заказ №" + o.number) + "&body=" + encodeURIComponent(orderText(o));
+    root.innerHTML = '<table class="sale_order_full_table"><tbody><tr><td> Ваш заказ <b>№' + esc(o.number) + '</b> от ' + esc(o.stamp) +
+        ' успешно создан. Номер вашей оплаты: <b>№' + esc(o.number) + '/1</b><br><br> Вы можете следить за выполнением своего заказа в ' +
+        '<a href="/auth/">Персональном разделе сайта</a>. Обратите внимание, что для входа в этот раздел вам необходимо будет ввести логин и пароль пользователя сайта. </td></tr></tbody></table>' +
+      '<br><br><table class="sale_order_full_table"><tbody><tr><td class="ps_logo"><div class="pay_name">Оплата заказа</div>' +
+        '<div class="image"><img src="' + (PAY_LOGO[o.payId] || PAY_LOGO["1"]) + '" style="width:100px" alt="" width="100" height="34"></div>' +
+        '<div class="paysystem_name">' + esc(o.pay) + '</div><br></td></tr><tr><td></td></tr></tbody></table>' +
+      '<p class="ms-demo-note">Это демонстрационная копия сайта: заказ сохранён только в вашем браузере и в магазин не отправлен. ' +
+        '<a href="' + mail + '">Отправить заказ на почту</a> или позвонить: <a href="tel:' + SHOP_PHONE.replace(/[^\d+]/g, "") + '">' + SHOP_PHONE + '</a>.</p>';
   }
 
-  function renderDone(root, order) {
-    var text = orderText(order);
-    var mail = "mailto:" + SHOP_MAIL + "?subject=" + encodeURIComponent("Заказ " + order.number) +
-      "&body=" + encodeURIComponent(text);
-    root.innerHTML = '<div class="ms-done">' +
-      '<div class="ms-done__label">Заказ принят</div>' +
-      '<h2 class="ms-done__title">' + esc(order.number) + '</h2>' +
-      '<p class="ms-done__text">Спасибо, ' + esc(order.name) + '. Менеджер перезвонит на ' + esc(order.phone) +
-        ', подтвердит состав и ' + (order.delivery === "delivery" ? "время доставки" : "время, когда всё будет готово") + '.</p>' +
-      '<div class="ms-done__list">' + order.items.map(function (it) {
-        return '<div class="ms-done__row"><span>' + esc(it.name) + ' × ' + it.qty + '</span><span>' + money(it.price * it.qty) + '</span></div>';
-      }).join("") +
-      (order.delivery === "delivery" ? '<div class="ms-done__row"><span>Доставка по Саратову</span><span>' + order.shipping + '</span></div>' : "") +
-      '<div class="ms-done__row ms-done__row--total"><span>' + totalLabel(order.total, order.delivery) + '</span><span>' + money(order.total) + '</span></div></div>' +
-      '<div class="ms-done__actions">' +
-        '<a class="btn btn-default btn-lg" href="' + mail + '">Отправить заказ на почту</a>' +
-        '<button type="button" class="btn btn-transparent btn-lg" data-copy>Скопировать заказ</button>' +
-        '<a class="ms-done__phone" href="tel:' + SHOP_PHONE.replace(/[^\d+]/g, "") + '">' + SHOP_PHONE + '</a>' +
-      '</div>' +
-      '<p class="ms-done__note">Сайт собран для демонстрации: заказ сохранён в вашем браузере и не ушёл на сервер. На рабочем сайте эту форму обслуживает штатный модуль заказов.</p>' +
-      '<a class="ms-done__back" href="/catalog/">Вернуться в каталог</a>' +
-    '</div>';
-    var copy = root.querySelector("[data-copy]");
-    copy.addEventListener("click", function () {
-      var ok = function () { copy.textContent = "Скопировано"; };
-      if (navigator.clipboard) navigator.clipboard.writeText(text).then(ok, ok);
-      else ok();
-    });
-  }
-
-  function mountCart() {
-    if (!/^\/basket\/?$/.test(location.pathname)) return;
-
+  function pageRoot() {
     var container = document.querySelector(".wrapper_inner .container_inner .middle > .container")
       || document.querySelector(".wrapper_inner .container_inner .middle")
       || document.querySelector(".wrapper_inner");
-    if (!container) return;
-    var root = document.createElement("div");
-    root.className = "ms-basket-root";
+    if (!container) return null;
     container.innerHTML = '<div class="maxwidth-theme"></div>';
-    var wrap = container.firstChild;
-    wrap.appendChild(root);
-    bindCart(root);
-    renderCart(root);
+    return container.firstChild;
   }
+  function mountPages() {
+    var path = location.pathname;
+    if (/^\/basket\/?$/.test(path)) {
+      var basket = pageRoot();
+      if (basket) { bindBasket(basket); renderBasket(basket); }
+    }
+    if (/^\/order\/?$/.test(path)) {
+      var id = (location.search.match(/[?&]ORDER_ID=([^&]+)/) || [])[1];
+      var done = id && savedOrders().filter(function (o) { return o.number === decodeURIComponent(id) && o.stamp; })[0];
+      if (!done && total(load()) < MIN_ORDER) { location.replace("/basket/"); return; }
+      var form = pageRoot();
+      if (form && done) renderDone(form, done);
+      else if (form) { bindOrder(form); renderOrder(form); }
+    }
+  }
+
+  function onFly(e) {
+    var fly = flyEl();
+    if (!fly || !fly.contains(e.target)) return false;
+    var opener = e.target.closest(".opener");
+    if (opener) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      if (flyIsOpen()) closeFly(); else openFly();
+      return true;
+    }
+    var b = e.target.closest("[data-fly]");
+    if (!b) return false;
+    var act = b.getAttribute("data-fly");
+    if (act === "qty") return true;
+    e.preventDefault(); e.stopImmediatePropagation();
+    if (act === "close") { closeFly(); return true; }
+    if (act === "clear") clearCart();
+    else change(b.closest("[data-id]").getAttribute("data-id"), act);
+    renderFly();
+    return true;
+  }
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest) return;
+    if (onFly(e)) return;
+    if (flyIsOpen() && !e.target.closest(".basket_fly") && !e.target.closest(".to-cart")) closeFly();
+    var t = e.target.closest(".to-cart, .one_click");
+    if (!t) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    var id = productIdFrom(t);
+    if (!id) return;
+    if (t.classList.contains("one_click")) { add(id, quantityFor(t, id)); location.href = "/order/"; return; }
+    if (add(id, quantityFor(t, id)) && flyAvailable()) openFly();
+  }, true);
+  document.addEventListener("change", function (e) {
+    if (!e.target.getAttribute || e.target.getAttribute("data-fly") !== "qty") return;
+    change(e.target.closest("[data-id]").getAttribute("data-id"), "qty", e.target.value);
+    renderFly();
+  }, true);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && flyIsOpen()) closeFly();
+  });
 
   function ready(fn) {
     if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn);
   }
   ready(function () {
+    document.documentElement.classList.add("ms-demo-cart");
     badge();
     var cart = load();
     for (var id in cart) markInCart(id);
-    mountCart();
+    mountPages();
   });
 })();

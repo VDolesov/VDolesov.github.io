@@ -1,0 +1,70 @@
+/* Additional styling for native Bitrix checkout components. Base skin.css is unchanged. */
+#basket-root .basket-checkout-container,
+#basket-root .basket-items-list-wrapper,
+#basket-root .basket-items-list-header {
+  background: #22160f !important;
+  border-color: rgba(207, 159, 83, .24) !important;
+}
+
+#basket-root .basket-checkout-container {
+  border: 1px solid rgba(207, 159, 83, .24) !important;
+  border-radius: 10px;
+}
+
+#basket-root .basket-checkout-block-total-title,
+#basket-root .basket-coupon-block-total-price-current,
+#basket-root .basket-coupon-block-field-description {
+  color: #f6eddf !important;
+}
+
+#basket-root .basket-item-info-name,
+#basket-root .basket-item-info-name-link {
+  font: 500 18px/1.5 "Golos Text", sans-serif !important;
+}
+
+#basket-root .basket-item-amount-btn-minus,
+#basket-root .basket-item-amount-btn-plus {
+  background: #2b1c14 !important;
+  border-color: rgba(207, 159, 83, .4) !important;
+}
+
+#basket-root .basket-item-amount-btn-minus::before,
+#basket-root .basket-item-amount-btn-plus::before,
+#basket-root .basket-item-amount-btn-plus::after {
+  background-color: #dfb879 !important;
+}
+
+#basket-root .alert-warning {
+  color: #ffd89a !important;
+  background: #3e2910 !important;
+  border-color: #805923 !important;
+}
+
+#bx-soa-order .bx-soa-section,
+#bx-soa-order .bx-soa-cart-total {
+  background: #22160f !important;
+  border-color: rgba(207, 159, 83, .24) !important;
+}
+
+#bx-soa-order .bx-soa-section-title {
+  font: 500 22px/1.4 "Golos Text", sans-serif !important;
+}
+
+#bx-soa-order .bx-soa-cart-total,
+#bx-soa-order .bx-soa-cart-t,
+#bx-soa-order .bx-soa-cart-d {
+  color: #f6eddf !important;
+}
+
+#bx-soa-order .bx-soa-cart-t,
+#bx-soa-order .bx-soa-cart-d {
+  background-color: #22160f !important;
+}
+
+#bx-soa-order .bx-ui-sls-fake {
+  color: #f6eddf !important;
+}
+
+#bx-soa-order .bx-soa-cart-total-line {
+  border-color: rgba(207, 159, 83, .24) !important;
+}

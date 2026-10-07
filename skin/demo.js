@@ -79,7 +79,7 @@
 
   document.addEventListener("submit", function (e) {
     var form = e.target;
-    if (!form || form.classList.contains("ms-form") || form.classList.contains("ms-search")) return;
+    if (!form || form.classList.contains("ms-search")) return;
     if (form.querySelector('input[name="q"]')) return;
     e.preventDefault(); e.stopImmediatePropagation();
     modal("form");
