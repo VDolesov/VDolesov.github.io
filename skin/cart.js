@@ -304,7 +304,7 @@
       '<div class="row"><div class="col-xs-12"><div class="basket-checkout-container visible"><div class="basket-checkout-section">' +
         '<div class="ms-basket-sum">' + shipBlock(sum) +
           '<div class="ms-basket-line"><span>' + ids.length + " " + plural(ids.length, "товар", "товара", "товаров") + '</span><span>' + money(sum) + '</span></div>' +
-          '<div class="ms-basket-line"><span>Доставка</span><span>самовывоз, бесплатно</span></div></div>' +
+          '<div class="ms-basket-line"><span>Доставка</span><span>' + (sum >= FREE_DELIVERY ? "бесплатно" : "курьер до " + money(DELIVERY_FEE) + ", самовывоз бесплатно") + '</span></div></div>' +
         '<div class="basket-checkout-section-inner">' +
           '<div class="basket-checkout-block basket-checkout-block-total"><div class="basket-checkout-block-total-inner"><div class="basket-checkout-block-total-title">Итого</div></div></div>' +
           '<div class="basket-checkout-block basket-checkout-block-total-price"><div class="basket-checkout-block-total-price-inner">' +
