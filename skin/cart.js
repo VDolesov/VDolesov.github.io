@@ -14,7 +14,6 @@
   var MIN_ORDER = 800;
   var ICON = {"close": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><path data-name=\"Rounded Rectangle 114 copy 3\" class=\"cccls-1\" d=\"M334.411,138l6.3,6.3a1,1,0,0,1,0,1.414,0.992,0.992,0,0,1-1.408,0l-6.3-6.306-6.3,6.306a1,1,0,0,1-1.409-1.414l6.3-6.3-6.293-6.3a1,1,0,0,1,1.409-1.414l6.3,6.3,6.3-6.3A1,1,0,0,1,340.7,131.7Z\" transform=\"translate(-325 -130)\"></path></svg>", "remove": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "closes": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "price": "<svg id=\"Group_278_copy\" data-name=\"Group 278 copy\" xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"38\" viewBox=\"0 0 38 38\"><path id=\"Ellipse_305_copy_2\" data-name=\"Ellipse 305 copy 2\" class=\"clswm-1\" d=\"M1851,561a19,19,0,1,1,19-19A19,19,0,0,1,1851,561Zm0-36a17,17,0,1,0,17,17A17,17,0,0,0,1851,525Zm3.97,10.375-0.03.266c-0.01.062-.02,0.127-0.03,0.188l-0.94,7.515h0a2.988,2.988,0,0,1-5.94,0H1848l-0.91-7.525c-0.01-.041-0.01-0.086-0.02-0.128l-0.04-.316h0.01c-0.01-.125-0.04-0.246-0.04-0.375a4,4,0,0,1,8,0c0,0.129-.03.25-0.04,0.375h0.01ZM1851,533a2,2,0,0,0-2,2,1.723,1.723,0,0,0,.06.456L1850,543a1,1,0,0,0,2,0l0.94-7.544A1.723,1.723,0,0,0,1853,535,2,2,0,0,0,1851,533Zm0,14a3,3,0,1,1-3,3A3,3,0,0,1,1851,547Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,1851,551Z\" transform=\"translate(-1832 -523)\"></path> <path class=\"clswm-2 op-cls\" d=\"M1853,543l-1,1h-2l-1-1-1-8,1-2,1-1h2l1,1,1,2Zm-1,5,1,1v2l-1,1h-2l-1-1v-2l1-1h2Z\" transform=\"translate(-1832 -523)\"></path></svg>"};
   var CASH_TEXT = "Оплата производится наличными деньгами, в момент получения заказа. Подтверждением вашей оплаты является фискальный кассовый чек, вручаемый во время получения и оплаты заказа.";
-  var REGION = "Саратов, Саратов, Саратовская область, Поволжье, Россия";
   var FINE = "Наличие, итоговую стоимость и время подтверждает менеджер.";
   var COURIER_TEXT = "Доставка осуществляется в течение 1–2 дней в удобное для вас время.";
   var COURIER_FREE_TEXT = "Бесплатная доставка от 3000 ₽ — в течение 1–2 дней в удобное для вас время.";
@@ -169,13 +168,13 @@
       (left ? "До бесплатной доставки" : "Доставка по Саратову — бесплатно") + '</span>' + (left ? '<b>' + money(left) + '</b>' : "") + '</div>' +
       '<div class="ms-ship__bar"><i style="width:' + Math.min(100, sum / FREE_DELIVERY * 100).toFixed(1) + '%"></i></div>' +
       '<div class="ms-ship__hint">' + (left
-        ? "Доставляем только по Саратову: в радиусе 3 км от центра и при заказе от " + money(FREE_DELIVERY) + " — бесплатно, дальше по городу — " + money(DELIVERY_FEE) + "."
+        ? "Доставляем только по Саратову: " + money(DELIVERY_FEE) + ", при заказе от " + money(FREE_DELIVERY) + " — бесплатно."
         : "Доставляем только по Саратову.") + '</div></div>';
   }
   function noteText(sum) {
     return sum >= FREE_DELIVERY
       ? "Доставка по Саратову: бесплатно · самовывоз бесплатно"
-      : "Доставка по Саратову: до " + money(DELIVERY_FEE) + ", в радиусе 3 км от центра — бесплатно · самовывоз бесплатно";
+      : "Доставка по Саратову: " + money(DELIVERY_FEE) + " · самовывоз бесплатно";
   }
 
   function flyEl() {
@@ -304,7 +303,7 @@
       '<div class="row"><div class="col-xs-12"><div class="basket-checkout-container visible"><div class="basket-checkout-section">' +
         '<div class="ms-basket-sum">' + shipBlock(sum) +
           '<div class="ms-basket-line"><span>' + ids.length + " " + plural(ids.length, "товар", "товара", "товаров") + '</span><span>' + money(sum) + '</span></div>' +
-          '<div class="ms-basket-line"><span>Доставка</span><span>' + (sum >= FREE_DELIVERY ? "бесплатно" : "курьер до " + money(DELIVERY_FEE) + ", самовывоз бесплатно") + '</span></div></div>' +
+          '<div class="ms-basket-line"><span>Доставка</span><span>' + (sum >= FREE_DELIVERY ? "бесплатно" : "курьер " + money(DELIVERY_FEE) + ", самовывоз бесплатно") + '</span></div></div>' +
         '<div class="basket-checkout-section-inner">' +
           '<div class="basket-checkout-block basket-checkout-block-total"><div class="basket-checkout-block-total-inner"><div class="basket-checkout-block-total-title">Итого</div></div></div>' +
           '<div class="basket-checkout-block basket-checkout-block-total-price"><div class="basket-checkout-block-total-price-inner">' +
@@ -420,15 +419,6 @@
     var pays = payments(picked.key);
     if (!pays.some(function (p) { return p.id === order.pay; })) order.pay = pays[0].id;
     var pay = pays.filter(function (p) { return p.id === order.pay; })[0];
-    var region = '<div class="alert alert-danger" style="display:none"></div><div class="bx_soa_location row"><div class="col-xs-12">' +
-      '<div class="form-group bx-soa-location-input-container" data-property-id-row="6"><label class="bx-soa-custom-label"> Местоположение<span class="bx-authform-starrequired"> *</span></label>' +
-      '<div class="bx-sls"><div class="bx-ui-sls-quick-locations quick-locations"><a href="javascript:void(0)" class="quick-location-tag">Саратов</a></div>' +
-      '<div class="dropdown-block bx-ui-sls-input-block form-control"><span class="dropdown-icon"></span>' +
-        '<div class="bx-ui-sls-container" style="margin: 0px; padding: 0px; border: none; position: relative;">' +
-        '<input type="text" disabled="disabled" autocomplete="off" class="bx-ui-sls-route" style="padding: 0px; margin: 0px;" value="' + REGION + '">' +
-        '<input type="text" readonly autocomplete="off" class="bx-ui-sls-fake" value="Саратов" title="' + REGION + '" aria-label="Местоположение"></div>' +
-        '<div class="bx-ui-sls-clear" title="Отменить выбор"></div></div></div></div>' +
-      '<div class="bx-soa-reference">Выберите свой город в списке. Если вы не нашли свой город, выберите "другое местоположение", а город впишите в поле "Город"</div></div></div>';
     var delivery = '<div class="alert alert-danger" style="display:none"></div><div class="bx-soa-pp row"><div class="col-sm-12 bx-soa-pp-item-container">' +
       list.map(function (d) { return card("delivery", d, d.key === picked.key); }).join("") + '</div></div>';
     var payment = '<div class="alert alert-danger" style="display:none"></div><div class="bx-soa-pp row"><div class="col-sm-12 bx-soa-pp-item-container">' +
@@ -447,7 +437,6 @@
     root.innerHTML = '<form name="ORDER_FORM" id="bx-soa-order-form" novalidate><div id="bx-soa-order" class="row orderform--v1 bx-blue">' +
       '<div class="col-sm-9 bx-soa"><div id="bx-soa-main-notifications"><div class="alert alert-danger" style="display:none"></div></div>' +
         '<div id="bx-soa-total-mobile" class="visible-xs">' + totals(sum, picked.fee) + '</div>' +
-        section("bx-soa-region", "Тип покупателя и регион доставки", region, " bx-selected") +
         '<div class="pandd">' + section("bx-soa-delivery", "Способ доставки", delivery) + section("bx-soa-paysystem", "Способ оплаты", payment) + '</div>' +
         section("bx-soa-properties", "Покупатель", props) +
         section("bx-soa-basket", "Товары в заказе", orderItems(cart), "", '<div class="col-xs-12 col-sm-3 text-right"><a href="/basket/" class="bx-soa-editstep">Подробнее</a></div>') +
