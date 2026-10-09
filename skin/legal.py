@@ -70,8 +70,8 @@ QUALITY_ANSWER = (
 
 REVIEW_CONSENT = (
     '<div class="ms-consent"><label><input type="checkbox" name="ms_consent" required> '
-    "Согласен на публикацию моего имени и текста отзыва на сайте и на их обработку в соответствии с "
-    f'<a href="{POLICY}" target="_blank">политикой обработки персональных данных</a></label></div>\n'
+    "<span>Согласен на публикацию моего имени и текста отзыва на сайте и на их обработку в соответствии с "
+    f'<a href="{POLICY}" target="_blank">политикой обработки персональных данных</a></span></label></div>\n'
 )
 
 COPY = [
@@ -146,7 +146,7 @@ _COPY = [(re.compile(pattern), new) for pattern, new in COPY]
 
 def add_review_consent(html):
     if 'class="ms-consent"' in html:
-        return html
+        return re.sub(r'<div class="ms-consent">.*?</label></div>\n?', lambda m: REVIEW_CONSENT, html, count=1, flags=re.S)
     return html.replace('<div class="reviews-reply-buttons">', REVIEW_CONSENT + '<div class="reviews-reply-buttons">', 1)
 
 
