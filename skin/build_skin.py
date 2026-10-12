@@ -1392,6 +1392,8 @@ body .bottom-info .ordered-block.goods {{ margin-top: 40px !important; }}
 
 body [class*="ground-pane"], body .ymaps-layers-pane {{ filter: grayscale(1) invert(.92) brightness(.72) contrast(.92) sepia(.35); }}
 body .ms-map-photo [class*="ground-pane"], body .ms-map-photo .ymaps-layers-pane {{ filter: none; }}
+.ms-map-tip {{ position: absolute; z-index: 1000; max-width: 280px; padding: 8px 12px; background: {CARD}; border: 1px solid rgba(214, 164, 89, .45); color: {INK}; font-size: 13px; line-height: 1.4; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); pointer-events: none; transform: translate(-50%, calc(-100% - 14px)); white-space: normal; }}
+.ms-map-tip[hidden] {{ display: none; }}
 body .wrapper1 .ymaps-b-zoom_hints-pos_right,
 body .wrapper1 .ymaps-controls-righttop .ymaps-b-select.ymaps-b-select_control_listbox {{
   background: {CARD} !important; border: 1px solid {GOLD_LINE}; box-shadow: 0 8px 24px rgba(0, 0, 0, .45) !important;

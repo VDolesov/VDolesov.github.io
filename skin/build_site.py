@@ -48,6 +48,21 @@ _YMAPS_LOADER = re.compile(r"<script>\s*var script = document\.createElement\('s
 _SCRIPT = re.compile(r"<script\b[^>]*>.*?</script>[ \t]*\n?", re.S | re.I)
 
 
+_PLACEMARKS = re.compile(r"(?:arObjects\.PLACEMARKS\[arObjects\.PLACEMARKS\.length\] = BX_YMapAddPlacemark\(map, \{.*?\}, true\);)+", re.S)
+
+
+def contacts_map(html, path):
+    if path != "/contacts/":
+        return html
+    stores = os.path.join(APP, "contacts", "stores", "index.html")
+    if not os.path.exists(stores):
+        return html
+    marks = _PLACEMARKS.search(io.open(stores, encoding="utf-8").read())
+    if not marks:
+        return html
+    return _PLACEMARKS.sub(lambda m: marks.group(0), html, count=1)
+
+
 def lazy_map(html):
     return _YMAPS_LOADER.sub(lambda m: "<script>window.MS_YMAPS_URL = '" + m.group(1) + "';</script>", html)
 
@@ -238,6 +253,7 @@ def build_page(path, html, ids, version):
     html = legal_copy(html)
     html = name_pages(html, path)
     html = _BEACON.sub("", html)
+    html = contacts_map(html, path)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
 
@@ -354,6 +370,7 @@ def refresh(html, path=""):
                   lambda m: photo_script(path, product_ids()).strip(), html, count=1, flags=re.S)
     html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
     html = add_faq(html)
+    html = contacts_map(html, path)
     return move_scripts(lazy_map(html))
 
 
