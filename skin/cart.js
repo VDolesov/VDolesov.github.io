@@ -635,6 +635,13 @@
     if (e.key === "Escape" && flyIsOpen()) closeFly();
   });
 
+  var SERVER_ONLY = /\/(?:ajax\/(?:basket_fly|show_basket_fly|reload_basket_fly|showBasketHover|show_basket_popup|action_basket|item)\.php|bitrix\/components\/bitrix\/catalog\.bigdata\.products\/ajax\.php|bitrix\/tools\/conversion\/ajax_counter\.php)/;
+  if (window.jQuery && jQuery.ajaxPrefilter) {
+    jQuery.ajaxPrefilter(function (options, original, xhr) {
+      if (SERVER_ONLY.test(options.url || "")) xhr.abort();
+    });
+  }
+
   function ready(fn) {
     if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn);
   }

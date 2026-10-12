@@ -63,6 +63,35 @@ def contacts_map(html, path):
     return _PLACEMARKS.sub(lambda m: marks.group(0), html, count=1)
 
 
+_SERVER_CALLS = (
+    re.compile(r"<script>(?:(?!</script>).)*?conversion/ajax_counter\.php(?:(?!</script>).)*</script>[ \t]*\n?", re.S),
+    re.compile(r"<script>var _ba = _ba \|\| \[\];(?:(?!</script>).)*bitrix\.info/ba\.js(?:(?!</script>).)*</script>[ \t]*\n?", re.S),
+    re.compile(r"<script>\s*BX\.ready\(function\(\)\{\s*bx_rcm_get_from_cloud\((?:(?!</script>).)*</script>[ \t]*\n?", re.S),
+    re.compile(r"<div class=\"bigdata-wrapper\"><!--'start_frame_cache_(\w+)'-->\s*<div id=\"bigdata_recommended_products_\w+\"></div>\s*<!--'end_frame_cache_\1'--></div>"),
+    re.compile(r"\n[ \t]*SetActualBasketFlyCounters\(\);"),
+    re.compile(r"\n[ \t]*viewItemCounter\('\d+','[A-Z_]+'\);"),
+)
+
+
+def static_only(html):
+    for pattern in _SERVER_CALLS:
+        html = pattern.sub("", html)
+    return html
+
+
+_ABOUT_IMG = re.compile(r"(<img\b(?![^>]*\salt=)[^>]*/assets/about\.jpg[^>]*?)(\s*/?>)")
+
+
+def photo_alt(html):
+    return _ABOUT_IMG.sub(lambda m: m.group(1) + ' alt="Свежая выпечка «Мир Сладостей»"' + m.group(2), html)
+
+
+def landmarks(html):
+    if 'class="ms-skip-link"' not in html:
+        html = re.sub(r"(<body\b[^>]*>)", r'\1' + "\n" + '<a class="ms-skip-link" href="#content">Перейти к содержимому</a>', html, count=1)
+    return html.replace('<div class="wraps hover_shine" id="content">', '<div class="wraps hover_shine" id="content" role="main" tabindex="-1">')
+
+
 def lazy_map(html):
     return _YMAPS_LOADER.sub(lambda m: "<script>window.MS_YMAPS_URL = '" + m.group(1) + "';</script>", html)
 
@@ -254,6 +283,9 @@ def build_page(path, html, ids, version):
     html = name_pages(html, path)
     html = _BEACON.sub("", html)
     html = contacts_map(html, path)
+    html = landmarks(html)
+    html = static_only(html)
+    html = photo_alt(html)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
 
@@ -371,6 +403,9 @@ def refresh(html, path=""):
     html = re.sub(r'<style>\nli\[data-code="NEW"\].*?</style>', DEMO_FIX.strip(), html, count=1, flags=re.S)
     html = add_faq(html)
     html = contacts_map(html, path)
+    html = landmarks(html)
+    html = static_only(html)
+    html = photo_alt(html)
     return move_scripts(lazy_map(html))
 
 

@@ -3,10 +3,31 @@
 
   var PHOTO_TYPES = ["yandex#satellite", "yandex#hybrid", "yandex#publicMapHybrid"];
 
+  var CONTROL_LABELS = [
+    [".ymaps-b-zoom__button_type_plus .ymaps-b-form-button", "Приблизить"],
+    [".ymaps-b-zoom__button_type_minus .ymaps-b-form-button", "Отдалить"],
+    ["a.ymaps-logo-link", "Открыть в Яндекс Картах"]
+  ];
+
+  function labels(node) {
+    CONTROL_LABELS.forEach(function (pair) {
+      node.querySelectorAll(pair[0]).forEach(function (el) {
+        if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", pair[1]);
+      });
+    });
+  }
+
   function track(map) {
     var node = map.container && map.container.getElement && map.container.getElement();
-    if (!node || node.hasAttribute("data-ms-map")) return;
+    if (!node) return;
+    labels(node);
+    if (node.hasAttribute("data-ms-map")) return;
     node.setAttribute("data-ms-map", "1");
+    var timer = null;
+    new MutationObserver(function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () { labels(node); }, 200);
+    }).observe(node, { childList: true, subtree: true });
     function apply() {
       var type = map.getType && map.getType();
       var name = typeof type === "string" ? type : "";

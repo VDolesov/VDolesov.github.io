@@ -106,6 +106,8 @@ def build_renames():
 
 
 PRODUCT_NAMES = build_renames()
+_UNQUOTED = re.compile(r"(\s(?:alt|title|content)=)(" + "|".join(re.escape(t) for t in sorted({p["title"] for p in PRODUCTS.values()}, key=len, reverse=True))
+                       + r")(?=\s|/?>)")
 SECTION_NAMES = [(re.compile(r"(?<![А-ЯЁA-Z])" + re.escape(title.upper()) + r"(?![А-ЯЁA-Z])"), title)
                  for title in sorted(SECTIONS.values(), key=len, reverse=True)]
 
@@ -187,7 +189,11 @@ def section_counts(html_text):
 
 def name_pages(html_text, path):
     for old, new in PRODUCT_NAMES:
-        html_text = html_text.replace(old, new)
+        if old.startswith('"'):
+            html_text = re.sub(r"(?<!=)" + re.escape(old), lambda m: new, html_text)
+        else:
+            html_text = html_text.replace(old, new)
+    html_text = _UNQUOTED.sub(lambda m: m.group(1) + '"' + html.escape(m.group(2), quote=True) + '"', html_text)
     for pattern, title in SECTION_NAMES:
         html_text = pattern.sub(title, html_text)
     for old, new in PAGE_NAMES:

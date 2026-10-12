@@ -6,6 +6,23 @@
   var PHONE2 = "+7 (8452) 21-28-45";
   var MAIL = "mirslad49@mail.ru";
 
+  (function staticServer() {
+    var proto = window.XMLHttpRequest && XMLHttpRequest.prototype;
+    if (!proto || proto.__msStatic) return;
+    proto.__msStatic = true;
+    var open = proto.open;
+    var send = proto.send;
+    proto.open = function (method, url) {
+      var target = new URL(String(url), location.href);
+      this.__msSkip = String(method).toUpperCase() !== "GET" && target.origin === location.origin;
+      return open.apply(this, arguments);
+    };
+    proto.send = function () {
+      if (this.__msSkip) return;
+      return send.apply(this, arguments);
+    };
+  })();
+
   var NOTES = {
     auth: ["Личный кабинет",
       "На рабочем сайте здесь вход и регистрация: история заказов, адреса, бонусы. В демо-версии заказ оформляется без регистрации — через корзину."],
@@ -127,7 +144,7 @@
   }
 
   function tidyPage() {
-    [["button.inline-search-show", "Поиск"], ["button.inline-phone-show", "Позвонить"]].forEach(function (pair) {
+    [["button.inline-search-show", "Поиск"], ["button.inline-phone-show", "Позвонить"], ["a.scroll-to-top", "Наверх"]].forEach(function (pair) {
       document.querySelectorAll(pair[0]).forEach(function (el) {
         if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", pair[1]);
       });
@@ -135,6 +152,18 @@
     document.querySelectorAll(".owl-dots").forEach(function (dots) {
       dots.querySelectorAll("button.owl-dot").forEach(function (dot, i) {
         if (!dot.getAttribute("aria-label")) dot.setAttribute("aria-label", "Слайд " + (i + 1));
+      });
+    });
+    document.querySelectorAll(".counter_block input[type=text], .basket-item-amount-filed").forEach(function (input) {
+      if (!input.getAttribute("aria-label") && !(input.labels && input.labels.length)) input.setAttribute("aria-label", "Количество");
+    });
+    document.querySelectorAll(".owl-nav .owl-prev, .owl-nav .owl-next").forEach(function (btn) {
+      if (btn.getAttribute("role") === "presentation") btn.removeAttribute("role");
+      if (!btn.getAttribute("aria-label")) btn.setAttribute("aria-label", btn.classList.contains("owl-prev") ? "Назад" : "Вперёд");
+      btn.querySelectorAll("svg").forEach(function (svg) {
+        svg.setAttribute("aria-hidden", "true");
+        svg.setAttribute("focusable", "false");
+        svg.querySelectorAll("[id]").forEach(function (el) { el.removeAttribute("id"); });
       });
     });
     document.querySelectorAll(".top_slider_wrapp li.clone h1").forEach(function (h) {
@@ -148,6 +177,11 @@
     tidyPage();
     var slider = document.querySelector(".top_slider_wrapp");
     if (slider) new MutationObserver(tidyPage).observe(slider, { childList: true, subtree: true });
+    var timer = null;
+    new MutationObserver(function () {
+      clearTimeout(timer);
+      timer = setTimeout(tidyPage, 200);
+    }).observe(document.body, { childList: true, subtree: true });
     window.addEventListener("load", tidyPage);
   }
 
