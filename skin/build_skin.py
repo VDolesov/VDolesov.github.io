@@ -1379,7 +1379,7 @@ footer .btn, footer span.btn {{ background: {ACCENT} !important; border-color: {
 }}
 body .cat_sections.cat_sections .item.compact .name {{ padding: 12px 0 0 !important; }}
 body .CATALOG_SECTIONS .sections_wrapper::before {{
-  content: "Что печём"; display: block;
+  content: "Каталог"; display: block;
   font-family: "Golos Digits", Prata, Georgia, serif; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.1;
   color: {INK}; margin: 0 0 26px;
 }}
