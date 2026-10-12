@@ -20,6 +20,7 @@ from strip import strip_sections
 from build_demo import (BANNER, BANNER_COPY, IMAGES, DEMO_FIX, PAGES_ORIGIN, PHOTO_SCRIPT,
                         SECTION_PHOTOS, SERIES, SITE, inline_deferred, product_ids,
                         add_faq, expand_slides, swap_banner, swap_photos, unlazy)
+from share import share_block
 
 HOSTS = {"www.mirsladostey164.ru", "mirsladostey164.ru"}
 SEEDS = ["/", "/catalog/", "/basket/", "/personal/", "/search/", "/contacts/",
@@ -80,6 +81,15 @@ def static_only(html):
 
 
 _ABOUT_IMG = re.compile(r"(<img\b(?![^>]*\salt=)[^>]*/assets/about\.jpg[^>]*?)(\s*/?>)")
+
+
+_YA_SHARE = re.compile(r'<div class="ya-share2 yashare-auto-init hover-block__item-wrapper" data-services="[^"]*"></div>')
+_YA_SHARE_SCRIPT = re.compile(r'[ \t]*<script[^>]*src="//yastatic\.net/share2/share\.js"[^>]*></script>\n?')
+
+
+def share_links(html, path):
+    url = urllib.parse.quote(PAGES_ORIGIN + path, safe="")
+    return _YA_SHARE_SCRIPT.sub("", _YA_SHARE.sub(lambda m: share_block(url), html))
 
 
 def photo_alt(html):
@@ -250,7 +260,7 @@ def localize_links(html, current):
     html = _FORM.sub(lambda m: f'{m.group(1)}/catalog/{m.group(3)}', html)
     return html
 
-SCRIPTS = ("cart-data.js", "cart.js", "nav.js", "search.js", "demo.js", "motion.js", "map.js")
+SCRIPTS = ("cart-data.js", "cart.js", "nav.js", "search.js", "demo.js", "motion.js", "map.js", "share.js")
 
 
 def skin_version():
@@ -286,6 +296,7 @@ def build_page(path, html, ids, version):
     html = landmarks(html)
     html = static_only(html)
     html = photo_alt(html)
+    html = share_links(html, path)
 
     html = re.sub(r"<base\s[^>]*>", "", html, flags=re.I)
 
@@ -406,6 +417,7 @@ def refresh(html, path=""):
     html = landmarks(html)
     html = static_only(html)
     html = photo_alt(html)
+    html = share_links(html, path)
     return move_scripts(lazy_map(html))
 
 

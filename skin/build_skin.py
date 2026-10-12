@@ -1398,6 +1398,19 @@ body .ms-map-photo [class*="ground-pane"], body .ms-map-photo .ymaps-layers-pane
 a.ms-skip-link, a.ms-skip-link:visited, a.ms-skip-link:hover, a.ms-skip-link:focus {{ color: {ON_ACCENT} !important; }}
 .ms-skip-link:focus {{ top: 16px; outline: 2px solid {INK}; outline-offset: 2px; }}
 #content[role="main"]:focus {{ outline: none; }}
+.ms-share .ya-share2__list {{ list-style: none; margin: 0; padding: 0; }}
+.ms-share .ya-share2__title {{ position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }}
+.ms-share .ya-share2__link {{ position: relative; }}
+.ms-share button.ya-share2__link {{ width: 100%; padding: 0; border: 0; cursor: pointer; font: inherit; color: inherit; }}
+.ms-share .ms-share__copy .ya-share2__badge {{ display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; margin: -8px 0 0 -8px; background: none !important; }}
+.ms-share .ms-share__copy svg {{ width: 16px; height: 16px; fill: #b8b8b8; }}
+.ms-share .ms-share__copy:hover {{ background: {ACCENT_DEEP}; }}
+.ms-share .ms-share__copy:hover svg {{ fill: #fff; }}
+.ms-share .ya-share2__link:focus-visible {{ outline: 2px solid {ACCENT}; outline-offset: -2px; opacity: 1; }}
+.ms-share .ms-share__status {{ position: absolute; right: 0; top: 100%; margin-top: 6px; padding: 6px 10px; background: {CARD}; border: 1px solid rgba(214, 164, 89, .45); color: {INK}; font-family: "Golos Text", "Segoe UI", Arial, sans-serif !important; font-size: 12px; line-height: 1.3; white-space: nowrap; }}
+.ms-share .ms-share__status:empty {{ display: none; }}
+.share .shares-block.ms-share-open .ya-share2 {{ display: block !important; opacity: 1 !important; }}
+.share .shares-block > .svg[data-ms-share-toggle]:focus-visible {{ outline: 2px solid {ACCENT}; outline-offset: 2px; }}
 body .wrapper1 .ymaps-b-zoom_hints-pos_right,
 body .wrapper1 .ymaps-controls-righttop .ymaps-b-select.ymaps-b-select_control_listbox {{
   background: {CARD} !important; border: 1px solid {GOLD_LINE}; box-shadow: 0 8px 24px rgba(0, 0, 0, .45) !important;
@@ -1419,6 +1432,8 @@ body .wrapper1 .ymaps-b-popupa__tail {{ display: none !important; }}
 body .viewed_product_block {{ background: {GROUND} !important; }}
 body .viewed_product_block .block-item, body .viewed_product_block .block-item__wrapper {{ background: {CARD} !important; box-shadow: none !important; border-radius: 0 !important; }}
 body .viewed_product_block .block-item {{ border: 1px solid {LINE} !important; }}
+body .bigdata-wrapper .block-item__cost .price, body .bigdata-wrapper .block-item__cost .price .price_value {{ font-size: 18px !important; line-height: 1.2 !important; }}
+body .bigdata-wrapper .block-item__cost .price .price_currency, body .bigdata-wrapper .block-item__cost .price .price_measure {{ font-size: 13px !important; }}
 body .viewed_product_block .block-items::before, body .viewed_product_block .block-items::after {{ background: transparent !important; }}
 body .viewed_product_block .price {{ color: {GOLD} !important; }}
 body .search-button-div .btn.btn-search.btn-default {{ background: {ACCENT} !important; border-color: {ACCENT} !important; color: {ON_ACCENT} !important; }}
