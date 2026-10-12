@@ -144,7 +144,7 @@
   }
 
   function tidyPage() {
-    [["button.inline-search-show", "Поиск"], ["button.inline-phone-show", "Позвонить"], ["a.scroll-to-top", "Наверх"]].forEach(function (pair) {
+    [["button.inline-search-show", "Поиск"], ["button.inline-phone-show", "Позвонить"], ["a.scroll-to-top", "Наверх"], ["input[type=text][name=q]:not([placeholder])", "Поиск по сайту"]].forEach(function (pair) {
       document.querySelectorAll(pair[0]).forEach(function (el) {
         if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", pair[1]);
       });

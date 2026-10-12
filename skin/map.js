@@ -23,10 +23,14 @@
     labels(node);
     if (node.hasAttribute("data-ms-map")) return;
     node.setAttribute("data-ms-map", "1");
-    var timer = null;
+    var pending = false;
     new MutationObserver(function () {
-      clearTimeout(timer);
-      timer = setTimeout(function () { labels(node); }, 200);
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        labels(node);
+      });
     }).observe(node, { childList: true, subtree: true });
     function apply() {
       var type = map.getType && map.getType();
@@ -109,7 +113,10 @@
     if (typeof original !== "function" || original.__msWrapped) return;
     var wrapped = function () {
       var mark = original.apply(this, arguments);
-      try { enhance(mark); } catch (e) {}
+      try {
+        if (arguments[0] && arguments[0].container) track(arguments[0]);
+        enhance(mark);
+      } catch (e) {}
       return mark;
     };
     wrapped.__msWrapped = true;
