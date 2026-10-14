@@ -13,13 +13,11 @@
   var DELIVERY_FEE = 150;
   var MIN_ORDER = 800;
   var ICON = {"close": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><path data-name=\"Rounded Rectangle 114 copy 3\" class=\"cccls-1\" d=\"M334.411,138l6.3,6.3a1,1,0,0,1,0,1.414,0.992,0.992,0,0,1-1.408,0l-6.3-6.306-6.3,6.306a1,1,0,0,1-1.409-1.414l6.3-6.3-6.293-6.3a1,1,0,0,1,1.409-1.414l6.3,6.3,6.3-6.3A1,1,0,0,1,340.7,131.7Z\" transform=\"translate(-325 -130)\"></path></svg>", "remove": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "closes": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "price": "<svg id=\"Group_278_copy\" data-name=\"Group 278 copy\" xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"38\" viewBox=\"0 0 38 38\"><path id=\"Ellipse_305_copy_2\" data-name=\"Ellipse 305 copy 2\" class=\"clswm-1\" d=\"M1851,561a19,19,0,1,1,19-19A19,19,0,0,1,1851,561Zm0-36a17,17,0,1,0,17,17A17,17,0,0,0,1851,525Zm3.97,10.375-0.03.266c-0.01.062-.02,0.127-0.03,0.188l-0.94,7.515h0a2.988,2.988,0,0,1-5.94,0H1848l-0.91-7.525c-0.01-.041-0.01-0.086-0.02-0.128l-0.04-.316h0.01c-0.01-.125-0.04-0.246-0.04-0.375a4,4,0,0,1,8,0c0,0.129-.03.25-0.04,0.375h0.01ZM1851,533a2,2,0,0,0-2,2,1.723,1.723,0,0,0,.06.456L1850,543a1,1,0,0,0,2,0l0.94-7.544A1.723,1.723,0,0,0,1853,535,2,2,0,0,0,1851,533Zm0,14a3,3,0,1,1-3,3A3,3,0,0,1,1851,547Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,1851,551Z\" transform=\"translate(-1832 -523)\"></path> <path class=\"clswm-2 op-cls\" d=\"M1853,543l-1,1h-2l-1-1-1-8,1-2,1-1h2l1,1,1,2Zm-1,5,1,1v2l-1,1h-2l-1-1v-2l1-1h2Z\" transform=\"translate(-1832 -523)\"></path></svg>"};
-  var CASH_TEXT = "Оплата производится наличными деньгами, в момент получения заказа. Подтверждением вашей оплаты является фискальный кассовый чек, вручаемый во время получения и оплаты заказа.";
   var FINE = "Наличие, итоговую стоимость и время подтверждает менеджер.";
   var COURIER_TEXT = "Доставка осуществляется в течение 1–2 дней в удобное для вас время.";
   var COURIER_FREE_TEXT = "Бесплатная доставка от 3000 ₽ — в течение 1–2 дней в удобное для вас время.";
   var DONE_TITLE = "Заказ сформирован";
-  var CASH_LOGO = "/vendor/upload/sale/paysystem/logotip/ae5/ae562c5ef5496bc1fcf9d687ebd6fc69.png";
-  var PAY_LOGO = { "1": CASH_LOGO, "8": CASH_LOGO, "7": "/vendor/upload/sale/paysystem/logotip/277/277bac3584decb235d4c33e57d86e33d.png" };
+  var PAY_LOGO = "/vendor/upload/sale/paysystem/logotip/277/277bac3584decb235d4c33e57d86e33d.png";
 
   function load() {
     var raw = {};
@@ -340,7 +338,7 @@
     });
   }
 
-  var order = { delivery: "courier", pay: "1" };
+  var order = { delivery: "courier", pay: "7" };
 
   function deliveries(sum) {
     var free = sum >= FREE_DELIVERY;
@@ -350,10 +348,8 @@
       { key: "pickup", id: "2", title: "Самовывоз", cost: "бесплатно", fee: 0, text: "Вы можете самостоятельно забрать заказ из нашего магазина." }
     ];
   }
-  function payments(key) {
-    return key === "pickup"
-      ? [{ id: "8", title: "Наличный расчет", text: "" }, { id: "7", title: "Оплата картой онлайн", text: "" }]
-      : [{ id: "1", title: "Наличные курьеру", text: CASH_TEXT }, { id: "7", title: "Оплата картой онлайн", text: "" }];
+  function payments() {
+    return [{ id: "7", title: "Оплата картой онлайн", text: "" }];
   }
   function card(kind, item, selected) {
     var cls = "bx-soa-pp-company bx-soa-pp-company-item" +
@@ -416,7 +412,7 @@
     if (sum < MIN_ORDER) { location.replace("/basket/"); return; }
     var list = deliveries(sum);
     var picked = list.filter(function (d) { return d.key === order.delivery; })[0] || list[0];
-    var pays = payments(picked.key);
+    var pays = payments();
     if (!pays.some(function (p) { return p.id === order.pay; })) order.pay = pays[0].id;
     var pay = pays.filter(function (p) { return p.id === order.pay; })[0];
     var delivery = '<div class="alert alert-danger" style="display:none"></div><div class="bx-soa-pp row"><div class="col-sm-12 bx-soa-pp-item-container">' +
@@ -508,7 +504,7 @@
       return;
     }
     if (!f.licenses_order.checked) return;
-    var pay = payments(picked.key).filter(function (p) { return p.id === order.pay; })[0];
+    var pay = payments().filter(function (p) { return p.id === order.pay; })[0];
     var orders = savedOrders();
     var done = {
       number: String(orders.length + 1), stamp: stamp(new Date()), name: f.name.value.trim(), email: f.email.value.trim(), phone: f.phone.value.trim(),
@@ -563,7 +559,7 @@
         ' успешно создан. Номер вашей оплаты: <b>№' + esc(o.number) + '/1</b><br><br> Вы можете следить за выполнением своего заказа в ' +
         '<a href="/auth/">Персональном разделе сайта</a>. Обратите внимание, что для входа в этот раздел вам необходимо будет ввести логин и пароль пользователя сайта. </td></tr></tbody></table>' +
       '<br><br><table class="sale_order_full_table"><tbody><tr><td class="ps_logo"><div class="pay_name">Оплата заказа</div>' +
-        '<div class="image"><img src="' + (PAY_LOGO[o.payId] || PAY_LOGO["1"]) + '" style="width:100px" alt="" width="100" height="34"></div>' +
+        '<div class="image"><img src="' + PAY_LOGO + '" style="width:100px" alt="" width="100" height="34"></div>' +
         '<div class="paysystem_name">' + esc(o.pay) + '</div><br></td></tr><tr><td></td></tr></tbody></table>' +
       '<p class="ms-demo-note">Это демонстрационная копия сайта: заказ сохранён только в вашем браузере и в магазин не отправлен. ' +
         '<a href="' + mail + '">Отправить заказ на почту</a> или позвонить: <a href="tel:' + SHOP_PHONE.replace(/[^\d+]/g, "") + '">' + SHOP_PHONE + '</a>.</p>';
