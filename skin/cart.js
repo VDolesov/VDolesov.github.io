@@ -10,7 +10,7 @@
   var SHOP_MAIL = "mirslad49@mail.ru";
   var SHOP_PHONE = "+7 (8452) 47-35-69";
   var FREE_DELIVERY = 3000;
-  var DELIVERY_FEE = 150;
+  var DELIVERY_FEE = 200;
   var MIN_ORDER = 800;
   var ICON = {"close": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><path data-name=\"Rounded Rectangle 114 copy 3\" class=\"cccls-1\" d=\"M334.411,138l6.3,6.3a1,1,0,0,1,0,1.414,0.992,0.992,0,0,1-1.408,0l-6.3-6.306-6.3,6.306a1,1,0,0,1-1.409-1.414l6.3-6.3-6.293-6.3a1,1,0,0,1,1.409-1.414l6.3,6.3,6.3-6.3A1,1,0,0,1,340.7,131.7Z\" transform=\"translate(-325 -130)\"></path></svg>", "remove": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "closes": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"8.031\" height=\"8\" viewBox=\"0 0 8.031 8\"><path data-name=\"Rounded Rectangle 893 copy\" class=\"cls-1\" d=\"M756.41,668.967l2.313,2.315a1,1,0,0,1-1.415,1.409L755,670.379l-2.309,2.312a1,1,0,0,1-1.414-1.409l2.312-2.315-2.281-2.284a1,1,0,1,1,1.414-1.409L755,667.555l2.277-2.281a1,1,0,1,1,1.414,1.409Z\" transform=\"translate(-751 -665)\"></path></svg>", "price": "<svg id=\"Group_278_copy\" data-name=\"Group 278 copy\" xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"38\" viewBox=\"0 0 38 38\"><path id=\"Ellipse_305_copy_2\" data-name=\"Ellipse 305 copy 2\" class=\"clswm-1\" d=\"M1851,561a19,19,0,1,1,19-19A19,19,0,0,1,1851,561Zm0-36a17,17,0,1,0,17,17A17,17,0,0,0,1851,525Zm3.97,10.375-0.03.266c-0.01.062-.02,0.127-0.03,0.188l-0.94,7.515h0a2.988,2.988,0,0,1-5.94,0H1848l-0.91-7.525c-0.01-.041-0.01-0.086-0.02-0.128l-0.04-.316h0.01c-0.01-.125-0.04-0.246-0.04-0.375a4,4,0,0,1,8,0c0,0.129-.03.25-0.04,0.375h0.01ZM1851,533a2,2,0,0,0-2,2,1.723,1.723,0,0,0,.06.456L1850,543a1,1,0,0,0,2,0l0.94-7.544A1.723,1.723,0,0,0,1853,535,2,2,0,0,0,1851,533Zm0,14a3,3,0,1,1-3,3A3,3,0,0,1,1851,547Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,1851,551Z\" transform=\"translate(-1832 -523)\"></path> <path class=\"clswm-2 op-cls\" d=\"M1853,543l-1,1h-2l-1-1-1-8,1-2,1-1h2l1,1,1,2Zm-1,5,1,1v2l-1,1h-2l-1-1v-2l1-1h2Z\" transform=\"translate(-1832 -523)\"></path></svg>"};
   var FINE = "Наличие, итоговую стоимость и время подтверждает менеджер.";
@@ -312,7 +312,7 @@
               '</i><b>Минимальная сумма заказа ' + money(MIN_ORDER) + '</b><br>Пожалуйста, добавьте еще товаров в корзину</div></div>'
             : '<button type="button" class="btn btn-lg btn-default basket-btn-checkout" data-bact="checkout">Оформить заказ</button>') + '</div>' +
         '</div>' +
-        '<div class="ms-basket-note">Самовывоз из магазина — бесплатно, в день заказа.<br>Доставка — только по Саратову, от 1 до 2 дней.</div>' +
+        '<div class="ms-basket-note">Самовывоз из ТЦ «Арига», ул. Бахметьевская, 49 — бесплатно, в день заказа.<br>Доставка — только по Саратову, от 1 до 2 дней.</div>' +
       '</div></div></div></div>' +
       '<div class="row"><div class="col-xs-12"><div class="alert alert-warning" style="display:none"></div></div></div>' +
       '<div class="row"><div class="col-xs-12"><div class="basket-items-list-wrapper basket-items-list-wrapper-height-fixed basket-items-list-wrapper-light">' +
@@ -346,7 +346,7 @@
     return [
       { key: "courier", id: free ? "5" : "1", title: "Доставка курьером", cost: free ? "бесплатно" : money(DELIVERY_FEE), fee: free ? 0 : DELIVERY_FEE,
         period: "от 1 до 2 дней", text: free ? COURIER_FREE_TEXT : COURIER_TEXT },
-      { key: "pickup", id: "2", title: "Самовывоз", cost: "бесплатно", fee: 0, text: "Вы можете самостоятельно забрать заказ из нашего магазина." }
+      { key: "pickup", id: "2", title: "Самовывоз", cost: "бесплатно", fee: 0, text: "Заберите заказ в ТЦ «Арига»: г. Саратов, ул. Бахметьевская, 49." }
     ];
   }
   function payments(key) {
@@ -547,7 +547,7 @@
     o.items.forEach(function (it) { lines.push(it.name + " × " + it.qty + " — " + money(it.price * it.qty)); });
     lines.push("", "Доставка: " + o.shipping, "Итого: " + money(o.total), "",
       "Ф.И.О.: " + o.name, "Телефон: " + o.phone, "E-Mail: " + o.email,
-      "Получение: " + (o.delivery === "delivery" ? "доставка, " + o.address : "самовывоз"), "Оплата: " + o.pay);
+      "Получение: " + (o.delivery === "delivery" ? "доставка, " + o.address : "самовывоз, ТЦ «Арига», ул. Бахметьевская, 49"), "Оплата: " + o.pay);
     if (o.comment) lines.push("Комментарий: " + o.comment);
     return lines.join("\n");
   }
