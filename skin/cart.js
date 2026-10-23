@@ -17,7 +17,8 @@
   var COURIER_TEXT = "Доставка осуществляется в течение 1–2 дней в удобное для вас время.";
   var COURIER_FREE_TEXT = "Бесплатная доставка от 3000 ₽ — в течение 1–2 дней в удобное для вас время.";
   var DONE_TITLE = "Заказ сформирован";
-  var PAY_LOGO = "/vendor/upload/sale/paysystem/logotip/277/277bac3584decb235d4c33e57d86e33d.png";
+  var CASH_TEXT = "Оплата производится наличными деньгами, в момент получения заказа. Подтверждением вашей оплаты является фискальный кассовый чек, вручаемый во время получения и оплаты заказа.";
+  var PAY_LOGO = "/vendor/upload/sale/paysystem/logotip/ae5/ae562c5ef5496bc1fcf9d687ebd6fc69.png";
 
   function load() {
     var raw = {};
@@ -338,7 +339,7 @@
     });
   }
 
-  var order = { delivery: "courier", pay: "7" };
+  var order = { delivery: "courier", pay: "1" };
 
   function deliveries(sum) {
     var free = sum >= FREE_DELIVERY;
@@ -348,8 +349,8 @@
       { key: "pickup", id: "2", title: "Самовывоз", cost: "бесплатно", fee: 0, text: "Вы можете самостоятельно забрать заказ из нашего магазина." }
     ];
   }
-  function payments() {
-    return [{ id: "7", title: "Оплата картой онлайн", text: "" }];
+  function payments(key) {
+    return key === "pickup" ? [{ id: "8", title: "Наличный расчет", text: "" }] : [{ id: "1", title: "Наличные курьеру", text: CASH_TEXT }];
   }
   function card(kind, item, selected) {
     var cls = "bx-soa-pp-company bx-soa-pp-company-item" +
@@ -412,7 +413,7 @@
     if (sum < MIN_ORDER) { location.replace("/basket/"); return; }
     var list = deliveries(sum);
     var picked = list.filter(function (d) { return d.key === order.delivery; })[0] || list[0];
-    var pays = payments();
+    var pays = payments(picked.key);
     if (!pays.some(function (p) { return p.id === order.pay; })) order.pay = pays[0].id;
     var pay = pays.filter(function (p) { return p.id === order.pay; })[0];
     var delivery = '<div class="alert alert-danger" style="display:none"></div><div class="bx-soa-pp row"><div class="col-sm-12 bx-soa-pp-item-container">' +
@@ -504,7 +505,7 @@
       return;
     }
     if (!f.licenses_order.checked) return;
-    var pay = payments().filter(function (p) { return p.id === order.pay; })[0];
+    var pay = payments(picked.key).filter(function (p) { return p.id === order.pay; })[0];
     var orders = savedOrders();
     var done = {
       number: String(orders.length + 1), stamp: stamp(new Date()), name: f.name.value.trim(), email: f.email.value.trim(), phone: f.phone.value.trim(),
