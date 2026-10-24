@@ -20,12 +20,31 @@
     });
     nav.appendChild(inner);
     host.parentNode.insertBefore(nav, host.nextSibling);
+    if (window.ResizeObserver) {
+      var observer = new ResizeObserver(positionBasket);
+      observer.observe(nav);
+      observer.observe(host);
+    }
+    positionBasket();
+  }
+
+  function positionBasket() {
+    var nav = document.querySelector(".ms-nav");
+    var top = 148;
+    if (nav && window.matchMedia("(min-width: 992px)").matches) {
+      top = Math.max(top, Math.ceil(nav.getBoundingClientRect().bottom) + 8);
+    }
+    document.documentElement.style.setProperty("--ms-basket-opener-top", top + "px");
   }
 
   function trackScroll() {
     var root = document.documentElement;
-    var update = function () { root.classList.toggle("ms-scrolled", window.pageYOffset > 8); };
+    var update = function () {
+      root.classList.toggle("ms-scrolled", window.pageYOffset > 8);
+      positionBasket();
+    };
     window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", positionBasket);
     update();
   }
 
