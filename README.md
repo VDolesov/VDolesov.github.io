@@ -1,6 +1,12 @@
 # Mir Sladostey — storefront demo
 
-Static copy of mirsladostey164.ru with the new skin applied: https://vdolesov.github.io/
+Static copy of mirsladostey164.ru with the new skin applied. It is kept for ourselves, not published; open it locally:
+
+```
+python skin/serve.py
+```
+
+and go to http://localhost:4183/ (another port: `python skin/serve.py 4190`). The built pages keep the former public origin https://vdolesov.github.io in their links; `skin/serve.py` swaps it for the local address, so the demo loads nothing from GitHub. Only the store maps need the internet (Yandex Maps, reachable with the VPN off).
 
 The live site runs on 1C-Bitrix with the Aspro Max template. The demo keeps its pages, URLs and markup and changes the visual layer; a few demo scripts stand in for the backend (cart, search, forms).
 
@@ -18,7 +24,7 @@ The live site runs on 1C-Bitrix with the Aspro Max template. The demo keeps its 
 
 ## Earlier versions
 
-`v1/` (https://vdolesov.github.io/v1/) and `v2/` (https://vdolesov.github.io/v2/) are snapshots exported from history with `python skin/export_version.py <commit> <name>`. `v1/` also carries the store map and footer of the current site (`v1/bottom.css`, `v1/bottom.js`), applied by `python skin/v1_bottom.py`; re-run it after re-exporting. Its product photos are series v10 (`build/v1_photos.py`), the Ossetian pies come from `build/pies_v1.py` and the wide hero from `build/v1_hd.py`.
+`v1/` (http://localhost:4183/v1/) and `v2/` (http://localhost:4183/v2/) are snapshots exported from history with `python skin/export_version.py <commit> <name>`. `v1/` also carries the store map and footer of the current site (`v1/bottom.css`, `v1/bottom.js`), applied by `python skin/v1_bottom.py`; re-run it after re-exporting. Its product photos are series v10 (`build/v1_photos.py`), the Ossetian pies come from `build/pies_v1.py` and the wide hero from `build/v1_hd.py`.
 
 ## Requirements
 
